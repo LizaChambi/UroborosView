@@ -42,14 +42,17 @@ Esta herramienta esta pensada para programadores que quieran crear sus propios v
 
 ### Arquitectura
 
-*Imagen de la Estructura*
+![Technology Architecture](Logo/Estructura.jpg)
 
 #### Tecnología
 > Implementacion de Dominio: Java
 
 > Interface de Usuario: Java Swing
 
-[VSM](https://realtimeboard.com/app/board/o9J_kxnZcYo=/)
+
+### Backlog
+* [Trello](https://trello.com/b/Xs1Q6q4e/uroborus-game-studio)
+* [VSM](https://realtimeboard.com/app/board/o9J_kxnZcYo=/)
 
 #### Autores:
 * Chambi Orellana Liza Melody
