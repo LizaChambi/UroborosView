@@ -46,6 +46,7 @@ Esta herramienta esta pensada para programadores que quieran crear sus propios v
 
 #### Tecnología
 > Implementacion de Dominio: Java
+
 > Interface de Usuario: Java Swing
 
 [VSM](https://realtimeboard.com/app/board/o9J_kxnZcYo=/)
