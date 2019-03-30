@@ -1,6 +1,6 @@
 # Uroboros Game Studio
 
-![Uroboros Logo](UroborosGameStudio\Logo\ouroboros-snake-religion-by-Vexels.png)
+![Uroboros Logo](Logo/Uroboros-Logo.png)
 
 ### Objetivo
 Uroboros Game Studio es un editor de videojuegos que utiliza el framework de videojuegos Uroboros.
@@ -12,6 +12,19 @@ Esta herramienta esta pensada para programadores que quieran crear sus propios v
 [Uroboros-Engine](https://github.com/TeamUroboros/Uroboros-Engine/tree/develop)
 
 ### Casos de Uso
+* Crear un nuevo proyecto
+	*El usuario debe ingresar una direccion donde crear el proyecto
+
+* Abrir proyecto
+* Agregar una escena al juego
+* Agregar un objeto de juego a una escena
+* Ejecutar el juego
+* Detener la ejecucion del juego
+* Cambiar la configuracion del juego
+* Editar escena
+* Editar los objeto de juego
+* Agregar comportamientos
+
 [VSM](https://realtimeboard.com/app/board/o9J_kxnZcYo=/)
 
 ### Estructura
