@@ -9,13 +9,14 @@ Uroboros Game Studio es un editor de videojuegos que utiliza el framework de vid
 * Eclipse >= Neon
 * JDK >= 8
 
-### Motivacion
-Esta herramienta esta pensada para programadores que quieran crear sus propios videojuegos 2D. La motivacion de este proyecto es introducir al programador al ambiente de videojuegos, y ayudarle a pensar en todos los componentes que intervienen en la creacion de la misma(como los escenarios, actores, transformaciones, comportamientos, etc.). Y como interactuan entre ellos.
+### Motivación
+Esta herramienta está pensada para programadores que quieran crear sus propios videojuegos 2D. La motivación de este proyecto es introducir al programador al ambiente de videojuegos, y ayudarle a pensar en todos los componentes que intervienen en la creacion de la misma(como los escenarios, actores, transformaciones, comportamientos, etc.). Y como interactúan entre ellos.
 
 ### Dependencias
 [Uroboros-Engine](https://github.com/TeamUroboros/Uroboros-Engine/tree/develop)
 
 ### Principales Casos de Uso
+
 * Crear un nuevo proyecto
 	* El usuario debe ingresar una direccion donde crear el proyecto.
 	* El usuario debe ingresar un nombre al juego
@@ -45,12 +46,12 @@ Esta herramienta esta pensada para programadores que quieran crear sus propios v
 	* El usuario puede habilitar y deshabilitar el nuevo comportamiento
 
 ### Arquitectura
-**Uroboros Engine** sera utilizado como dependencia y es fundamental para el funcionamiento de Uroboros Game Studio, ya que este contiene toda la logica de juego que usara el proyecto del usuario.
+**Uroboros Engine** sera utilizado como dependencia y es fundamental para el funcionamiento de Uroboros Game Studio, ya que este contiene toda la lógica de juego que usará el proyecto del usuario.
 
 ![Technology Architecture](Logo/Estructura.jpg)
 
 #### Tecnología
-> Implementacion de Dominio: Java
+> Implementación de Dominio: Java
 
 > Interface de Usuario: Java Swing
 
