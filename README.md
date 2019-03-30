@@ -11,24 +11,44 @@ Esta herramienta esta pensada para programadores que quieran crear sus propios v
 ### Dependencias
 [Uroboros-Engine](https://github.com/TeamUroboros/Uroboros-Engine/tree/develop)
 
-### Casos de Uso
+### Principales Casos de Uso
 * Crear un nuevo proyecto
-	*El usuario debe ingresar una direccion donde crear el proyecto
-
+	* El usuario debe ingresar una direccion donde crear el proyecto.
+	* El usuario debe ingresar un nombre al juego
 * Abrir proyecto
+	* El usuario debe ingresar la direccion de la carpeta del proyecto existente.
 * Agregar una escena al juego
+	* El usuario debe ingresar un nombre para la escena
 * Agregar un objeto de juego a una escena
+	* El usuario debe ingresar un nombre para el objeto de escena
 * Ejecutar el juego
+	* El usuario debe ejecutar el juego en cualquier momento dado en caso de no haber ninguna inconsistencia
 * Detener la ejecucion del juego
+	* El usuario puede detener la ejecucion en el caso de que el juego se este ejecutando
 * Cambiar la configuracion del juego
+	* El usuario puede modificar la dimension de la pantalla del juego
 * Editar escena
+	* El usuario puede cambiar el nombre de la escena salvo que el nombre este en uso
+	* El usuario puede redimencionar, pocisionar y agregar una imagen.
 * Editar los objeto de juego
+	* El usuario puede cambiar el nombre del objeto de juego salvo que este en uso
+	* El usuario puede agregar una imagen al objeto de juego y redimensionarlo
+	* El usuario puede cambiar la posicion
+	* El usuario puede habilitar o deshabilitar comportamientos de física
 * Agregar comportamientos
+	* El usuario debe agregar un nombre al nuevo comportamiento
+	* El usuario debe poder programar el nuevo comportamiento
+	* El usuario puede habilitar y deshabilitar el nuevo comportamiento
+
+### Arquitectura
+
+*Imagen de la Estructura*
+
+#### Tecnología
+> Implementacion de Dominio: Java
+> Interface de Usuario: Java Swing
 
 [VSM](https://realtimeboard.com/app/board/o9J_kxnZcYo=/)
-
-### Estructura
-(draw.io)
 
 #### Autores:
 * Chambi Orellana Liza Melody
