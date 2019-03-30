@@ -1,6 +1,6 @@
 # Uroboros Game Studio
 
-![Uroboros Logo](D:\Gabriel\TIP\ouroboros-snake-religion-by-Vexels.png)
+![Uroboros Logo](UroborosGameStudio\Logo\ouroboros-snake-religion-by-Vexels.png)
 
 ### Objetivo
 Uroboros Game Studio es un editor de videojuegos que utiliza el framework de videojuegos Uroboros.
