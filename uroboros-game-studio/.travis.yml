@@ -6,6 +6,9 @@ sudo: false
 
 jdk:
  - oraclejdk8
+ 
+before_install:
+ - mvn -f ./uroboros-game-studio
 
 install:
  - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
