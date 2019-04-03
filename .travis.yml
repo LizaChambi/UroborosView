@@ -6,7 +6,7 @@ jdk:
 - oraclejdk8
 
 before install:
-- mvn -f ./uroboros-game-studio/pom.xml
+- mvn -f ./uroboros-game-studio
 
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
