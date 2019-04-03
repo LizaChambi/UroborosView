@@ -1,14 +1,9 @@
 language: java
 
-dist: trusty
-
-sudo: false
-
 jdk:
  - oraclejdk8
  
-before install:
-- mvn -f /pom.xml
+sudo: false
 
 install:
  - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
