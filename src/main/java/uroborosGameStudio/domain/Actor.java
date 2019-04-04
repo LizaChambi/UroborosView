@@ -1,4 +1,4 @@
-package uroboros.game.studio.domain;
+package uroborosGameStudio.domain;
 
 public class Actor {
 
