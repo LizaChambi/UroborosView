@@ -1,0 +1,14 @@
+language: java
+
+dist: trusty
+
+sudo: false
+
+jdk:
+ - oraclejdk8
+
+install:
+ - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script: 
+ - mvn test -B
