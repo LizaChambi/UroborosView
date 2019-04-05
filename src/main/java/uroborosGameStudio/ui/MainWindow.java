@@ -29,6 +29,7 @@ public class MainWindow {
 	 */
 	public MainWindow() {
 		initialize();
+		 
 	}
 
 	/**
