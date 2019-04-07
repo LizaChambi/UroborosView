@@ -52,42 +52,42 @@ public class EditorWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 864, 61);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JPanel barraDeHerramientas = new JPanel();
+		barraDeHerramientas.setBounds(10, 11, 864, 61);
+		contentPane.add(barraDeHerramientas);
+		barraDeHerramientas.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Nueva Escena");
 		btnNewButton.setBounds(10, 27, 134, 23);
-		panel.add(btnNewButton);
+		barraDeHerramientas.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
 		btnNewButton_1.setBounds(154, 27, 116, 23);
-		panel.add(btnNewButton_1);
+		barraDeHerramientas.add(btnNewButton_1);
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(280, 27, 97, 23);
-		panel.add(btnGuardar);
+		barraDeHerramientas.add(btnGuardar);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 83, 864, 467);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBounds(122, 0, 410, 467);
-		panel_1.add(canvas);
+		Canvas panelDeEjecucion = new Canvas();
+		panelDeEjecucion.setBounds(122, 0, 410, 467);
+		panel_1.add(panelDeEjecucion);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(538, 0, 326, 467);
 		panel_1.add(scrollPane);
 		
-		JTextPane txtpnSoyUnLindo = new JTextPane();
-		txtpnSoyUnLindo.setText("Soy un lindo Editor de Texto");
-		scrollPane.setViewportView(txtpnSoyUnLindo);
+		JTextPane editorTxt = new JTextPane();
+		editorTxt.setText("Soy un lindo Editor de Texto");
+		scrollPane.setViewportView(editorTxt);
 		
-		JTree tree = new JTree();
-		tree.setModel(new DefaultTreeModel(
+		JTree treeScenes = new JTree();
+		treeScenes.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Name Proyect") {
 				{
 					DefaultMutableTreeNode node_1;
@@ -112,7 +112,7 @@ public class EditorWindow extends JFrame {
 				}
 			}
 		));
-		tree.setBounds(0, 0, 116, 467);
-		panel_1.add(tree);
+		treeScenes.setBounds(0, 0, 116, 467);
+		panel_1.add(treeScenes);
 	}
 }
