@@ -1,4 +1,5 @@
 # Uroboros Game Studio
+* ***Develop*** branch: [![Build Status](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio.svg?branch=develop)](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio)
 
 ![Uroboros Logo](images/Uroboros-Logo.png)
 
