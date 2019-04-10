@@ -12,14 +12,21 @@ public class Scene
 	{
 		this.name = name;
 		this.actors = new ArrayList<Actor>();
-		this.actors.add(new Actor("Actor1"));
-		this.actors.add(new Actor("Actor2"));
-		this.actors.add(new Actor("Actor3"));
 	}
 
+	public List<Actor> getActors()
+	{
+		return this.actors;
+	}
+	
 	public String getName() 
 	{
 		return this.name;
+	}
+	
+	public void addActor(Actor actor)
+	{
+		this.actors.add(actor);
 	}
 
 	public Integer cantActors() 
