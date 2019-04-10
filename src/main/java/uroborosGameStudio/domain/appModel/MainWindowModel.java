@@ -1,11 +1,11 @@
 package uroborosGameStudio.domain.appModel;
 
 import uroborosGameStudio.domain.Scene;
-import uroborosGameStudio.domain.UGSProyect;
+import uroborosGameStudio.domain.UGSProject;
 
 public class MainWindowModel 
 {
-	private UGSProyect proyect;
+	private UGSProject project;
 	
 	public MainWindowModel()
 	{
@@ -13,27 +13,27 @@ public class MainWindowModel
 
 	public void createNewProyect() 
 	{
-		this.proyect = new UGSProyect("UGSProyect", "GameTitle");
+		this.project = new UGSProject("UGSProject", "GameTitle");
 	}
 
 	public String getProyectName() 
 	{
-		return proyect.getProyectName();
+		return project.getProjectName();
 	}
 	
 	public String getGameTitle() 
 	{
-		return proyect.getProyectName();
+		return project.getProjectName();
 	}
 
 	public Integer cantScenes() 
 	{
-		return proyect.getScenes().size();
+		return project.getScenes().size();
 	}
 
 	public Scene getSceneIn(int index) 
 	{
-		return proyect.getScenes().get(index);
+		return project.getScenes().get(index);
 	}
 	
 

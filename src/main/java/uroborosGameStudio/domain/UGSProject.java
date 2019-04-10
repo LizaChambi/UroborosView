@@ -4,18 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UGSProyect 
+public class UGSProject 
 {
 	private String gameTitle;
-	private String proyectName;
+	private String projectName;
 	private String path;
 	private List<Scene> scenes;
 	
-	public UGSProyect(String proyectName, String gameName) 
+	public UGSProject(String projectName, String gameName) 
 	{
 		this.gameTitle = gameName;
-		this.proyectName = proyectName;
-		createProyectDir();
+		this.projectName = projectName;
+		createProjectDir();
 		this.scenes = new ArrayList<Scene>();
 		this.getScenes().add(new Scene("Scene"));
 	}
@@ -30,11 +30,11 @@ public class UGSProyect
 		return this.scenes;
 	}	
 
-	public void createProyectDir()
+	public void createProjectDir()
 	{
 		String dp = System.getProperty("user.home");
 		String line = System.getProperty("file.separator");
-		File dir = new File(dp + line + this.proyectName);
+		File dir = new File(dp + line + this.projectName);
 		createDir(dir);
 	}
 	
@@ -44,9 +44,9 @@ public class UGSProyect
 		dir.mkdir();
 	}
 
-	public String getProyectName() 
+	public String getProjectName() 
 	{
-		return this.proyectName;
+		return this.projectName;
 	}
 	
 	public String getGameTitle()
