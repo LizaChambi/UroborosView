@@ -1,37 +1,35 @@
 package uroborosGameStudio.ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import java.awt.Canvas;
-import javax.swing.JEditorPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
+
+import uroborosGameStudio.domain.Scene;
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextPane;
 
 public class EditorWindow extends JFrame {
 
 	private JPanel contentPane;
+	private MainWindowModel model;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow() {
+	public static void OpenWindow(final MainWindowModel model) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EditorWindow frame = new EditorWindow();
+					EditorWindow frame = new EditorWindow(model);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +41,8 @@ public class EditorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditorWindow() {
+	public EditorWindow(MainWindowModel model) {
+		this.model = model;
 		setTitle("Uroboros Game Studio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
@@ -87,31 +86,23 @@ public class EditorWindow extends JFrame {
 		scrollPane.setViewportView(editorTxt);
 		
 		JTree treeScenes = new JTree();
-		treeScenes.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Name Proyect") {
-				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("Scene01");
-						node_1.add(new DefaultMutableTreeNode("blue"));
-						node_1.add(new DefaultMutableTreeNode("violet"));
-						node_1.add(new DefaultMutableTreeNode("red"));
-						node_1.add(new DefaultMutableTreeNode("yellow"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Scene02");
-						node_1.add(new DefaultMutableTreeNode("basketball"));
-						node_1.add(new DefaultMutableTreeNode("soccer"));
-						node_1.add(new DefaultMutableTreeNode("football"));
-						node_1.add(new DefaultMutableTreeNode("hockey"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Scene03");
-						node_1.add(new DefaultMutableTreeNode("hot dogs"));
-						node_1.add(new DefaultMutableTreeNode("pizza"));
-						node_1.add(new DefaultMutableTreeNode("ravioli"));
-						node_1.add(new DefaultMutableTreeNode("bananas"));
-					add(node_1);
-				}
+		
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getGameTitle());
+		
+		for (int i=0; i < model.cantScenes(); i++)
+		{
+			Scene scene = model.getSceneIn(i);
+			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(scene.getName());
+			for (int si=0; si<scene.cantActors();si++)
+			{
+				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode(scene.getActorIn(si).getName());
+				child1.add(child11);
 			}
-		));
+			root.add(child1);
+		}
+		
+		DefaultTreeModel tree = new DefaultTreeModel(root);
+		treeScenes.setModel(tree);
 		treeScenes.setBounds(0, 0, 116, 467);
 		panel_1.add(treeScenes);
 	}
