@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -14,6 +17,7 @@ import java.awt.Font;
 public class InicioWindow extends JFrame {
 
 	private JPanel contentPane;
+	private MainWindowModel model = new MainWindowModel();
 
 	/**
 	 * Launch the application.
@@ -46,8 +50,9 @@ public class InicioWindow extends JFrame {
 		btnOpenWindow.setBounds(57, 152, 139, 23);
 		btnOpenWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditorWindow mw = new EditorWindow();
-				mw.OpenWindow();
+				model.createNewProyect();
+				EditorWindow mw = new EditorWindow(model);
+				mw.OpenWindow(model);
 			}
 		});
 		contentPane.setLayout(null);
