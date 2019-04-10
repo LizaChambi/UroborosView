@@ -6,19 +6,23 @@ import java.util.List;
 
 public class UGSProyect 
 {
-	private String title;
+	private String gameTitle;
 	private String proyectName;
 	private String path;
 	private List<Scene> scenes;
 	
 	public UGSProyect(String proyectName, String gameName) 
 	{
-		this.title = gameName;
+		this.gameTitle = gameName;
 		this.proyectName = proyectName;
 		createProyectDir();
 		this.scenes = new ArrayList<Scene>();
-		this.scenes.add(new Scene("Scene1"));
-		this.scenes.add(new Scene("Scene2"));
+		this.getScenes().add(new Scene("Scene"));
+	}
+	
+	public String getPath()
+	{
+		return this.path;
 	}
 	
 	public List<Scene> getScenes()
@@ -36,15 +40,8 @@ public class UGSProyect
 	
 	public void createDir(File dir)
 	{
-		if (dir.mkdir())
-		{
-			this.path = dir.getPath();
-			System.out.println("Se ha creado el proyecto " + this.proyectName + " con éxito");
-		}
-		else
-		{
-			System.out.println("No se pudo crear el proyecto.");
-		}
+		this.path = dir.getPath();
+		dir.mkdir();
 	}
 
 	public String getProyectName() 
@@ -54,6 +51,6 @@ public class UGSProyect
 	
 	public String getGameTitle()
 	{
-		return this.title;
+		return this.gameTitle;
 	}
 }
