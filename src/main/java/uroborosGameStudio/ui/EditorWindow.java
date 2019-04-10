@@ -17,11 +17,15 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EditorWindow extends JFrame {
 
 	private JPanel contentPane;
-	private MainWindowModel model;
+	final MainWindowModel model;
 
 	/**
 	 * Launch the application.
@@ -62,12 +66,23 @@ public class EditorWindow extends JFrame {
 		barraDeHerramientas.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
-		btnNewButton_1.setBounds(154, 27, 116, 23);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// una ves seleccionado del combo box, este boton confirma la seleccion
+				// y pushea al tree y al canvas
+			}
+		});
+		btnNewButton_1.setBounds(269, 27, 116, 23);
 		barraDeHerramientas.add(btnNewButton_1);
 		
 		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(280, 27, 97, 23);
+		btnGuardar.setBounds(390, 27, 97, 23);
 		barraDeHerramientas.add(btnGuardar);
+		
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Niño", "Pelota", "Piso"}));
+		comboBox.setBounds(154, 28, 105, 20);
+		barraDeHerramientas.add(comboBox);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 83, 864, 467);
