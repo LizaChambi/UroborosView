@@ -1,23 +1,19 @@
 package uroborosGameStudio.ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import java.awt.Canvas;
-import javax.swing.JEditorPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
+
+import uroborosGameStudio.domain.Ball;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextPane;
 
 public class EditorWindow extends JFrame {
@@ -74,7 +70,7 @@ public class EditorWindow extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		Canvas panelDeEjecucion = new Canvas();
+		Canvas panelDeEjecucion = new Ball();
 		panelDeEjecucion.setBounds(122, 0, 410, 467);
 		panel_1.add(panelDeEjecucion);
 		
