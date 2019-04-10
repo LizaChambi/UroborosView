@@ -10,6 +10,12 @@ public class MainWindowModel
 	public MainWindowModel()
 	{
 	}
+	
+
+	public UGSProject getProject() 
+	{
+		return project;
+	}
 
 	public void createNewProyect() 
 	{

@@ -4,29 +4,49 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class Ball extends Canvas implements MouseListener, MouseMotionListener{
+	
+	private MainWindowModel model;
 	
 	public Ball() {
 //		setBackground(Color.black);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
 	}
 
 	public void paint(Graphics boll) {
 		boll.setColor(Color.black);
 		boll.fillOval(125, 125, 54, 54);
 		boll.drawString("Compartiendo la visual", 45, 45);
-		try {
-			boll.drawImage(ImageIO.read(new File("images/Uroboros-Logo.png")), 200, 200, 50, 50, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		// CREAR ACA UNA LISTA DE ESCENAS CON ACTORES PARA USAR COMO BBDD AL CANVAS
+		List<Scene> escenas = new ArrayList<Scene>();
+		// escenas.add(actor1);
+		// escenas.add(actor2); 
+		// ....
+		
+		
+		/*
+		for ( indiceDeEscena)
+		{
+			Escena esc = model.getSceneIn(indiceDeEscena)
+			for (indiceDeActor)
+			{
+				Actor act = esc.getActorIn(indiceDeActor)
+				boll.drawImage(act.getImage(), act.point.x, act.point.y, act.dimension.width, act.dimension.height, null);
+				
+			}
 		}
+		*/
 	}
 
 	public void mouseDragged(MouseEvent e) {
