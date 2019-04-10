@@ -9,10 +9,20 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class Ball extends Canvas implements MouseListener, MouseMotionListener{
+	
+	MainWindowModel comboBox;
 	
 	public Ball() {
 //		setBackground(Color.black);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+	}
+	
+	public Ball(MainWindowModel comboBox) {
+		this.comboBox = comboBox;
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
@@ -21,12 +31,19 @@ public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 		boll.setColor(Color.black);
 		boll.fillOval(125, 125, 54, 54);
 		boll.drawString("Compartiendo la visual", 45, 45);
+		if(comboBox.getItemSelectComboBox() != null) {
+			boll.drawString(comboBox.getItemSelectComboBox(), 35, 30);
+		}
 		try {
 			boll.drawImage(ImageIO.read(new File("images/Uroboros-Logo.png")), 200, 200, 50, 50, null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void update(Graphics boll) {
+		paint(boll);
 	}
 
 	public void mouseDragged(MouseEvent e) {

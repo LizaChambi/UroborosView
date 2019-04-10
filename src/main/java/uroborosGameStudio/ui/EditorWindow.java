@@ -18,8 +18,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 
 public class EditorWindow extends JFrame {
@@ -46,7 +48,7 @@ public class EditorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditorWindow(MainWindowModel model) {
+	public EditorWindow(final MainWindowModel model) {
 		this.model = model;
 		setTitle("Uroboros Game Studio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,9 +81,19 @@ public class EditorWindow extends JFrame {
 		btnGuardar.setBounds(390, 27, 97, 23);
 		barraDeHerramientas.add(btnGuardar);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		final JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Niño", "Pelota", "Piso"}));
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == comboBox) {
+					JComboBox<String> cb =  (JComboBox<String>) e.getSource();
+					String msg = (String) cb.getSelectedItem();
+					model.setItemSelectComboBox(msg);
+				}
+			}
+		});
 		comboBox.setBounds(154, 28, 105, 20);
+//		comboBox.setLightWeightPopupEnabled(false);
 		barraDeHerramientas.add(comboBox);
 		
 		JPanel panel_1 = new JPanel();
@@ -89,7 +101,7 @@ public class EditorWindow extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		Canvas panelDeEjecucion = new Ball();
+		Canvas panelDeEjecucion = new Ball(model);
 		panelDeEjecucion.setBounds(122, 0, 410, 467);
 		panel_1.add(panelDeEjecucion);
 		

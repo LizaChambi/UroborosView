@@ -7,6 +7,9 @@ public class MainWindowModel
 {
 	private UGSProject project;
 	
+	String itemSelectComboBox;
+	
+
 	public MainWindowModel()
 	{
 	}
@@ -36,5 +39,12 @@ public class MainWindowModel
 		return project.getScenes().get(index);
 	}
 	
+	public String getItemSelectComboBox() {
+		return itemSelectComboBox;
+	}
+
+	public void setItemSelectComboBox(String msg) {
+		itemSelectComboBox = msg;
+	}
 
 }
