@@ -11,6 +11,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.Ball;
+import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
@@ -26,6 +27,9 @@ public class EditorWindow extends JFrame {
 
 	private JPanel contentPane;
 	final MainWindowModel model;
+	final DummyActors bdActors = new DummyActors();
+	private JTree treeScenes = new JTree();
+	private int idScene = 1;
 
 	/**
 	 * Launch the application.
@@ -62,20 +66,27 @@ public class EditorWindow extends JFrame {
 		barraDeHerramientas.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Nueva Escena");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addScene(e);
+			}
+		});
 		btnNewButton.setBounds(10, 27, 134, 23);
 		barraDeHerramientas.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// una ves seleccionado del combo box, este boton confirma la seleccion
-				// y pushea al tree y al canvas
+		btnNewButton_1.addActionListener(new ActionListener() 
+		{	
+			public void actionPerformed(ActionEvent e) 
+			{
+				addActor(e);
 			}
 		});
 		btnNewButton_1.setBounds(269, 27, 116, 23);
 		barraDeHerramientas.add(btnNewButton_1);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.setEnabled(false);
 		btnGuardar.setBounds(390, 27, 97, 23);
 		barraDeHerramientas.add(btnGuardar);
 		
@@ -101,17 +112,16 @@ public class EditorWindow extends JFrame {
 		editorTxt.setText("Soy un lindo Editor de Texto");
 		scrollPane.setViewportView(editorTxt);
 		
-		JTree treeScenes = new JTree();
-		
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getGameTitle());
-		
 		for (int i=0; i < model.cantScenes(); i++)
 		{
 			Scene scene = model.getSceneIn(i);
-			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(scene.getName());
+			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
+			child1.setUserObject(scene);
 			for (int si=0; si<scene.cantActors();si++)
 			{
-				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode(scene.getActorIn(si).getName());
+				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
+				child11.setUserObject(scene.getActorIn(si));
 				child1.add(child11);
 			}
 			root.add(child1);
@@ -122,4 +132,44 @@ public class EditorWindow extends JFrame {
 		treeScenes.setBounds(0, 0, 116, 467);
 		panel_1.add(treeScenes);
 	}
+
+	protected void addScene(ActionEvent e) 
+	{
+		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
+		if (lastNode != null)
+		{
+			DefaultTreeModel model = (DefaultTreeModel) treeScenes.getModel();
+			if(lastNode.getLevel() == 0)
+			{
+				model.insertNodeInto(new DefaultMutableTreeNode(new Scene("Escena" + this.idScene)), lastNode, model.getChildCount(lastNode));
+				this.idScene++;
+			}
+		}
+	}
+	
+	protected void addActor(ActionEvent e) 
+	{
+		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
+		if (lastNode != null)
+		{
+			DefaultTreeModel model = (DefaultTreeModel) treeScenes.getModel();
+			if(lastNode.getLevel() == 1)
+			{
+				model.insertNodeInto( new DefaultMutableTreeNode(bdActors.getKids()), lastNode, model.getChildCount(lastNode));
+			}
+		}
+	}
+	
+	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
+	 * 
+	protected void removeNode(ActionEvent e) 
+	{
+		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
+		if (lastNode != null)
+		{
+			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
+			mdl.removeNodeFromParent(lastNode);
+		}
+	}
+	*/
 }

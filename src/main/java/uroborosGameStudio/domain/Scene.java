@@ -39,4 +39,12 @@ public class Scene
 	{
 		return this.actors.get(index);
 	}
+
+	@Override
+	public String toString() 
+	{
+		return this.name;
+	}
+	
+	
 }

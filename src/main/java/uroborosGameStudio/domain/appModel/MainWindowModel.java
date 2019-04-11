@@ -19,7 +19,7 @@ public class MainWindowModel
 
 	public void createNewProyect() 
 	{
-		this.project = new UGSProject("UGSProject", "GameTitle");
+		this.project = new UGSProject("UGSProject", "Título del Juego");
 	}
 
 	public String getProyectName() 
@@ -29,7 +29,7 @@ public class MainWindowModel
 	
 	public String getGameTitle() 
 	{
-		return project.getProjectName();
+		return project.getGameTitle();
 	}
 
 	public Integer cantScenes() 

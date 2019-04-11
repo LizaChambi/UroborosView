@@ -17,7 +17,7 @@ public class UGSProject
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<Scene>();
-		this.getScenes().add(new Scene("Scene"));
+		this.getScenes().add(new Scene("Escena0"));
 	}
 	
 	public String getPath()

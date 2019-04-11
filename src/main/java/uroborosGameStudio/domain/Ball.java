@@ -29,11 +29,10 @@ public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 		boll.drawString("Compartiendo la visual", 45, 45);
 		
 		// CREAR ACA UNA LISTA DE ESCENAS CON ACTORES PARA USAR COMO BBDD AL CANVAS
-		List<Scene> escenas = new ArrayList<Scene>();
+		//List<Scene> escenas = new ArrayList<Scene>();
 		// escenas.add(actor1);
 		// escenas.add(actor2); 
 		// ....
-		
 		
 		/*
 		for ( indiceDeEscena)
@@ -47,6 +46,13 @@ public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 			}
 		}
 		*/
+		try {
+			boll.drawImage(ImageIO.read(new File("images/Uroboros-Logo.png")), 200, 200, 50, 50, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void mouseDragged(MouseEvent e) {
