@@ -11,7 +11,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Ball;
+import uroborosGameStudio.domain.ExecutionCanvas;
 import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -20,9 +20,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EditorWindow extends JFrame {
 
@@ -31,17 +37,25 @@ public class EditorWindow extends JFrame {
 	final DummyActors bdActors = new DummyActors();
 	private JTree treeScenes = new JTree();
 	private int idScene = 1;
+	JComboBox<Actor> comboBox = new JComboBox<Actor>();
+	Canvas panelDeEjecucion = new ExecutionCanvas();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void OpenWindow(final MainWindowModel model) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void OpenWindow(final MainWindowModel model) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
 					EditorWindow frame = new EditorWindow(model);
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -51,7 +65,7 @@ public class EditorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditorWindow(MainWindowModel model) {
+	public EditorWindow(final MainWindowModel model) {
 		this.model = model;
 		setTitle("Uroboros Game Studio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,12 +89,25 @@ public class EditorWindow extends JFrame {
 		btnNewButton.setBounds(10, 27, 134, 23);
 		barraDeHerramientas.add(btnNewButton);
 		
+		Actor ninio = bdActors.getKids();
+		Actor pelota = bdActors.getBall();
+		Actor piso = bdActors.getFlow();
+ 		
+		comboBox.setModel(new DefaultComboBoxModel<Actor>());
+		comboBox.addItem(ninio);
+		comboBox.addItem(pelota);
+		comboBox.addItem(piso);
+		comboBox.setBounds(154, 28, 105, 20);
+		barraDeHerramientas.add(comboBox);
+		
+		JPanel panel_1 = new JPanel();
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
 		btnNewButton_1.addActionListener(new ActionListener() 
 		{	
 			public void actionPerformed(ActionEvent e) 
 			{
 				addActor(e);
+				setItemSelectComboBox(e);
 			}
 		});
 		btnNewButton_1.setBounds(269, 27, 116, 23);
@@ -91,17 +118,10 @@ public class EditorWindow extends JFrame {
 		btnGuardar.setBounds(390, 27, 97, 23);
 		barraDeHerramientas.add(btnGuardar);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Niño", "Pelota", "Piso"}));
-		comboBox.setBounds(154, 28, 105, 20);
-		barraDeHerramientas.add(comboBox);
-		
-		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 83, 864, 467);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		Canvas panelDeEjecucion = new Ball();
 		panelDeEjecucion.setBounds(122, 0, 410, 467);
 		panel_1.add(panelDeEjecucion);
 		
@@ -158,7 +178,7 @@ public class EditorWindow extends JFrame {
 			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 1)
 			{
-				Actor newActor = bdActors.getKids();
+				Actor newActor = (Actor) comboBox.getSelectedItem();
 				Scene scene = (Scene) lastNode.getUserObject();
 				scene.addActor(newActor);
 				modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), lastNode, modelNode.getChildCount(lastNode));
@@ -178,4 +198,9 @@ public class EditorWindow extends JFrame {
 		}
 	}
 	*/
+	protected void setItemSelectComboBox(ActionEvent e) 
+	{
+			Actor actor = (Actor) comboBox.getSelectedItem();
+			panelDeEjecucion.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
+	}
 }

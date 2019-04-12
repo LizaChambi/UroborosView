@@ -8,8 +8,12 @@ public class MainWindowModel
 {
 	private UGSProject project;
 	
+	String itemSelectComboBox;
+	
+
 	public MainWindowModel()
 	{
+		this.itemSelectComboBox = "";
 	}
 	
 
@@ -55,5 +59,16 @@ public class MainWindowModel
 		System.out.println(scene.getName());
 	}
 	
+	public String getItemSelectComboBox() {
+		return itemSelectComboBox;
+	}
+
+	public void setItemSelectComboBox(String msg) {
+		itemSelectComboBox = msg;
+	}
+
+	public void setProject(UGSProject project) {
+		this.project = project;
+	}
 
 }
