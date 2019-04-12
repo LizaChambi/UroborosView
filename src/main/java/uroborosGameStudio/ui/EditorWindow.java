@@ -10,6 +10,7 @@ import java.awt.Canvas;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
+import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Ball;
 import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
@@ -138,10 +139,12 @@ public class EditorWindow extends JFrame {
 		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
 		if (lastNode != null)
 		{
-			DefaultTreeModel model = (DefaultTreeModel) treeScenes.getModel();
+			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 0)
 			{
-				model.insertNodeInto(new DefaultMutableTreeNode(new Scene("Escena" + this.idScene)), lastNode, model.getChildCount(lastNode));
+				Scene newScene = new Scene("Escena" + this.idScene);
+				this.model.addScene(newScene);
+				modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), lastNode, modelNode.getChildCount(lastNode));
 				this.idScene++;
 			}
 		}
@@ -152,10 +155,13 @@ public class EditorWindow extends JFrame {
 		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
 		if (lastNode != null)
 		{
-			DefaultTreeModel model = (DefaultTreeModel) treeScenes.getModel();
+			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 1)
 			{
-				model.insertNodeInto( new DefaultMutableTreeNode(bdActors.getKids()), lastNode, model.getChildCount(lastNode));
+				Actor newActor = bdActors.getKids();
+				Scene scene = (Scene) lastNode.getUserObject();
+				scene.addActor(newActor);
+				modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), lastNode, modelNode.getChildCount(lastNode));
 			}
 		}
 	}
