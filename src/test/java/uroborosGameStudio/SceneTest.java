@@ -29,8 +29,8 @@ public class SceneTest
 	@Test
 	public void testCreateSceneWithTwoActorsAndGetTheSecond()
 	{	
-		Actor actor0 = new Actor("Actor0");
-		Actor actor1 = new Actor("Actor1");
+		Actor actor0 = new Actor("Actor0", "images/kids.png", 12, 15, 59, 89);;
+		Actor actor1 = new Actor("Actor1", "images/kids.png", 12, 15, 59, 89);;
 		scene.addActor(actor0);
 		scene.addActor(actor1);
 		
