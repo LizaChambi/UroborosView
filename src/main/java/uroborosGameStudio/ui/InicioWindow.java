@@ -53,6 +53,7 @@ public class InicioWindow extends JFrame {
 				model.createNewProyect();
 				EditorWindow mw = new EditorWindow(model);
 				mw.OpenWindow(model);
+				setVisible(false);
 			}
 		});
 		contentPane.setLayout(null);
