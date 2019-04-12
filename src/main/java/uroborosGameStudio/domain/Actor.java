@@ -45,18 +45,7 @@ public class Actor
 	{
 		return this.image;
 	}
-
-	public void setName(String newName) 
-	{
-		this.name = newName;
-	}
 	
-	@Override
-	public String toString() 
-	{
-		return this.name;
-	}
-
 	public int getX() {
 		return this.point.x;
 	}
@@ -73,4 +62,17 @@ public class Actor
 		return this.dimension.height;
 	}
 
+	public void setName(String newName) 
+	{
+		this.name = newName;
+	}
+	
+	@Override
+	public String toString() 
+	{
+		return this.name;
+	}
+
+	
+	
 }

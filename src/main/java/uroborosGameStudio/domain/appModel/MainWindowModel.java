@@ -1,5 +1,6 @@
 package uroborosGameStudio.domain.appModel;
 
+import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.UGSProject;
 
@@ -14,10 +15,16 @@ public class MainWindowModel
 	{
 		this.itemSelectComboBox = "";
 	}
+	
+
+	public UGSProject getProject() 
+	{
+		return project;
+	}
 
 	public void createNewProyect() 
 	{
-		this.project = new UGSProject("UGSProject", "GameTitle");
+		this.project = new UGSProject("UGSProject", "Título del Juego");
 	}
 
 	public String getProyectName() 
@@ -27,7 +34,7 @@ public class MainWindowModel
 	
 	public String getGameTitle() 
 	{
-		return project.getProjectName();
+		return project.getGameTitle();
 	}
 
 	public Integer cantScenes() 
@@ -39,6 +46,18 @@ public class MainWindowModel
 	{
 		return project.getScenes().get(index);
 	}
+
+
+	public void addScene(Scene newScene) 
+	{
+		project.addScene(newScene);
+	}
+
+
+	public void addActorToScene(Actor newActor, Scene scene) 
+	{
+		System.out.println(scene.getName());
+	}
 	
 	public String getItemSelectComboBox() {
 		return itemSelectComboBox;
@@ -46,10 +65,6 @@ public class MainWindowModel
 
 	public void setItemSelectComboBox(String msg) {
 		itemSelectComboBox = msg;
-	}
-
-	public UGSProject getProject() {
-		return project;
 	}
 
 	public void setProject(UGSProject project) {
