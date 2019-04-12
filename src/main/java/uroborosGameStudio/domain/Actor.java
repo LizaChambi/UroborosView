@@ -13,7 +13,7 @@ public class Actor
 	public String name;
 	public Point point; // X e Y
 	public Dimension dimension; // ancho y alto
-	static public BufferedImage image;
+	public BufferedImage image;
 
 	public Actor(String name, String path, Integer x, Integer y, Integer width, Integer height) 
 	{
@@ -55,6 +55,22 @@ public class Actor
 	public String toString() 
 	{
 		return this.name;
+	}
+
+	public int getX() {
+		return this.point.x;
+	}
+
+	public int getY() {
+		return this.point.y;
+	}
+
+	public int getWidth() {
+		return this.dimension.width;
+	}
+
+	public int getHeight() {
+		return this.dimension.height;
 	}
 
 }

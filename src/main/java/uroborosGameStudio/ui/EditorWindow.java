@@ -10,7 +10,8 @@ import java.awt.Canvas;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
-import uroborosGameStudio.domain.Ball;
+import uroborosGameStudio.domain.Actor;
+import uroborosGameStudio.domain.ExecutionCanvas;
 import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -35,8 +36,8 @@ public class EditorWindow extends JFrame {
 	final MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	
-	JComboBox<String> comboBox = new JComboBox<String>();
-	Canvas panelDeEjecucion;
+	JComboBox<Actor> comboBox = new JComboBox<Actor>();
+	Canvas panelDeEjecucion = new ExecutionCanvas();
 
 	/**
 	 * Launch the application.
@@ -76,13 +77,12 @@ public class EditorWindow extends JFrame {
 		btnNewButton.setBounds(10, 27, 134, 23);
 		barraDeHerramientas.add(btnNewButton);
 		
-		panelDeEjecucion = new Ball(model);
-		List<String> actores = new ArrayList<String>();
-		String ninio = "Niño";
-		String pelota = "Pelota";
-		String piso = "Piso";
+//		panelDeEjecucion = new Ball(model, bdActors);
+		Actor ninio = bdActors.getKids();
+		Actor pelota = bdActors.getBall();
+		Actor piso = bdActors.getFlow();
  		
-		comboBox.setModel(new DefaultComboBoxModel<String>());
+		comboBox.setModel(new DefaultComboBoxModel<Actor>());
 		comboBox.addItem(ninio);
 		comboBox.addItem(pelota);
 		comboBox.addItem(piso);
@@ -93,13 +93,7 @@ public class EditorWindow extends JFrame {
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				comboBox.addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent e) {
 						setItemSelectComboBox(arg0);
-//						comboBox.getSelectedItem();
-						
-//					}
-//				});
 			}
 		});
 		btnNewButton_1.setBounds(269, 27, 116, 23);
@@ -113,7 +107,6 @@ public class EditorWindow extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		panelDeEjecucion = new Ball(model, bdActors);
 		panelDeEjecucion.setBounds(122, 0, 410, 467);
 		panel_1.add(panelDeEjecucion);
 		
@@ -148,8 +141,7 @@ public class EditorWindow extends JFrame {
 	}
 
 	protected void setItemSelectComboBox(ActionEvent e) {
-			String msg = (String) comboBox.getSelectedItem();
-			model.setItemSelectComboBox(msg);
-			panelDeEjecucion = new Ball(model, bdActors);
+			Actor actor = (Actor) comboBox.getSelectedItem();
+			panelDeEjecucion.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
 	}
 }

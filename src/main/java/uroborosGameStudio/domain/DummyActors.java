@@ -2,32 +2,29 @@ package uroborosGameStudio.domain;
 
 public class DummyActors {
 
-	private int idKids;
-	private int idBall;
-	private int idFlow;
+	Actor kids;
+	Actor ball;
+	Actor flow;
 	
 	public DummyActors()
 	{
-		idKids = 0;
-		idBall = 0;
-		idFlow = 0;
+		kids = new Actor("Nene", "images/kids.png", 200, 200, 50, 120);
+		ball = new Actor("Pelota", "images/ball.png", 200, 200, 50, 50);
+		flow = new Actor("Piso", "images/flow.png", 0, 200, 50, 120);
 	}
 	
 	public Actor getKids()
 	{
-		this.idKids++;
-		return new Actor("Nene" + idKids, "images/kids.png", 200, 200, 50, 120);
+		return this.kids;
 	}
 	
 	public Actor getBall()
 	{
-		this.idBall++;
-		return new Actor("Pelota" + idBall, "images/ball.png", 200, 200, 50, 50);
+		return this.ball;
 	}
 	
 	public Actor getFlow()
 	{
-		this.idFlow++;
-		return new Actor("Piso" + idFlow, "images/flow.png", 0, 200, 50, 120);
+		return this.flow;
 	}
 }
