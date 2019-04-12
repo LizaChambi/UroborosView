@@ -11,6 +11,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.Ball;
+import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
@@ -22,12 +23,20 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EditorWindow extends JFrame {
 
 	private JPanel contentPane;
 	final MainWindowModel model;
+	final DummyActors bdActors = new DummyActors();
+	
+	JComboBox<String> comboBox = new JComboBox<String>();
+	Canvas panelDeEjecucion;
 
 	/**
 	 * Launch the application.
@@ -67,11 +76,30 @@ public class EditorWindow extends JFrame {
 		btnNewButton.setBounds(10, 27, 134, 23);
 		barraDeHerramientas.add(btnNewButton);
 		
+		panelDeEjecucion = new Ball(model);
+		List<String> actores = new ArrayList<String>();
+		String ninio = "Niño";
+		String pelota = "Pelota";
+		String piso = "Piso";
+ 		
+		comboBox.setModel(new DefaultComboBoxModel<String>());
+		comboBox.addItem(ninio);
+		comboBox.addItem(pelota);
+		comboBox.addItem(piso);
+		comboBox.setBounds(154, 28, 105, 20);
+		barraDeHerramientas.add(comboBox);
+		
+		JPanel panel_1 = new JPanel();
 		JButton btnNewButton_1 = new JButton("Nuevo Actor");
 		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// una ves seleccionado del combo box, este boton confirma la seleccion
-				// y pushea al tree y al canvas
+			public void actionPerformed(ActionEvent arg0) {
+//				comboBox.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+						setItemSelectComboBox(arg0);
+//						comboBox.getSelectedItem();
+						
+//					}
+//				});
 			}
 		});
 		btnNewButton_1.setBounds(269, 27, 116, 23);
@@ -81,27 +109,11 @@ public class EditorWindow extends JFrame {
 		btnGuardar.setBounds(390, 27, 97, 23);
 		barraDeHerramientas.add(btnGuardar);
 		
-		final JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Niño", "Pelota", "Piso"}));
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == comboBox) {
-					JComboBox<String> cb =  (JComboBox<String>) e.getSource();
-					String msg = (String) cb.getSelectedItem();
-					model.setItemSelectComboBox(msg);
-				}
-			}
-		});
-		comboBox.setBounds(154, 28, 105, 20);
-//		comboBox.setLightWeightPopupEnabled(false);
-		barraDeHerramientas.add(comboBox);
-		
-		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 83, 864, 467);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		Canvas panelDeEjecucion = new Ball(model);
+		panelDeEjecucion = new Ball(model, bdActors);
 		panelDeEjecucion.setBounds(122, 0, 410, 467);
 		panel_1.add(panelDeEjecucion);
 		
@@ -133,5 +145,11 @@ public class EditorWindow extends JFrame {
 		treeScenes.setModel(tree);
 		treeScenes.setBounds(0, 0, 116, 467);
 		panel_1.add(treeScenes);
+	}
+
+	protected void setItemSelectComboBox(ActionEvent e) {
+			String msg = (String) comboBox.getSelectedItem();
+			model.setItemSelectComboBox(msg);
+			panelDeEjecucion = new Ball(model, bdActors);
 	}
 }

@@ -4,42 +4,47 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 	
 	MainWindowModel comboBox;
-	
-	public Ball() {
+	DummyActors bdActors;
+
+	public Ball(MainWindowModel model) {
 //		setBackground(Color.black);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
 	
-	public Ball(MainWindowModel comboBox) {
+	public Ball(MainWindowModel comboBox, DummyActors bdActors) {
 		this.comboBox = comboBox;
+		this.bdActors = bdActors;
 		addMouseListener(this);
 		addMouseMotionListener(this);
+	}
+	
+	public MainWindowModel getComboBox() {
+		return comboBox;
+	}
+	
+	public void setComboBox(MainWindowModel comboBox) {
+		this.comboBox = comboBox;
 	}
 
 	public void paint(Graphics boll) {
 		boll.setColor(Color.black);
-		boll.fillOval(125, 125, 54, 54);
-		boll.drawString("Compartiendo la visual", 45, 45);
+//		boll.fillOval(125, 125, 54, 54);
+//		boll.drawString("Compartiendo la visual", 45, 45);
+		
 		if(comboBox.getItemSelectComboBox() != null) {
 			boll.drawString(comboBox.getItemSelectComboBox(), 35, 30);
 		}
-		try {
-			boll.drawImage(ImageIO.read(new File("images/Uroboros-Logo.png")), 200, 200, 50, 50, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		boll.drawImage(bdActors.getBall().getImage(), 150, 150, 50, 50, null);
+		boll.drawImage(bdActors.getFlow().getImage(), 200, 200, 50, 50, null);
+		boll.drawImage(bdActors.getKids().getImage(), 250, 250, 50, 50, null);
 	}
 	
 	public void update(Graphics boll) {
@@ -51,7 +56,6 @@ public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 		  
         g.setColor(Color.red); 
   
-        // get X and y position 
         int x, y; 
         x = e.getX(); 
         y = e.getY(); 
@@ -68,9 +72,8 @@ public class Ball extends Canvas implements MouseListener, MouseMotionListener{
 	public void mouseClicked(MouseEvent e) {
 		Graphics g = this.getGraphics(); 
 		  
-        g.setColor(Color.red); 
+        g.setColor(Color.blue); 
   
-        // get X and y position 
         int x, y; 
         x = e.getX(); 
         y = e.getY(); 

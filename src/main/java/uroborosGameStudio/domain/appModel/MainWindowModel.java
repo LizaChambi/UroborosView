@@ -12,6 +12,7 @@ public class MainWindowModel
 
 	public MainWindowModel()
 	{
+		this.itemSelectComboBox = "";
 	}
 
 	public void createNewProyect() 
@@ -45,6 +46,14 @@ public class MainWindowModel
 
 	public void setItemSelectComboBox(String msg) {
 		itemSelectComboBox = msg;
+	}
+
+	public UGSProject getProject() {
+		return project;
+	}
+
+	public void setProject(UGSProject project) {
+		this.project = project;
 	}
 
 }
