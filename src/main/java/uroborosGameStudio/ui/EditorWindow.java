@@ -144,9 +144,6 @@ public class EditorWindow extends JFrame {
 				.addGroup(gl_centralPanel.createSequentialGroup()
 					.addGroup(gl_centralPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_centralPanel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(canvas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_centralPanel.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_centralPanel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_centralPanel.createSequentialGroup()
@@ -154,21 +151,24 @@ public class EditorWindow extends JFrame {
 									.addComponent(lblNombre)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_centralPanel.createSequentialGroup()
+							.addGap(4)
+							.addComponent(canvas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_centralPanel.setVerticalGroup(
 			gl_centralPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_centralPanel.createSequentialGroup()
 					.addGap(5)
-					.addComponent(canvas, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+					.addComponent(canvas, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_centralPanel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblNombre)
 						.addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(96, Short.MAX_VALUE))
+					.addContainerGap(90, Short.MAX_VALUE))
 		);
 		centralPanel.setLayout(gl_centralPanel);
 		
