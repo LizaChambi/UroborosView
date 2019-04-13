@@ -14,7 +14,7 @@ public class ActorTest
 	@Before
 	public void setUp()
 	{
-		actor = new Actor("Actor0");
+		actor = new Actor("Actor0", "images/kids.png", 12, 15, 59, 89);
 	}
 	
 	@Test

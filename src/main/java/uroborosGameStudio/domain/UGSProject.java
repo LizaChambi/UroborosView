@@ -17,7 +17,7 @@ public class UGSProject
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<Scene>();
-		this.getScenes().add(new Scene("Scene"));
+		this.getScenes().add(new Scene("Escena0"));
 	}
 	
 	public String getPath()
@@ -52,5 +52,10 @@ public class UGSProject
 	public String getGameTitle()
 	{
 		return this.gameTitle;
+	}
+
+	public void addScene(Scene newScene) 
+	{
+		this.scenes.add(newScene);
 	}
 }
