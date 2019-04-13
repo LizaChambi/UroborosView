@@ -11,8 +11,8 @@ import java.io.IOException;
 public class Actor 
 {
 	public String name;
-	public Point point; // X e Y
-	public Dimension dimension; // ancho y alto
+	public Point point;
+	public Dimension dimension;
 	public BufferedImage image;
 
 	public Actor(String name, String path, Integer x, Integer y, Integer width, Integer height) 
@@ -46,19 +46,23 @@ public class Actor
 		return this.image;
 	}
 	
-	public int getX() {
+	public int getX() 
+	{
 		return this.point.x;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return this.point.y;
 	}
 
-	public int getWidth() {
+	public int getWidth() 
+	{
 		return this.dimension.width;
 	}
 
-	public int getHeight() {
+	public int getHeight() 
+	{
 		return this.dimension.height;
 	}
 

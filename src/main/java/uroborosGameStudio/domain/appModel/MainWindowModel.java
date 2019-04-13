@@ -9,14 +9,12 @@ public class MainWindowModel
 	private UGSProject project;
 	
 	String itemSelectComboBox;
-	
 
 	public MainWindowModel()
 	{
 		this.itemSelectComboBox = "";
 	}
 	
-
 	public UGSProject getProject() 
 	{
 		return project;
@@ -47,12 +45,10 @@ public class MainWindowModel
 		return project.getScenes().get(index);
 	}
 
-
 	public void addScene(Scene newScene) 
 	{
 		project.addScene(newScene);
 	}
-
 
 	public void addActorToScene(Actor newActor, Scene scene) 
 	{

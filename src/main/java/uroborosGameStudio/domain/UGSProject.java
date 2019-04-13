@@ -57,10 +57,5 @@ public class UGSProject
 	public void addScene(Scene newScene) 
 	{
 		this.scenes.add(newScene);
-		for(int i=0; i<this.scenes.size(); i++)
-		{
-			System.out.println(this.scenes.get(i).getName());
-		}
-		
 	}
 }
