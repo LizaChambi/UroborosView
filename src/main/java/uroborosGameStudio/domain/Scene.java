@@ -1,6 +1,5 @@
 package uroborosGameStudio.domain;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +27,6 @@ public class Scene
 	public void addActor(Actor actor)
 	{
 		this.actors.add(actor);
-		for(int i=0; i<cantActors();i++)
-		{
-			System.out.println(getActorIn(i).getName());
-		}
 	}
 
 	public Integer cantActors() 

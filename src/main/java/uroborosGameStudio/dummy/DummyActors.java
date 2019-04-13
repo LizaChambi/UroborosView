@@ -1,4 +1,6 @@
-package uroborosGameStudio.domain;
+package uroborosGameStudio.dummy;
+
+import uroborosGameStudio.domain.Actor;
 
 public class DummyActors {
 

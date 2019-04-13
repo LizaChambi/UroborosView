@@ -12,23 +12,21 @@ import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.ExecutionCanvas;
-import uroborosGameStudio.domain.DummyActors;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.dummy.DummyActors;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
 
 public class EditorWindow extends JFrame {
 
@@ -38,7 +36,8 @@ public class EditorWindow extends JFrame {
 	private JTree treeScenes = new JTree();
 	private int idScene = 1;
 	JComboBox<Actor> comboBox = new JComboBox<Actor>();
-	Canvas panelDeEjecucion = new ExecutionCanvas();
+	Canvas canvas = new ExecutionCanvas();
+	JTextPane txtName = new JTextPane();
 
 	/**
 	 * Launch the application.
@@ -75,19 +74,19 @@ public class EditorWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel barraDeHerramientas = new JPanel();
-		barraDeHerramientas.setBounds(10, 11, 864, 61);
-		contentPane.add(barraDeHerramientas);
-		barraDeHerramientas.setLayout(null);
+		JPanel toolbar = new JPanel();
+		toolbar.setBounds(10, 11, 864, 61);
+		contentPane.add(toolbar);
+		toolbar.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Nueva Escena");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewScene = new JButton("Nueva Escena");
+		btnNewScene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addScene(e);
 			}
 		});
-		btnNewButton.setBounds(10, 27, 134, 23);
-		barraDeHerramientas.add(btnNewButton);
+		btnNewScene.setBounds(10, 27, 134, 23);
+		toolbar.add(btnNewScene);
 		
 		Actor ninio = bdActors.getKids();
 		Actor pelota = bdActors.getBall();
@@ -98,11 +97,11 @@ public class EditorWindow extends JFrame {
 		comboBox.addItem(pelota);
 		comboBox.addItem(piso);
 		comboBox.setBounds(154, 28, 105, 20);
-		barraDeHerramientas.add(comboBox);
+		toolbar.add(comboBox);
 		
-		JPanel panel_1 = new JPanel();
-		JButton btnNewButton_1 = new JButton("Nuevo Actor");
-		btnNewButton_1.addActionListener(new ActionListener() 
+		JPanel mainPanel = new JPanel();
+		JButton btnNewActor = new JButton("Nuevo Actor");
+		btnNewActor.addActionListener(new ActionListener() 
 		{	
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -110,28 +109,76 @@ public class EditorWindow extends JFrame {
 				setItemSelectComboBox(e);
 			}
 		});
-		btnNewButton_1.setBounds(269, 27, 116, 23);
-		barraDeHerramientas.add(btnNewButton_1);
+		btnNewActor.setBounds(269, 27, 116, 23);
+		toolbar.add(btnNewActor);
 		
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setEnabled(false);
-		btnGuardar.setBounds(390, 27, 97, 23);
-		barraDeHerramientas.add(btnGuardar);
+		JScrollPane scrollDirectoryPane = new JScrollPane();
+		scrollDirectoryPane.setBounds(0, 0, 174, 467);
+		mainPanel.add(scrollDirectoryPane);
+		treeScenes.setBounds(0, 0, 116, 467);
 		
-		panel_1.setBounds(10, 83, 864, 467);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		JButton btnSave = new JButton("Guardar");
+		btnSave.setEnabled(false);
+		btnSave.setBounds(390, 27, 97, 23);
+		toolbar.add(btnSave);
 		
-		panelDeEjecucion.setBounds(122, 0, 410, 467);
-		panel_1.add(panelDeEjecucion);
+		mainPanel.setBounds(10, 83, 864, 467);
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+				
+		JPanel centralPanel = new JPanel();
+		centralPanel.setBounds(186, 0, 416, 455);
+		mainPanel.add(centralPanel);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(538, 0, 326, 467);
-		panel_1.add(scrollPane);
+		canvas.setBounds(180, 0, 409, 400);
+		
+		JLabel lblNewLabel = new JLabel("Configuración:");
+		
+		JLabel lblNombre = new JLabel("Nombre:");
+		
+		JTextPane txtName = new JTextPane();
+		txtName.setText("name");
+		GroupLayout gl_centralPanel = new GroupLayout(centralPanel);
+		gl_centralPanel.setHorizontalGroup(
+			gl_centralPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centralPanel.createSequentialGroup()
+					.addGroup(gl_centralPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_centralPanel.createSequentialGroup()
+							.addGap(4)
+							.addComponent(canvas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_centralPanel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_centralPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_centralPanel.createSequentialGroup()
+									.addGap(12)
+									.addComponent(lblNombre)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_centralPanel.setVerticalGroup(
+			gl_centralPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centralPanel.createSequentialGroup()
+					.addGap(5)
+					.addComponent(canvas, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_centralPanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNombre)
+						.addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(96, Short.MAX_VALUE))
+		);
+		centralPanel.setLayout(gl_centralPanel);
+		
+		JScrollPane scrollEditorText = new JScrollPane();
+		scrollEditorText.setBounds(614, 0, 250, 467);
+		mainPanel.add(scrollEditorText);
 		
 		JTextPane editorTxt = new JTextPane();
-		editorTxt.setText("Soy un lindo Editor de Texto");
-		scrollPane.setViewportView(editorTxt);
+		editorTxt.setText("Editor de Texto");
+		scrollEditorText.setViewportView(editorTxt);
 		
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getGameTitle());
 		for (int i=0; i < model.cantScenes(); i++)
@@ -150,8 +197,8 @@ public class EditorWindow extends JFrame {
 		
 		DefaultTreeModel tree = new DefaultTreeModel(root);
 		treeScenes.setModel(tree);
-		treeScenes.setBounds(0, 0, 116, 467);
-		panel_1.add(treeScenes);
+		treeScenes.setBounds(0, 0, 174, 467);
+		scrollDirectoryPane.setViewportView(treeScenes);
 	}
 
 	protected void addScene(ActionEvent e) 
@@ -201,6 +248,6 @@ public class EditorWindow extends JFrame {
 	protected void setItemSelectComboBox(ActionEvent e) 
 	{
 			Actor actor = (Actor) comboBox.getSelectedItem();
-			panelDeEjecucion.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
+			canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
 	}
 }
