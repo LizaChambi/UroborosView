@@ -13,6 +13,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Cursor;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+import java.awt.Label;
+import java.awt.Color;
 
 public class MainWindow extends JFrame {
 
@@ -41,13 +47,16 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		setTitle("Uroboros Game Studio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		pack();
 		setBounds(100, 100, 450, 300);
+		setResizable(true);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JButton btnOpenWindow = new JButton("Crear Proyecto Nuevo");
+		btnOpenWindow.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOpenWindow.setBounds(57, 152, 149, 23);
 		btnOpenWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -67,8 +76,15 @@ public class MainWindow extends JFrame {
 		contentPane.add(btnCargarProyecto);
 		
 		JLabel lblBienvenidosAUroboros = new JLabel("Bienvenidos a Uroboros Game Studio");
+		lblBienvenidosAUroboros.setForeground(Color.RED);
 		lblBienvenidosAUroboros.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		lblBienvenidosAUroboros.setBounds(33, 69, 385, 28);
 		contentPane.add(lblBienvenidosAUroboros);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("images/icon-logo.png"));
+		lblNewLabel.setBounds(18, 11, 400, 239);
+//		lblNewLabel.setPreferredSize(new Dimension(300, 300));
+		contentPane.add(lblNewLabel);
 	}
 }

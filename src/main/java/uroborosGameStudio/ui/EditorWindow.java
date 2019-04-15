@@ -132,7 +132,7 @@ public class EditorWindow extends JFrame {
 		
 		canvas.setBounds(180, 0, 409, 400);
 		
-		JLabel lblNewLabel = new JLabel("ConfiguraciÃ³n:");
+		JLabel lblNewLabel = new JLabel("Configuración:");
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		
