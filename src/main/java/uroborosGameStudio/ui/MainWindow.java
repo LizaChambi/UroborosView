@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class MainWindow implements Runnable, WindowListener, ComponentListener {
 
 	JFrame frame;
@@ -26,33 +28,18 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	Integer height = 350;
 	Dimension dimension = new Dimension(width, height);
 	Boolean resizable = true;
+	
 	private JPanel centerPanel;
-	private JPanel southPanel;
-	private JPanel centerLabel;
-	private JPanel northImg;
 	private JButton createButton;
 	private JButton openButton;
 	private JLabel titleL;
 	private JLabel iconL;
+	
+	protected MainWindowModel model = new MainWindowModel();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { new MainWindow().run(); }
 
-		new MainWindow().run();
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainWindow frame = new MainWindow();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-	}
-
-	public void run() {
-		this.open();
-	}
+	public void run() {	this.open(); }
 
 	private void open() {
 		if (!this.frame.isVisible()) {
@@ -61,7 +48,6 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	}
 
 	public MainWindow() {
-
 		this.initializeFrame();
 		this.initializeCenterPanel();
 		
@@ -71,49 +57,6 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		this.initializeImgIcon();
 		
 		this.frame.pack();
-//		setTitle("Uroboros Game Studio");
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-////		pack();
-//		setBounds(100, 100, 450, 300);
-//		setResizable(true);
-//		setLocationRelativeTo(null);
-////		setForeground(c);(Color.WHITE);
-//		contentPane = new JPanel();
-//		contentPane.setBackground(Color.WHITE);
-//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		setContentPane(contentPane);
-//		
-//		JButton btnOpenWindow = new JButton("Crear Proyecto Nuevo");
-//		btnOpenWindow.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//		btnOpenWindow.setBounds(57, 152, 149, 23);
-//		btnOpenWindow.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				model.createNewProyect();
-//				EditorWindow mw = new EditorWindow(model);
-//				mw.OpenWindow(model);
-////				setVisible(false);
-//				dispose();
-//			}
-//		});
-//		contentPane.setLayout(null);
-//		contentPane.add(btnOpenWindow);
-//		
-//		JButton btnCargarProyecto = new JButton("Abrir Proyecto");
-//		btnCargarProyecto.setEnabled(false);
-//		btnCargarProyecto.setBounds(230, 152, 135, 23);
-//		contentPane.add(btnCargarProyecto);
-//		
-//		JLabel lblBienvenidosAUroboros = new JLabel("Bienvenidos a Uroboros Game Studio");
-//		lblBienvenidosAUroboros.setForeground(Color.RED);
-//		lblBienvenidosAUroboros.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-//		lblBienvenidosAUroboros.setBounds(33, 69, 385, 28);
-//		contentPane.add(lblBienvenidosAUroboros);
-//		
-//		JLabel lblNewLabel = new JLabel("");
-//		lblNewLabel.setIcon(new ImageIcon("images/icon-logo-resize.jpg"));
-//		lblNewLabel.setBounds(18, 11, 400, 239);
-////		lblNewLabel.setPreferredSize(new Dimension(300, 300));
-//		contentPane.add(lblNewLabel);
 	}
 
 	private void initializeImgIcon() {
@@ -141,10 +84,10 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		createButton.setBounds(69, 172, 162, 23);
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				model.createNewProyect();
-//				EditorWindow mw = new EditorWindow(model);
-//				mw.OpenWindow(model);
-//				dispose();
+				model.createNewProyect();
+				EditorWindow mw = new EditorWindow(model);
+				mw.OpenWindow(model);
+				frame.dispose();
 			}
 		});
 		centerPanel.add(this.createButton);
@@ -155,12 +98,12 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		centerPanel.setLayout(null);
 		centerPanel.setPreferredSize(new Dimension(120, 170));
 		centerPanel.setBackground(Color.white);
-		this.frame.add(centerPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
-		this.frame.setLayout(new BorderLayout());
+		this.frame.getContentPane().setLayout(new BorderLayout());
 		this.frame.setSize(this.dimension);
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
