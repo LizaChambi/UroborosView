@@ -3,22 +3,21 @@ package uroborosGameStudio.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Component;
 
 public class MainWindow implements Runnable, WindowListener, ComponentListener {
-
-//	private MainWindowModel model = new MainWindowModel();
 
 	JFrame frame;
 	String title = "Uroboros Game Studio";
@@ -34,6 +33,7 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	private JButton createButton;
 	private JButton openButton;
 	private JLabel titleL;
+	private JLabel iconL;
 
 	public static void main(String[] args) {
 
@@ -65,14 +65,12 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		this.initializeFrame();
 		this.initializeCenterPanel();
 		
-		this.initializeSouthButtonsPanel();
-		this.initializeCenterLabelPanel();
-		this.initializeNorthImgPanel();
-		
 		this.initializeCreateProyectButton();
 		this.initializaOpenProyectButton();
-		
 		this.initializeTitleLabel();
+		this.initializeImgIcon();
+		
+		this.frame.pack();
 //		setTitle("Uroboros Game Studio");
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 ////		pack();
@@ -118,19 +116,29 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 //		contentPane.add(lblNewLabel);
 	}
 
+	private void initializeImgIcon() {
+		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.jpg"));
+		iconL.setBounds(219, 60, 50, 50);
+		centerPanel.add(this.iconL);
+	}
+
 	private void initializeTitleLabel() {
 		this.titleL = new JLabel("Bienvenidos a Uroboros Game Studio");
-		centerLabel.add(this.titleL, BorderLayout.CENTER);
+		titleL.setBounds(59, 121, 383, 30);
+		titleL.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		centerPanel.add(this.titleL);
 	}
 
 	private void initializaOpenProyectButton() {
 		this.openButton = new JButton("Abrir proyecto");
+		openButton.setBounds(261, 172, 129, 23);
 		this.openButton.setEnabled(false);
-		southPanel.add(this.openButton, BorderLayout.EAST);
+		centerPanel.add(this.openButton);
 	}
 
 	private void initializeCreateProyectButton() {
 		this.createButton = new JButton("Crear proyecto nuevo");
+		createButton.setBounds(69, 172, 162, 23);
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 //				model.createNewProyect();
@@ -139,35 +147,20 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 //				dispose();
 			}
 		});
-		southPanel.add(this.createButton, BorderLayout.WEST);
-	}
-
-	private void initializeNorthImgPanel() {
-		northImg = new JPanel(new BorderLayout());
-		centerPanel.add(northImg, BorderLayout.NORTH);
-	}
-
-	private void initializeCenterLabelPanel() {
-		centerLabel = new JPanel();
-		centerPanel.add(centerLabel, BorderLayout.CENTER);
-	}
-
-	private void initializeSouthButtonsPanel() {
-		southPanel = new JPanel();
-		centerPanel.add(southPanel, BorderLayout.SOUTH);
+		centerPanel.add(this.createButton);
 	}
 
 	private void initializeCenterPanel() {
-		centerPanel = new JPanel(new BorderLayout());
-		centerPanel.setPreferredSize(this.dimension);
+		centerPanel = new JPanel();
+		centerPanel.setLayout(null);
+		centerPanel.setPreferredSize(new Dimension(120, 170));
 		centerPanel.setBackground(Color.white);
-		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
-		
+		this.frame.add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
-		this.frame.getContentPane().setLayout(new BorderLayout());
+		this.frame.setLayout(new BorderLayout());
 		this.frame.setSize(this.dimension);
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
@@ -178,47 +171,25 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		this.frame.addComponentListener(this);
 	}
 
-	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowActivated(WindowEvent arg0) {	}
 
-	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowClosed(WindowEvent arg0) { }
 
-	public void windowClosing(WindowEvent arg0) {
-		System.exit(0);
-	}
+	public void windowClosing(WindowEvent arg0) { System.exit(0); }
 
-	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowDeactivated(WindowEvent arg0) { }
 
-	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowDeiconified(WindowEvent arg0) { }
 
-	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowIconified(WindowEvent arg0) {	}
 
-	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void windowOpened(WindowEvent arg0) { }
 
-	public void componentHidden(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void componentHidden(ComponentEvent arg0) { }
 
-	public void componentMoved(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void componentMoved(ComponentEvent arg0) { }
 
-	public void componentResized(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void componentResized(ComponentEvent arg0) { }
 
-	public void componentShown(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void componentShown(ComponentEvent arg0) { }
 }
