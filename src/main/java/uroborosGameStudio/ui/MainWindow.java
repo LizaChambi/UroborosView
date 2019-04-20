@@ -35,7 +35,7 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	private JLabel titleL;
 	private JLabel iconL;
 	
-	protected MainWindowModel model = new MainWindowModel();
+	private MainWindowModel model = new MainWindowModel();
 
 	public static void main(String[] args) { new MainWindow().run(); }
 
@@ -85,8 +85,8 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
-				EditorWindow mw = new EditorWindow(model);
-				mw.OpenWindow(model);
+				EditorWindow editor = new EditorWindow(model);
+				editor.OpenWindow(model);
 				frame.dispose();
 			}
 		});
@@ -98,12 +98,12 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 		centerPanel.setLayout(null);
 		centerPanel.setPreferredSize(new Dimension(120, 170));
 		centerPanel.setBackground(Color.white);
-		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
+		this.frame.add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
-		this.frame.getContentPane().setLayout(new BorderLayout());
+		this.frame.setLayout(new BorderLayout());
 		this.frame.setSize(this.dimension);
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
