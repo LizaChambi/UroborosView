@@ -67,7 +67,8 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		new EditorWindow(model).run();
 	}
 
-	public EditorWindow(MainWindowModel model) {
+	public EditorWindow(MainWindowModel model) 
+	{
 		this.initializeFrame(model);
 		
 		this.initializeNorthPanel();
