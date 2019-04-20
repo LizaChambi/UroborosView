@@ -58,4 +58,12 @@ public class UGSProject
 	{
 		this.scenes.add(newScene);
 	}
+
+	@Override
+	public String toString() 
+	{
+		return this.gameTitle;
+	}
+	
+	
 }
