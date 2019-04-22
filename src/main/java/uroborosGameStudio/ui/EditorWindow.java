@@ -3,8 +3,8 @@ package uroborosGameStudio.ui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Color.*;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -29,20 +28,19 @@ import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
 
 public class EditorWindow implements Runnable, WindowListener, ComponentListener {
 
 	MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
-	JTextPane txtName = new JTextPane();
 	
 	private JFrame frame;
-	private Canvas canvas;
+	private Canvas canvas = new Canvas();
 	private String title = "Uroboros Game Studio";
-	private Integer width = 1680;
-	private Integer height = 1024;
-	private Dimension dimension = new Dimension(width, height);
+	private Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
 	private boolean resizable = true;
 	private JPanel northPanel;
 	private JPanel centerPanel;
@@ -58,15 +56,17 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private JTree treeScenes = new JTree();
 	private JButton actorButton;
 	private JButton saveButton;
-	private JTextField textField;
+	private JTextField nameTF = new JTextField("");
 	private JLabel config;
 	private JLabel nombre;
+	private JButton btnEditName;
 
 	public static void OpenWindow(MainWindowModel model) {
 		new EditorWindow(model).run();
 	}
 
-	public EditorWindow(MainWindowModel model) {
+	public EditorWindow(MainWindowModel model) 
+	{
 		this.initializeFrame(model);
 		
 		this.initializeNorthPanel();
@@ -90,10 +90,11 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.initializeNewActorButton();
 		this.initializeSaveButton();
 	}
-
-	private void initializeSaveButton() {
+	
+	private void initializeSaveButton() 
+	{
 		this.saveButton = new JButton("Guardar");
-		saveButton.setBounds(500, 155, 97, 23);
+		saveButton.setBounds(500, 50, 97, 23);
 		saveButton.setEnabled(false);
 		northPanel.add(saveButton);
 	}
@@ -106,7 +107,7 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 				setItemSelectComboBox(e);
 			}
 		});
-		actorButton.setBounds(350, 155, 116, 23);
+		actorButton.setBounds(350, 50, 116, 23);
 		northPanel.add(actorButton);
 	}
 
@@ -120,7 +121,7 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		comboBox.addItem(pelota);
 		comboBox.addItem(piso);
 		
-		comboBox.setBounds(200, 155, 116, 23);
+		comboBox.setBounds(200, 50, 116, 23);
 		northPanel.add(comboBox);
 	}
 
@@ -131,31 +132,42 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 				addScene(e);
 			}
 		});
-		sceneButton.setBounds(10, 155, 134, 23);
+		sceneButton.setBounds(10, 50, 134, 23);
 		northPanel.add(sceneButton);
 	}
 
 	private void initializeCanvas() {
-		this.canvas = new Canvas();
+		//this.canvas = new Canvas();
+		this.canvas.setIgnoreRepaint(true);
+		this.canvas.setFocusable(true);
+		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
-		this.playPanel.add(canvas);
+		this.playPanel.add(this.canvas);
 	}
 	
 	private void initializePlayPanel() {
 		playPanel = new JPanel(new BorderLayout());
-		playPanel.setPreferredSize(new Dimension(width-880, height-424));
+		playPanel.setPreferredSize(new Dimension(resolution.width-880, resolution.height-424));
 		this.treePlayPanel.add(playPanel, BorderLayout.CENTER);
 	}
 	
 	private void initializeCodeTextArea() {
-		textArea.setText("Soy el nuevo editor de texto... ;D");
+		textArea.setText("Editor de texto...");
 	}
 
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
-		scroollPanel.setPreferredSize(new Dimension(440, height-424));
-		
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getGameTitle());
+		scroollPanel.setPreferredSize(new Dimension(300, 250));
+		DefaultMutableTreeNode root = createTreeNode();
+		DefaultTreeModel tree = new DefaultTreeModel(root);
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF));
+		treeScenes.setModel(tree);
+		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
+	}
+	
+	private DefaultMutableTreeNode createTreeNode() 
+	{
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
 		for (int i=0; i < model.cantScenes(); i++)
 		{
 			Scene scene = model.getSceneIn(i);
@@ -169,15 +181,13 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 			}
 			root.add(child1);
 		}
-		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.setModel(tree);
-		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
+		return root;
 	}
-	
+
 	private void initializeEditorPanel() {
 		editorPanel = new JPanel();
 		editorPanel.setLayout(null);
-		editorPanel.setPreferredSize(new Dimension(width-440, height-800));
+		editorPanel.setPreferredSize(new Dimension(800, 250));
 		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
 		
 		this.config = new JLabel("Panel de Configuraci\u00F3n:");
@@ -185,43 +195,48 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		editorPanel.add(config);
 		
 		this.nombre = new JLabel("Nombre: ");
-		nombre.setBounds(28, 61, 72, 23);
+		nombre.setBounds(28, 60, 72, 23);
 		editorPanel.add(nombre);
+		nameTF.setToolTipText("");
 		
-		textField = new JTextField("un Nombre");
-		textField.setBounds(110, 62, 86, 23);
-		editorPanel.add(textField);
-		textField.setColumns(10);
+		nameTF.setBounds(110, 62, 100, 23);
+		editorPanel.add(nameTF);
+		nameTF.setColumns(10);
+		
+		this.btnEditName = new JButton("Editar");
+		btnEditName.setBounds(230, 62, 100, 23);
+		btnEditName.addActionListener(new btnEditNameAL(treeScenes,nameTF));
+		editorPanel.add(btnEditName);
 	}
 
 	private void initializeTreePlayPanel() {
 		treePlayPanel = new JPanel(new BorderLayout());
-		treePlayPanel.setPreferredSize(new Dimension(width-440, height-424));
+		treePlayPanel.setPreferredSize(new Dimension(200, 550));
 		this.gameEditorPanel.add(treePlayPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeGameEditorPanel() {
 		gameEditorPanel = new JPanel(new BorderLayout());
-		gameEditorPanel.setPreferredSize(new Dimension(width-440, height-200));
+		gameEditorPanel.setPreferredSize(new Dimension(resolution.width-440, resolution.height-200));
 		this.centerPanel.add(gameEditorPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeTextPanel() {
 		eastPanel = new JScrollPane(this.textArea);
-		eastPanel.setPreferredSize(new Dimension(440, height-200));
+		eastPanel.setPreferredSize(new Dimension(440, resolution.height-200));
 		this.centerPanel.add(eastPanel, BorderLayout.EAST);
 	}
 
 	private void initializeCenterPanel() {
 		centerPanel = new JPanel(new BorderLayout());
-		centerPanel.setPreferredSize(new Dimension(width, height-200));
+		centerPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-200));
 		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeNorthPanel() {
 		northPanel = new JPanel();
 		northPanel.setLayout(null);
-		northPanel.setPreferredSize(new Dimension(width, 200));
+		northPanel.setPreferredSize(new Dimension(1366, 100) );
 		this.frame.getContentPane().add(northPanel, BorderLayout.NORTH);
 	}
 
@@ -229,9 +244,11 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.model = model;
 		this.frame = new JFrame(this.title);
 		this.frame.getContentPane().setLayout(new BorderLayout());
-		this.frame.setSize(this.dimension);
-		this.frame.setPreferredSize(this.dimension);
-		this.frame.setMinimumSize(this.dimension);
+		// this.frame.setSize(this.dimension);
+		this.frame.setPreferredSize(this.resolution);
+		this.frame.setMinimumSize(new Dimension(800,600));
+		
+		this.frame.setMinimumSize(this.resolution);
 		this.frame.setVisible(false);
 		this.frame.setResizable(resizable);
 		this.frame.setLocationRelativeTo(null);
