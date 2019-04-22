@@ -6,10 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,16 +15,8 @@ import javax.swing.JPanel;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class MainWindow implements Runnable, WindowListener, ComponentListener {
+public class MainWindow extends AbstractWindowFrame {
 
-	JFrame frame;
-	String title = "Uroboros Game Studio";
-
-	Integer width = 500;
-	Integer height = 350;
-	Dimension dimension = new Dimension(width, height);
-	Boolean resizable = true;
-	
 	private JPanel centerPanel;
 	private JButton createButton;
 	private JButton openButton;
@@ -37,17 +25,16 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	
 	private MainWindowModel model = new MainWindowModel();
 
-	public static void main(String[] args) { new MainWindow().run(); }
-
-	public void run() {	this.open(); }
-
-	private void open() {
-		if (!this.frame.isVisible()) {
-			this.frame.setVisible(true);
-		}
+	public static void main(String[] args) { 
+		new MainWindow().run(); 
 	}
 
 	public MainWindow() {
+		super();
+		this.setWidth(500);
+		this.setHeight(350);
+		this.setResolution(new Dimension(width, height));
+		
 		this.initializeFrame();
 		this.initializeCenterPanel();
 		
@@ -102,37 +89,10 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	}
 
 	private void initializeFrame() {
-		this.frame = new JFrame(this.title);
-		this.frame.setLayout(new BorderLayout());
-//		this.frame.setSize(this.dimension);
-		this.frame.setPreferredSize(this.dimension);
-		this.frame.setMinimumSize(this.dimension);
-		this.frame.setVisible(false);
-		this.frame.setResizable(false); // default true
+		this.frame.setPreferredSize(this.resolution);
+		this.frame.setMinimumSize(this.resolution);
+		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
-		this.frame.addWindowListener(this);
-		this.frame.addComponentListener(this);
 	}
 
-	public void windowActivated(WindowEvent arg0) {	}
-
-	public void windowClosed(WindowEvent arg0) { }
-
-	public void windowClosing(WindowEvent arg0) { System.exit(0); }
-
-	public void windowDeactivated(WindowEvent arg0) { }
-
-	public void windowDeiconified(WindowEvent arg0) { }
-
-	public void windowIconified(WindowEvent arg0) {	}
-
-	public void windowOpened(WindowEvent arg0) { }
-
-	public void componentHidden(ComponentEvent arg0) { }
-
-	public void componentMoved(ComponentEvent arg0) { }
-
-	public void componentResized(ComponentEvent arg0) { }
-
-	public void componentShown(ComponentEvent arg0) { }
 }

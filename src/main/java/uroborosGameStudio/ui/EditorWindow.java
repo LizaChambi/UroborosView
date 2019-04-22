@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -214,21 +215,22 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private void initializeCenterPanel() {
 		centerPanel = new JPanel(new BorderLayout());
 		centerPanel.setPreferredSize(new Dimension(width, height-200));
-		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
+		this.frame.add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeNorthPanel() {
 		northPanel = new JPanel();
 		northPanel.setLayout(null);
 		northPanel.setPreferredSize(new Dimension(width, 200));
-		this.frame.getContentPane().add(northPanel, BorderLayout.NORTH);
+		this.frame.add(northPanel, BorderLayout.NORTH);
 	}
 
 	private void initializeFrame(MainWindowModel model) {
 		this.model = model;
 		this.frame = new JFrame(this.title);
-		this.frame.getContentPane().setLayout(new BorderLayout());
+		this.frame.setLayout(new BorderLayout());
 //		this.frame.setSize(this.dimension);
+		System.out.println(Toolkit.getDefaultToolkit().getScreenSize());
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
 		this.frame.setVisible(false);

@@ -11,11 +11,11 @@ import javax.swing.JFrame;
 
 public class AbstractWindowFrame implements Runnable, WindowListener, ComponentListener {
 
-	private JFrame frame;
-	private String title = "Uroboros Game Studio";
-	private Integer width = 0;
-	private Integer height = 0;
-	private Dimension resolution = new Dimension(width, height);
+	JFrame frame;
+	String title = "Uroboros Game Studio";
+	Integer width = 0;
+	Integer height = 0;
+	Dimension resolution = new Dimension(width, height);
 	private boolean resizable = true;
 
 	public static void main(String[] args) { new AbstractWindowFrame().run(); }
@@ -31,7 +31,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(this.resolution);
 		this.frame.setVisible(false);
-		this.frame.setResizable(this.resizable);
+		this.frame.setResizable(this.resizable); // default true
 		this.frame.setLocationRelativeTo(null);
 		this.frame.addWindowListener(this);
 		this.frame.addComponentListener(this);
@@ -43,6 +43,30 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 		if(!this.frame.isVisible()) {
 			this.frame.setVisible(true);
 		}
+	}
+
+	public Integer getWidth() {
+		return width;
+	}
+
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Dimension getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(Dimension resolution) {
+		this.resolution = resolution;
 	}
 
 	public void componentResized(ComponentEvent e) { }
