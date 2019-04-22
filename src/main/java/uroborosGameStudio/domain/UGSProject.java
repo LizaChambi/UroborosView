@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UGSProject 
 {
 	private String gameTitle;
@@ -17,7 +18,7 @@ public class UGSProject
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<Scene>();
-		this.getScenes().add(new Scene("Escena0"));
+		this.scenes.add(new Scene("Escena0"));
 	}
 	
 	public String getPath()
@@ -57,5 +58,16 @@ public class UGSProject
 	public void addScene(Scene newScene) 
 	{
 		this.scenes.add(newScene);
+	}
+
+	@Override
+	public String toString() 
+	{
+		return this.gameTitle;
+	}
+
+	public void setTitle(String newTitle) 
+	{
+		this.gameTitle = newTitle;
 	}
 }
