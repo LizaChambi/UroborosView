@@ -1,4 +1,4 @@
-package uroborosGameStudio.ui.components;
+package uroborosGameStudio.ui.componentListeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

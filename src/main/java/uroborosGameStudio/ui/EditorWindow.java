@@ -28,8 +28,8 @@ import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.components.SceneTreePanelTSL;
-import uroborosGameStudio.ui.components.btnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
 
 public class EditorWindow implements Runnable, WindowListener, ComponentListener {
 

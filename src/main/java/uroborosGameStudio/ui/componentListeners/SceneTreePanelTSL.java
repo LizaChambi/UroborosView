@@ -1,4 +1,4 @@
-package uroborosGameStudio.ui.components;
+package uroborosGameStudio.ui.componentListeners;
 
 import javax.swing.JTextField;
 import javax.swing.JTree;
