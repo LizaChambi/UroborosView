@@ -3,7 +3,6 @@ package uroborosGameStudio.ui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Color.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -30,17 +28,17 @@ import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.components.DirectoryTreePanelTSL;
+import uroborosGameStudio.ui.components.SceneTreePanelTSL;
+import uroborosGameStudio.ui.components.btnEditNameAL;
 
 public class EditorWindow implements Runnable, WindowListener, ComponentListener {
 
 	MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
-	JTextPane txtName = new JTextPane();
 	
 	private JFrame frame;
-	private Canvas canvas;
+	private Canvas canvas = new Canvas();
 	private String title = "Uroboros Game Studio";
 	private Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
 	private boolean resizable = true;
@@ -58,10 +56,10 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private JTree treeScenes = new JTree();
 	private JButton actorButton;
 	private JButton saveButton;
-	private JTextField textField = new JTextField("");
+	private JTextField nameTF = new JTextField("");
 	private JLabel config;
 	private JLabel nombre;
-	private JButton editNameButton;
+	private JButton btnEditName;
 
 	public static void OpenWindow(MainWindowModel model) {
 		new EditorWindow(model).run();
@@ -92,8 +90,9 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.initializeNewActorButton();
 		this.initializeSaveButton();
 	}
-
-	private void initializeSaveButton() {
+	
+	private void initializeSaveButton() 
+	{
 		this.saveButton = new JButton("Guardar");
 		saveButton.setBounds(500, 50, 97, 23);
 		saveButton.setEnabled(false);
@@ -138,9 +137,12 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	}
 
 	private void initializeCanvas() {
-		this.canvas = new Canvas();
+		//this.canvas = new Canvas();
+		this.canvas.setIgnoreRepaint(true);
+		this.canvas.setFocusable(true);
+		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
-		this.playPanel.add(canvas);
+		this.playPanel.add(this.canvas);
 	}
 	
 	private void initializePlayPanel() {
@@ -156,7 +158,15 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
 		scroollPanel.setPreferredSize(new Dimension(300, 250));
-		
+		DefaultMutableTreeNode root = createTreeNode();
+		DefaultTreeModel tree = new DefaultTreeModel(root);
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF));
+		treeScenes.setModel(tree);
+		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
+	}
+	
+	private DefaultMutableTreeNode createTreeNode() 
+	{
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
 		for (int i=0; i < model.cantScenes(); i++)
 		{
@@ -171,12 +181,9 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 			}
 			root.add(child1);
 		}
-		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.setModel(tree);
-		treeScenes.addTreeSelectionListener(new DirectoryTreePanelTSL(treeScenes,textField));
-		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
+		return root;
 	}
-	
+
 	private void initializeEditorPanel() {
 		editorPanel = new JPanel();
 		editorPanel.setLayout(null);
@@ -190,15 +197,16 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.nombre = new JLabel("Nombre: ");
 		nombre.setBounds(28, 60, 72, 23);
 		editorPanel.add(nombre);
-		textField.setToolTipText("");
+		nameTF.setToolTipText("");
 		
-		textField.setBounds(110, 62, 100, 23);
-		editorPanel.add(textField);
-		textField.setColumns(10);
+		nameTF.setBounds(110, 62, 100, 23);
+		editorPanel.add(nameTF);
+		nameTF.setColumns(10);
 		
-		this.editNameButton = new JButton("Editar");
-		editNameButton.setBounds(230, 62, 100, 23);
-		editorPanel.add(editNameButton);
+		this.btnEditName = new JButton("Editar");
+		btnEditName.setBounds(230, 62, 100, 23);
+		btnEditName.addActionListener(new btnEditNameAL(treeScenes,nameTF));
+		editorPanel.add(btnEditName);
 	}
 
 	private void initializeTreePlayPanel() {

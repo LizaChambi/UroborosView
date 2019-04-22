@@ -10,12 +10,12 @@ import uroborosGameStudio.domain.Actor;
 import uroborosGameStudio.domain.Scene;
 import uroborosGameStudio.domain.UGSProject;
 
-public class DirectoryTreePanelTSL implements TreeSelectionListener 
+public class SceneTreePanelTSL implements TreeSelectionListener 
 {
 	private JTree treeScenes;
 	private JTextField textField;
 	
-	public DirectoryTreePanelTSL(JTree treeScenes, JTextField textField) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField) 
 	{
 		this.treeScenes = treeScenes;
 		this.textField = textField;
@@ -29,6 +29,7 @@ public class DirectoryTreePanelTSL implements TreeSelectionListener
 		if(selectedNode.getUserObject().getClass() == UGSProject.class)
 		{
 			UGSProject obj = (UGSProject) selectedNode.getUserObject();
+			
 			textField.setText(obj.getGameTitle());
 			/* Cada contenido de un if debe invocar a un metodo que diga todo lo que cambia al...
 			 * seleccionar ese objeto. Las cuales son:
@@ -41,6 +42,7 @@ public class DirectoryTreePanelTSL implements TreeSelectionListener
 			 *  						txtDimY.setText(obj.getY());
 			 *  	bindImage() => txtImagePath.setText(obj.getPathImage());
 			 */
+	
 		}
 		if(selectedNode.getUserObject().getClass() == Scene.class)
 		{
@@ -52,6 +54,7 @@ public class DirectoryTreePanelTSL implements TreeSelectionListener
 			Actor obj = (Actor) selectedNode.getUserObject();
 			textField.setText(obj.getName());
 		}	
+		
 	}
 
 }
