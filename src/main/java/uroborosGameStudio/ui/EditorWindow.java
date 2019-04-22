@@ -3,7 +3,6 @@ package uroborosGameStudio.ui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Color.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -35,7 +33,6 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
-	JTextPane txtName = new JTextPane();
 	
 	private JFrame frame;
 	private Canvas canvas;
@@ -89,6 +86,8 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.initializeComboBox();
 		this.initializeNewActorButton();
 		this.initializeSaveButton();
+		
+		this.frame.pack();
 	}
 
 	private void initializeSaveButton() {
@@ -229,7 +228,7 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.model = model;
 		this.frame = new JFrame(this.title);
 		this.frame.getContentPane().setLayout(new BorderLayout());
-		this.frame.setSize(this.dimension);
+//		this.frame.setSize(this.dimension);
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
 		this.frame.setVisible(false);

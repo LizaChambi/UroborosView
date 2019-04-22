@@ -104,7 +104,7 @@ public class MainWindow implements Runnable, WindowListener, ComponentListener {
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
 		this.frame.setLayout(new BorderLayout());
-		this.frame.setSize(this.dimension);
+//		this.frame.setSize(this.dimension);
 		this.frame.setPreferredSize(this.dimension);
 		this.frame.setMinimumSize(this.dimension);
 		this.frame.setVisible(false);
