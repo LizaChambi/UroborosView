@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -73,7 +72,7 @@ public class MainWindow extends AbstractWindowFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
 				EditorWindow editor = new EditorWindow(model);
-				editor.OpenWindow(model);
+				editor.main();
 				frame.dispose();
 			}
 		});

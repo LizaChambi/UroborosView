@@ -45,29 +45,21 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 		}
 	}
 
-	public Integer getWidth() {
-		return width;
-	}
+	public boolean isResizable() { return resizable; }
 
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
+	public void setResizable(boolean resizable) { this.resizable = resizable; }
 
-	public Integer getHeight() {
-		return height;
-	}
+	public Integer getWidth() {	return width; }
 
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
+	public void setWidth(Integer width) { this.width = width; }
 
-	public Dimension getResolution() {
-		return resolution;
-	}
+	public Integer getHeight() { return height;	}
 
-	public void setResolution(Dimension resolution) {
-		this.resolution = resolution;
-	}
+	public void setHeight(Integer height) { this.height = height; }
+
+	public Dimension getResolution() { return resolution; }
+
+	public void setResolution(Dimension resolution) { this.resolution = resolution; }
 
 	public void componentResized(ComponentEvent e) { }
 

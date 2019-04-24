@@ -8,9 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,17 +29,14 @@ import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
 
-public class EditorWindow implements Runnable, WindowListener, ComponentListener {
+public class EditorWindow extends AbstractWindowFrame {
 
 	MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
 	
-	private JFrame frame;
 	private Canvas canvas = new Canvas();
-	private String title = "Uroboros Game Studio";
 	private Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
-	private boolean resizable = true;
 	private JPanel northPanel;
 	private JPanel centerPanel;
 	private JScrollPane eastPanel;
@@ -61,13 +56,12 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private JLabel nombre;
 	private JButton btnEditName;
 
-	public static void OpenWindow(MainWindowModel model) {
-		new EditorWindow(model).run();
-	}
+	public void main() { run();	}
 
-	public EditorWindow(MainWindowModel model) 
-	{
-		this.initializeFrame(model);
+	public EditorWindow(MainWindowModel model) {
+		super();
+		this.model = model;
+		this.initializeFrame();
 		
 		this.initializeNorthPanel();
 		this.initializeCenterPanel();
@@ -93,8 +87,14 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.frame.pack();
 	}
 	
-	private void initializeSaveButton() 
-	{
+	private void initializeFrame() {
+		System.out.println(Toolkit.getDefaultToolkit().getScreenSize());
+		this.frame.setPreferredSize(this.resolution);
+		this.frame.setMinimumSize(new Dimension(800,600));
+		this.frame.setLocationRelativeTo(null);
+	}
+	
+	private void initializeSaveButton() {
 		this.saveButton = new JButton("Guardar");
 		saveButton.setBounds(500, 50, 97, 23);
 		saveButton.setEnabled(false);
@@ -242,19 +242,7 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.frame.add(northPanel, BorderLayout.NORTH);
 	}
 
-	private void initializeFrame(MainWindowModel model) {
-		this.model = model;
-		this.frame = new JFrame(this.title);
-		this.frame.setLayout(new BorderLayout());
-		System.out.println(Toolkit.getDefaultToolkit().getScreenSize());
-		this.frame.setPreferredSize(this.resolution);
-		this.frame.setMinimumSize(new Dimension(800,600));
-		this.frame.setVisible(false);
-		this.frame.setResizable(resizable);
-		this.frame.setLocationRelativeTo(null);
-		this.frame.addWindowListener(this);
-		this.frame.addComponentListener(this);
-	}
+	
 
 	protected void addScene(ActionEvent e) 
 	{
@@ -288,6 +276,12 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		}
 	}
 	
+	protected void setItemSelectComboBox(ActionEvent e) 
+	{
+		Actor actor = (Actor) comboBox.getSelectedItem();
+		canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
+	}
+
 	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
 	 * 
 	protected void removeNode(ActionEvent e) 
@@ -300,39 +294,5 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		}
 	}
 	*/
-	protected void setItemSelectComboBox(ActionEvent e) 
-	{
-			Actor actor = (Actor) comboBox.getSelectedItem();
-			canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
-	}
 
-	public void run() {	this.open(); }
-
-	private void open() {
-		if (!this.frame.isVisible()) {
-			this.frame.setVisible(true);
-		}
-	}
-
-	public void windowActivated(WindowEvent arg0) {	}
-
-	public void windowClosed(WindowEvent arg0) { }
-
-	public void windowClosing(WindowEvent arg0) { System.exit(0); }
-
-	public void windowDeactivated(WindowEvent arg0) { }
-
-	public void windowDeiconified(WindowEvent arg0) { }
-
-	public void windowIconified(WindowEvent arg0) {	}
-
-	public void windowOpened(WindowEvent arg0) { }
-
-	public void componentHidden(ComponentEvent arg0) { }
-
-	public void componentMoved(ComponentEvent arg0) { }
-
-	public void componentResized(ComponentEvent arg0) {	}
-
-	public void componentShown(ComponentEvent arg0) { }
 }
