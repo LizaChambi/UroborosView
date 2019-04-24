@@ -7,12 +7,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,6 +25,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.btnPlayAL;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -55,6 +53,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JLabel config;
 	private JLabel nombre;
 	private JButton btnEditName;
+	private JButton btnPlay;
 
 	public void main() { run();	}
 
@@ -83,8 +82,17 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeComboBox();
 		this.initializeNewActorButton();
 		this.initializeSaveButton();
-		
+		this.initializePlayButton();
+
 		this.frame.pack();
+	}
+	
+	private void initializePlayButton() 
+	{
+		this.btnPlay = new JButton("Play");
+		btnPlay.setBounds(650, 50, 97, 23);
+		btnPlay.addActionListener(new btnPlayAL(canvas));
+		northPanel.add(btnPlay);
 	}
 	
 	private void initializeFrame() {
