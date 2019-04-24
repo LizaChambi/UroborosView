@@ -30,6 +30,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.btnPlayAL;
 
 public class EditorWindow implements Runnable, WindowListener, ComponentListener {
 
@@ -60,6 +61,7 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 	private JLabel config;
 	private JLabel nombre;
 	private JButton btnEditName;
+	private JButton btnPlay;
 
 	public static void OpenWindow(MainWindowModel model) {
 		new EditorWindow(model).run();
@@ -89,6 +91,15 @@ public class EditorWindow implements Runnable, WindowListener, ComponentListener
 		this.initializeComboBox();
 		this.initializeNewActorButton();
 		this.initializeSaveButton();
+		this.initializePlayButton();
+	}
+	
+	private void initializePlayButton() 
+	{
+		this.btnPlay = new JButton("Play");
+		btnPlay.setBounds(650, 50, 97, 23);
+		btnPlay.addActionListener(new btnPlayAL(canvas));
+		northPanel.add(btnPlay);
 	}
 	
 	private void initializeSaveButton() 

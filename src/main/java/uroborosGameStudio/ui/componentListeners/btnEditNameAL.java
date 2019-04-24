@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -23,7 +22,6 @@ public class btnEditNameAL implements ActionListener
 		this.textField = textField;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
