@@ -6,8 +6,10 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Scene;
+import org.team.uroboros.uroboros.engine.Game;
+
+import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
 public class SceneTreePanelTSL implements TreeSelectionListener 
@@ -44,14 +46,15 @@ public class SceneTreePanelTSL implements TreeSelectionListener
 			 */
 	
 		}
-		if(selectedNode.getUserObject().getClass() == Scene.class)
+		if(selectedNode.getUserObject().getClass() == SceneWrapper.class)
 		{
-			Scene obj = (Scene) selectedNode.getUserObject();
+			SceneWrapper obj = (SceneWrapper) selectedNode.getUserObject();
 			textField.setText(obj.getName());
+			Game.setScene(obj.getName());
 		}
-		if(selectedNode.getUserObject().getClass() == Actor.class)
+		if(selectedNode.getUserObject().getClass() == ActorWrapper.class)
 		{
-			Actor obj = (Actor) selectedNode.getUserObject();
+			ActorWrapper obj = (ActorWrapper) selectedNode.getUserObject();
 			textField.setText(obj.getName());
 		}	
 		

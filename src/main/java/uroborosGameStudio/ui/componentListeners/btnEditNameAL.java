@@ -7,8 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Scene;
+import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
 public class btnEditNameAL implements ActionListener 
@@ -31,14 +31,14 @@ public class btnEditNameAL implements ActionListener
 			UGSProject obj = (UGSProject) selectedNode.getUserObject();
 			obj.setTitle(textField.getText());
 		}
-		if(selectedNode.getUserObject().getClass() == Scene.class)
+		if(selectedNode.getUserObject().getClass() == SceneWrapper.class)
 		{
-			Scene obj = (Scene) selectedNode.getUserObject();
+			SceneWrapper obj = (SceneWrapper) selectedNode.getUserObject();
 			obj.setName(textField.getText());
 		}
-		if(selectedNode.getUserObject().getClass() == Actor.class)
+		if(selectedNode.getUserObject().getClass() == ActorWrapper.class)
 		{
-			Actor obj = (Actor) selectedNode.getUserObject();
+			ActorWrapper obj = (ActorWrapper) selectedNode.getUserObject();
 			obj.setName(textField.getText());
 		}
 		treeScenes.updateUI();

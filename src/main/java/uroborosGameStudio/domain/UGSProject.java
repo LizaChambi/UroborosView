@@ -4,21 +4,29 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.team.uroboros.uroboros.engine.Game;
+
 
 public class UGSProject 
 {
 	private String gameTitle;
 	private String projectName;
 	private String path;
-	private List<Scene> scenes;
+	private List<SceneWrapper> scenes;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
 		this.gameTitle = gameName;
 		this.projectName = projectName;
 		createProjectDir();
-		this.scenes = new ArrayList<Scene>();
-		this.scenes.add(new Scene("Escena0"));
+		this.scenes = new ArrayList<SceneWrapper>();
+		createMainScene();
+	}
+
+	private void createMainScene() 
+	{
+		this.scenes.add(new SceneWrapper("Escena0"));
+		Game.createScene("Escena0");
 	}
 	
 	public String getPath()
@@ -26,7 +34,7 @@ public class UGSProject
 		return this.path;
 	}
 	
-	public List<Scene> getScenes()
+	public List<SceneWrapper> getScenes()
 	{
 		return this.scenes;
 	}	
@@ -55,7 +63,7 @@ public class UGSProject
 		return this.gameTitle;
 	}
 
-	public void addScene(Scene newScene) 
+	public void addScene(SceneWrapper newScene) 
 	{
 		this.scenes.add(newScene);
 	}

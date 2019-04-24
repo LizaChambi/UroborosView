@@ -8,26 +8,43 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Actor 
+public class ActorWrapper 
 {
 	public String name;
+	public String path;
 	public Point point;
 	public Dimension dimension;
 	public BufferedImage image;
 
-	public Actor(String name, String path, Integer x, Integer y, Integer width, Integer height) 
+	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) 
 	{
 		this.name = name;
+		this.path = path;
 		readImage(path);
 		this.point = new Point(x,y);
 		this.dimension = new Dimension (width, height);
+	}
+	
+	public double getRealWidth()
+	{
+		return this.image.getWidth();
+	}
+	
+	public double getRealHeight()
+	{
+		return this.image.getHeight();
+	}
+	
+	public String getPath()
+	{
+		return this.path;
 	}
 	
 	private void readImage(String path)
 	{
 		try 
 		{
-			this.image = ImageIO.read(new File(path));
+			this.image = ImageIO.read(new File("src/main/resources/" + path));
 		} 
 		catch (IOException e) 
 		{

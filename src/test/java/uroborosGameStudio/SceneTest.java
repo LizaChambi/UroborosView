@@ -6,17 +6,17 @@ import static org.junit.Assume.assumeTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Scene;
+import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.SceneWrapper;
 
 public class SceneTest 
 {
-	Scene scene;
+	SceneWrapper scene;
 	
 	@Before
 	public void setUp()
 	{
-		scene = new Scene("Scene0");
+		scene = new SceneWrapper("Scene0");
 	}
 	
 	@Test
@@ -29,8 +29,8 @@ public class SceneTest
 	@Test
 	public void testCreateSceneWithTwoActorsAndGetTheSecond()
 	{	
-		Actor actor0 = new Actor("Actor0", "images/kids.png", 12, 15, 59, 89);;
-		Actor actor1 = new Actor("Actor1", "images/kids.png", 12, 15, 59, 89);;
+		ActorWrapper actor0 = new ActorWrapper("Actor0", "images/kids.png", 12, 15, 59, 89);
+		ActorWrapper actor1 = new ActorWrapper("Actor1", "images/kids.png", 12, 15, 59, 89);
 		scene.addActor(actor0);
 		scene.addActor(actor1);
 		

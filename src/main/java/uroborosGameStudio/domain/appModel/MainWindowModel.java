@@ -1,7 +1,9 @@
 package uroborosGameStudio.domain.appModel;
 
-import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Scene;
+import org.team.uroboros.uroboros.engine.Game;
+
+import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
 public class MainWindowModel 
@@ -40,17 +42,18 @@ public class MainWindowModel
 		return project.getScenes().size();
 	}
 
-	public Scene getSceneIn(int index) 
+	public SceneWrapper getSceneIn(int index) 
 	{
 		return project.getScenes().get(index);
 	}
 
-	public void addScene(Scene newScene) 
+	public void addScene(SceneWrapper newScene) 
 	{
 		project.addScene(newScene);
+		Game.createScene(newScene.getName());
 	}
 
-	public void addActorToScene(Actor newActor, Scene scene) 
+	public void addActorToScene(ActorWrapper newActor, SceneWrapper scene) 
 	{
 		System.out.println(scene.getName());
 	}

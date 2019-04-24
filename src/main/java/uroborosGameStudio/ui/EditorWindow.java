@@ -19,8 +19,11 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import uroborosGameStudio.domain.Actor;
-import uroborosGameStudio.domain.Scene;
+import org.team.uroboros.uroboros.engine.Actor;
+import org.team.uroboros.uroboros.engine.Game;
+
+import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
@@ -42,7 +45,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel treePlayPanel;
 	private JPanel editorPanel;
 	private JTextArea textArea = new JTextArea(1, 1);
-	private JComboBox<Actor> comboBox;
+	private JComboBox<ActorWrapper> comboBox;
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JButton sceneButton;
@@ -122,11 +125,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeComboBox() {
-		Actor ninio = bdActors.getKids();
-		Actor pelota = bdActors.getBall();
-		Actor piso = bdActors.getFlow();
+		ActorWrapper ninio = bdActors.getKids();
+		ActorWrapper pelota = bdActors.getBall();
+		ActorWrapper piso = bdActors.getFlow();
 		
-		this.comboBox = new JComboBox<Actor>();
+		this.comboBox = new JComboBox<ActorWrapper>();
 		comboBox.addItem(ninio);
 		comboBox.addItem(pelota);
 		comboBox.addItem(piso);
@@ -180,7 +183,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
 		for (int i=0; i < model.cantScenes(); i++)
 		{
-			Scene scene = model.getSceneIn(i);
+			SceneWrapper scene = model.getSceneIn(i);
 			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
 			child1.setUserObject(scene);
 			for (int si=0; si<scene.cantActors();si++)
@@ -260,12 +263,13 @@ public class EditorWindow extends AbstractWindowFrame {
 			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 0)
 			{
-				Scene newScene = new Scene("Escena" + this.idScene);
+				SceneWrapper newScene = new SceneWrapper("Escena" + this.idScene);
 				this.model.addScene(newScene);
 				modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), lastNode, modelNode.getChildCount(lastNode));
 				this.idScene++;
 			}
 		}
+		
 	}
 	
 	protected void addActor(ActionEvent e) 
@@ -276,8 +280,8 @@ public class EditorWindow extends AbstractWindowFrame {
 			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 1)
 			{
-				Actor newActor = (Actor) comboBox.getSelectedItem();
-				Scene scene = (Scene) lastNode.getUserObject();
+				ActorWrapper newActor = (ActorWrapper) comboBox.getSelectedItem();
+				SceneWrapper scene = (SceneWrapper) lastNode.getUserObject();
 				scene.addActor(newActor);
 				modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), lastNode, modelNode.getChildCount(lastNode));
 			}
@@ -286,7 +290,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	protected void setItemSelectComboBox(ActionEvent e) 
 	{
-		Actor actor = (Actor) comboBox.getSelectedItem();
+		ActorWrapper actor = (ActorWrapper) comboBox.getSelectedItem();
 		canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
 	}
 
