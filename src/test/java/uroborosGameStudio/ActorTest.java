@@ -5,16 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import uroborosGameStudio.domain.Actor;
+import uroborosGameStudio.domain.ActorWrapper;
 
 public class ActorTest 
 {
-	Actor actor;
+	ActorWrapper actor;
 	
 	@Before
 	public void setUp()
 	{
-		actor = new Actor("Actor0", "images/kids.png", 12, 15, 59, 89);
+		actor = new ActorWrapper("Actor0", "images/kids.png", 12, 15, 59, 89);
 	}
 	
 	@Test
