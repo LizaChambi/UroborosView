@@ -1,7 +1,5 @@
 package uroborosGameStudio.domain.appModel;
 
-import org.team.uroboros.uroboros.engine.Game;
-
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
@@ -50,7 +48,6 @@ public class MainWindowModel
 	public void addScene(SceneWrapper newScene) 
 	{
 		project.addScene(newScene);
-		Game.createScene(newScene.getName());
 	}
 
 	public void addActorToScene(ActorWrapper newActor, SceneWrapper scene) 

@@ -66,6 +66,7 @@ public class UGSProject
 	public void addScene(SceneWrapper newScene) 
 	{
 		this.scenes.add(newScene);
+		Game.createScene(newScene.getName());
 	}
 
 	@Override

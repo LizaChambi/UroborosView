@@ -5,8 +5,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,15 +17,14 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import org.team.uroboros.uroboros.engine.Actor;
-import org.team.uroboros.uroboros.engine.Game;
-
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.btNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.btnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.btnPlayAL;
 
 public class EditorWindow extends AbstractWindowFrame {
@@ -112,14 +109,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		northPanel.add(saveButton);
 	}
 
-	private void initializeNewActorButton() {
+	private void initializeNewActorButton() 
+	{
 		this.actorButton = new JButton("Nuevo Actor");
-		actorButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addActor(e);
-				setItemSelectComboBox(e);
-			}
-		});
+		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas));
 		actorButton.setBounds(350, 50, 116, 23);
 		northPanel.add(actorButton);
 	}
@@ -140,11 +133,7 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeNewSceneButton() {
 		this.sceneButton = new JButton("Nueva Escena");
-		sceneButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addScene(e);
-			}
-		});
+		sceneButton.addActionListener(new btNewSceneAL(treeScenes, idScene));
 		sceneButton.setBounds(10, 50, 134, 23);
 		northPanel.add(sceneButton);
 	}
@@ -251,47 +240,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		northPanel.setLayout(null);
 		northPanel.setPreferredSize(new Dimension(resolution.width, 100) );
 		this.frame.add(northPanel, BorderLayout.NORTH);
-	}
-
-	
-
-	protected void addScene(ActionEvent e) 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
-		{
-			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
-			if(lastNode.getLevel() == 0)
-			{
-				SceneWrapper newScene = new SceneWrapper("Escena" + this.idScene);
-				this.model.addScene(newScene);
-				modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), lastNode, modelNode.getChildCount(lastNode));
-				this.idScene++;
-			}
-		}
-		
-	}
-	
-	protected void addActor(ActionEvent e) 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
-		{
-			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
-			if(lastNode.getLevel() == 1)
-			{
-				ActorWrapper newActor = (ActorWrapper) comboBox.getSelectedItem();
-				SceneWrapper scene = (SceneWrapper) lastNode.getUserObject();
-				scene.addActor(newActor);
-				modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), lastNode, modelNode.getChildCount(lastNode));
-			}
-		}
-	}
-	
-	protected void setItemSelectComboBox(ActionEvent e) 
-	{
-		ActorWrapper actor = (ActorWrapper) comboBox.getSelectedItem();
-		canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
 	}
 
 	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
