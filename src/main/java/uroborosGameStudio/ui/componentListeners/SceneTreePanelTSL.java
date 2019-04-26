@@ -9,22 +9,26 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.Scene;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class SceneTreePanelTSL implements TreeSelectionListener 
 {
 	private JTree treeScenes;
 	private JTextField textField;
 	private Canvas canvas;
+	private MainWindowModel model;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model) 
 	{
 		this.treeScenes = treeScenes;
 		this.textField = textField;
 		this.canvas = canvas;
+		this.model = model;
 	}
 
 	public void valueChanged(TreeSelectionEvent e) 
@@ -60,7 +64,9 @@ public class SceneTreePanelTSL implements TreeSelectionListener
 		{
 			ActorWrapper actorWpp = (ActorWrapper) selectedNode.getUserObject();
 			textField.setText(actorWpp.getName());
-			
+			Scene selectedScene = Game.getSceneWithActor(actorWpp.getName());
+			Game.setScene(selectedScene);
+			setCanvas(model.searchScene(selectedScene.getName()));
 		}	
 	}
 

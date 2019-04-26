@@ -43,7 +43,7 @@ public class MainWindow extends AbstractWindowFrame {
 
 	private void initializeImgIcon() {
 		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.jpg"));
-		iconL.setBounds(219, 60, 50, 50);
+		iconL.setBounds(219, 60, 60, 60);
 		centerPanel.add(this.iconL);
 	}
 

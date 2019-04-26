@@ -107,6 +107,11 @@ public class SceneWrapper
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
 	}
+
+	public Boolean hasName(String name2) 
+	{
+		return name == name2;
+	}
 	
 	
 }

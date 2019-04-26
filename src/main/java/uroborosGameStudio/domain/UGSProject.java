@@ -79,4 +79,17 @@ public class UGSProject
 	{
 		this.gameTitle = newTitle;
 	}
+
+	public SceneWrapper searchScene(String name) 
+	{
+		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
