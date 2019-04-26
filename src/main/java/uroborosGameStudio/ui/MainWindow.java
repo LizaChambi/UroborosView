@@ -21,14 +21,11 @@ public class MainWindow extends AbstractWindowFrame {
 	private JButton openButton;
 	private JLabel titleL;
 	private JLabel iconL;
-	
-	MainWindowModel model;
 
 	public void main() { run(); }
 
 	public MainWindow(MainWindowModel model) {
-		super();
-		this.model = model;
+		super(model);
 		this.setWidth(500);
 		this.setHeight(350);
 		this.setResolution(new Dimension(width, height));
@@ -46,7 +43,7 @@ public class MainWindow extends AbstractWindowFrame {
 
 	private void initializeImgIcon() {
 		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.jpg"));
-		iconL.setBounds(219, 60, 50, 50);
+		iconL.setBounds(219, 60, 60, 60);
 		centerPanel.add(this.iconL);
 	}
 
@@ -70,7 +67,7 @@ public class MainWindow extends AbstractWindowFrame {
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
-				new EditorWindow(model).main();
+				new EditorWindow(getModelObject()).main();
 				frame.dispose();
 			}
 		});

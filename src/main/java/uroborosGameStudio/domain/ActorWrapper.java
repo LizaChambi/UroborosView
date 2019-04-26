@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.team.uroboros.uroboros.engine.Game;
+
 public class ActorWrapper 
 {
 	public String name;
@@ -85,6 +87,7 @@ public class ActorWrapper
 
 	public void setName(String newName) 
 	{
+		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
 	

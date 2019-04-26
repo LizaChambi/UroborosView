@@ -5,14 +5,11 @@ import uroborosGameStudio.ui.MainWindow;
 
 public class UroborosApplication implements Runnable{
 
-	private MainWindowModel model = new MainWindowModel();
-	
 	public static void main(String[] args) {
 		new UroborosApplication().run();;
 	}
 
 	public void run() {	
-		new MainWindow(model).run();
+		new MainWindow(new MainWindowModel()).run();
 	}
-	
 }

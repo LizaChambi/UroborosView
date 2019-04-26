@@ -29,7 +29,6 @@ import uroborosGameStudio.ui.componentListeners.btnPlayAL;
 
 public class EditorWindow extends AbstractWindowFrame {
 
-	MainWindowModel model;
 	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
 	
@@ -58,8 +57,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	public void main() { run();	}
 
 	public EditorWindow(MainWindowModel model) {
-		super();
-		this.model = model;
+		super(model);
 		this.initializeFrame();
 		
 		this.initializeNorthPanel();
@@ -96,7 +94,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeFrame() {
-		System.out.println(Toolkit.getDefaultToolkit().getScreenSize());
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
 		this.frame.setLocationRelativeTo(null);
@@ -140,7 +137,7 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeCanvas() {
 		//this.canvas = new Canvas();
-		this.canvas.setIgnoreRepaint(true);
+		//this.canvas.setIgnoreRepaint(true);
 		this.canvas.setFocusable(true);
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
@@ -162,7 +159,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(300, 250));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF,canvas, model));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
 	}

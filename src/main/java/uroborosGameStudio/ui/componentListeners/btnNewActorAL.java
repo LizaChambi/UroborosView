@@ -34,7 +34,7 @@ public class btnNewActorAL implements ActionListener
 
 	private void drawNewActor(ActorWrapper actor) 
 	{
-		canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null); 
+		canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null);
 	}
 
 	private void addActor(ActorWrapper actorWpp) 

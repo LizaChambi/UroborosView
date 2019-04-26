@@ -9,6 +9,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class AbstractWindowFrame implements Runnable, WindowListener, ComponentListener {
 
 	JFrame frame;
@@ -17,12 +19,15 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	Integer height = 0;
 	Dimension resolution = new Dimension(width, height);
 	private boolean resizable = true;
+	static MainWindowModel model;
 
-	public static void main(String[] args) { new AbstractWindowFrame().run(); }
+	public static void main(String[] args) { new AbstractWindowFrame(model).run(); }
 
-	public AbstractWindowFrame() {
+	public AbstractWindowFrame(MainWindowModel model) 
+	{
 		this.initializeFrame();
 		this.frame.pack();
+		this.model = model;
 	}
 	
 	private void initializeFrame() {
@@ -44,6 +49,11 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 			this.frame.setVisible(true);
 		}
 	}
+	
+	public MainWindowModel getModelObject()
+	{
+		return this.model;
+	};
 
 	public boolean isResizable() { return resizable; }
 

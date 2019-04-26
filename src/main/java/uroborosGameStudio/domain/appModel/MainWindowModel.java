@@ -67,4 +67,9 @@ public class MainWindowModel
 		this.project = project;
 	}
 
+	public SceneWrapper searchScene(String name) 
+	{
+		return this.project.searchScene(name);
+	}
+
 }

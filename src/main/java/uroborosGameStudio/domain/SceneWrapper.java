@@ -6,6 +6,7 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Ability;
 import org.team.uroboros.uroboros.engine.Actor;
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.input.Key;
 import org.team.uroboros.uroboros.engine.ui.Graphics;
@@ -13,7 +14,6 @@ import org.team.uroboros.uroboros.engine.ui.RenderTexture;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
-import org.team.uroboros.uroboros.engine.geometry.Dimension;
 
 public class SceneWrapper 
 {
@@ -36,17 +36,17 @@ public class SceneWrapper
 		return this.name;
 	}
 	
-	public void addActor(ActorWrapper actor)
+	public void addActor(ActorWrapper actorWpp)
 	{
-		this.actors.add(actor);
-		Actor pepe = Game.createActor(actor.getName());
+		this.actors.add(actorWpp);
+		Actor newActor = Game.createActor(actorWpp.getName());
 		
-		SpriteSheet spritesheet = new SpriteSheet(actor.getPath(), new Frame(new Point(0,0), new Dimension(actor.getRealWidth(), actor.getRealHeight())));
-		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actor.getWidth(), actor.getHeight()));
-		pepe.learn(new RenderTexture(sprite));
-		pepe.translate(new Point(actor.getX(), actor.getY()));
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPath(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
+		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
+		newActor.learn(new RenderTexture(sprite));
+		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
 		
-		pepe.learn(new Ability() 
+		newActor.learn(new Ability() 
 		{	
 			Actor actor;
 			
@@ -80,9 +80,10 @@ public class SceneWrapper
 			@Override
 			public void onRender(Graphics graphics) 
 			{
-				// TODO Auto-generated method stub	
 			}
+
 		});
+		
 	}
 
 	public Integer cantActors() 
@@ -103,7 +104,13 @@ public class SceneWrapper
 
 	public void setName(String newName) 
 	{
+		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
+	}
+
+	public Boolean hasName(String name2) 
+	{
+		return name == name2;
 	}
 	
 	
