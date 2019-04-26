@@ -54,8 +54,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditName;
 	private JButton btnPlay;
 
-	public void main() { run();	}
-
 	public EditorWindow(MainWindowModel model) {
 		super(model);
 		this.initializeFrame();
@@ -136,8 +134,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeCanvas() {
-		//this.canvas = new Canvas();
-		//this.canvas.setIgnoreRepaint(true);
 		this.canvas.setFocusable(true);
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);

@@ -22,8 +22,6 @@ public class MainWindow extends AbstractWindowFrame {
 	private JLabel titleL;
 	private JLabel iconL;
 
-	public void main() { run(); }
-
 	public MainWindow(MainWindowModel model) {
 		super(model);
 		this.setWidth(500);
@@ -67,7 +65,7 @@ public class MainWindow extends AbstractWindowFrame {
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
-				new EditorWindow(getModelObject()).main();
+				new EditorWindow(getModelObject()).run();
 				frame.dispose();
 			}
 		});
