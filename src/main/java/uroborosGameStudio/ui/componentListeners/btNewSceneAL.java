@@ -34,9 +34,9 @@ public class btNewSceneAL implements ActionListener
 			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 			if(lastNode.getLevel() == 0)
 			{
-				UGSProject game = (UGSProject) lastNode.getUserObject();
+				UGSProject ugsGame = (UGSProject) lastNode.getUserObject();
 				SceneWrapper newScene = new SceneWrapper("Escena" + this.idScene);
-				game.addScene(newScene);
+				ugsGame.addScene(newScene);
 				modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), lastNode, modelNode.getChildCount(lastNode));
 				this.idScene++;
 			}

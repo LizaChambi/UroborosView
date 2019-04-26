@@ -28,18 +28,18 @@ public class btnEditNameAL implements ActionListener
 		
 		if(selectedNode.getUserObject().getClass() == UGSProject.class)
 		{
-			UGSProject obj = (UGSProject) selectedNode.getUserObject();
-			obj.setTitle(textField.getText());
+			UGSProject ugsGame = (UGSProject) selectedNode.getUserObject();
+			ugsGame.setTitle(textField.getText());
 		}
 		if(selectedNode.getUserObject().getClass() == SceneWrapper.class)
 		{
-			SceneWrapper obj = (SceneWrapper) selectedNode.getUserObject();
-			obj.setName(textField.getText());
+			SceneWrapper sceneWpp = (SceneWrapper) selectedNode.getUserObject();
+			sceneWpp.setName(textField.getText());
 		}
 		if(selectedNode.getUserObject().getClass() == ActorWrapper.class)
 		{
-			ActorWrapper obj = (ActorWrapper) selectedNode.getUserObject();
-			obj.setName(textField.getText());
+			ActorWrapper actorWpp = (ActorWrapper) selectedNode.getUserObject();
+			actorWpp.setName(textField.getText());
 		}
 		treeScenes.updateUI();
 	}
