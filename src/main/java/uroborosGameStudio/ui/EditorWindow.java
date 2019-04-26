@@ -52,7 +52,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JLabel config;
 	private JLabel nombre;
 	private JButton btnEditName;
-	private JButton btnPlay;
+	private JButton btnPlay = new JButton("Play");
 
 	public EditorWindow(MainWindowModel model) {
 		super(model);
@@ -85,8 +85,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializePlayButton() 
 	{
-		this.btnPlay = new JButton("Play");
 		btnPlay.setBounds(650, 50, 97, 23);
+		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new btnPlayAL(canvas));
 		northPanel.add(btnPlay);
 	}
@@ -107,7 +107,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeNewActorButton() 
 	{
 		this.actorButton = new JButton("Nuevo Actor");
-		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas));
+		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas, btnPlay));
 		actorButton.setBounds(350, 50, 116, 23);
 		northPanel.add(actorButton);
 	}

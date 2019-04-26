@@ -4,15 +4,7 @@ import java.awt.Canvas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.team.uroboros.uroboros.engine.Ability;
 import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.geometry.Point;
-import org.team.uroboros.uroboros.engine.input.Key;
-import org.team.uroboros.uroboros.engine.ui.Graphics;
-import org.team.uroboros.uroboros.engine.ui.RenderTexture;
-import org.team.uroboros.uroboros.engine.ui.resources.Frame;
-import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
-import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 public class btnPlayAL implements ActionListener 
 {
