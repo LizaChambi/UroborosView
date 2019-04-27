@@ -54,9 +54,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JLabel config;
 	private JLabel nombre;
 	private JButton btnEditName;
-	private JButton btnPlay;
-
-	public void main() { run();	}
+	private JButton btnPlay = new JButton("Play");
 
 	public EditorWindow() {
 		super();
@@ -114,7 +112,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializePlayButton() 
 	{
 		this.btnPlay = new JButton("Play");
-		// btnPlay.setBounds(550, 50, 97, 23);
 		btnPlay.addActionListener(new btnPlayAL(canvas));
 		buttonPanel.add(btnPlay);
 	}
@@ -155,8 +152,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeCanvas() {
-		//this.canvas = new Canvas();
-		//this.canvas.setIgnoreRepaint(true);
 		this.canvas.setFocusable(true);
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);

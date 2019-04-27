@@ -21,7 +21,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	private boolean resizable = true;
 	static MainWindowModel model = new MainWindowModel();
 
-	public static void main(String[] args) { new AbstractWindowFrame().run(); }
+	public void main(String[] args) { new AbstractWindowFrame().run(); }
 
 	public AbstractWindowFrame() 
 	{
@@ -52,7 +52,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	public MainWindowModel getModelObject()
 	{
 		return model;
-	};
+	}
 
 	public boolean isResizable() { return resizable; }
 

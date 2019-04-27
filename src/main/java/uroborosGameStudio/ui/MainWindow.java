@@ -67,7 +67,7 @@ public class MainWindow extends AbstractWindowFrame {
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
-				new EditorWindow().main();
+				new EditorWindow().run();
 				frame.dispose();
 			}
 		});
