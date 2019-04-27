@@ -19,13 +19,12 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	Integer height = 0;
 	Dimension resolution = new Dimension(width, height);
 	private boolean resizable = true;
-	MainWindowModel model;
+	static MainWindowModel model = new MainWindowModel();
 
-	public void main(String[] args) { new AbstractWindowFrame(model).run(); }
+	public void main(String[] args) { new AbstractWindowFrame().run(); }
 
-	public AbstractWindowFrame(MainWindowModel model) 
+	public AbstractWindowFrame() 
 	{
-		this.model = model;
 		this.initializeFrame();
 		this.frame.pack();
 	}
@@ -33,10 +32,10 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
 		this.frame.setLayout(new BorderLayout());
-		this.frame.setPreferredSize(this.resolution);
-		this.frame.setMinimumSize(this.resolution);
+		// this.frame.setPreferredSize(this.resolution);
+		// this.frame.setMinimumSize(this.resolution);
 		this.frame.setVisible(false);
-		this.frame.setResizable(this.resizable); // default true
+		// this.frame.setResizable(this.resizable); // default true
 		this.frame.setLocationRelativeTo(null);
 		this.frame.addWindowListener(this);
 		this.frame.addComponentListener(this);
@@ -52,7 +51,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	
 	public MainWindowModel getModelObject()
 	{
-		return this.model;
+		return model;
 	}
 
 	public boolean isResizable() { return resizable; }

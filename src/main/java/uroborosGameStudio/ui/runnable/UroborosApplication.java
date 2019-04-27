@@ -10,6 +10,6 @@ public class UroborosApplication implements Runnable{
 	}
 
 	public void run() {	
-		new MainWindow(new MainWindowModel()).run();
+		new MainWindow().run();
 	}
 }

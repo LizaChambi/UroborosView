@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -19,7 +20,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
-import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.btNewSceneAL;
@@ -36,6 +36,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel northPanel;
 	private JPanel centerPanel;
+	private JPanel principalPanel;
+	private JPanel buttonPanel;
 	private JScrollPane eastPanel;
 	private JPanel gameEditorPanel;
 	private JPanel treePlayPanel;
@@ -54,17 +56,27 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditName;
 	private JButton btnPlay = new JButton("Play");
 
-	public EditorWindow(MainWindowModel model) {
-		super(model);
+	public EditorWindow() {
+		super();
 		this.initializeFrame();
-		
+	
+		this.initializePrincipalPanel();
 		this.initializeNorthPanel();
+		this.initializeButtonPanel();
+		// Tool bar
+		this.initializeNewSceneButton();
+		this.initializeComboBox();
+		this.initializeNewActorButton();
+		this.initializeSaveButton();
+		this.initializePlayButton();
+
 		this.initializeCenterPanel();
 		
 		this.initializeTextPanel();
 		this.initializeGameEditorPanel();
 		
 		this.initializeTreePlayPanel();
+	
 		this.initializeEditorPanel();
 		
 		this.initializeTreePanel();
@@ -73,43 +85,49 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeCanvas();
 		this.initializeCodeTextArea();
 		
-		// Tool bar
-		this.initializeNewSceneButton();
-		this.initializeComboBox();
-		this.initializeNewActorButton();
-		this.initializeSaveButton();
-		this.initializePlayButton();
 
 		this.frame.pack();
 	}
 	
-	private void initializePlayButton() 
-	{
-		btnPlay.setBounds(650, 50, 97, 23);
-		btnPlay.setEnabled(false);
-		btnPlay.addActionListener(new btnPlayAL(canvas));
-		northPanel.add(btnPlay);
-	}
-	
 	private void initializeFrame() {
+		// this.frame.setLayout(new BorderLayout());
+		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
-		this.frame.setLocationRelativeTo(null);
+		this.frame.setResizable(true);
+		// this.frame.setVisible(false);
+		
+		// this.frame.setLocationRelativeTo(null);
+	}
+	
+	private void initializeButtonPanel() {
+		buttonPanel = new JPanel();
+		// buttonPanel.setSize(800,75);
+		buttonPanel.setPreferredSize(new Dimension(800, 40));
+		FlowLayout fl_buttonPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
+		buttonPanel.setLayout(fl_buttonPanel);
+		this.northPanel.add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	private void initializePlayButton() 
+	{
+		this.btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new btnPlayAL(canvas));
+		buttonPanel.add(btnPlay);
 	}
 	
 	private void initializeSaveButton() {
 		this.saveButton = new JButton("Guardar");
-		saveButton.setBounds(500, 50, 97, 23);
+		// saveButton.setBounds(500, 50, 97, 23);
 		saveButton.setEnabled(false);
-		northPanel.add(saveButton);
+		buttonPanel.add(saveButton);
 	}
 
 	private void initializeNewActorButton() 
 	{
 		this.actorButton = new JButton("Nuevo Actor");
-		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas, btnPlay));
-		actorButton.setBounds(350, 50, 116, 23);
-		northPanel.add(actorButton);
+		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas));
+		buttonPanel.add(actorButton);
 	}
 
 	private void initializeComboBox() {
@@ -121,16 +139,16 @@ public class EditorWindow extends AbstractWindowFrame {
 		comboBox.addItem(ninio);
 		comboBox.addItem(pelota);
 		comboBox.addItem(piso);
-		
-		comboBox.setBounds(200, 50, 116, 23);
-		northPanel.add(comboBox);
+
+		comboBox.setPreferredSize(new Dimension(110,23));
+		comboBox.setMaximumSize(new Dimension(110,23));
+		buttonPanel.add(comboBox);
 	}
 
 	private void initializeNewSceneButton() {
 		this.sceneButton = new JButton("Nueva Escena");
 		sceneButton.addActionListener(new btNewSceneAL(treeScenes, idScene));
-		sceneButton.setBounds(10, 50, 134, 23);
-		northPanel.add(sceneButton);
+		buttonPanel.add(sceneButton);
 	}
 
 	private void initializeCanvas() {
@@ -142,7 +160,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializePlayPanel() {
 		playPanel = new JPanel(new BorderLayout());
-		playPanel.setPreferredSize(new Dimension(resolution.width-880, resolution.height-424));
+		playPanel.setPreferredSize(new Dimension(666, 400));
 		this.treePlayPanel.add(playPanel, BorderLayout.CENTER);
 	}
 	
@@ -152,12 +170,12 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
-		scroollPanel.setPreferredSize(new Dimension(300, 250));
+		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
 		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF,canvas, model));
 		treeScenes.setModel(tree);
-		this.treePlayPanel.add(scroollPanel, BorderLayout.WEST);
+		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
 	
 	private DefaultMutableTreeNode createTreeNode() 
@@ -180,9 +198,9 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeEditorPanel() {
-		editorPanel = new JPanel();
+		editorPanel = new JPanel(new BorderLayout());
 		editorPanel.setLayout(null);
-		editorPanel.setPreferredSize(new Dimension(800, 250));
+		editorPanel.setPreferredSize(new Dimension(973, 263));
 		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
 		
 		this.config = new JLabel("Panel de Configuraci\u00F3n:");
@@ -206,34 +224,41 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeTreePlayPanel() {
 		treePlayPanel = new JPanel(new BorderLayout());
-		treePlayPanel.setPreferredSize(new Dimension(200, 550));
-		this.gameEditorPanel.add(treePlayPanel, BorderLayout.CENTER);
+		treePlayPanel.setPreferredSize(new Dimension(973, 400));
+		this.gameEditorPanel.add(treePlayPanel, BorderLayout.WEST);
 	}
 
 	private void initializeGameEditorPanel() {
 		gameEditorPanel = new JPanel(new BorderLayout());
-		gameEditorPanel.setPreferredSize(new Dimension(resolution.width-440, resolution.height-200));
+		gameEditorPanel.setPreferredSize(new Dimension(973, 663));
 		this.centerPanel.add(gameEditorPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeTextPanel() {
 		eastPanel = new JScrollPane(this.textArea);
-		eastPanel.setPreferredSize(new Dimension(440, resolution.height-200));
+		eastPanel.setPreferredSize(new Dimension (393, 663) );
 		this.centerPanel.add(eastPanel, BorderLayout.EAST);
 	}
-
+	
+	private void initializePrincipalPanel() {
+		principalPanel = new JPanel(new BorderLayout());
+		principalPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-30) );
+		this.frame.getContentPane().add(principalPanel, BorderLayout.CENTER);
+	}
+	
+	private void initializeNorthPanel() {
+		northPanel = new JPanel(new BorderLayout());
+		northPanel.setPreferredSize(new Dimension(resolution.width, 75) );
+		this.principalPanel.add(northPanel, BorderLayout.NORTH);
+	}
+	
 	private void initializeCenterPanel() {
 		centerPanel = new JPanel(new BorderLayout());
-		centerPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-200));
-		this.frame.add(centerPanel, BorderLayout.CENTER);
+		centerPanel.setPreferredSize(new Dimension(resolution.width, 663));
+		this.principalPanel.add(centerPanel, BorderLayout.CENTER);
 	}
 
-	private void initializeNorthPanel() {
-		northPanel = new JPanel();
-		northPanel.setLayout(null);
-		northPanel.setPreferredSize(new Dimension(resolution.width, 100) );
-		this.frame.add(northPanel, BorderLayout.NORTH);
-	}
+
 
 	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
 	 * 
