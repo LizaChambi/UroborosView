@@ -22,7 +22,7 @@ public class MainWindowModel
 
 	public void createNewProyect() 
 	{
-		this.project = new UGSProject("UGSProject", "Título del Juego");
+		this.project = new UGSProject("UGSProject", "T\u00EDtulo del Juego");
 	}
 
 	public String getProyectName() 
