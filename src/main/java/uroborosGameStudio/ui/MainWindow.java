@@ -24,11 +24,11 @@ public class MainWindow extends AbstractWindowFrame {
 
 	public void main() { run(); }
 
-	public MainWindow(MainWindowModel model) {
-		super(model);
-		this.setWidth(500);
-		this.setHeight(350);
-		this.setResolution(new Dimension(width, height));
+	public MainWindow() {
+		super();
+		// this.setWidth(500);
+		// this.setHeight(350);
+		this.setResolution(new Dimension(500, 350));
 		
 		this.initializeFrame();
 		this.initializeCenterPanel();
@@ -67,7 +67,7 @@ public class MainWindow extends AbstractWindowFrame {
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
-				new EditorWindow(getModelObject()).main();
+				new EditorWindow().main();
 				frame.dispose();
 			}
 		});
@@ -75,16 +75,18 @@ public class MainWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeCenterPanel() {
-		centerPanel = new JPanel();
+		centerPanel = new JPanel(new BorderLayout());
 		centerPanel.setLayout(null);
-		centerPanel.setPreferredSize(new Dimension(120, 170));
+		centerPanel.setPreferredSize(new Dimension(500, 350));
 		centerPanel.setBackground(Color.white);
 		this.frame.add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {
-		this.frame.setPreferredSize(this.resolution);
-		this.frame.setMinimumSize(this.resolution);
+		Dimension dim = new Dimension(500, 350);
+		this.frame.setSize(dim);
+		this.frame.setPreferredSize(dim);
+		this.frame.setMinimumSize(dim);
 		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
 	}
