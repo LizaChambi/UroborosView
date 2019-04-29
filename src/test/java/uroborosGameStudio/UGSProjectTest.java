@@ -26,7 +26,7 @@ public class UGSProjectTest
 		File dir = new File(project.getPath());
 		
 		assertEquals("DirectoryName", project.getProjectName());
-		assertEquals("GameTitle", project.getGameTitle());
+		assertEquals("GameTitle", project.getName());
 		assertTrue(dir.exists());
 	}
 	

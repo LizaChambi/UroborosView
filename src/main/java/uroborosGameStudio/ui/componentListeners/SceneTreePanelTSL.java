@@ -39,7 +39,7 @@ public class SceneTreePanelTSL implements TreeSelectionListener
 		{
 			UGSProject ugsGame = (UGSProject) selectedNode.getUserObject();
 			
-			textField.setText(ugsGame.getGameTitle());
+			textField.setText(ugsGame.getName());
 			/* Cada contenido de un if debe invocar a un metodo que diga todo lo que cambia al...
 			 * seleccionar ese objeto. Las cuales son:
 			 * 

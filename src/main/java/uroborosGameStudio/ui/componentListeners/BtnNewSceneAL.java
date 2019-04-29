@@ -10,12 +10,12 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
-public class btNewSceneAL implements ActionListener 
+public class BtnNewSceneAL implements ActionListener 
 {
 	private JTree treeScenes;
 	private Integer idScene;
 	
-	public btNewSceneAL(JTree treeScenes, int idScene) 
+	public BtnNewSceneAL(JTree treeScenes, int idScene) 
 	{
 		this.treeScenes = treeScenes;
 		this.idScene = idScene;

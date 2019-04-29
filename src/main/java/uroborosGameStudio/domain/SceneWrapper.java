@@ -15,9 +15,8 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
-public class SceneWrapper 
+public class SceneWrapper extends GameObject
 {
-	private String name;
 	private List<ActorWrapper> actors;
 	
 	public SceneWrapper(String name)
@@ -29,11 +28,6 @@ public class SceneWrapper
 	public List<ActorWrapper> getActors()
 	{
 		return this.actors;
-	}
-	
-	public String getName() 
-	{
-		return this.name;
 	}
 	
 	public void addActor(ActorWrapper actorWpp)
@@ -102,6 +96,7 @@ public class SceneWrapper
 		return this.name;
 	}
 
+	@Override
 	public void setName(String newName) 
 	{
 		Game.rename(Game.getScene(name), newName);
@@ -112,6 +107,5 @@ public class SceneWrapper
 	{
 		return name == name2;
 	}
-	
 	
 }

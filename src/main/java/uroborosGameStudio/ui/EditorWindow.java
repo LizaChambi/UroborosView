@@ -22,10 +22,10 @@ import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
-import uroborosGameStudio.ui.componentListeners.btNewSceneAL;
-import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
-import uroborosGameStudio.ui.componentListeners.btnNewActorAL;
-import uroborosGameStudio.ui.componentListeners.btnPlayAL;
+import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
+import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
+import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -112,7 +112,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializePlayButton() 
 	{
 		this.btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new btnPlayAL(canvas));
+		btnPlay.addActionListener(new BtnPlayAL(canvas));
 		buttonPanel.add(btnPlay);
 	}
 	
@@ -126,7 +126,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeNewActorButton() 
 	{
 		this.actorButton = new JButton("Nuevo Actor");
-		actorButton.addActionListener(new btnNewActorAL(treeScenes, comboBox, canvas));
+		actorButton.addActionListener(new BtnNewActorAL(treeScenes, comboBox, canvas));
 		buttonPanel.add(actorButton);
 	}
 
@@ -147,7 +147,7 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeNewSceneButton() {
 		this.sceneButton = new JButton("Nueva Escena");
-		sceneButton.addActionListener(new btNewSceneAL(treeScenes, idScene));
+		sceneButton.addActionListener(new BtnNewSceneAL(treeScenes, idScene));
 		buttonPanel.add(sceneButton);
 	}
 
@@ -218,7 +218,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.btnEditName = new JButton("Editar");
 		btnEditName.setBounds(230, 62, 100, 23);
-		btnEditName.addActionListener(new btnEditNameAL(treeScenes,nameTF));
+		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTF));
 		editorPanel.add(btnEditName);
 	}
 
