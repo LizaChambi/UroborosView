@@ -7,16 +7,15 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Game;
 
 
-public class UGSProject 
+public class UGSProject extends GameObject
 {
-	private String gameTitle;
 	private String projectName;
 	private String path;
 	private List<SceneWrapper> scenes;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
-		this.gameTitle = gameName;
+		this.name = gameName;
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
@@ -57,11 +56,6 @@ public class UGSProject
 	{
 		return this.projectName;
 	}
-	
-	public String getGameTitle()
-	{
-		return this.gameTitle;
-	}
 
 	public void addScene(SceneWrapper newScene) 
 	{
@@ -72,24 +66,18 @@ public class UGSProject
 	@Override
 	public String toString() 
 	{
-		return this.gameTitle;
+		return this.name;
 	}
 
-	public void setTitle(String newTitle) 
+	@Override
+	public void setName(String newTitle) 
 	{
-		this.gameTitle = newTitle;
+		this.name = newTitle;
 	}
 
 	public SceneWrapper searchScene(String name) 
 	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }
