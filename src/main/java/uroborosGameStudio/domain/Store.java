@@ -18,7 +18,7 @@ public class Proyect
 		//this.file = new File(name); 
 	}
 	
-	public void escritura(Game game) 
+	public void escritura(GameData game) 
 	{
 		File file = new File("datos.obj");
 		try 
@@ -45,11 +45,11 @@ public class Proyect
 		try {
 			fis = new FileInputStream(file);
 			ois= new ObjectInputStream(fis);
-			Game game = (Game) ois.readObject();
+			GameData game = (GameData) ois.readObject();
 			System.out.println("Nombre de juego: " + game.getName() );
 			System.out.println("Escenas: " + game.getScenes());
 		
-			List<Scene> scenes = game.getScenes();
+			List<SceneData> scenes = game.getScenes();
 		
 			for (int i=0; i<scenes.size();i++)
 			{

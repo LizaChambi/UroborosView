@@ -1,4 +1,5 @@
 # Uroboros Game Studio
+* ***Develop*** branch: [![Build Status](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio.svg?branch=develop)](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio)
 
 ![Uroboros Logo](images/Uroboros-Logo.png)
 
@@ -50,6 +51,10 @@ Esta herramienta está pensada para programadores que quieran crear sus propios 
 Cuando el usuario quiera agregar una escena al juego, por ejemplo, el sistema responde con el siguiente flujo:
 
 ![Technology Architecture](images/Estructura.jpg)
+
+**MainWindowDomain.java** es el moderador entre la vista y el modelo. En caso de necesitarlo, puede solicitar guardar archivos en un directorio predeterminado para el usuario.
+
+**UGSProject.java** es el modelo principal que contiene toda la lógica del proyecto en creación y delegar tareas a otros objetos del dominio.
 
 **Uroboros Engine** sera utilizado como dependencia y es fundamental para el funcionamiento de Uroboros Game Studio, ya que este contiene toda la lógica de juego que usará el proyecto del usuario.
 

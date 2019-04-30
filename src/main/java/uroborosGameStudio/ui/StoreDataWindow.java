@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JTree;
 
-import uroborosGameStudio.domain.Game;
+import uroborosGameStudio.domain.GameData;
 import uroborosGameStudio.domain.Proyect;
 
 import java.awt.TextArea;
@@ -38,7 +38,7 @@ public class MainWindow2 {
 
 	public void escrituraLectura() 
 	{
-		Game game = new Game("JueguitoNuevo");
+		GameData game = new GameData("JueguitoNuevo");
 		Proyect p = new Proyect();
 		p.escritura(game);
 		game.getScenes().get(0).setName("cambieDeNombre");
