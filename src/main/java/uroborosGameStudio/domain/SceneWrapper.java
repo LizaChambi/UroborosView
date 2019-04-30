@@ -3,6 +3,7 @@ package uroborosGameStudio.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Ability;
 import org.team.uroboros.uroboros.engine.Actor;
@@ -21,11 +22,13 @@ public class SceneWrapper implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private List<ActorWrapper> actors;
+	private ArrayList<String> pathsActor;
 	
 	public SceneWrapper(String name)
 	{
 		this.name = name;
 		this.actors = new ArrayList<ActorWrapper>();
+		this.pathsActor = new ArrayList<String>();
 	}
 
 	public List<ActorWrapper> getActors()
@@ -114,6 +117,13 @@ public class SceneWrapper implements Serializable
 	{
 		return name == name2;
 	}
-	
-	
+
+	public BodyPath saveScene() {
+		pathsActor = (ArrayList<String>) this.actors.stream().map(actor->actor.saveActor()).collect(Collectors.toList());
+		pathsActor.add(0, name + ".sce");
+		BodyPath path = new BodyPath(pathsActor);
+		
+		return path;
+	}
+
 }

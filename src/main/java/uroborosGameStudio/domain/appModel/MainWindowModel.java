@@ -7,7 +7,6 @@ import uroborosGameStudio.domain.UGSProject;
 public class MainWindowModel 
 {
 	private UGSProject project;
-	
 	String itemSelectComboBox;
 
 	public MainWindowModel()
@@ -70,6 +69,10 @@ public class MainWindowModel
 	public SceneWrapper searchScene(String name) 
 	{
 		return this.project.searchScene(name);
+	}
+
+	public void save() {
+		this.project.saveProject();
 	}
 
 }

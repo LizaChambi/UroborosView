@@ -5,18 +5,20 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
 
-public class ActorWrapper 
-{
+public class ActorWrapper implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	public String name;
 	public String path;
 	public Point point;
 	public Dimension dimension;
-	public BufferedImage image;
+	transient BufferedImage image;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) 
 	{
@@ -47,6 +49,7 @@ public class ActorWrapper
 		try 
 		{
 			this.image = ImageIO.read(new File("src/main/resources/" + path));
+//			ImageIO.write(image, "png", new File("src/main/resources/" + path));
 		} 
 		catch (IOException e) 
 		{
@@ -97,6 +100,8 @@ public class ActorWrapper
 		return this.name;
 	}
 
-	
+	public String saveActor() {
+		return name + ".act";
+	}
 	
 }

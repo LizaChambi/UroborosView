@@ -21,6 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnSaveProyect;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.btNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.btnEditNameAL;
@@ -85,7 +86,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeCanvas();
 		this.initializeCodeTextArea();
 		
-
 		this.frame.pack();
 	}
 	
@@ -96,7 +96,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.frame.setMinimumSize(new Dimension(800,600));
 		this.frame.setResizable(true);
 		// this.frame.setVisible(false);
-		
 		// this.frame.setLocationRelativeTo(null);
 	}
 	
@@ -118,8 +117,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializeSaveButton() {
 		this.saveButton = new JButton("Guardar");
-		// saveButton.setBounds(500, 50, 97, 23);
-		saveButton.setEnabled(false);
+		saveButton.addActionListener(new BtnSaveProyect(this.getModelObject()));
+		//saveButton.setEnabled(false);
 		buttonPanel.add(saveButton);
 	}
 
@@ -257,8 +256,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		centerPanel.setPreferredSize(new Dimension(resolution.width, 663));
 		this.principalPanel.add(centerPanel, BorderLayout.CENTER);
 	}
-
-
 
 	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
 	 * 
