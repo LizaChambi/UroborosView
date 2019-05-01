@@ -1,5 +1,9 @@
 package uroborosGameStudio.domain;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +26,15 @@ public class SceneWrapper implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private List<ActorWrapper> actors;
-	private ArrayList<String> pathsActor;
+	//private ArrayList<String> pathsActor;
+	private ArrayList<String> savedActors;
 	
 	public SceneWrapper(String name)
 	{
 		this.name = name;
 		this.actors = new ArrayList<ActorWrapper>();
-		this.pathsActor = new ArrayList<String>();
+		this.savedActors = new ArrayList<String>();
+		// this.pathsActor = new ArrayList<String>();
 	}
 
 	public List<ActorWrapper> getActors()
@@ -118,12 +124,54 @@ public class SceneWrapper implements Serializable
 		return name == name2;
 	}
 
+	/*
 	public BodyPath saveScene() {
 		pathsActor = (ArrayList<String>) this.actors.stream().map(actor->actor.saveActor()).collect(Collectors.toList());
 		pathsActor.add(0, name + ".sce");
 		BodyPath path = new BodyPath(pathsActor);
 		
 		return path;
+	}
+	*/
+	
+	public void save(String savedPath) throws IOException
+	{
+		updateSavedActors();
+		saveActors(savedPath);
+		saveFile(savedPath);
+	}
+	
+	public void saveFile(String savedPath) throws IOException
+	{
+		File file = new File(savedPath + getName() + ".sce");
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(this);
+		oos.close();
+	}
+
+	private void saveActors(String savedPath)
+	{
+		this.actors.forEach(act -> {
+			try 
+			{
+				act.saveFile(savedPath);
+			} catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	private void updateSavedActors() 
+	{
+		setSavedActors(actors.stream().map(act -> act.getName()).collect(Collectors.toList()));
+	}
+
+	private void setSavedActors(List<String> savedActors) 
+	{
+		this.savedActors = (ArrayList<String>) savedActors;
 	}
 
 }

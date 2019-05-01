@@ -1,6 +1,9 @@
 package uroborosGameStudio.domain;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +17,17 @@ public class UGSProject implements Serializable {
 	private String projectName;
 	private String path;
 	private List<SceneWrapper> scenes;
-	private List<BodyPath> pathsScenes;
+	private List<String> savedScenes;
+	// private List<BodyPath> pathsScenes;
 
 	public UGSProject(String projectName, String gameName) {
+		this.savedScenes = new ArrayList<String>();
 		this.gameTitle = gameName;
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
 		createMainScene();
-		this.setPathsScenes(new ArrayList<BodyPath>());
+		// this.setPathsScenes(new ArrayList<BodyPath>());
 	}
 
 	private void createMainScene() {
@@ -75,7 +80,7 @@ public class UGSProject implements Serializable {
 	public SceneWrapper searchScene(String name) {
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
-
+/*
 	public void saveProject() {
 		setPathsScenes(this.scenes.stream().map(scene -> scene.saveScene()).collect(Collectors.toList()));
 		// list sorted
@@ -89,6 +94,60 @@ public class UGSProject implements Serializable {
 
 	public void setPathsScenes(List<BodyPath> pathsScenes) {
 		this.pathsScenes = pathsScenes;
+	}
+*/
+	
+	
+	
+	public void saveProject()
+	{
+		updateSavedScenes();
+		saveScenes(getSavedPath());
+		saveFile();
+	}
+
+	public void saveFile()
+	{
+		try {
+		File file = new File(getSavedPath() + getProjectName() + ".ugs");
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(this);
+		oos.close();
+		}
+		catch (IOException e1) 
+		{
+			System.out.println("Algo salio mal");
+		}
+	}
+	
+	private String getSavedPath() 
+	{
+		return getPath() + System.getProperty("file.separator");
+	}
+
+	private void updateSavedScenes() 
+	{
+		setSavedScenes(this.scenes.stream().map(sce -> sce.getName()).collect(Collectors.toList()));
+	}
+
+	private void setSavedScenes(List<String> savedScenes) 
+	{
+		this.savedScenes = savedScenes;
+	}
+
+	private void saveScenes(String savedPath) 
+	{
+		this.scenes.forEach(esc -> {
+			try 
+			{
+				esc.save(savedPath);
+			} catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 }

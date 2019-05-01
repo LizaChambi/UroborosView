@@ -25,12 +25,19 @@ public class BtnSaveProyect implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		model.save();
-		extracted1();
+		try {
+			lectura();
+		} catch (ClassNotFoundException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// extracted1();
 	}
 
 	/**
 	 * Buscar un nombre adecuado para los 2 extracted
 	 */
+	/*
 	private void extracted1() {
 		List<BodyPath> paths = model.getProject().getPathsScenes();
 		for (BodyPath bodyPath : paths) {
@@ -58,10 +65,11 @@ public class BtnSaveProyect implements ActionListener {
 		output.flush();
 		output.close();
 	}
-
-	public void lectura(String archivo) throws IOException, ClassNotFoundException {
+*/
+	public void lectura() throws IOException, ClassNotFoundException 
+	{
 		FileInputStream file = new FileInputStream(
-				model.getProject().getPath() + System.getProperty("file.separator") + archivo);
+				model.getProject().getPath() + System.getProperty("file.separator") + model.getProyectName() + ".ugs");
 		ObjectInputStream input = new ObjectInputStream(file);
 		UGSProject game = (UGSProject) input.readObject();
 
