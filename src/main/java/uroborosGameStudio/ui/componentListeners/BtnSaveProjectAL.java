@@ -14,11 +14,11 @@ import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class BtnSaveProyect implements ActionListener {
+public class BtnSaveProjectAL implements ActionListener {
 
 	private MainWindowModel model;
 
-	public BtnSaveProyect(MainWindowModel modelObject) {
+	public BtnSaveProjectAL(MainWindowModel modelObject) {
 		this.model = modelObject;
 	}
 

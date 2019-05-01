@@ -21,7 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.componentListeners.BtnSaveProyect;
+import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
@@ -117,7 +117,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializeSaveButton() {
 		this.saveButton = new JButton("Guardar");
-		saveButton.addActionListener(new BtnSaveProyect(this.getModelObject()));
+		saveButton.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		buttonPanel.add(saveButton);
 	}
 
