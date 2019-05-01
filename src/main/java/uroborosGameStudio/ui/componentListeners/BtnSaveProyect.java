@@ -69,11 +69,12 @@ public class BtnSaveProyect implements ActionListener {
 	public void lectura() throws IOException, ClassNotFoundException 
 	{
 		FileInputStream file = new FileInputStream(
-				model.getProject().getPath() + System.getProperty("file.separator") + model.getProyectName() + ".ugs");
+				model.getProject().getPath() + System.getProperty("file.separator") + model.getGameTitle() + ".ugs");
 		ObjectInputStream input = new ObjectInputStream(file);
 		UGSProject game = (UGSProject) input.readObject();
-
-		System.out.println("Nombre de juego: " + game.getGameTitle());
+		input.close();
+		
+		System.out.println("Nombre de juego: " + game.getName());
 		System.out.println("Escenas: " + game.getScenes());
 
 		List<SceneWrapper> scenes = game.getScenes();
@@ -84,7 +85,7 @@ public class BtnSaveProyect implements ActionListener {
 			System.out.println(game.getPath());
 			System.out.println("** FIN DE ESCENA **");
 		}
-		input.close();
+		//input.close();
 	}
 
 }

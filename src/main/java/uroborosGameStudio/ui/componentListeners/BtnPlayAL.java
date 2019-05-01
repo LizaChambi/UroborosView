@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 
 import org.team.uroboros.uroboros.engine.Game;
 
-public class btnPlayAL implements ActionListener 
+public class BtnPlayAL implements ActionListener 
 {
 	private Canvas canvas;
 	
-	public btnPlayAL(Canvas canvas) 
+	public BtnPlayAL(Canvas canvas) 
 	{
 		this.canvas = canvas;
 	}

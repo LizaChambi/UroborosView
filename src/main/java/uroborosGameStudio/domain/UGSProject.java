@@ -11,18 +11,18 @@ import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Game;
 
-public class UGSProject implements Serializable {
+public class UGSProject extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String gameTitle;
 	private String projectName;
 	private String path;
 	private List<SceneWrapper> scenes;
 	private List<String> savedScenes;
 	// private List<BodyPath> pathsScenes;
-
-	public UGSProject(String projectName, String gameName) {
+	
+	public UGSProject(String projectName, String gameName) 
+	{
+		this.name = gameName;
 		this.savedScenes = new ArrayList<String>();
-		this.gameTitle = gameName;
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
@@ -59,25 +59,25 @@ public class UGSProject implements Serializable {
 		return this.projectName;
 	}
 
-	public String getGameTitle() {
-		return this.gameTitle;
-	}
-
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
 		Game.createScene(newScene.getName());
 	}
 
 	@Override
-	public String toString() {
-		return this.gameTitle;
+	public String toString() 
+	{
+		return this.name;
 	}
 
-	public void setTitle(String newTitle) {
-		this.gameTitle = newTitle;
+	@Override
+	public void setName(String newTitle) 
+	{
+		this.name = newTitle;
 	}
 
-	public SceneWrapper searchScene(String name) {
+	public SceneWrapper searchScene(String name) 
+	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
 /*
@@ -95,9 +95,7 @@ public class UGSProject implements Serializable {
 	public void setPathsScenes(List<BodyPath> pathsScenes) {
 		this.pathsScenes = pathsScenes;
 	}
-*/
-	
-	
+*/	
 	
 	public void saveProject()
 	{
@@ -109,7 +107,7 @@ public class UGSProject implements Serializable {
 	public void saveFile()
 	{
 		try {
-		File file = new File(getSavedPath() + getProjectName() + ".ugs");
+		File file = new File(getSavedPath() + getName() + ".ugs");
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(this);
@@ -149,5 +147,4 @@ public class UGSProject implements Serializable {
 			}
 		});
 	}
-
 }

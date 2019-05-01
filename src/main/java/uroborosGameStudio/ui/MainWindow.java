@@ -22,8 +22,6 @@ public class MainWindow extends AbstractWindowFrame {
 
 	public MainWindow() {
 		super();
-		// this.setWidth(500);
-		// this.setHeight(350);
 		this.setResolution(new Dimension(500, 350));
 		
 		this.initializeFrame();

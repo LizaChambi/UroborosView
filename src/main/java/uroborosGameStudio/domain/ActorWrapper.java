@@ -13,92 +13,71 @@ import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
 
-public class ActorWrapper implements Serializable {
+public class ActorWrapper extends GameObject  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	public String name;
 	public String path;
 	public Point point;
 	public Dimension dimension;
 	transient BufferedImage image;
 
-	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) 
-	{
+	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
 		this.path = path;
 		readImage(path);
-		this.point = new Point(x,y);
-		this.dimension = new Dimension (width, height);
+		this.point = new Point(x, y);
+		this.dimension = new Dimension(width, height);
 	}
-	
-	public double getRealWidth()
-	{
+
+	public double getRealWidth() {
 		return this.image.getWidth();
 	}
-	
-	public double getRealHeight()
-	{
+
+	public double getRealHeight() {
 		return this.image.getHeight();
 	}
-	
-	public String getPath()
-	{
+
+	public String getPath() {
 		return this.path;
 	}
-	
-	private void readImage(String path)
-	{
-		try 
-		{
+
+	private void readImage(String path) {
+		try {
 			this.image = ImageIO.read(new File("src/main/resources/" + path));
-//			ImageIO.write(image, "png", new File("src/main/resources/" + path));
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	public BufferedImage getImage()
-	{
+
+	public BufferedImage getImage() {
 		return this.image;
 	}
-	
-	public int getX() 
-	{
+
+	public int getX() {
 		return this.point.x;
 	}
 
-	public int getY() 
-	{
+	public int getY() {
 		return this.point.y;
 	}
 
-	public int getWidth() 
-	{
+	public int getWidth() {
 		return this.dimension.width;
 	}
 
-	public int getHeight() 
-	{
+	public int getHeight() {
 		return this.dimension.height;
 	}
 
-	public void setName(String newName) 
-	{
+	@Override
+	public void setName(String newName) {
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
-	
+
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return this.name;
 	}
 /*
@@ -115,5 +94,4 @@ public class ActorWrapper implements Serializable {
 		oos.writeObject(this);
 		oos.close();
 	}
-	
 }

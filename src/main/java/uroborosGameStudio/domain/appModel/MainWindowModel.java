@@ -1,6 +1,6 @@
 package uroborosGameStudio.domain.appModel;
 
-import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
@@ -31,7 +31,7 @@ public class MainWindowModel
 	
 	public String getGameTitle() 
 	{
-		return project.getGameTitle();
+		return project.getName();
 	}
 
 	public Integer cantScenes() 
@@ -49,7 +49,7 @@ public class MainWindowModel
 		project.addScene(newScene);
 	}
 
-	public void addActorToScene(ActorWrapper newActor, SceneWrapper scene) 
+	public void addActorToScene(GameObject newActor, SceneWrapper scene) 
 	{
 		System.out.println(scene.getName());
 	}

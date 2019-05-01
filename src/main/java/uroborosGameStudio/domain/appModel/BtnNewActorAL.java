@@ -1,4 +1,4 @@
-package uroborosGameStudio.ui.componentListeners;
+package uroborosGameStudio.domain.appModel;
 
 import java.awt.Canvas;
 import java.awt.event.ActionEvent;
@@ -12,13 +12,13 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 
-public class btnNewActorAL implements ActionListener 
+public class BtnNewActorAL implements ActionListener 
 {
 	private JTree treeScenes;
 	private JComboBox<ActorWrapper> comboBox;
 	private Canvas canvas;
 	
-	public btnNewActorAL(JTree treeScenes, JComboBox<ActorWrapper> comboBox, Canvas canvas) 
+	public BtnNewActorAL(JTree treeScenes, JComboBox<ActorWrapper> comboBox, Canvas canvas) 
 	{
 		this.treeScenes = treeScenes;
 		this.comboBox = comboBox;

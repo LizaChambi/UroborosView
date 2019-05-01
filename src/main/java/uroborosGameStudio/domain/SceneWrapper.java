@@ -21,10 +21,9 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
-public class SceneWrapper implements Serializable
+public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private String name;
 	private List<ActorWrapper> actors;
 	//private ArrayList<String> pathsActor;
 	private ArrayList<String> savedActors;
@@ -40,11 +39,6 @@ public class SceneWrapper implements Serializable
 	public List<ActorWrapper> getActors()
 	{
 		return this.actors;
-	}
-	
-	public String getName() 
-	{
-		return this.name;
 	}
 	
 	public void addActor(ActorWrapper actorWpp)
@@ -113,6 +107,7 @@ public class SceneWrapper implements Serializable
 		return this.name;
 	}
 
+	@Override
 	public void setName(String newName) 
 	{
 		Game.rename(Game.getScene(name), newName);
