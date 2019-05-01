@@ -82,13 +82,6 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
 /*
-	public void saveProject() {
-		setPathsScenes(this.scenes.stream().map(scene -> scene.saveScene()).collect(Collectors.toList()));
-		// list sorted
-		getPathsScenes().get(0).getPaths().add(0, gameTitle + ".ugs");
-//		System.out.println(getPathsScenes().get(0).getPaths());
-	}
-
 	public List<BodyPath> getPathsScenes() {
 		return pathsScenes;
 	}
@@ -103,6 +96,13 @@ public class UGSProject extends GameObject implements Serializable {
 		updateSavedScenes();
 		saveScenes();
 		saveFile(getSavedPath());
+		
+		/*
+		setPathsScenes(this.scenes.stream().map(scene -> scene.saveScene()).collect(Collectors.toList()));
+		// list sorted
+		getPathsScenes().get(0).getPaths().add(0, gameTitle + ".ugs");
+//		System.out.println(getPathsScenes().get(0).getPaths());
+		*/
 	}
 	
 	private String getSavedPath() 
@@ -115,9 +115,11 @@ public class UGSProject extends GameObject implements Serializable {
 		setSavedScenes(this.scenes.stream().map(sce -> sce.getName()).collect(Collectors.toList()));
 	}
 
+	// public void setPathsScenes(List<BodyPath> pathsScenes)
 	private void setSavedScenes(List<String> savedScenes) 
 	{
 		this.savedScenes = savedScenes;
+		//this.pathsScenes = pathsScenes;
 	}
 
 	private void saveScenes() 

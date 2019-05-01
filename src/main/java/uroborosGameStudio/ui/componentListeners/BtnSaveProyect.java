@@ -85,7 +85,6 @@ public class BtnSaveProyect implements ActionListener {
 			System.out.println(game.getPath());
 			System.out.println("** FIN DE ESCENA **");
 		}
-		//input.close();
 	}
 
 }
