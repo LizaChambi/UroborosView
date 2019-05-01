@@ -1,5 +1,7 @@
 package uroborosGameStudio.domain.appModel;
 
+import java.io.IOException;
+
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
@@ -72,7 +74,12 @@ public class MainWindowModel
 	}
 
 	public void save() {
-		this.project.saveProject();
+		try {
+			this.project.saveProject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

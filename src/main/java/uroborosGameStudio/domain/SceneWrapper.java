@@ -1,9 +1,6 @@
 package uroborosGameStudio.domain;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +28,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public SceneWrapper(String name)
 	{
 		this.name = name;
+		this.ext = ".sce";
 		this.actors = new ArrayList<ActorWrapper>();
 		this.savedActors = new ArrayList<String>();
 		// this.pathsActor = new ArrayList<String>();
@@ -134,15 +132,6 @@ public class SceneWrapper extends GameObject implements Serializable
 		updateSavedActors();
 		saveActors(savedPath);
 		saveFile(savedPath);
-	}
-	
-	public void saveFile(String savedPath) throws IOException
-	{
-		File file = new File(savedPath + getName() + ".sce");
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this);
-		oos.close();
 	}
 
 	private void saveActors(String savedPath)

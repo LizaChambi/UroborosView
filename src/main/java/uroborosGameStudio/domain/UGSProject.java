@@ -22,6 +22,7 @@ public class UGSProject extends GameObject implements Serializable {
 	public UGSProject(String projectName, String gameName) 
 	{
 		this.name = gameName;
+		this.ext = ".ugs";
 		this.savedScenes = new ArrayList<String>();
 		this.projectName = projectName;
 		createProjectDir();
@@ -97,26 +98,11 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 */	
 	
-	public void saveProject()
+	public void saveProject() throws IOException
 	{
 		updateSavedScenes();
-		saveScenes(getSavedPath());
-		saveFile();
-	}
-
-	public void saveFile()
-	{
-		try {
-		File file = new File(getSavedPath() + getName() + ".ugs");
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this);
-		oos.close();
-		}
-		catch (IOException e1) 
-		{
-			System.out.println("Algo salio mal");
-		}
+		saveScenes();
+		saveFile(getSavedPath());
 	}
 	
 	private String getSavedPath() 
@@ -134,12 +120,12 @@ public class UGSProject extends GameObject implements Serializable {
 		this.savedScenes = savedScenes;
 	}
 
-	private void saveScenes(String savedPath) 
+	private void saveScenes() 
 	{
 		this.scenes.forEach(esc -> {
 			try 
 			{
-				esc.save(savedPath);
+				esc.save(getSavedPath());
 			} catch (IOException e) 
 			{
 				// TODO Auto-generated catch block

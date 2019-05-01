@@ -64,12 +64,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializePrincipalPanel();
 		this.initializeNorthPanel();
 		this.initializeButtonPanel();
-		// Tool bar
-		this.initializeNewSceneButton();
-		this.initializeComboBox();
-		this.initializeNewActorButton();
-		this.initializeSaveButton();
-		this.initializePlayButton();
+		this.toolbar();
 
 		this.initializeCenterPanel();
 		
@@ -88,20 +83,25 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.frame.pack();
 	}
+
+	private void toolbar() 
+	{
+		this.initializeNewSceneButton();
+		this.initializeComboBox();
+		this.initializeNewActorButton();
+		this.initializeSaveButton();
+		this.initializePlayButton();
+	}
 	
 	private void initializeFrame() {
-		// this.frame.setLayout(new BorderLayout());
 		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
 		this.frame.setResizable(true);
-		// this.frame.setVisible(false);
-		// this.frame.setLocationRelativeTo(null);
 	}
 	
 	private void initializeButtonPanel() {
 		buttonPanel = new JPanel();
-		// buttonPanel.setSize(800,75);
 		buttonPanel.setPreferredSize(new Dimension(800, 40));
 		FlowLayout fl_buttonPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
 		buttonPanel.setLayout(fl_buttonPanel);
@@ -118,7 +118,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeSaveButton() {
 		this.saveButton = new JButton("Guardar");
 		saveButton.addActionListener(new BtnSaveProyect(this.getModelObject()));
-		//saveButton.setEnabled(false);
 		buttonPanel.add(saveButton);
 	}
 

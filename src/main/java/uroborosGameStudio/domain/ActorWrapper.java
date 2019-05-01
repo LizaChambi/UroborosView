@@ -4,9 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
@@ -23,6 +21,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
+		this.ext = ".act";
 		this.path = path;
 		readImage(path);
 		this.point = new Point(x, y);
@@ -86,12 +85,4 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	}
 */
 	
-	public void saveFile(String savedPath) throws IOException
-	{
-		File file = new File(savedPath + getName() + ".act");
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this);
-		oos.close();
-	}
 }
