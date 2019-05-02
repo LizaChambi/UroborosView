@@ -74,7 +74,6 @@ public class MainWindowModel
 	}
 
 	public void save() {
-		// Falta borrar los viejos datos que se encontraban en la carpeta de guardado antes de guardar.
 		try {
 			this.project.saveProject();
 		} catch (IOException e) {

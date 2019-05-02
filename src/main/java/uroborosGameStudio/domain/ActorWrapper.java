@@ -18,6 +18,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public Point point;
 	public Dimension dimension;
 	transient BufferedImage image;
+	private String pathRoot;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -71,6 +72,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
+		deleteFile(getSavedPath());
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -84,5 +86,14 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		return name + ".act";
 	}
 */
+
+	@Override
+	public String getPathRoot() {
+		return pathRoot + System.getProperty("file.separator");
+	}
+
+	public void setPathRoot(String pathRoot) {
+		this.pathRoot = pathRoot;
+	}
 	
 }

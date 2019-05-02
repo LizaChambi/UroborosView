@@ -21,12 +21,12 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
-import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
-import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
+import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
+import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 
 public class EditorWindow extends AbstractWindowFrame {
 

@@ -22,8 +22,8 @@ public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
-	//private ArrayList<String> pathsActor;
 	private ArrayList<String> savedActors;
+	private String pathRoot;
 	
 	public SceneWrapper(String name)
 	{
@@ -31,7 +31,6 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.ext = ".sce";
 		this.actors = new ArrayList<ActorWrapper>();
 		this.savedActors = new ArrayList<String>();
-		// this.pathsActor = new ArrayList<String>();
 	}
 
 	public List<ActorWrapper> getActors()
@@ -81,9 +80,7 @@ public class SceneWrapper extends GameObject implements Serializable
 			}
 			
 			@Override
-			public void onRender(Graphics graphics) 
-			{
-			}
+			public void onRender(Graphics graphics) { }
 
 		});
 		
@@ -108,6 +105,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void setName(String newName) 
 	{
+		deleteFile(getSavedPath());
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
 	}
@@ -117,18 +115,9 @@ public class SceneWrapper extends GameObject implements Serializable
 		return name == name2;
 	}
 
-	/*
-	public BodyPath saveScene() {
-		pathsActor = (ArrayList<String>) this.actors.stream().map(actor->actor.saveActor()).collect(Collectors.toList());
-		pathsActor.add(0, name + ".sce");
-		BodyPath path = new BodyPath(pathsActor);
-		
-		return path;
-	}
-	*/
-	
 	public void save(String savedPath) throws IOException
 	{
+		pathRoot = savedPath;
 		updateSavedActors();
 		saveActors(savedPath);
 		saveFile(savedPath);
@@ -139,6 +128,7 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.forEach(act -> {
 			try 
 			{
+				act.setPathRoot(savedPath);
 				act.saveFile(savedPath);
 			} catch (IOException e) 
 			{
@@ -156,6 +146,11 @@ public class SceneWrapper extends GameObject implements Serializable
 	private void setSavedActors(List<String> savedActors) 
 	{
 		this.savedActors = (ArrayList<String>) savedActors;
+	}
+
+	@Override
+	public String getPathRoot() {
+		return pathRoot + System.getProperty("file.separator");
 	}
 
 }
