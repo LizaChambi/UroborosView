@@ -23,7 +23,7 @@ public class UGSProjectTest
 	@Test
 	public void testCreateNewUGSProyectWithNameAndGameTitle()
 	{	
-		File dir = new File(project.getPath());
+		File dir = new File(project.getPathRoot());
 		
 		assertEquals("DirectoryName", project.getProjectName());
 		assertEquals("GameTitle", project.getName());

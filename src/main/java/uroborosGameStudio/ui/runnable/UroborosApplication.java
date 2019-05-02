@@ -5,7 +5,7 @@ import uroborosGameStudio.ui.MainWindow;
 public class UroborosApplication implements Runnable{
 
 	public static void main(String[] args) {
-		new UroborosApplication().run();;
+		new UroborosApplication().run();
 	}
 
 	public void run() {	

@@ -1,5 +1,7 @@
 package uroborosGameStudio.domain.appModel;
 
+import java.io.IOException;
+
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
@@ -7,7 +9,6 @@ import uroborosGameStudio.domain.UGSProject;
 public class MainWindowModel 
 {
 	private UGSProject project;
-	
 	String itemSelectComboBox;
 
 	public MainWindowModel()
@@ -70,6 +71,15 @@ public class MainWindowModel
 	public SceneWrapper searchScene(String name) 
 	{
 		return this.project.searchScene(name);
+	}
+
+	public void save() {
+		try {
+			this.project.saveProject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
