@@ -26,6 +26,7 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
+import javax.swing.SwingConstants;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -42,6 +43,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel gameEditorPanel;
 	private JPanel treePlayPanel;
 	private JPanel editorPanel;
+	private JPanel titleEditorPanel;
+	private JPanel optionsEditorPanel;
 	private JTextArea textArea = new JTextArea(1, 1);
 	private JComboBox<ActorWrapper> comboBox;
 	private JScrollPane scroollPanel;
@@ -78,6 +81,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeTreePlayPanel();
 	
 		this.initializeEditorPanel();
+		this.initializeTitleEditorPanel();
+		this.initializeOptionsEditorPanel();
+		
+		this.optionsEditorPanel();
 		
 		this.initializeTreePanel();
 		this.initializePlayPanel();
@@ -199,27 +206,44 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeEditorPanel() {
 		editorPanel = new JPanel(new BorderLayout());
-		editorPanel.setLayout(null);
 		editorPanel.setPreferredSize(new Dimension(973, 263));
 		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
+	}
+	
+	private void initializeTitleEditorPanel() {
+		titleEditorPanel = new JPanel();
+		titleEditorPanel.setPreferredSize(new Dimension(973, 35));
+		FlowLayout fl_titlePanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
+		titleEditorPanel.setLayout(fl_titlePanel);
+		this.editorPanel.add(titleEditorPanel, BorderLayout.NORTH);
+	}
+	
+	private void initializeOptionsEditorPanel() {
+		optionsEditorPanel = new JPanel();
+		optionsEditorPanel.setPreferredSize(new Dimension(973, 228));
+		FlowLayout fl_optionsPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
+		optionsEditorPanel.setLayout(fl_optionsPanel);
+		this.editorPanel.add(optionsEditorPanel, BorderLayout.SOUTH);
+	}
+	
+	private void optionsEditorPanel() {
 		
 		this.config = new JLabel("Panel de Configuraci\u00F3n:");
-		config.setBounds(28, 22, 172, 23);
-		editorPanel.add(config);
+		titleEditorPanel.add(config);
 		
 		this.nombre = new JLabel("Nombre: ");
 		nombre.setBounds(28, 60, 72, 23);
-		editorPanel.add(nombre);
+		optionsEditorPanel.add(nombre);
 		nameTF.setToolTipText("");
 		
 		nameTF.setBounds(110, 62, 100, 23);
-		editorPanel.add(nameTF);
+		optionsEditorPanel.add(nameTF);
 		nameTF.setColumns(10);
 		
 		this.btnEditName = new JButton("Editar");
 		btnEditName.setBounds(230, 62, 100, 23);
 		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTF));
-		editorPanel.add(btnEditName);
+		optionsEditorPanel.add(btnEditName);
 	}
 
 	private void initializeTreePlayPanel() {
