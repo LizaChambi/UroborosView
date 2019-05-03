@@ -20,8 +20,6 @@ public class MainWindow extends AbstractWindowFrame {
 	private JLabel titleL;
 	private JLabel iconL;
 
-	public void main() { run(); }
-
 	public MainWindow() {
 		super();
 		this.setResolution(new Dimension(500, 350));

@@ -5,20 +5,23 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
 
-public class ActorWrapper extends GameObject {
-
+public class ActorWrapper extends GameObject  implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	public String path;
 	public Point point;
 	public Dimension dimension;
-	public BufferedImage image;
+	transient BufferedImage image;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
+		this.ext = ".act";
 		this.path = path;
 		readImage(path);
 		this.point = new Point(x, y);
@@ -68,6 +71,7 @@ public class ActorWrapper extends GameObject {
 
 	@Override
 	public void setName(String newName) {
+		// deleteFile(getSavedPath());
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -76,6 +80,5 @@ public class ActorWrapper extends GameObject {
 	public String toString() {
 		return this.name;
 	}
-
-
+	
 }
