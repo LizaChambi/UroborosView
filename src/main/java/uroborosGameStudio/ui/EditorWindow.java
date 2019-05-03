@@ -27,6 +27,7 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.components.ButtonUGS;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -49,15 +50,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JComboBox<ActorWrapper> comboBox;
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
-	private JButton sceneButton;
 	private JTree treeScenes = new JTree();
-	private JButton actorButton;
-	private JButton saveButton;
 	private JTextField nameTF = new JTextField("");
 	private JLabel config;
 	private JLabel nombre;
-	private JButton btnEditName;
-	private JButton btnPlay = new JButton("Play");
 
 	public EditorWindow() {
 		super();
@@ -92,11 +88,11 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void toolbar() 
 	{
-		this.initializeNewSceneButton();
+		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene), buttonPanel);
 		this.initializeComboBox();
-		this.initializeNewActorButton();
-		this.initializeSaveButton();
-		this.initializePlayButton();
+		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas), buttonPanel);
+		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
+		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
 	}
 	
 	private void initializeFrame() {
@@ -113,26 +109,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.setLayout(fl_buttonPanel);
 		this.northPanel.add(buttonPanel, BorderLayout.SOUTH);
 	}
-	
-	private void initializePlayButton() 
-	{
-		this.btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas));
-		buttonPanel.add(btnPlay);
-	}
-	
-	private void initializeSaveButton() {
-		this.saveButton = new JButton("Guardar");
-		saveButton.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
-		buttonPanel.add(saveButton);
-	}
-
-	private void initializeNewActorButton() 
-	{
-		this.actorButton = new JButton("Nuevo Actor");
-		actorButton.addActionListener(new BtnNewActorAL(treeScenes, comboBox, canvas));
-		buttonPanel.add(actorButton);
-	}
 
 	private void initializeComboBox() {
 		ActorWrapper ninio = bdActors.getKids();
@@ -147,12 +123,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		comboBox.setPreferredSize(new Dimension(110,23));
 		comboBox.setMaximumSize(new Dimension(110,23));
 		buttonPanel.add(comboBox);
-	}
-
-	private void initializeNewSceneButton() {
-		this.sceneButton = new JButton("Nueva Escena");
-		sceneButton.addActionListener(new BtnNewSceneAL(treeScenes, idScene));
-		buttonPanel.add(sceneButton);
 	}
 
 	private void initializeCanvas() {
@@ -223,24 +193,20 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.editorPanel.add(optionsEditorPanel, BorderLayout.SOUTH);
 	}
 	
-	private void optionsEditorPanel() {
-		
+	private void optionsEditorPanel() 
+	{	
 		this.config = new JLabel("Panel de Configuraci\u00F3n:");
 		titleEditorPanel.add(config);
 		
 		this.nombre = new JLabel("Nombre: ");
 		nombre.setBounds(28, 60, 72, 23);
 		optionsEditorPanel.add(nombre);
-		nameTF.setToolTipText("");
 		
 		nameTF.setBounds(110, 62, 100, 23);
 		optionsEditorPanel.add(nameTF);
 		nameTF.setColumns(10);
 		
-		this.btnEditName = new JButton("Editar");
-		btnEditName.setBounds(230, 62, 100, 23);
-		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTF));
-		optionsEditorPanel.add(btnEditName);
+		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTF), optionsEditorPanel, 230, 62, 100, 23);
 	}
 
 	private void initializeTreePlayPanel() {
