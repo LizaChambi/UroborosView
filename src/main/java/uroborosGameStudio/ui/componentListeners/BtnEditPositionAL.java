@@ -10,13 +10,13 @@ import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class BtnEditDimensionAL extends AbstractEditionListener
+public class BtnEditPositionAL extends AbstractEditionListener
 {
 	private JTextField posX;
 	private JTextField posY;
 	private MainWindowModel model;
 	
-	public BtnEditDimensionAL(JTree treeScenes, JTextField posX, JTextField posY, Canvas canvas, MainWindowModel model) 
+	public BtnEditPositionAL(JTree treeScenes, JTextField posX, JTextField posY, Canvas canvas, MainWindowModel model) 
 	{
 		super(treeScenes, canvas);
 		this.posX = posX;

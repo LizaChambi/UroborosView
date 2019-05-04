@@ -19,7 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.componentListeners.BtnEditDimensionAL;
+import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
@@ -212,7 +212,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		new LabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
 		posXTextField = new TextFieldUGS("0",optionsEditorPanel, 450, 62, 50, 23,5).getTextField();
 		posYTextField = new TextFieldUGS("0",optionsEditorPanel, 500, 62, 50, 23,5).getTextField();
-		new ButtonUGS("Editar", new BtnEditDimensionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);
+		new ButtonUGS("Editar", new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);
 		
 	}
 
