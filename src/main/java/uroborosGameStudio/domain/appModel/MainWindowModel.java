@@ -1,6 +1,5 @@
 package uroborosGameStudio.domain.appModel;
 
-import java.io.File;
 import java.io.IOException;
 
 import uroborosGameStudio.domain.SceneWrapper;

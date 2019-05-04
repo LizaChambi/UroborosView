@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Ability;
 import org.team.uroboros.uroboros.engine.Actor;
@@ -24,14 +23,12 @@ public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
-	private ArrayList<String> savedActors;
 	
 	public SceneWrapper(String name)
 	{
 		this.name = name;
 		this.ext = ".sce";
 		this.actors = new ArrayList<ActorWrapper>();
-		this.savedActors = new ArrayList<String>();
 	}
 
 	public List<ActorWrapper> getActors()
@@ -106,7 +103,6 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void setName(String newName) 
 	{
-		// deleteFile(getSavedPath());
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
 	}
@@ -118,7 +114,6 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	public void save(String savedPath) throws IOException
 	{
-		updateSavedActors();
 		saveActors(savedPath);
 		saveFile(savedPath);
 	}
@@ -135,16 +130,6 @@ public class SceneWrapper extends GameObject implements Serializable
 				e.printStackTrace();
 			}
 		});
-	}
-
-	private void updateSavedActors() 
-	{
-		setSavedActors(actors.stream().map(act -> act.getName()).collect(Collectors.toList()));
-	}
-
-	private void setSavedActors(List<String> savedActors) 
-	{
-		this.savedActors = (ArrayList<String>) savedActors;
 	}
 
 	@Override

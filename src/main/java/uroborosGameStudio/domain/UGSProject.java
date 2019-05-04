@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Game;
 
@@ -16,13 +15,11 @@ public class UGSProject extends GameObject implements Serializable {
 	private String projectName;
 	private String pathRoot;
 	private List<SceneWrapper> scenes;
-	private List<String> savedScenes;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
 		this.name = gameName;
 		this.ext = ".ugs";
-		this.savedScenes = new ArrayList<String>();
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
@@ -83,7 +80,6 @@ public class UGSProject extends GameObject implements Serializable {
 	public void saveProject() throws IOException
 	{
 		deleteOldProject();
-		updateSavedScenes();
 		saveScenes();
 		saveFile(getSavedPath());
 	}
@@ -109,16 +105,6 @@ public class UGSProject extends GameObject implements Serializable {
 	public String getSavedPath() 
 	{
 		return getPathRoot() + System.getProperty("file.separator");
-	}
-
-	private void updateSavedScenes() 
-	{
-		setSavedScenes(this.scenes.stream().map(sce -> sce.getName()).collect(Collectors.toList()));
-	}
-
-	private void setSavedScenes(List<String> savedScenes) 
-	{
-		this.savedScenes = savedScenes;
 	}
 
 	private void saveScenes() 
