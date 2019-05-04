@@ -13,12 +13,16 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 public class SceneTreePanelTSL extends AbstractEditionListener 
 {
 	private JTextField textField;
+	private JTextField posXField;
+	private JTextField posYField;
 	private MainWindowModel model;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField) 
 	{
 		super(treeScenes, canvas);
 		this.textField = textField;
+		this.posXField = posXTextField;
+		this.posYField = posYTextField;
 		this.model = model;
 	}
 
@@ -26,6 +30,8 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	public void updateComponents(GameObject gameObject) 
 	{
 		textField.setText(gameObject.getName());
+		posXField.setText(gameObject.getX().toString());
+		posYField.setText(gameObject.getY().toString());
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)

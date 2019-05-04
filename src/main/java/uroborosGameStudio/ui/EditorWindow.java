@@ -19,6 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnEditDimensionAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
@@ -51,7 +52,9 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
-	private JTextField nameTF;
+	private JTextField nameTextField;
+	private JTextField posXTextField;
+	private JTextField posYTextField;
 
 	public EditorWindow() {
 		super();
@@ -131,6 +134,7 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void initializeCanvas() {
 		this.canvas.setFocusable(true);
+		this.canvas.setPreferredSize(new Dimension(666, 400));
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
 		this.playPanel.add(this.canvas);
@@ -151,7 +155,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTF,canvas, model));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -202,9 +206,14 @@ public class EditorWindow extends AbstractWindowFrame {
 		new LabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
 		
 		new LabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
-		nameTF = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
-		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTF, canvas), optionsEditorPanel, 230, 62, 100, 23);
+		nameTextField = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
+		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTextField, canvas), optionsEditorPanel, 230, 62, 100, 23);
 	
+		new LabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
+		posXTextField = new TextFieldUGS("0",optionsEditorPanel, 450, 62, 50, 23,5).getTextField();
+		posYTextField = new TextFieldUGS("0",optionsEditorPanel, 500, 62, 50, 23,5).getTextField();
+		new ButtonUGS("Editar", new BtnEditDimensionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);
+		
 	}
 
 	private void initializeTreePlayPanel() {

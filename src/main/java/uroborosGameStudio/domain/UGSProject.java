@@ -138,4 +138,20 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return null;
 	}
+
+	@Override
+	public void setPosition(int x, int y) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Integer getX() {
+		return 0;
+	}
+
+	@Override
+	public Integer getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
