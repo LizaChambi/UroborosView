@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public abstract class GameObject implements Serializable
 {
@@ -34,6 +34,9 @@ public abstract class GameObject implements Serializable
 		oos.writeObject(this);
 		oos.close();
 	}
-	
+
+	public abstract void setSceneUEngine();
+
+	public abstract SceneWrapper selectedScene(MainWindowModel model);
 
 }

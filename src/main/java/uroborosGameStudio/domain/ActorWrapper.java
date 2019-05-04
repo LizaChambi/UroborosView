@@ -10,6 +10,9 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.Scene;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class ActorWrapper extends GameObject  implements Serializable {
 	
@@ -79,6 +82,19 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public void setSceneUEngine() 
+	{
+		Scene selectedScene = Game.getSceneWithActor(this.name);
+		Game.setScene(selectedScene);
+	}
+
+	@Override
+	public SceneWrapper selectedScene(MainWindowModel model) 
+	{
+		return model.searchScene(Game.getSceneWithActor(this.getName()).getName());
 	}
 	
 }

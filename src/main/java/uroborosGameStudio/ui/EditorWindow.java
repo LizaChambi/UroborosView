@@ -225,8 +225,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.centerPanel.add(eastPanel, BorderLayout.EAST);
 	}
 	
-
-	
 	private void initializeNorthPanel() {
 		northPanel = new JPanel(new BorderLayout());
 		northPanel.setPreferredSize(new Dimension(resolution.width, 75) );

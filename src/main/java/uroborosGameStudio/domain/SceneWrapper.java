@@ -18,6 +18,8 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -143,6 +145,18 @@ public class SceneWrapper extends GameObject implements Serializable
 	private void setSavedActors(List<String> savedActors) 
 	{
 		this.savedActors = (ArrayList<String>) savedActors;
+	}
+
+	@Override
+	public void setSceneUEngine() 
+	{
+		Game.setScene(this.name);
+	}
+
+	@Override
+	public SceneWrapper selectedScene(MainWindowModel model) 
+	{
+		return this;
 	}
 
 }

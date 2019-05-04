@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Game;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
+
 public class UGSProject extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String projectName;
@@ -136,6 +138,18 @@ public class UGSProject extends GameObject implements Serializable {
 	public List<String> getSavesFiles() 
 	{
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSceneUEngine() 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public SceneWrapper selectedScene(MainWindowModel model) 
+	{
 		return null;
 	}
 }
