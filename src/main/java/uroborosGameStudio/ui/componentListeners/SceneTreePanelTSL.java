@@ -4,34 +4,27 @@ import java.awt.Canvas;
 
 import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class SceneTreePanelTSL implements TreeSelectionListener 
+public class SceneTreePanelTSL extends AbstractEditionListener 
 {
-	private JTree treeScenes;
 	private JTextField textField;
-	private Canvas canvas;
 	private MainWindowModel model;
 	
 	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model) 
 	{
-		this.treeScenes = treeScenes;
+		super(treeScenes, canvas);
 		this.textField = textField;
-		this.canvas = canvas;
 		this.model = model;
 	}
 
-	public void valueChanged(TreeSelectionEvent e) 
+	@Override
+	public void updateComponents(GameObject gameObject) 
 	{
-		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		GameObject gameObject = (GameObject) selectedNode.getUserObject();
 		textField.setText(gameObject.getName());
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
@@ -50,15 +43,14 @@ public class SceneTreePanelTSL implements TreeSelectionListener
 		 */
 	}
 
-	private void setCanvas(SceneWrapper sceneWpp) 
-	{
-		this.canvas.getGraphics().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		sceneWpp.getActors().forEach(act -> drawActor(act));
+	@Override
+	public void updateComponents() {
+		// TODO Auto-generated method stub	
 	}
 
-	private void drawActor(ActorWrapper actor) 
-	{
-		this.canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null);
+	@Override
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
+		// TODO Auto-generated method stub	
 	}
 
 }

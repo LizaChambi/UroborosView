@@ -203,7 +203,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		new LabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
 		nameTF = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
-		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTF), optionsEditorPanel, 230, 62, 100, 23);
+		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTF, canvas), optionsEditorPanel, 230, 62, 100, 23);
 	
 	}
 
