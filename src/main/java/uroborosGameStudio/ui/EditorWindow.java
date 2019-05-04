@@ -7,9 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -28,6 +26,8 @@ import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.components.ButtonUGS;
+import uroborosGameStudio.ui.components.LabelUGS;
+import uroborosGameStudio.ui.components.TextFieldUGS;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -51,48 +51,37 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
-	private JTextField nameTF = new JTextField("");
-	private JLabel config;
-	private JLabel nombre;
+	private JTextField nameTF;
 
 	public EditorWindow() {
 		super();
-		this.initializeFrame();
+		initializeFrame();
 	
-		this.initializePrincipalPanel();
-		this.initializeNorthPanel();
-		this.initializeButtonPanel();
-		this.toolbar();
+		initializeGlobalPanel();
+		initializeNorthPanel();
+		initializeButtonPanel();
+		toolbar();
 
-		this.initializeCenterPanel();
+		initializeCenterPanel();
 		
-		this.initializeTextPanel();
-		this.initializeGameEditorPanel();
+		initializeTextPanel();
+		initializeGameEditorPanel();
 		
-		this.initializeTreePlayPanel();
+		initializeTreePlayPanel();
 	
-		this.initializeEditorPanel();
-		this.initializeTitleEditorPanel();
-		this.initializeOptionsEditorPanel();
+		initializeEditorPanel();
+		initializeTitleEditorPanel();
+		initializeOptionsEditorPanel();
 		
-		this.optionsEditorPanel();
+		optionsEditorPanel();
 		
-		this.initializeTreePanel();
-		this.initializePlayPanel();
+		initializeTreePanel();
+		initializePlayPanel();
 		
-		this.initializeCanvas();
-		this.initializeCodeTextArea();
+		initializeCanvas();
+		initializeCodeTextArea();
 		
 		this.frame.pack();
-	}
-
-	private void toolbar() 
-	{
-		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene), buttonPanel);
-		this.initializeComboBox();
-		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas), buttonPanel);
-		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
-		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
 	}
 	
 	private void initializeFrame() {
@@ -102,6 +91,12 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.frame.setResizable(true);
 	}
 	
+	private void initializeGlobalPanel() {
+		principalPanel = new JPanel(new BorderLayout());
+		principalPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-30) );
+		this.frame.getContentPane().add(principalPanel, BorderLayout.CENTER);
+	}
+	
 	private void initializeButtonPanel() {
 		buttonPanel = new JPanel();
 		buttonPanel.setPreferredSize(new Dimension(800, 40));
@@ -109,7 +104,16 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.setLayout(fl_buttonPanel);
 		this.northPanel.add(buttonPanel, BorderLayout.SOUTH);
 	}
-
+	
+	private void toolbar() 
+	{
+		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene), buttonPanel);
+		this.initializeComboBox();
+		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas), buttonPanel);
+		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
+		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
+	}
+	
 	private void initializeComboBox() {
 		ActorWrapper ninio = bdActors.getKids();
 		ActorWrapper pelota = bdActors.getBall();
@@ -195,18 +199,12 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void optionsEditorPanel() 
 	{	
-		this.config = new JLabel("Panel de Configuraci\u00F3n:");
-		titleEditorPanel.add(config);
+		new LabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
 		
-		this.nombre = new JLabel("Nombre: ");
-		nombre.setBounds(28, 60, 72, 23);
-		optionsEditorPanel.add(nombre);
-		
-		nameTF.setBounds(110, 62, 100, 23);
-		optionsEditorPanel.add(nameTF);
-		nameTF.setColumns(10);
-		
+		new LabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
+		nameTF = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
 		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTF), optionsEditorPanel, 230, 62, 100, 23);
+	
 	}
 
 	private void initializeTreePlayPanel() {
@@ -227,11 +225,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.centerPanel.add(eastPanel, BorderLayout.EAST);
 	}
 	
-	private void initializePrincipalPanel() {
-		principalPanel = new JPanel(new BorderLayout());
-		principalPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-30) );
-		this.frame.getContentPane().add(principalPanel, BorderLayout.CENTER);
-	}
+
 	
 	private void initializeNorthPanel() {
 		northPanel = new JPanel(new BorderLayout());
