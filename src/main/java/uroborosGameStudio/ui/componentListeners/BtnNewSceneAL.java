@@ -1,46 +1,46 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Canvas;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
-public class BtnNewSceneAL implements ActionListener 
+public class BtnNewSceneAL extends AbstractEditionListener
 {
-	private JTree treeScenes;
 	private Integer idScene;
 	
-	public BtnNewSceneAL(JTree treeScenes, int idScene) 
+	public BtnNewSceneAL(JTree treeScenes, int idScene, Canvas canvas) 
 	{
-		this.treeScenes = treeScenes;
+		super(treeScenes, canvas);
 		this.idScene = idScene;
 	}
 
-	public void actionPerformed(ActionEvent e) 
+	@Override
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) 
 	{
-		addScene();
-	}
-
-	private void addScene() 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
+		DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
+		if(selectedNode.getLevel() == 0)
 		{
-			DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
-			if(lastNode.getLevel() == 0)
-			{
-				UGSProject ugsGame = (UGSProject) lastNode.getUserObject();
-				SceneWrapper newScene = new SceneWrapper("Escena" + this.idScene);
-				ugsGame.addScene(newScene);
-				modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), lastNode, modelNode.getChildCount(lastNode));
-				this.idScene++;
-			}
+			UGSProject ugsGame = (UGSProject) gameObject;
+			SceneWrapper newScene = new SceneWrapper("Escena" + this.idScene);
+			ugsGame.addScene(newScene);
+			modelNode.insertNodeInto(new DefaultMutableTreeNode(newScene), selectedNode, modelNode.getChildCount(selectedNode));
+			this.idScene++;
 		}
 	}
 
+	@Override
+	public void updateComponents(GameObject gameObject) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void updateComponents() {
+		// TODO Auto-generated method stub
+	}
 }

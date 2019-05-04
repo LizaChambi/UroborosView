@@ -2,7 +2,6 @@ package uroborosGameStudio.domain.appModel;
 
 import java.io.IOException;
 
-import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
@@ -50,11 +49,6 @@ public class MainWindowModel
 	{
 		project.addScene(newScene);
 	}
-
-	public void addActorToScene(GameObject newActor, SceneWrapper scene) 
-	{
-		System.out.println(scene.getName());
-	}
 	
 	public String getItemSelectComboBox() {
 		return itemSelectComboBox;
@@ -81,5 +75,4 @@ public class MainWindowModel
 			e.printStackTrace();
 		}
 	}
-
 }

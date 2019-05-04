@@ -10,6 +10,9 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.Scene;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class ActorWrapper extends GameObject  implements Serializable {
 	
@@ -18,7 +21,6 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public Point point;
 	public Dimension dimension;
 	transient BufferedImage image;
-	private String pathRoot;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -72,7 +74,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
-		deleteFile(getSavedPath());
+		// deleteFile(getSavedPath());
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -81,19 +83,18 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public String toString() {
 		return this.name;
 	}
-/*
-	public String saveActor() {
-		return name + ".act";
-	}
-*/
 
 	@Override
-	public String getPathRoot() {
-		return pathRoot + System.getProperty("file.separator");
+	public void setSceneUEngine() 
+	{
+		Scene selectedScene = Game.getSceneWithActor(this.name);
+		Game.setScene(selectedScene);
 	}
 
-	public void setPathRoot(String pathRoot) {
-		this.pathRoot = pathRoot;
+	@Override
+	public SceneWrapper selectedScene(MainWindowModel model) 
+	{
+		return model.searchScene(Game.getSceneWithActor(this.getName()).getName());
 	}
 	
 }

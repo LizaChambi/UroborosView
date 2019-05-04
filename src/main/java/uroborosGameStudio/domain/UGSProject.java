@@ -5,22 +5,21 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.team.uroboros.uroboros.engine.Game;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class UGSProject extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String projectName;
 	private String pathRoot;
 	private List<SceneWrapper> scenes;
-	private List<String> savedScenes;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
 		this.name = gameName;
 		this.ext = ".ugs";
-		this.savedScenes = new ArrayList<String>();
 		this.projectName = projectName;
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
@@ -69,7 +68,7 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public void setName(String newTitle) {
-		deleteFile(getSavedPath());
+		//deleteFile(getSavedPath());
 		this.name = newTitle;
 	}
 
@@ -80,28 +79,32 @@ public class UGSProject extends GameObject implements Serializable {
 	
 	public void saveProject() throws IOException
 	{
-		updateSavedScenes();
+		deleteOldProject();
 		saveScenes();
 		saveFile(getSavedPath());
 	}
 	
-	protected String getSavedPath() 
+	private void deleteOldProject() 
+	{
+		File file = new File(getPathRoot()); 
+		File[] ficheros = file.listFiles(); 
+		if(file.exists()) 
+		{ 
+			for (int x=0;x<ficheros.length;x++) 
+			{ 
+				File fileToDelete = new File(ficheros[x].toString()); 
+				fileToDelete.delete(); 
+			}
+		} 
+		else 
+		{ 
+			System.out.println("No existe el directorio"); 
+		}
+	}
+
+	public String getSavedPath() 
 	{
 		return getPathRoot() + System.getProperty("file.separator");
-	}
-
-	private void updateSavedScenes() 
-	{
-		setSavedScenes(this.scenes.stream().map(sce -> sce.getName()).collect(Collectors.toList()));
-	}
-
-	private void setSavedScenes(List<String> savedScenes) 
-	{
-		this.savedScenes = savedScenes;
-	}
-	
-	private List<String> getSavedScenes() {
-		return this.savedScenes;
 	}
 
 	private void saveScenes() 
@@ -116,5 +119,23 @@ public class UGSProject extends GameObject implements Serializable {
 				e.printStackTrace();
 			}
 		});
+	}
+
+	public List<String> getSavesFiles() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSceneUEngine() 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public SceneWrapper selectedScene(MainWindowModel model) 
+	{
+		return null;
 	}
 }

@@ -23,6 +23,7 @@ public class BtnSaveProjectAL implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		model.save();
 		try {
+			// Lectura de los archivos guardados
 			lectura();
 		} catch (ClassNotFoundException | IOException e1) {
 			// TODO Auto-generated catch block
@@ -30,6 +31,7 @@ public class BtnSaveProjectAL implements ActionListener {
 		}
 	}
 	
+	// Método de lectura para comprobar los archivos guardados:
 	public void lectura() throws IOException, ClassNotFoundException 
 	{
 		FileInputStream file = new FileInputStream(
