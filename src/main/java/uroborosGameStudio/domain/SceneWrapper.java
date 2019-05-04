@@ -144,4 +144,22 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this;
 	}
 
+	@Override
+	public void setPosition(int x, int y) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Integer getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Integer getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

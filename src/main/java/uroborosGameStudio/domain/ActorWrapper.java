@@ -56,11 +56,13 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		return this.image;
 	}
 
-	public int getX() {
+	@Override
+	public Integer getX() {
 		return this.point.x;
 	}
 
-	public int getY() {
+	@Override
+	public Integer getY() {
 		return this.point.y;
 	}
 
@@ -96,5 +98,12 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	{
 		return model.searchScene(Game.getSceneWithActor(this.getName()).getName());
 	}
+
+	@Override
+	public void setPosition(int x, int y) 
+	{
+		this.point = new Point(x,y);	
+	}
+
 	
 }
