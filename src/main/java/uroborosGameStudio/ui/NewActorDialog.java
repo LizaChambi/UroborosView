@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
 
 public class NewActorDialog extends JDialog 
@@ -39,7 +40,6 @@ public class NewActorDialog extends JDialog
 		
 	}
 
-	// Refactor
 	private void buttons() 
 	{
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -49,16 +49,13 @@ public class NewActorDialog extends JDialog
 			getRootPane().setDefaultButton(okButton);
 		}
 		
-		{
-			JButton cancelButton = new JButton("Cancel");
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) 
-				{
-					dispose();
-				}
-			});
-			buttonPanel.add(cancelButton);
-		}
+		new ButtonUGS("Cancel", new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				dispose();
+			}
+		}, buttonPanel);
+		
 	}
 
 	private void initializedButtonPanel() 
