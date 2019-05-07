@@ -3,6 +3,7 @@ package uroborosGameStudio.ui.componentListeners;
 import java.awt.Canvas;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -10,6 +11,7 @@ import javax.swing.tree.DefaultTreeModel;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
+import uroborosGameStudio.ui.NewActorDialog;
 
 public class BtnNewActorAL extends AbstractEditionListener 
 {
@@ -28,6 +30,14 @@ public class BtnNewActorAL extends AbstractEditionListener
 		if(selectedNode.getLevel() == 1)
 		{
 			SceneWrapper scene = (SceneWrapper) gameObject;
+			
+			
+			NewActorDialog dialog = new NewActorDialog();
+			dialog.setLocationRelativeTo(null);// Hace que la ventana se abra en el centro de la pantalla
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			
+			
 			ActorWrapper newActor = (ActorWrapper) comboBox.getSelectedItem();
 			scene.addActor(newActor);
 			drawActor(newActor);
