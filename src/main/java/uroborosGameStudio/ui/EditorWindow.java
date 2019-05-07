@@ -27,7 +27,7 @@ import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.components.ButtonUGS;
-import uroborosGameStudio.ui.components.LabelUGS;
+import uroborosGameStudio.ui.components.JLabelUGS;
 import uroborosGameStudio.ui.components.TextFieldUGS;
 
 public class EditorWindow extends AbstractWindowFrame {
@@ -203,13 +203,13 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void optionsEditorPanel() 
 	{	
-		new LabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
+		new JLabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
 		
-		new LabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
+		new JLabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
 		nameTextField = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
 		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTextField, canvas), optionsEditorPanel, 230, 62, 100, 23);
 	
-		new LabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
+		new JLabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
 		posXTextField = new TextFieldUGS("0",optionsEditorPanel, 450, 62, 50, 23,5).getTextField();
 		posYTextField = new TextFieldUGS("0",optionsEditorPanel, 500, 62, 50, 23,5).getTextField();
 		new ButtonUGS("Editar", new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);

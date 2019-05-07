@@ -3,15 +3,15 @@ package uroborosGameStudio.ui.components;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class LabelUGS 
+public class JLabelUGS 
 {
 
-	public LabelUGS(String text, JPanel panel) 
+	public JLabelUGS(String text, JPanel panel) 
 	{
 		createSimpleLabel(text, panel);
 	}
 
-	public LabelUGS(String text, JPanel panel, int x, int y, int width, int height) 
+	public JLabelUGS(String text, JPanel panel, int x, int y, int width, int height) 
 	{
 		createSimpleLabel(text, panel).setBounds(x, y, width, height);
 	}
