@@ -105,5 +105,10 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		this.point = new Point(x,y);	
 	}
 
+	public Boolean hasName(String name) 
+	{
+		return getName().equals(name);
+	}
+
 	
 }

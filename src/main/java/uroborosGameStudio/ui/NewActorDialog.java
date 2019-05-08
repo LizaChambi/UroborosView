@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
 import java.awt.event.KeyAdapter;
@@ -27,6 +28,7 @@ public class NewActorDialog extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 	private final JPanel globalPanel = new JPanel();
+	private MainWindowModel model;
 	private JPanel headerPanel;
 	private JPanel propertiesPanel;
 	private JPanel buttonPanel;
@@ -38,8 +40,9 @@ public class NewActorDialog extends JDialog
 	private JButton btnOpenImage;
 	private JButton okButton;
 
-	public NewActorDialog() 
+	public NewActorDialog(MainWindowModel model) 
 	{
+		this.model = model;
 		initializedDialog();
 		initializedHeaderPanel();
 		titleLabel();
@@ -115,16 +118,18 @@ public class NewActorDialog extends JDialog
 					}
 					else
 					{
-						System.out.println("El nombre: " + text + " es válido.");
-						okButton.setEnabled(true);
+						if (model.validName(textFieldName.getText()))
+						{
+							System.out.println("El nombre del actor ya está en uso.");
+							okButton.setEnabled(false);
+						}
+						else
+						{
+							System.out.println("El nombre: " + text + " es válido.");
+							okButton.setEnabled(true);
+						}
 					}
-					/*
-					if (model.existNameActor(textFieldName.getText()))
-					{
-						System.out.println("El nombre de actor ya está en uso.");
-						okButton.setEnabled(false);
-					}
-					*/
+					
 				}
 			}
 		});

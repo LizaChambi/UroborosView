@@ -112,7 +112,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
 		this.initializeComboBox();
-		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas), buttonPanel);
+		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas, model), buttonPanel);
 		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
 		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
 	}

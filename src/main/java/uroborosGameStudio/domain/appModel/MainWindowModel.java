@@ -75,4 +75,9 @@ public class MainWindowModel
 			e.printStackTrace();
 		}
 	}
+
+	public Boolean validName(String name) 
+	{
+		return this.project.existActorName(name);
+	}
 }

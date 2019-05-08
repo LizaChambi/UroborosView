@@ -162,4 +162,9 @@ public class SceneWrapper extends GameObject implements Serializable
 		return 0;
 	}
 
+	public Boolean existActorName(String name) 
+	{
+		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
+	}
+
 }
