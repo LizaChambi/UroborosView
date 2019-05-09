@@ -2,35 +2,28 @@ package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.UIManager;
-import java.awt.SystemColor;
-import java.awt.GridLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JCheckBox;
-import java.awt.Dimension;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 
 public class NewActorDialog extends JDialog 
 {
@@ -78,6 +71,7 @@ public class NewActorDialog extends JDialog
 	{
 		propertyName();
 		propertyImage();
+		propertyFrames();
 	}
 
 	private void propertyImage() 
@@ -105,40 +99,28 @@ public class NewActorDialog extends JDialog
 		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
 		cbxHabilitarFrames.setBounds(0, 36, 420, 23);
 		panelImage.add(cbxHabilitarFrames);
-		
-		panelFrames = new JPanel();
-		panelFrames.setBounds(5, 125, 421, 107);
-		propertiesPanel.add(panelFrames);
-		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
-		
-		panelNumFrames = new JPanel();
-		
-		lblNewLabel = new JLabel("Cantidad de fotogramas:");
-		lblNewLabel.setBounds(5, 6, 177, 15);
-		
-		textFieldNumFrames = new JTextField();
-		textFieldNumFrames.setBounds(187, 5, 212, 18);
-		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
-		textFieldNumFrames.setColumns(10);
-		
-		panelTitleFrame = new JPanel();
-		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		lblFrames = new JLabel("Dimensión de los fotograma:");
-		panelTitleFrame.add(lblFrames);
-		lblFrames.setFont(new Font("Dialog", Font.PLAIN, 12));
-		
-		panelDimensionFrame = new JPanel();
-		panelDimensionFrame.setLayout(null);
-		
+	}
+
+	private void propertyFrames() 
+	{
+		inicializedPanelFrames();
+		numberFrames();
+		titleDimensionFrames();
+		dimensionFrames();
+	}
+
+	private void dimensionFrames() 
+	{
+		inicializedDimensionFrame();
+		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		lblAncho = new JLabel("Ancho:");
 		lblAncho.setBounds(5, 7, 48, 15);
 		panelDimensionFrame.add(lblAncho);
 		
 		textFieldWidth = new JTextField();
 		textFieldWidth.setBounds(58, 5, 135, 19);
-		panelDimensionFrame.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
+		panelDimensionFrame.add(textFieldWidth);
 		
 		lblHigh = new JLabel("Alto:");
 		lblHigh.setBounds(217, 7, 40, 15);
@@ -146,15 +128,58 @@ public class NewActorDialog extends JDialog
 		
 		textFieldHeight = new JTextField();
 		textFieldHeight.setBounds(259, 5, 135, 19);
-		panelDimensionFrame.add(textFieldHeight);
 		textFieldHeight.setColumns(10);
-		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
-		panelNumFrames.setLayout(null);
+		panelDimensionFrame.add(textFieldHeight);
+	}
+
+	private void titleDimensionFrames() 
+	{
+		inicializedTitleFrame();
+		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
+		lblFrames = new JLabel("Dimensión de los fotograma:");
+		lblFrames.setFont(new Font("Dialog", Font.PLAIN, 12));
+		panelTitleFrame.add(lblFrames);
+	}
+
+	private void numberFrames() {
+		inicializedNumFrames();
+		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
+		lblNewLabel = new JLabel("Cantidad de fotogramas:");
+		lblNewLabel.setBounds(5, 6, 177, 15);
 		panelNumFrames.add(lblNewLabel);
+		
+		textFieldNumFrames = new JTextField();
+		textFieldNumFrames.setBounds(187, 5, 212, 18);
+		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
+		textFieldNumFrames.setColumns(10);
 		panelNumFrames.add(textFieldNumFrames);
-		panelFrames.add(panelNumFrames);
-		panelFrames.add(panelTitleFrame);
+	}
+
+	private void inicializedDimensionFrame() {
+		panelDimensionFrame = new JPanel();
+		panelDimensionFrame.setLayout(null);
 		panelFrames.add(panelDimensionFrame);
+	}
+
+	private void inicializedTitleFrame() 
+	{
+		panelTitleFrame = new JPanel();
+		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panelFrames.add(panelTitleFrame);
+	}
+
+	private void inicializedNumFrames() {
+		panelNumFrames = new JPanel();
+		panelNumFrames.setLayout(null);
+		panelFrames.add(panelNumFrames);
+	}
+
+	private void inicializedPanelFrames() {
+		panelFrames = new JPanel();
+		panelFrames.setBounds(5, 125, 421, 107);
+		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
+		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
+		propertiesPanel.add(panelFrames);
 	}
 
 	private void propertyName() 
