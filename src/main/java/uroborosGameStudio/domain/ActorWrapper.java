@@ -10,7 +10,7 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.Scene;
+import org.team.uroboros.uroboros.engine.component.Scene;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 

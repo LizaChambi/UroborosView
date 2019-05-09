@@ -1,7 +1,6 @@
 package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,22 +24,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import org.team.uroboros.uroboros.engine.ui.Canvas;
+
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.components.ButtonUGS;
-import uroborosGameStudio.ui.components.SimpleLabelUGS;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class NewActorDialog extends JDialog 
 {
 	private static final long serialVersionUID = 1L;
 	private final JPanel globalPanel = new JPanel();
 	private MainWindowModel model;
-	private JTree treeScenes;
 	private Canvas canvas;
+	private JTree treeScenes;
 	private JPanel headerPanel;
 	private JPanel propertiesPanel;
 	private JPanel buttonPanel;
@@ -296,7 +296,9 @@ public class NewActorDialog extends JDialog
 
 	private void titleLabel() 
 	{
-		new SimpleLabelUGS("Complete las siguientes propiedades:", headerPanel);
+		JLabel lblTitle = new JLabel("Complete las siguientes propiedades:");
+		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
+		headerPanel.add(lblTitle);
 	}
 
 	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 

@@ -13,7 +13,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class AbstractWindowFrame implements Runnable, WindowListener, ComponentListener {
 
-	JFrame frame;
+	protected JFrame frame;
 	String title = "Uroboros Game Studio";
 	Integer width = 0;
 	Integer height = 0;
@@ -43,7 +43,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 
 	public void run() {	this.open(); }
 	
-	private void open() {
+	protected void open() {
 		if(!this.frame.isVisible()) {
 			this.frame.setVisible(true);
 		}
@@ -52,6 +52,11 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	public MainWindowModel getModelObject()
 	{
 		return model;
+	}
+	
+	public JFrame getFrame()
+	{
+		return this.frame;
 	}
 
 	public boolean isResizable() { return resizable; }
