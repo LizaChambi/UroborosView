@@ -21,6 +21,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public Point point;
 	public Dimension dimension;
 	transient BufferedImage image;
+	public double frames;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -29,6 +30,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		readImage(path);
 		this.point = new Point(x, y);
 		this.dimension = new Dimension(width, height);
+		this.frames = 1;
 	}
 
 	public double getRealWidth() {
@@ -45,7 +47,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	private void readImage(String path) {
 		try {
-			this.image = ImageIO.read(new File("src/main/resources/" + path));
+			this.image = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +78,6 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
-		// deleteFile(getSavedPath());
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -103,6 +104,11 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public void setPosition(int x, int y) 
 	{
 		this.point = new Point(x,y);	
+	}
+
+	public Boolean hasName(String name) 
+	{
+		return getName().equals(name);
 	}
 
 	

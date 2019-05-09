@@ -9,9 +9,9 @@ public class DummyActors {
 	
 	public DummyActors()
 	{
-		kids = new ActorWrapper("Nene", "kids.png", 110, 150, 50, 120);
-		ball = new ActorWrapper("Pelota", "ball.png", 220, 220, 40, 40);
-		flow = new ActorWrapper("Piso", "flow.png", 0, 270, 335, 30);
+		kids = new ActorWrapper("Nene", "src/main/resources/kids.png", 110, 150, 50, 120);
+		ball = new ActorWrapper("Pelota", "src/main/resources/ball.png", 220, 220, 40, 40);
+		flow = new ActorWrapper("Piso", "src/main/resources/flow.png", 0, 270, 335, 30);
 	}
 	
 	public ActorWrapper getKids()
