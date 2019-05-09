@@ -1,13 +1,11 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.Canvas;
-
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.ActorWrapper;
+import org.team.uroboros.uroboros.engine.ui.Canvas;
+
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.NewActorDialog;

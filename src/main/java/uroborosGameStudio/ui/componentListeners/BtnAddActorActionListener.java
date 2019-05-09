@@ -1,11 +1,11 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.Canvas;
-
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
@@ -49,7 +49,6 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 	@Override
 	public void updateComponents(GameObject gameObject) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
