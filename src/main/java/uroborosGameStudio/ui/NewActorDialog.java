@@ -1,6 +1,7 @@
 package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class NewActorDialog extends JDialog
 	private JTextField textFieldImagen;
 	private JButton btnOpenImage;
 	private JButton okButton;
+	private JLabel lblError;
 
 	public NewActorDialog(MainWindowModel model) 
 	{
@@ -82,12 +84,18 @@ public class NewActorDialog extends JDialog
 		initializedPanelName();
 		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(5, 7, 60, 15);
+		lblName.setBounds(5, 18, 60, 19);
 		panelName.add(lblName);
 		
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
+		lblError.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblError.setBounds(70, 0, 346, 15);
+		panelName.add(lblError);
+		
 		textFieldName = new JTextField();
-		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model));
-		textFieldName.setBounds(70, 5, 346, 19);
+		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
+		textFieldName.setBounds(70, 18, 346, 19);
 		textFieldName.setColumns(10);
 		panelName.add(textFieldName);
 	}
@@ -126,13 +134,13 @@ public class NewActorDialog extends JDialog
 
 	private void initializedPanelImage() {
 		panelImage = new JPanel();
-		panelImage.setBounds(5, 44, 428, 30);
+		panelImage.setBounds(5, 60, 428, 31);
 		propertiesPanel.add(panelImage);
 	}
 
 	private void initializedPanelName() {
 		panelName = new JPanel();
-		panelName.setBounds(5, 17, 428, 30);
+		panelName.setBounds(5, 17, 428, 43);
 		panelName.setLayout(null);
 		propertiesPanel.add(panelName);
 	}

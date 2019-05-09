@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -13,12 +14,14 @@ public class ActorNameAdapterListener implements KeyListener
 	JTextField textFieldName;
 	JButton okButton;
 	MainWindowModel model;
+	JLabel lblError;
 	
-	public ActorNameAdapterListener(JTextField textFieldName, JButton okButton, MainWindowModel model) 
+	public ActorNameAdapterListener(JTextField textFieldName, JButton okButton, MainWindowModel model, JLabel lblError) 
 	{
 		this.textFieldName = textFieldName;
 		this.okButton = okButton;
 		this.model = model;
+		this.lblError = lblError;
 	}
 
 	@Override
@@ -31,9 +34,14 @@ public class ActorNameAdapterListener implements KeyListener
 		}
 		else
 		{
-			System.out.println("Por favor, ingrese un nombre para el actor.");
-			this.okButton.setEnabled(false);
+			changeStatus("Por favor, ingrese un nombre para el actor.", false);
 		}
+	}
+
+	private void changeStatus(String info, boolean enable) 
+	{
+		lblError.setText(info);
+		this.okButton.setEnabled(enable);
 	}
 
 	private void validateNameActor(String name) 
@@ -50,18 +58,13 @@ public class ActorNameAdapterListener implements KeyListener
 
 	private void notifyError(String name) 
 	{
-		String letter = name.substring(0, 1);
 		if(! isUppercase(name.substring(0, 1)))
 		{
-			System.out.println("Letra inicial: " + letter);
-			System.out.println("Debe ingresar un nombre con letra inicial en mayuscula.");
-			this.okButton.setEnabled(false);
+			changeStatus("La letra inicial del nombre debe estar en mayúscula.", false);
 		}
-		
 		if(model.validateName(name))
 		{
-			System.out.println("El nombre del actor ya está en uso.");
-			this.okButton.setEnabled(false);
+			changeStatus("El nombre ingresado ya está en uso.", false);
 		}
 	}
 
@@ -73,8 +76,7 @@ public class ActorNameAdapterListener implements KeyListener
 
 	private void notifyPass(String name) 
 	{
-		System.out.println("El nombre: " + name + " es válido.");
-		this.okButton.setEnabled(true);
+		changeStatus("", true);
 	}
 
 	private boolean isUppercase(String letter) 
