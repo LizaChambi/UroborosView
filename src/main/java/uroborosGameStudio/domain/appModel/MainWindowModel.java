@@ -76,7 +76,7 @@ public class MainWindowModel
 		}
 	}
 
-	public Boolean validName(String name) 
+	public Boolean validateName(String name) 
 	{
 		return this.project.existActorName(name);
 	}
