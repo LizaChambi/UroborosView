@@ -1,6 +1,7 @@
 package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -15,26 +18,27 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
+import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
-import uroborosGameStudio.ui.componentListeners.CboxEnableFrameListener;
 import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class NewActorDialog extends JDialog 
 {
 	private static final long serialVersionUID = 1L;
 	private final JPanel globalPanel = new JPanel();
 	private MainWindowModel model;
+	private JTree treeScenes;
+	private Canvas canvas;
 	private JPanel headerPanel;
 	private JPanel propertiesPanel;
 	private JPanel buttonPanel;
@@ -44,9 +48,9 @@ public class NewActorDialog extends JDialog
 	private JLabel lblImage;
 	private JTextField textFieldImagen;
 	private JButton btnOpenImage;
-	private JButton okButton;
+	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
-	private JPanel panelFrames;
+	private JPanel panelFrames = new JPanel();
 	private JLabel lblAncho;
 	private JTextField textFieldWidth;
 	private JLabel lblHigh;
@@ -58,18 +62,19 @@ public class NewActorDialog extends JDialog
 	private JTextField textFieldNumFrames;
 	private JPanel panelTitleFrame;
 	private JPanel panelDimensionFrame;
+	private Boolean enableNewActor = false;
 
-	public NewActorDialog(MainWindowModel model) 
+	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
-		initializedDialog(model);
+		initializedDialog(model, treeScenes, canvas);
 		initializedHeaderPanel();
 		titleLabel();
 		
 		initializedPropertiesPanel();
 		initializedButtonPanel();
 		
-		buttons();
 		properties();
+		buttons();
 	}
 
 	private void properties() 
@@ -88,14 +93,14 @@ public class NewActorDialog extends JDialog
 		propertiesPanel.add(panelImage);
 		panelImage.add(lblImage);
 		
-		textFieldImagen = new JTextField();
+		textFieldImagen = new JTextField("");
 		textFieldImagen.setEditable(false);
 		textFieldImagen.setBounds(71, 8, 269, 19);
 		textFieldImagen.setColumns(10);
 		panelImage.add(textFieldImagen);
 		
 		btnOpenImage = new JButton("Abrir...");
-		btnOpenImage.addActionListener(new BtnOpenImageActionListener(textFieldImagen, panelImage));
+		btnOpenImage.addActionListener(new BtnOpenImageActionListener(textFieldImagen, panelImage, okButton));
 		btnOpenImage.setBounds(341, 5, 75, 25);
 		btnOpenImage.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panelImage.setLayout(null);
@@ -137,7 +142,7 @@ public class NewActorDialog extends JDialog
 		lblAncho.setBounds(5, 7, 48, 15);
 		panelDimensionFrame.add(lblAncho);
 		
-		textFieldWidth = new JTextField();
+		textFieldWidth = new JTextField("");
 		textFieldWidth.setBounds(58, 5, 135, 19);
 		textFieldWidth.setColumns(10);
 		panelDimensionFrame.add(textFieldWidth);
@@ -146,7 +151,7 @@ public class NewActorDialog extends JDialog
 		lblHigh.setBounds(217, 7, 40, 15);
 		panelDimensionFrame.add(lblHigh);
 		
-		textFieldHeight = new JTextField();
+		textFieldHeight = new JTextField("");
 		textFieldHeight.setBounds(259, 5, 135, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);
@@ -168,7 +173,7 @@ public class NewActorDialog extends JDialog
 		lblNewLabel.setBounds(5, 6, 177, 15);
 		panelNumFrames.add(lblNewLabel);
 		
-		textFieldNumFrames = new JTextField();
+		textFieldNumFrames = new JTextField("");
 		textFieldNumFrames.setBounds(187, 5, 212, 18);
 		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
 		textFieldNumFrames.setColumns(10);
@@ -217,7 +222,7 @@ public class NewActorDialog extends JDialog
 		lblError.setBounds(70, 0, 346, 15);
 		panelName.add(lblError);
 		
-		textFieldName = new JTextField();
+		textFieldName = new JTextField("");
 		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
 		textFieldName.setBounds(70, 18, 346, 19);
 		textFieldName.setColumns(10);
@@ -228,7 +233,18 @@ public class NewActorDialog extends JDialog
 	{
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		{
-			okButton = new JButton("Crear");
+			
+			okButton.addPropertyChangeListener(new PropertyChangeListener() {
+				public void propertyChange(PropertyChangeEvent evt) 
+				{
+					if(enableNewActor) 
+					{
+						okButton.setEnabled(true);
+					}
+				}
+			});
+			
+			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
@@ -283,9 +299,11 @@ public class NewActorDialog extends JDialog
 		new SimpleLabelUGS("Complete las siguientes propiedades:", headerPanel);
 	}
 
-	private void initializedDialog(MainWindowModel model) 
+	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
 		this.model = model;
+		this.treeScenes=treeScenes;
+		this.canvas = canvas;
 		setTitle("Nuevo Actor");
 		setBounds(100, 100, 450, 400);
 		setResizable(false);

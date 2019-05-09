@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -14,11 +15,13 @@ public class BtnOpenImageActionListener implements ActionListener
 {
 	JTextField textFieldImagen;
 	JPanel panelImage;
+	JButton okButton;
 	
-	public BtnOpenImageActionListener(JTextField textFieldImagen, JPanel panelImage) 
+	public BtnOpenImageActionListener(JTextField textFieldImagen, JPanel panelImage, JButton okButton) 
 	{
 		this.textFieldImagen = textFieldImagen;
 		this.panelImage = panelImage;
+		this.okButton = okButton;
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class BtnOpenImageActionListener implements ActionListener
 		File archivo = jFile.getSelectedFile();
 		if (archivo != null)
 		{
-			textFieldImagen.setText(archivo.getAbsolutePath());
+			this.textFieldImagen.setText(archivo.getAbsolutePath());
 		}
 	}
 

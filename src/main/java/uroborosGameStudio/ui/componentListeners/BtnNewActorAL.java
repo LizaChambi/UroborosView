@@ -10,7 +10,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
-import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.NewActorDialog;
 
@@ -32,18 +31,19 @@ public class BtnNewActorAL extends AbstractEditionListener
 		DefaultTreeModel modelNode = (DefaultTreeModel) treeScenes.getModel();
 		if(selectedNode.getLevel() == 1)
 		{
+			/*
 			SceneWrapper scene = (SceneWrapper) gameObject;
 			ActorWrapper newActor = (ActorWrapper) comboBox.getSelectedItem();
 			scene.addActor(newActor);
-			
-			NewActorDialog dialog = new NewActorDialog(model);
+			*/
+			NewActorDialog dialog = new NewActorDialog(model, treeScenes, canvas);
 			dialog.setLocationRelativeTo(null);// Hace que la ventana se abra en el centro de la pantalla
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-			
-			
+			/*
 			drawActor(newActor);
 			modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), selectedNode, modelNode.getChildCount(selectedNode));
+			*/
 		}
 	}
 	
