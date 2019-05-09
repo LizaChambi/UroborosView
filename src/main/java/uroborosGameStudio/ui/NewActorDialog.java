@@ -22,8 +22,13 @@ import javax.swing.border.TitledBorder;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
+import uroborosGameStudio.ui.componentListeners.CboxEnableFrameListener;
 import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class NewActorDialog extends JDialog 
 {
@@ -97,6 +102,21 @@ public class NewActorDialog extends JDialog
 		panelImage.add(btnOpenImage);
 		
 		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
+		// PARA HABILITAR ESTO, "panelFrame" TIENE QUE INICIALIZARSE ANTES
+		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames));
+		
+		cbxHabilitarFrames.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(cbxHabilitarFrames.isSelected())
+				{
+					panelFrames.setVisible(true);
+				}
+				else
+				{
+					panelFrames.setVisible(false);
+				}
+			}
+		});
 		cbxHabilitarFrames.setBounds(0, 36, 420, 23);
 		panelImage.add(cbxHabilitarFrames);
 	}
@@ -179,6 +199,7 @@ public class NewActorDialog extends JDialog
 		panelFrames.setBounds(5, 125, 421, 107);
 		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
 		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
+		panelFrames.setVisible(false);
 		propertiesPanel.add(panelFrames);
 	}
 
@@ -208,6 +229,7 @@ public class NewActorDialog extends JDialog
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		{
 			okButton = new JButton("Crear");
+			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
 		}
