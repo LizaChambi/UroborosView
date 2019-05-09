@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -16,11 +15,10 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
-import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
+import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
@@ -48,7 +46,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel titleEditorPanel;
 	private JPanel optionsEditorPanel;
 	private JTextArea textArea = new JTextArea(1, 1);
-	private JComboBox<ActorWrapper> comboBox;
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
@@ -111,25 +108,9 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void toolbar() 
 	{
 		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
-		this.initializeComboBox();
-		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, comboBox, canvas, model), buttonPanel);
+		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, canvas, model), buttonPanel);
 		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
 		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
-	}
-	
-	private void initializeComboBox() {
-		ActorWrapper ninio = bdActors.getKids();
-		ActorWrapper pelota = bdActors.getBall();
-		ActorWrapper piso = bdActors.getFlow();
-		
-		this.comboBox = new JComboBox<ActorWrapper>();
-		comboBox.addItem(ninio);
-		comboBox.addItem(pelota);
-		comboBox.addItem(piso);
-
-		comboBox.setPreferredSize(new Dimension(110,23));
-		comboBox.setMaximumSize(new Dimension(110,23));
-		buttonPanel.add(comboBox);
 	}
 
 	private void initializeCanvas() {
