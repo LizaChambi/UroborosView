@@ -20,6 +20,17 @@ import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.components.ButtonUGS;
 import uroborosGameStudio.ui.components.SimpleLabelUGS;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
+import java.awt.SystemColor;
+import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JCheckBox;
+import java.awt.Dimension;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 
 public class NewActorDialog extends JDialog 
 {
@@ -37,6 +48,18 @@ public class NewActorDialog extends JDialog
 	private JButton btnOpenImage;
 	private JButton okButton;
 	private JLabel lblError;
+	private JPanel panelFrames;
+	private JLabel lblAncho;
+	private JTextField textFieldWidth;
+	private JLabel lblHigh;
+	private JTextField textFieldHeight;
+	private JLabel lblNewLabel;
+	private JCheckBox cbxHabilitarFrames;
+	private JLabel lblFrames;
+	private JPanel panelNumFrames;
+	private JTextField textFieldNumFrames;
+	private JPanel panelTitleFrame;
+	private JPanel panelDimensionFrame;
 
 	public NewActorDialog(MainWindowModel model) 
 	{
@@ -67,7 +90,8 @@ public class NewActorDialog extends JDialog
 		panelImage.add(lblImage);
 		
 		textFieldImagen = new JTextField();
-		textFieldImagen.setBounds(67, 8, 274, 19);
+		textFieldImagen.setEditable(false);
+		textFieldImagen.setBounds(71, 8, 269, 19);
 		textFieldImagen.setColumns(10);
 		panelImage.add(textFieldImagen);
 		
@@ -77,6 +101,60 @@ public class NewActorDialog extends JDialog
 		btnOpenImage.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panelImage.setLayout(null);
 		panelImage.add(btnOpenImage);
+		
+		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
+		cbxHabilitarFrames.setBounds(0, 36, 420, 23);
+		panelImage.add(cbxHabilitarFrames);
+		
+		panelFrames = new JPanel();
+		panelFrames.setBounds(5, 125, 421, 107);
+		propertiesPanel.add(panelFrames);
+		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
+		
+		panelNumFrames = new JPanel();
+		
+		lblNewLabel = new JLabel("Cantidad de fotogramas:");
+		lblNewLabel.setBounds(5, 6, 177, 15);
+		
+		textFieldNumFrames = new JTextField();
+		textFieldNumFrames.setBounds(187, 5, 212, 18);
+		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
+		textFieldNumFrames.setColumns(10);
+		
+		panelTitleFrame = new JPanel();
+		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
+		lblFrames = new JLabel("Dimensión de los fotograma:");
+		panelTitleFrame.add(lblFrames);
+		lblFrames.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		panelDimensionFrame = new JPanel();
+		panelDimensionFrame.setLayout(null);
+		
+		lblAncho = new JLabel("Ancho:");
+		lblAncho.setBounds(5, 7, 48, 15);
+		panelDimensionFrame.add(lblAncho);
+		
+		textFieldWidth = new JTextField();
+		textFieldWidth.setBounds(58, 5, 135, 19);
+		panelDimensionFrame.add(textFieldWidth);
+		textFieldWidth.setColumns(10);
+		
+		lblHigh = new JLabel("Alto:");
+		lblHigh.setBounds(217, 7, 40, 15);
+		panelDimensionFrame.add(lblHigh);
+		
+		textFieldHeight = new JTextField();
+		textFieldHeight.setBounds(259, 5, 135, 19);
+		panelDimensionFrame.add(textFieldHeight);
+		textFieldHeight.setColumns(10);
+		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
+		panelNumFrames.setLayout(null);
+		panelNumFrames.add(lblNewLabel);
+		panelNumFrames.add(textFieldNumFrames);
+		panelFrames.add(panelNumFrames);
+		panelFrames.add(panelTitleFrame);
+		panelFrames.add(panelDimensionFrame);
 	}
 
 	private void propertyName() 
@@ -127,14 +205,14 @@ public class NewActorDialog extends JDialog
 	private void initializedPropertiesPanel() 
 	{
 		propertiesPanel = new JPanel();
-		propertiesPanel.setBorder(BorderFactory.createTitledBorder("Propiedades"));
+		propertiesPanel.setBorder(new TitledBorder(null, "Propiedades", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
 		propertiesPanel.setLayout(null);
 		globalPanel.add(propertiesPanel);
 	}
 
 	private void initializedPanelImage() {
 		panelImage = new JPanel();
-		panelImage.setBounds(5, 60, 428, 31);
+		panelImage.setBounds(5, 60, 428, 59);
 		propertiesPanel.add(panelImage);
 	}
 
@@ -162,7 +240,7 @@ public class NewActorDialog extends JDialog
 	{
 		this.model = model;
 		setTitle("Nuevo Actor");
-		setBounds(100, 100, 450, 500);
+		setBounds(100, 100, 450, 400);
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
 		globalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
