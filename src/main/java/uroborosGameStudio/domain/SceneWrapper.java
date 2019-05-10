@@ -145,7 +145,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void setPosition(int x, int y) 
+	public void setPosition(Integer x, Integer y) 
 	{
 		// TODO Auto-generated method stub
 	}

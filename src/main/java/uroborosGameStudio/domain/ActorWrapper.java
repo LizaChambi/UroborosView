@@ -14,6 +14,7 @@ import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.Scene;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.CoordenadaVaciaException;
 import uroborosGameStudio.exception.NombreVacioException;
 
 public class ActorWrapper extends GameObject  implements Serializable {
@@ -105,10 +106,11 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	}
 
 	@Override
-	public void setPosition(int x, int y) 
-	{
-		this.point = new Point(x,y);	
+	public void setPosition(Integer x, Integer y) {
+		if(x == null || y == null) throw new CoordenadaVaciaException();
+		this.point = new Point(x, y);
 	}
+
 
 	
 }

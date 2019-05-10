@@ -3,6 +3,8 @@ package uroborosGameStudio;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.awt.Point;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +39,7 @@ public class ActorWrapperTest {
 		
 		assertNotNull(pepe);
 		assertEquals(null, this.pepe.getName());
-//		assertTrue("" == null); no es lo mismo
+//		assertTrue("      " == null); //no es lo mismo
 	}
 	
 	@Test(expected = RuntimeException.class)
@@ -52,7 +54,27 @@ public class ActorWrapperTest {
 	public void testSetNameEmpty() {
 		this.actor.setName("");
 		
-		// actor.name ="Actor0"
 		assertEquals("qwdthrtewwewe", actor.getName());
+	}
+	
+	@Test
+	public void testSetNewNameDoAnswer() {
+		doAnswer((i)->{
+			assertTrue("Alan".equals(i.getArgument(0)));
+			return null;
+		}).when(pepe).setName(anyString());
+		
+		when(pepe.getName()).thenReturn("Alan");
+		
+		pepe.setName("Alan");
+		assertEquals("Alan", pepe.getName());
+	}
+	
+	@Test
+	public void testSetPosition() {
+		Point pino = new Point(45, 89);
+		actor.setPosition(pino.x, pino.y);
+		
+		assertEquals(pino, actor.point);
 	}
 }
