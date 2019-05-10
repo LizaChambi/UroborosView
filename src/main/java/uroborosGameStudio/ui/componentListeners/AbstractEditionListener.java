@@ -70,7 +70,7 @@ public abstract class AbstractEditionListener implements ActionListener, TreeSel
 
 	public void drawActor(ActorWrapper actor) 
 	{
-		String spritesheetRoute = actor.getPath();
+		String spritesheetRoute = actor.getPathImage();
 		SpriteSheet spritesheet = new SpriteSheet(spritesheetRoute, new Frame(Point.ORIGIN, new Dimension(actor.getRealWidth(), actor.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0, new Dimension(actor.getWidth(), actor.getHeight()));
 		

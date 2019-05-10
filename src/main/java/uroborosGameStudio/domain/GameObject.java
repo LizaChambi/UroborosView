@@ -45,5 +45,11 @@ public abstract class GameObject implements Serializable
 
 	public abstract Integer getY();
 
+	public abstract String getPathImage();
+
+	public abstract Integer getWidth();
+
+	public abstract Integer getHeight();
+
 
 }

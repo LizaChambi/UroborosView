@@ -41,7 +41,7 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.add(actorWpp);
 		Actor newActor = Game.createActor(actorWpp.getName());
 		
-		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPath(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
 		newActor.learn(new TextureRenderer(sprite));
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
@@ -165,6 +165,21 @@ public class SceneWrapper extends GameObject implements Serializable
 	public Boolean existActorName(String name) 
 	{
 		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
+	}
+
+	@Override
+	public String getPathImage() {
+		return "";
+	}
+
+	@Override
+	public Integer getWidth() {
+		return 0;
+	}
+
+	@Override
+	public Integer getHeight() {
+		return 0;
 	}
 
 }

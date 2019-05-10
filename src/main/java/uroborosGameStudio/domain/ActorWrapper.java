@@ -41,10 +41,6 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		return this.image.getHeight();
 	}
 
-	public String getPath() {
-		return this.path;
-	}
-
 	private void readImage(String path) {
 		try {
 			this.image = ImageIO.read(new File(path));
@@ -68,11 +64,13 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		return this.point.y;
 	}
 
-	public int getWidth() {
+	@Override
+	public Integer getWidth() {
 		return this.dimension.width;
 	}
 
-	public int getHeight() {
+	@Override
+	public Integer getHeight() {
 		return this.dimension.height;
 	}
 
@@ -109,6 +107,11 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public Boolean hasName(String name) 
 	{
 		return getName().equals(name);
+	}
+
+	@Override
+	public String getPathImage() {
+		return this.path;
 	}
 
 	

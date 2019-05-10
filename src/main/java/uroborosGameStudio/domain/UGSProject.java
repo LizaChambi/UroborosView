@@ -159,4 +159,20 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
 	}
+
+	@Override
+	public String getPathImage() 
+	{
+		return "";
+	}
+
+	@Override
+	public Integer getWidth() {
+		return 0;
+	}
+
+	@Override
+	public Integer getHeight() {
+		return 0;
+	}
 }

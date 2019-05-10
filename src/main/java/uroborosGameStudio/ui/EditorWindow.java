@@ -30,6 +30,7 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import java.awt.Rectangle;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -168,7 +169,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -259,50 +260,54 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void editImage() {
 		inicializedEditImagePanel();
+		panelEditImage.setLayout(null);
 		
 		lblImage = new JLabel("Imágen:");
+		lblImage.setBounds(5, 10, 57, 15);
 		panelEditImage.add(lblImage);
 		
 		textFieldPathImage = new JTextField();
+		textFieldPathImage.setEditable(false);
+		textFieldPathImage.setBounds(67, 8, 248, 19);
 		panelEditImage.add(textFieldPathImage);
 		textFieldPathImage.setColumns(10);
 		
 		btnSetImage = new JButton("Imagen...");
+		btnSetImage.setBounds(319, 5, 101, 25);
 		panelEditImage.add(btnSetImage);
 	}
 
 	private void inicializedEditImagePanel() {
 		panelEditImage = new JPanel();
-		panelEditImage.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
 		propertiesEditPanel.add(panelEditImage);
 	}
 
 	private void editPosition() {
 		inicializedEditPositionPanel();
+		panelEditPosition.setLayout(null);
 		
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
-		lblPosition.setBounds(350, 60, 80, 23);
+		lblPosition.setBounds(5, 7, 102, 15);
 		
 		posXTextField = new JTextField("0");
 		panelEditPosition.add(posXTextField);
-		posXTextField.setBounds(450, 62, 50, 23);
+		posXTextField.setBounds(112, 5, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
 		panelEditPosition.add(posYTextField);
-		posYTextField.setBounds(500, 62, 50, 23);
+		posYTextField.setBounds(226, 5, 112, 19);
 		posYTextField.setColumns(5);
 		
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
-		btnEditPosition.setBounds(550, 62, 100, 23);
+		btnEditPosition.setBounds(342, 2, 76, 25);
 		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
 	}
 
 	private void inicializedEditPositionPanel() {
 		panelEditPosition = new JPanel();
-		panelEditPosition.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
 		propertiesEditPanel.add(panelEditPosition);
 	}
 
@@ -376,18 +381,4 @@ public class EditorWindow extends AbstractWindowFrame {
 			this.canvas.onFrameVisible();
 		}
 	}
-
-	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
-	 * 
-	protected void removeNode(ActionEvent e) 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
-		{
-			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
-			mdl.removeNodeFromParent(lastNode);
-		}
-	}
-	*/
-
 }
