@@ -1,6 +1,6 @@
 package uroborosGameStudio.exception;
 
-public class CoordenadaVaciaException extends RuntimeException {
+public class CoordenadaVaciaException extends NumberFormatException {
 
 	/**
 	 * 

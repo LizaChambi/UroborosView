@@ -3,6 +3,7 @@ package uroborosGameStudio;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.awt.Dimension;
 import java.awt.Point;
 
 import org.junit.Before;
@@ -24,9 +25,13 @@ public class ActorWrapperTest {
 	}
 
 	@Test
-	public void testCreateActorWithName() 
+	public void testCreateActorOK() 
 	{
 		assertEquals("Actor0", actor.getName());
+		assertEquals(".act", actor.getExt());
+		assertEquals(new Point(12, 15), actor.point);
+		assertEquals(new Dimension(59, 89), actor.dimension);
+		
 	}
 	
 	@Test

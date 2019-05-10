@@ -31,6 +31,8 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		this.point = new Point(x, y);
 		this.dimension = new Dimension(width, height);
 	}
+	
+	public ActorWrapper() {}
 
 	public double getRealWidth() {
 		return this.image.getWidth();
