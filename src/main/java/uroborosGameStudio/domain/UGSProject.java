@@ -175,4 +175,16 @@ public class UGSProject extends GameObject implements Serializable {
 	public Integer getHeight() {
 		return 0;
 	}
+
+	@Override
+	public void setPathImage(String path) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setDimensionImage(Integer width, Integer heigth) 
+	{
+		// TODO Auto-generated method stub
+	}
 }

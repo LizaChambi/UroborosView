@@ -182,4 +182,16 @@ public class SceneWrapper extends GameObject implements Serializable
 		return 0;
 	}
 
+	@Override
+	public void setPathImage(String path) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setDimensionImage(Integer width, Integer height) 
+	{
+		// TODO Auto-generated method stub
+	}
+
 }

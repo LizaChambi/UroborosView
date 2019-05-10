@@ -23,10 +23,13 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
+import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
+import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
@@ -66,6 +69,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JTextField textFieldWidth;
 	private JTextField textFieldHigh;
 	private JButton btnEditDimension;
+	private JButton btnEditImage;
 
 	public EditorWindow() 
 	{
@@ -249,6 +253,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		textFieldHigh.setColumns(10);
 		
 		btnEditDimension = new JButton("Editar");
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		panelEditDimension.add(btnEditDimension);
 	}
 
@@ -268,13 +273,19 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		textFieldPathImage = new JTextField();
 		textFieldPathImage.setEditable(false);
-		textFieldPathImage.setBounds(67, 8, 248, 19);
+		textFieldPathImage.setBounds(67, 8, 165, 19);
 		panelEditImage.add(textFieldPathImage);
 		textFieldPathImage.setColumns(10);
 		
 		btnSetImage = new JButton("Imagen...");
-		btnSetImage.setBounds(319, 5, 101, 25);
+		btnSetImage.addActionListener(new BtnOpenImageActionListener(textFieldPathImage,principalPanel, btnEditImage));
+		btnSetImage.setBounds(237, 5, 101, 25);
 		panelEditImage.add(btnSetImage);
+		
+		btnEditImage = new JButton("Editar");
+		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
+		btnEditImage.setBounds(345, 5, 76, 25);
+		panelEditImage.add(btnEditImage);
 	}
 
 	private void inicializedEditImagePanel() {
@@ -302,7 +313,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
-		btnEditPosition.setBounds(342, 2, 76, 25);
+		btnEditPosition.setBounds(344, 2, 76, 25);
 		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
 	}
 

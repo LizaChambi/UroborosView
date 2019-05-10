@@ -50,5 +50,4 @@ public class BtnOpenImageActionListener implements ActionListener
 		jFile.addChoosableFileFilter(filterPNG);
 		jFile.addChoosableFileFilter(filterJPEG);
 	}
-
 }

@@ -114,5 +114,19 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		return this.path;
 	}
 
+	@Override
+	public void setPathImage(String path) 
+	{
+		this.path = path;
+		readImage(path);
+		// CAMBIAR EL PATH EN U-ENGINE
+	}
+
+	@Override
+	public void setDimensionImage(Integer width, Integer height) 
+	{
+		this.dimension = new Dimension(width, height);
+		// CAMBIAR LA DIMENSION EN U-ENGINE
+	}
 	
 }
