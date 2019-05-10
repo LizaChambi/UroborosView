@@ -9,12 +9,10 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-import org.mockito.internal.stubbing.answers.ThrowsException;
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.Scene;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
-import uroborosGameStudio.exception.CoordenadaVaciaException;
 import uroborosGameStudio.exception.NombreVacioException;
 
 public class ActorWrapper extends GameObject  implements Serializable {
@@ -79,12 +77,9 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
-		if(newName == "") { 
-			throw new NombreVacioException(); }
-		else {
-			Game.rename(Game.getActor(name), newName);
-			this.name = newName;
-		}
+		if(newName.equals("")) throw new NombreVacioException();
+		Game.rename(Game.getActor(name), newName);
+		this.name = newName;
 	}
 
 	@Override
@@ -107,10 +102,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setPosition(Integer x, Integer y) {
-		if(x == null || y == null) throw new CoordenadaVaciaException();
 		this.point = new Point(x, y);
 	}
-
-
 	
 }

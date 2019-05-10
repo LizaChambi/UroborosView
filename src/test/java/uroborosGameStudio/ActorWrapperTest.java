@@ -28,18 +28,16 @@ public class ActorWrapperTest {
 	{
 		assertEquals("Actor0", actor.getName());
 	}
-
+	
 	@Test
 	public void testEditedNameDoNothing() {
 		doNothing().when(pepe).setName(isA(String.class));
 		pepe.setName("pepe");
-//		when(pepe.getName()).thenReturn("pepe");
 		
 		verify(pepe).setName("pepe");
 		
 		assertNotNull(pepe);
 		assertEquals(null, this.pepe.getName());
-//		assertTrue("      " == null); //no es lo mismo
 	}
 	
 	@Test(expected = RuntimeException.class)
@@ -71,10 +69,11 @@ public class ActorWrapperTest {
 	}
 	
 	@Test
-	public void testSetPosition() {
+	public void testSetPositionOK() {
 		Point pino = new Point(45, 89);
 		actor.setPosition(pino.x, pino.y);
 		
 		assertEquals(pino, actor.point);
 	}
+	
 }
