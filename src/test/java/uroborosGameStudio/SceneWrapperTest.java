@@ -13,6 +13,7 @@ public class SceneWrapperTest
 {
 	SceneWrapper scene;
 	SceneWrapper mockScene;
+	
 	ActorWrapper actor0;
 	ActorWrapper actor1;
 	
@@ -42,12 +43,45 @@ public class SceneWrapperTest
 		mockScene.addActor(actor1);
 		
 		verify(mockScene).addActor(actor0);
+		verify(mockScene).addActor(actor1);
 		
-//		assertEquals(2, scene.cantActors().intValue());
-//		assertEquals(actor1, scene.getActorIn(1));
 		assertNotNull(mockScene);
 		assertTrue(mockScene.getActors().isEmpty());
 		assertNull(mockScene.getActorIn(0));
 		assertNull(mockScene.getActorIn(1));
 	}
+	
+//	@Test
+//	public void testMockSceneAddActorDoAnswer() {
+//		
+//	}
+	
+	@Test
+	public void testSetNameDoNothing() {
+		doNothing().when(mockScene).setName(isA(String.class));
+		mockScene.setName("Main Scene");
+		
+		verify(mockScene).setName("Main Scene");
+		
+		assertNotNull(mockScene);
+		assertNull(mockScene.getName());
+	}
+	
+	@Test (expected = RuntimeException.class)
+	public void testMockSceneSetNameEmpty() {
+		doThrow().when(mockScene).setName(isA(String.class));
+		mockScene.setName("");
+		
+		assertEquals("owijwoiejff", mockScene.getName());
+	}
+	
+	@Test (expected = RuntimeException.class)
+	public void testSetNameEmpty() {
+		scene.setName("");
+		
+		assertEquals("qwqwfhuhqfh", scene.getName());
+	}
+	
+	
+	
 }

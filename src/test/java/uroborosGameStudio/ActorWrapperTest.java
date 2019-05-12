@@ -42,7 +42,7 @@ public class ActorWrapperTest {
 		verify(pepe).setName("pepe");
 		
 		assertNotNull(pepe);
-		assertEquals(null, this.pepe.getName());
+		assertNull(this.pepe.getName());
 	}
 	
 	@Test(expected = RuntimeException.class)

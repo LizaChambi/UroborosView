@@ -15,7 +15,7 @@ import org.team.uroboros.uroboros.engine.Scene;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
 
-public class ActorWrapper extends GameObject  implements Serializable {
+public class ActorWrapper extends GameObject implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public String path;
@@ -79,7 +79,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
-		if(newName.equals("")) throw new NombreVacioException();
+		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
