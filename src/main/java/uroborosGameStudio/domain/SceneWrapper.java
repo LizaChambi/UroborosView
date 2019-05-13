@@ -167,4 +167,11 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
 	}
 
+	public void load() 
+	{
+		Game.createScene(this.name);
+		Game.setScene(this.name);
+		this.actors.forEach(actor -> actor.load());
+	}
+
 }
