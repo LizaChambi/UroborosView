@@ -40,6 +40,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void addActor(ActorWrapper actorWpp)
 	{
 		this.actors.add(actorWpp);
+		System.out.println("actor");
 		Actor newActor = Game.createActor(actorWpp.getName());
 		
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPath(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
@@ -173,6 +174,18 @@ public class SceneWrapper extends GameObject implements Serializable
 		Game.createScene(this.name);
 		Game.setScene(this.name);
 		this.actors.forEach(actor -> actor.load());
+	}
+	
+	public void deleteActor(String name) {
+		this.actors.removeIf(actor -> actor.hasName(name));
+		System.out.println("hello");
+		Game.removeActor(name);
+	}
+	
+	public void deleteActor(ActorWrapper actor) {
+		Actor temp = Game.getActor(actor.getName());
+		this.actors.remove(actor);
+		Game.removeActor(temp);
 	}
 
 }
