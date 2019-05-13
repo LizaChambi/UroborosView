@@ -1,10 +1,10 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.Canvas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 public class BtnPlayAL implements ActionListener 
 {
@@ -22,11 +22,9 @@ public class BtnPlayAL implements ActionListener
 			@Override
 			public void run() 
 			{
-				Game.setCustomCanvas(canvas);
-				Game.start();
+				Game.start(canvas);
 			}
 		};
 		t.start();
 	}
-
 }

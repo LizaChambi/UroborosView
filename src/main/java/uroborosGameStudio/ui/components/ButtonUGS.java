@@ -7,7 +7,8 @@ import javax.swing.JPanel;
 
 public class ButtonUGS 
 {
-
+	private JButton button;
+	
 	public ButtonUGS(String text, ActionListener listener, JPanel panel) 
 	{
 		createSimpleButton(text, listener, panel);
@@ -21,10 +22,15 @@ public class ButtonUGS
 	
 	private JButton createSimpleButton(String text, ActionListener listener, JPanel panel) 
 	{
-		JButton button = new JButton(text);
+		button = new JButton(text);
 		button.addActionListener(listener);
 		panel.add(button);
 		return button;
+	}
+	
+	public JButton getButton()
+	{
+		return this.button;
 	}
 
 }

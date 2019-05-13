@@ -155,4 +155,14 @@ public class UGSProject extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public Boolean existActorName(String name) 
+	{
+		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
+	}
+
+	public void loadProject() 
+	{
+		this.scenes.forEach(scene -> scene.load());
+	}
 }

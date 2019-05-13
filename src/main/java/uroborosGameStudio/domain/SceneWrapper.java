@@ -5,14 +5,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.team.uroboros.uroboros.engine.Ability;
-import org.team.uroboros.uroboros.engine.Actor;
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Ability;
+import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.input.Key;
 import org.team.uroboros.uroboros.engine.ui.Graphics;
-import org.team.uroboros.uroboros.engine.ui.RenderTexture;
+import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
@@ -44,7 +44,7 @@ public class SceneWrapper extends GameObject implements Serializable
 		
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPath(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
-		newActor.learn(new RenderTexture(sprite));
+		newActor.learn(new TextureRenderer(sprite));
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
 		
 		newActor.learn(new Ability() 
@@ -161,6 +161,18 @@ public class SceneWrapper extends GameObject implements Serializable
 	public Integer getY() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public Boolean existActorName(String name) 
+	{
+		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
+	}
+
+	public void load() 
+	{
+		Game.createScene(this.name);
+		Game.setScene(this.name);
+		this.actors.forEach(actor -> actor.load());
 	}
 
 }

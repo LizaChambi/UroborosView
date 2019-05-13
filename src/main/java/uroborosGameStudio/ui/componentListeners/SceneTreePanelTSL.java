@@ -1,10 +1,10 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.Canvas;
-
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
