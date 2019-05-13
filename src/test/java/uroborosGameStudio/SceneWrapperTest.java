@@ -51,10 +51,19 @@ public class SceneWrapperTest
 		assertNull(mockScene.getActorIn(1));
 	}
 	
-//	@Test
-//	public void testMockSceneAddActorDoAnswer() {
-//		
-//	}
+	@Test
+	public void testMockSceneAddActorDoAnswer() {
+		doAnswer((i)-> {
+			assertTrue(actor0.equals(i.getArgument(0)));
+			return null;
+		}).when(mockScene).addActor(actor0);
+		
+		when(mockScene.getActorIn(0)).thenReturn(actor0);
+		
+		mockScene.addActor(actor0);
+		assertEquals(actor0, mockScene.getActorIn(0));
+		assertTrue(mockScene.getActors().isEmpty());
+	}
 	
 	@Test
 	public void testSetNameDoNothing() {
@@ -82,6 +91,17 @@ public class SceneWrapperTest
 		assertEquals("qwqwfhuhqfh", scene.getName());
 	}
 	
-	
+	@Test
+	public void testMockSceneSetNameDoAnswer() {
+		doAnswer((i)->{
+			assertTrue("Main Scene".equals(i.getArgument(0)));
+			return null;
+		}).when(mockScene).setName(anyString());
+		
+		when(mockScene.getName()).thenReturn("Main Scene");
+		
+		mockScene.setName("Main Scene");
+		assertEquals("Main Scene", mockScene.getName());
+	}
 	
 }

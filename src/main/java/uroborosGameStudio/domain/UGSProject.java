@@ -9,6 +9,7 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Game;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.NombreVacioException;
 
 public class UGSProject extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -68,7 +69,7 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public void setName(String newTitle) {
-		//deleteFile(getSavedPath());
+		if(newTitle.equals("")) throw new NombreVacioException(this);
 		this.name = newTitle;
 	}
 
