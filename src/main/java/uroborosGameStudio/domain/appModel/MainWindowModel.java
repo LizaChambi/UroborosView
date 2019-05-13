@@ -1,12 +1,8 @@
 package uroborosGameStudio.domain.appModel;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.List;
-
-import org.team.uroboros.uroboros.engine.Game;
 
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
@@ -89,9 +85,11 @@ public class MainWindowModel
 
 	public void loadProject(String path) 
 	{
-		try {
+		try 
+		{
 			this.project = readFile(path);
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (ClassNotFoundException | IOException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -3,7 +3,6 @@ package uroborosGameStudio.ui.componentListeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.EditorWindow;
-import uroborosGameStudio.ui.MainWindow;
 
 public class OpenProjectActionListener implements ActionListener 
 {
@@ -32,9 +30,12 @@ public class OpenProjectActionListener implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		String path = selectFile();
-		this.model.loadProject(path);
-		new EditorWindow().run();
-		frame.dispose();
+		if (! path.isEmpty())
+		{
+			this.model.loadProject(path);
+			new EditorWindow().run();
+			frame.dispose();
+		}
 	}
 
 	private String selectFile() 
@@ -42,17 +43,16 @@ public class OpenProjectActionListener implements ActionListener
 		JFileChooser jFile = new JFileChooser();
 		addExtensionFilters(jFile);
 		jFile.showOpenDialog(this.panel);
-		return setTextPath(jFile);
+		return textPath(jFile);
 	}
 
-	private String setTextPath(JFileChooser jFile) 
+	private String textPath(JFileChooser jFile) 
 	{
 		File archivo = jFile.getSelectedFile();
 		if (archivo != null)
 		{
 			return archivo.getAbsolutePath();
 		}
-		System.out.println("No se ha seleccionado un archivo para cargar. Se inciará con un archivo vacío");
 		return "";
 	}
 

@@ -6,15 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
-import javax.swing.SwingConstants;
 
 public class MainWindow extends AbstractWindowFrame {
 
@@ -40,7 +39,7 @@ public class MainWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeImgIcon() {
-		this.iconL = new JLabel(new ImageIcon("/home/chambi_liza/Documentos/Computer programming/TIP/UroborosGameStudio/images/icon-logo-resize.png"));
+		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.png"));
 		iconL.setBounds(215, 40, 70, 70);
 		centerPanel.add(this.iconL);
 	}
