@@ -18,6 +18,7 @@ import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.NombreVacioException;
 
 public class SceneWrapper extends GameObject implements Serializable
 {
@@ -101,8 +102,8 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void setName(String newName) 
-	{
+	public void setName(String newName) {
+		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
 	}
@@ -145,7 +146,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void setPosition(int x, int y) 
+	public void setPosition(Integer x, Integer y) 
 	{
 		// TODO Auto-generated method stub
 	}

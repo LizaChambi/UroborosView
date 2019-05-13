@@ -21,8 +21,9 @@ import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.NombreVacioException;
 
-public class ActorWrapper extends GameObject  implements Serializable {
+public class ActorWrapper extends GameObject implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public String path;
@@ -40,6 +41,8 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = 1;
 	}
+	
+	public ActorWrapper() {}
 
 	public double getRealWidth() {
 		return this.image.getWidth();
@@ -86,6 +89,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 
 	@Override
 	public void setName(String newName) {
+		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -109,7 +113,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	}
 
 	@Override
-	public void setPosition(int x, int y) 
+	public void setPosition(Integer x, Integer y) 
 	{
 		this.point = new java.awt.Point(x,y);	
 	}
@@ -167,6 +171,5 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		});
 		
 	}
-
 	
 }
