@@ -1,6 +1,5 @@
 package uroborosGameStudio;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.File;
 
@@ -17,14 +16,11 @@ public class UGSProjectTest {
 	
 	UGSProject project;
 	
-	UGSProject mockProject;
-	
 	@Before
 	public void setUp()	{
 		this.scene = new SceneWrapper("Main Scene");
 		
 		project = new UGSProject("DirectoryName","GameTitle");
-		this.mockProject = mock(UGSProject.class);
 	}
 	
 	@Test
