@@ -159,4 +159,9 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
 	}
+
+	public void loadProject() 
+	{
+		this.scenes.forEach(scene -> scene.load());
+	}
 }

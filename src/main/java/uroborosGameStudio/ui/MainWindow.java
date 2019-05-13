@@ -6,11 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 
 public class MainWindow extends AbstractWindowFrame {
 
@@ -51,7 +54,7 @@ public class MainWindow extends AbstractWindowFrame {
 	private void initializaOpenProyectButton() {
 		this.openButton = new JButton("Abrir proyecto");
 		openButton.setBounds(261, 172, 129, 23);
-		this.openButton.setEnabled(false);
+		openButton.addActionListener(new OpenProjectActionListener(model, frame, centerPanel));
 		centerPanel.add(this.openButton);
 	}
 
@@ -73,7 +76,7 @@ public class MainWindow extends AbstractWindowFrame {
 		centerPanel.setLayout(null);
 		centerPanel.setPreferredSize(new Dimension(500, 350));
 		centerPanel.setBackground(Color.white);
-		this.frame.add(centerPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {
