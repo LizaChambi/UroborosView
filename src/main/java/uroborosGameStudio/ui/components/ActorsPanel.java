@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.Draggable;
 import uroborosGameStudio.ui.componentListeners.MouseDragActorHandlers;
 
 public class ActorsPanel extends JLayeredPane  {
@@ -23,13 +24,12 @@ public class ActorsPanel extends JLayeredPane  {
 	private Integer x;
 	private Integer y;
 	//private File[] images;
-    private List<ActorWrapper> actors;
+    private List<Draggable> labels;
 	
 	public ActorsPanel() 
     {
 		this.x = 0;
         this.y = 0;
-        this.actors = new ArrayList<ActorWrapper>();
         setBackground(Color.white);
     	// Carga una lista de imágenes con la extención específica en una determinada carpeta.
         /*
@@ -68,8 +68,6 @@ public class ActorsPanel extends JLayeredPane  {
             }
 
         }*/
-        
-        
     }
 	
 	private void createLabelImage(ActorWrapper act) 
@@ -88,13 +86,12 @@ public class ActorsPanel extends JLayeredPane  {
 		ImageIcon ima = new ImageIcon(ico.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_SMOOTH));
 		label.setLayout(null);
 		label.setIcon(ima);
-        
+        labels.add(new Draggable(act.getName(),label));
         add(label);
 	}
 	
 	public void addActor(ActorWrapper newActor)
 	{
-		this.actors.add(newActor);
 		createLabelImage(newActor);
 	}
 
@@ -102,7 +99,6 @@ public class ActorsPanel extends JLayeredPane  {
 	{
 		removeAll();
 		repaint();
-		this.actors = actors;
 		actors.forEach(act -> createLabelImage(act));
 	}
 	
