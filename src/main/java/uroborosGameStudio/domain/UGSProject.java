@@ -165,4 +165,10 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		this.scenes.forEach(scene -> scene.load());
 	}
+
+	public SceneWrapper deleteActor(ActorWrapper actor) {
+		SceneWrapper scene = searchScene(Game.getSceneWithActor(actor.getName()).getName());
+		scene.deleteActor(actor.getName());
+		return scene;
+	}
 }

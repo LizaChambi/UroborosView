@@ -20,6 +20,7 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
@@ -123,6 +124,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new BtnPlayAL(canvas));
 		buttonPanel.add(btnPlay);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, model));
+		buttonPanel.add(btnEliminar);
 		
 		/*
 		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
@@ -298,18 +303,5 @@ public class EditorWindow extends AbstractWindowFrame {
 			this.canvas.onFrameVisible();
 		}
 	}
-
-	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
-	 * 
-	protected void removeNode(ActionEvent e) 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
-		{
-			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
-			mdl.removeNodeFromParent(lastNode);
-		}
-	}
-	*/
 
 }
