@@ -9,15 +9,18 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.NewActorDialog;
+import uroborosGameStudio.ui.components.ActorsPanel;
 
 public class BtnNewActorAL extends AbstractEditionListener 
 {
 	private MainWindowModel model;
+	private ActorsPanel actorsPanel;
 	
-	public BtnNewActorAL(JTree treeScenes, Canvas canvas, MainWindowModel model) 
+	public BtnNewActorAL(JTree treeScenes, Canvas canvas, MainWindowModel model, ActorsPanel actorsPanel) 
 	{
 		super(treeScenes, canvas);
 		this.model = model;
+		this.actorsPanel = actorsPanel;
 	}
 
 	@Override
@@ -25,7 +28,7 @@ public class BtnNewActorAL extends AbstractEditionListener
 	{
 		if(selectedNode.getLevel() == 1)
 		{
-			NewActorDialog dialog = new NewActorDialog(model, treeScenes, canvas);
+			NewActorDialog dialog = new NewActorDialog(model, treeScenes, canvas, actorsPanel);
 			dialog.setLocationRelativeTo(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

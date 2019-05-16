@@ -9,20 +9,23 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.ui.components.ActorsPanel;
 
 public class SceneTreePanelTSL extends AbstractEditionListener 
 {
 	private JTextField textField;
 	private JTextField posXField;
 	private JTextField posYField;
+	private ActorsPanel actorsPanel;
 	private MainWindowModel model;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, ActorsPanel actorsPanel) 
 	{
 		super(treeScenes, canvas);
 		this.textField = textField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
+		this.actorsPanel=actorsPanel;
 		this.model = model;
 	}
 
@@ -36,6 +39,7 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)
 		{
+			actorsPanel.setActors(selectedScene.getActors());
 			setCanvas(selectedScene);
 		}
 

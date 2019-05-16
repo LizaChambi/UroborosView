@@ -30,6 +30,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
+import uroborosGameStudio.ui.components.ActorsPanel;
 import uroborosGameStudio.ui.components.ButtonUGS;
 
 public class NewActorDialog extends JDialog 
@@ -63,10 +64,11 @@ public class NewActorDialog extends JDialog
 	private JPanel panelTitleFrame;
 	private JPanel panelDimensionFrame;
 	private Boolean enableNewActor = false;
+	private ActorsPanel actorsPanel;
 
-	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, ActorsPanel actorsPanel) 
 	{
-		initializedDialog(model, treeScenes, canvas);
+		initializedDialog(model, treeScenes, canvas, actorsPanel);
 		initializedHeaderPanel();
 		titleLabel();
 		
@@ -244,7 +246,7 @@ public class NewActorDialog extends JDialog
 				}
 			});
 			
-			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, actorsPanel, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
@@ -301,11 +303,12 @@ public class NewActorDialog extends JDialog
 		headerPanel.add(lblTitle);
 	}
 
-	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, ActorsPanel actorsPanel) 
 	{
 		this.model = model;
 		this.treeScenes=treeScenes;
 		this.canvas = canvas;
+		this.actorsPanel = actorsPanel;
 		setTitle("Nuevo Actor");
 		setBounds(100, 100, 450, 400);
 		setResizable(false);

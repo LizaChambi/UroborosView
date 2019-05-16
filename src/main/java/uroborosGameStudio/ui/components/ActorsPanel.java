@@ -1,16 +1,16 @@
 package uroborosGameStudio.ui.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
+import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.ui.componentListeners.MouseDragActorHandlers;
 
 public class ActorsPanel extends JLayeredPane  {
@@ -22,14 +22,17 @@ public class ActorsPanel extends JLayeredPane  {
 
 	private Integer x;
 	private Integer y;
-	private File[] images;
-    
+	//private File[] images;
+    private List<ActorWrapper> actors;
+	
 	public ActorsPanel() 
     {
 		this.x = 0;
         this.y = 0;
+        this.actors = new ArrayList<ActorWrapper>();
+        setBackground(Color.white);
     	// Carga una lista de imágenes con la extención específica en una determinada carpeta.
-        
+        /*
         this.images = new File("/home/chambi_liza/Documentos/Computer programming/TIP/resources").listFiles(new FileFilter() 
         {
             @Override
@@ -42,8 +45,9 @@ public class ActorsPanel extends JLayeredPane  {
                                 name.endsWith(".gif");
             }
         });
-       
+        */
         
+        /*
         for (File imgFile : images) 
         {
             try {
@@ -63,12 +67,49 @@ public class ActorsPanel extends JLayeredPane  {
                 exp.printStackTrace();
             }
 
-        }
-
+        }*/
+        
+        
     }
+	
+	private void createLabelImage(ActorWrapper act) 
+	{
+		// JLabel label = new JLabel(new ImageIcon(act.getImage()));
+		JLabel label = new JLabel("");
+		label.setBounds(0, 0, act.getWidth(), act.getHeight());
+        //label.setSize(new Dimension(act.getWidth(), act.getHeight()));
+        label.setLocation(x, y);
+        
+        MouseDragActorHandlers mh  = new MouseDragActorHandlers(this);
+        label.addMouseListener(mh);
+        label.addMouseMotionListener(mh);
+        
+		ImageIcon ico = new ImageIcon(act.getPath());
+		ImageIcon ima = new ImageIcon(ico.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_SMOOTH));
+		label.setLayout(null);
+		label.setIcon(ima);
+        
+        add(label);
+	}
+	
+	public void addActor(ActorWrapper newActor)
+	{
+		this.actors.add(newActor);
+		createLabelImage(newActor);
+	}
 
+	public void setActors(List<ActorWrapper> actors)
+	{
+		removeAll();
+		repaint();
+		this.actors = actors;
+		actors.forEach(act -> createLabelImage(act));
+	}
+	
+/*
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 800);
+        return new Dimension(800, 600);
     }
+    */
 }

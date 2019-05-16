@@ -53,12 +53,13 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JTextField nameTextField;
 	private JTextField posXTextField;
 	private JTextField posYTextField;
+	private ActorsPanel actorsPanel = new ActorsPanel();
 
 	public EditorWindow() 
 	{
 		super();
 		this.initializeFrame();
-	
+
 		this.initializeGlobalPanel();
 		this.initializeNorthPanel();
 		this.initializeButtonPanel();
@@ -82,7 +83,8 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.initializeCanvas();
 		this.initializeCodeTextArea();
-		playPanel.add(new ActorsPanel());
+		playPanel.add(actorsPanel);
+		
 		this.frame.pack();
 	}
 	
@@ -114,7 +116,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnNewScena);
 		
 		JButton btnNewActor = new JButton("Nuevo Actor");
-		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
+		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model, actorsPanel));
 		buttonPanel.add(btnNewActor);
 		
 		JButton btnSave = new JButton("Guardar");
@@ -159,7 +161,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, actorsPanel));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
