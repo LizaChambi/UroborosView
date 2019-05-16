@@ -2,6 +2,7 @@ package uroborosGameStudio.domain;
 
 import java.awt.Dimension;
 import java.awt.Point;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,9 @@ import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Scene;
+import org.team.uroboros.uroboros.engine.ui.resources.Frame;
+import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
+import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
@@ -107,7 +111,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setPosition(int x, int y) 
 	{
-		this.point = new Point(x,y);	
+		this.point = new Point(x,y);
+		Game.getActor(name).translateTo(this.getPoint());
 	}
 
 	public Boolean hasName(String name) 
@@ -123,9 +128,16 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setPathImage(String path) 
 	{
+		// Falta pasar propiedades por la interface EN CASO de necesitar frames: 
 		this.path = path;
 		readImage(path);
-		// CAMBIAR EL PATH EN U-ENGINE
+		
+		org.team.uroboros.uroboros.engine.geometry.Dimension dim = new org.team.uroboros.uroboros.engine.geometry.Dimension(this.getRealWidth(), this.getRealHeight());
+		org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
+		
+		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(point, dim));
+		Sprite sprite = new Sprite(spritesheet, 0);
+		Game.getActor(name).setTexture(sprite);
 	}
 
 	@Override
