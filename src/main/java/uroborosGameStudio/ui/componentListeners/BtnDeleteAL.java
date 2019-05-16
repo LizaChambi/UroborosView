@@ -28,10 +28,12 @@ public class BtnDeleteAL extends AbstractEditionListener {
 	@Override
 	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
 		if(selectedNode.getLevel() == 1) {
-			System.out.println("voy a eliminar una escena");
 			scene = (SceneWrapper) gameObject;
+			model.deleteScene(scene);
+			
 			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
 			mdl.removeNodeFromParent(selectedNode);
+			setCanvas(scene);
 		}
 		
 		if(selectedNode.getLevel() == 2) {

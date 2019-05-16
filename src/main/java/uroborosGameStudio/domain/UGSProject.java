@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Scene;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
@@ -170,5 +171,12 @@ public class UGSProject extends GameObject implements Serializable {
 		SceneWrapper scene = searchScene(Game.getSceneWithActor(actor.getName()).getName());
 		scene.deleteActor(actor.getName());
 		return scene;
+	}
+	
+	public void deleteScene(SceneWrapper scene) {
+		scene.getActors().forEach(actor -> deleteActor(actor));
+		this.scenes.remove(scene);
+		Scene temp = Game.getScene(scene.getName());
+		Game.removeScene(temp);
 	}
 }
