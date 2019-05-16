@@ -42,8 +42,10 @@ public class SceneWrapper extends GameObject implements Serializable
 		Actor newActor = Game.createActor(actorWpp.getName());
 		
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
-		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
-		newActor.learn(new TextureRenderer(sprite));
+		Sprite sprite = new Sprite(spritesheet, 0);
+		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
+		newActor.setTexture(sprite);
+		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
 		
 		newActor.learn(new Ability() 

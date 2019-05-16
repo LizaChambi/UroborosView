@@ -154,8 +154,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.canvas.setPreferredSize(new Dimension(666, 400));
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
-		this.canvas.addOn(this.playPanel);
-		// this.playPanel.add(this.canvas);
+		this.playPanel.add(this.canvas);
 	}
 	
 	private void initializePlayPanel() {

@@ -14,7 +14,8 @@ import org.team.uroboros.uroboros.engine.component.Scene;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class ActorWrapper extends GameObject  implements Serializable {
+public class ActorWrapper extends GameObject  implements Serializable 
+{
 	
 	private static final long serialVersionUID = 1L;
 	public String path;
@@ -31,6 +32,11 @@ public class ActorWrapper extends GameObject  implements Serializable {
 		this.point = new Point(x, y);
 		this.dimension = new Dimension(width, height);
 		this.frames = 1;
+	}
+	
+	public Point getPoint()
+	{
+		return this.point;
 	}
 
 	public double getRealWidth() {
@@ -126,7 +132,7 @@ public class ActorWrapper extends GameObject  implements Serializable {
 	public void setDimensionImage(Integer width, Integer height) 
 	{
 		this.dimension = new Dimension(width, height);
-		// CAMBIAR LA DIMENSION EN U-ENGINE
+		Game.getActor(name).setDimension(width, height);
 	}
 	
 }
