@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
@@ -103,5 +104,9 @@ public class MainWindowModel
 		UGSProject game = (UGSProject) input.readObject();
 		input.close();
 		return game;
+	}
+
+	public SceneWrapper deleteActor(ActorWrapper actor) {
+		return project.deleteActor(actor);
 	}
 }

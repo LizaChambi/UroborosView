@@ -19,7 +19,8 @@ public class ActorWrapperTest {
 	
 	@Before
 	public void setUp() {
-		this.actor = new ActorWrapper("Actor0", "kids.png", 12, 15, 59, 89);
+		String path = "D:\\Gabriel\\TIP\\repoOrganization\\UroborosGameStudio\\src\\main\\resources\\";
+		this.actor = new ActorWrapper("Actor0",path + "kids.png", 12, 15, 59, 89);
 
 		this.pepe = mock(ActorWrapper.class);
 	}

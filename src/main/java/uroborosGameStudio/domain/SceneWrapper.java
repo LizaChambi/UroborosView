@@ -178,14 +178,14 @@ public class SceneWrapper extends GameObject implements Serializable
 	
 	public void deleteActor(String name) {
 		this.actors.removeIf(actor -> actor.hasName(name));
-		System.out.println("hello");
-		Game.removeActor(name);
+		deleteActorPrivate(name);
+		
 	}
 	
-	public void deleteActor(ActorWrapper actor) {
-		Actor temp = Game.getActor(actor.getName());
-		this.actors.remove(actor);
-		Game.removeActor(temp);
+	private void deleteActorPrivate(String name) {
+		// posiblemente necesite sabes en q scene estoy: Game.setScene(this.name);
+		Actor tmp = Game.getActor(name);
+		Game.removeActor(tmp);
 	}
 
 }

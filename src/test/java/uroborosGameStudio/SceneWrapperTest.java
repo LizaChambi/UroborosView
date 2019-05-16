@@ -19,7 +19,8 @@ public class SceneWrapperTest
 	
 	@Before
 	public void setUp() {
-		this.actor0 = new ActorWrapper("Actor0", "kids.png", 12, 15, 59, 89);
+		String path = "D:\\Gabriel\\TIP\\repoOrganization\\UroborosGameStudio\\src\\main\\resources\\";
+		this.actor0 = new ActorWrapper("Actor0",path + "kids.png", 12, 15, 59, 89);
 		this.actor1 = new ActorWrapper();
 
 		scene = new SceneWrapper("Scene0");
@@ -123,31 +124,6 @@ public class SceneWrapperTest
 			assertTrue(actor0.getName().equals(i.getArgument(0)));
 			return null;
 		}).when(mockScene).deleteActor(actor0.getName());
-		
-		mockScene.deleteActor(actor0.getName());
-		
-		assertTrue(mockScene.getActors().isEmpty());
-	}
-	
-	@Test
-	public void testDeleteActor() {
-		doAnswer((i)-> {
-			assertTrue(actor0.equals(i.getArgument(0)));
-			return null;
-		}).when(mockScene).addActor(actor0);
-	
-		when(mockScene.getActorIn(0)).thenReturn(actor0);
-		when(mockScene.cantActors()).thenReturn(1);
-		
-		mockScene.addActor(actor0);
-		
-		assertEquals(actor0, mockScene.getActorIn(0));
-		assertTrue(1 == mockScene.cantActors());
-	
-		doAnswer((i)-> {
-			assertTrue(actor0.equals(i.getArgument(0)));
-			return null;
-		}).when(mockScene).deleteActor(actor0);
 		
 		mockScene.deleteActor(actor0.getName());
 		
