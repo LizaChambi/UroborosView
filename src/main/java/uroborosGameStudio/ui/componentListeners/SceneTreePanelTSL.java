@@ -15,14 +15,20 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField textField;
 	private JTextField posXField;
 	private JTextField posYField;
+	private JTextField pathField;
+	private JTextField widthField;
+	private JTextField heightField;
 	private MainWindowModel model;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh) 
 	{
 		super(treeScenes, canvas);
 		this.textField = textField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
+		this.pathField = textFieldPath;
+		this.widthField = textFieldWidth;
+		this.heightField = textFieldHigh;
 		this.model = model;
 	}
 
@@ -32,6 +38,9 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		textField.setText(gameObject.getName());
 		posXField.setText(gameObject.getX().toString());
 		posYField.setText(gameObject.getY().toString());
+		pathField.setText(gameObject.getPathImage());
+		widthField.setText(gameObject.getWidth().toString());
+		heightField.setText(gameObject.getHeight().toString());
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)
