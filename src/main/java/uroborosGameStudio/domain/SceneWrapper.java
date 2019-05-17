@@ -40,14 +40,21 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void addActor(ActorWrapper actorWpp)
 	{
 		this.actors.add(actorWpp);
-		System.out.println("actor");
-		Actor newActor = Game.createActor(actorWpp.getName());
+		createActorUEngine(actorWpp);
 		
-		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPath(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
-		Sprite sprite= new Sprite(spritesheet, 0, new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
-		newActor.learn(new TextureRenderer(sprite));
+	}
+
+	private void createActorUEngine(ActorWrapper actorWpp) 
+	{
+		Actor newActor = Game.createActor(actorWpp.getName());
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
+		Sprite sprite = new Sprite(spritesheet, 0);
+		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
+		newActor.setTexture(sprite);
+		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
 		
+		// HABILIDAD DE PRUEBA
 		newActor.learn(new Ability() 
 		{	
 			Actor actor;
@@ -83,7 +90,6 @@ public class SceneWrapper extends GameObject implements Serializable
 			public void onRender(Graphics graphics) { }
 
 		});
-		
 	}
 
 	public Integer cantActors() 
@@ -149,18 +155,15 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void setPosition(Integer x, Integer y) 
 	{
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public Integer getX() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Integer getY() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -169,6 +172,35 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
 	}
 
+	@Override
+	public String getPathImage() {
+		return "";
+	}
+
+	@Override
+	public Integer getWidth() {
+		return 0;
+	}
+
+	@Override
+	public Integer getHeight() {
+		return 0;
+	}
+
+	@Override
+	public void setPathImage(String path) 
+	{
+		// TODO Auto-generated method stub
+		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+	}
+
+	@Override
+	public void setDimensionImage(Integer width, Integer height) 
+	{
+		// TODO Auto-generated method stub
+		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+	}
+	
 	public void load() 
 	{
 		Game.createScene(this.name);
@@ -176,16 +208,16 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.forEach(actor -> actor.load());
 	}
 	
-	public void deleteActor(String name) {
+	public void deleteActor(String name) 
+	{
 		this.actors.removeIf(actor -> actor.hasName(name));
-		deleteActorPrivate(name);
+		deleteActorUEngine(name);
 		
 	}
 	
-	private void deleteActorPrivate(String name) {
-		// posiblemente necesite sabes en q scene estoy: Game.setScene(this.name);
-		Actor tmp = Game.getActor(name);
-		Game.removeActor(tmp);
+	private void deleteActorUEngine(String name) 
+	{
+		Game.removeActor(name);;
 	}
 
 }

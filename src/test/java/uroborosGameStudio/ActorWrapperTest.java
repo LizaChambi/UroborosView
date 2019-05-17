@@ -8,6 +8,7 @@ import java.awt.Point;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.team.uroboros.uroboros.engine.Game;
 
 import uroborosGameStudio.domain.ActorWrapper;
 
@@ -46,19 +47,19 @@ public class ActorWrapperTest {
 		assertNull(this.pepe.getName());
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test(expected = RuntimeException.class)	
 	public void testMockSetNameEmpty() {
 		doThrow().when(pepe).setName(isA(String.class));
 		
 		pepe.setName("");
-		assertEquals("qwqwfkejnrfkwejnf", this.pepe.getName());
+		assertEquals("Alan", this.pepe.getName());
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void testSetNameEmpty() {
 		this.actor.setName("");
 		
-		assertEquals("qwdthrtewwewe", actor.getName());
+		assertEquals("Pepe", actor.getName());
 	}
 	
 	@Test
@@ -76,10 +77,10 @@ public class ActorWrapperTest {
 	
 	@Test
 	public void testSetPositionOK() {
-		Point pino = new Point(45, 89);
-		actor.setPosition(pino.x, pino.y);
+		Point newPoint = new Point(45, 89);
+		actor.setPosition(newPoint.x, newPoint.y);
 		
-		assertEquals(pino, actor.point);
+		assertEquals(newPoint, actor.point);
 	}
 	
 }

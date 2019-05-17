@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -70,11 +69,14 @@ public abstract class AbstractEditionListener implements ActionListener, TreeSel
 
 	public void drawActor(ActorWrapper actor) 
 	{
-		String spritesheetRoute = actor.getPath();
-		SpriteSheet spritesheet = new SpriteSheet(spritesheetRoute, new Frame(Point.ORIGIN, new Dimension(actor.getRealWidth(), actor.getRealHeight())));
-		Sprite sprite = new Sprite(spritesheet, 0, new Dimension(actor.getWidth(), actor.getHeight()));
 		
-		this.canvas.getGraphics().render(sprite, new Point(actor.getX(), actor.getY()), Rotation.NO_ROTATION);
+		String spritesheetRoute = actor.getPathImage();
+		SpriteSheet spritesheet = new SpriteSheet(spritesheetRoute, new Frame(Point.ORIGIN, new Dimension(actor.getRealWidth(), actor.getRealHeight())));
+		Sprite sprite = new Sprite(spritesheet, 0);
+		
+		Dimension dim = new Dimension(actor.getWidth(), actor.getHeight());
+		Point point = new Point(actor.getX(), actor.getY());
+		this.canvas.getGameGraphics().render(sprite, dim, point, Rotation.NO_ROTATION);
 		this.canvas.show();
 		// this.canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null);
 	}
