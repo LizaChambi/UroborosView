@@ -56,18 +56,18 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
-	private JTextField nameTextField;
-	private JTextField posXTextField;
-	private JTextField posYTextField;
+	private JTextField nameTextField = new JTextField("");
+	private JTextField posXTextField = new JTextField("0");
+	private JTextField posYTextField = new JTextField("0");
 	private JPanel panelEditPosition;
 	private JPanel panelEditImage;
 	private JLabel lblImage;
 	private JPanel panelEditDimension;
 	private JLabel lblDimension;
-	private JTextField textFieldPathImage;
+	private JTextField textFieldPathImage = new JTextField("");
 	private JButton btnSetImage;
-	private JTextField textFieldWidth;
-	private JTextField textFieldHigh;
+	private JTextField textFieldWidth = new JTextField("0");
+	private JTextField textFieldHigh = new JTextField("0");
 	private JButton btnEditDimension;
 	private JButton btnEditImage;
 
@@ -141,7 +141,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
-		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, model));
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 		
 		/*

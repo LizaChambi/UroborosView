@@ -157,15 +157,19 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void load() 
 	{
 		readImage(this.path);
-		Game.createActor(this.name);
-		Actor actorLoaded = Game.getActor(this.name);
-		
+		loadActorUEngine();
+	}
+
+	private void loadActorUEngine() 
+	{
+		Actor actorLoaded = Game.createActor(this.name);
 		SpriteSheet spritesheet = new SpriteSheet(this.path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite= new Sprite(spritesheet, 0);
-		
+		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
+		// HABILIDAD DE PRUEBA
 		actorLoaded.learn(new Ability() 
 		{	
 			Actor actor;
