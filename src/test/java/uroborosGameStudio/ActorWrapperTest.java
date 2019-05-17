@@ -8,7 +8,6 @@ import java.awt.Point;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.team.uroboros.uroboros.engine.Game;
 
 import uroborosGameStudio.domain.ActorWrapper;
 
@@ -76,11 +75,15 @@ public class ActorWrapperTest {
 	}
 	
 	@Test
-	public void testSetPositionOK() {
+	public void testSetPositionDoNothing() {
 		Point newPoint = new Point(45, 89);
-		actor.setPosition(newPoint.x, newPoint.y);
+		doNothing().when(pepe).setPosition(isA(Integer.class), isA(Integer.class));
+		pepe.setPosition(newPoint.x, newPoint.y);
 		
-		assertEquals(newPoint, actor.point);
+		verify(pepe).setPosition(newPoint.x, newPoint.y);
+		
+		assertNotNull(pepe);
+		assertNull(pepe.point);
 	}
 	
 }
