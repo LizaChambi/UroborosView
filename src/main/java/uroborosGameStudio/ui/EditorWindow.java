@@ -23,6 +23,7 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
@@ -33,7 +34,6 @@ import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
-import java.awt.Rectangle;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -139,6 +139,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new BtnPlayAL(canvas));
 		buttonPanel.add(btnPlay);
+		
+		JButton btnRemove = new JButton("Eliminar");
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, model));
+		buttonPanel.add(btnRemove);
 		
 		/*
 		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
@@ -339,7 +343,8 @@ public class EditorWindow extends AbstractWindowFrame {
 		editNamePanel.add(btnEditName);
 	}
 
-	private void inicializedEditNamePanel() {
+	private void inicializedEditNamePanel() 
+	{
 		editNamePanel = new JPanel();
 		editNamePanel.setPreferredSize(new Dimension(973, 228));
 		editNamePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));

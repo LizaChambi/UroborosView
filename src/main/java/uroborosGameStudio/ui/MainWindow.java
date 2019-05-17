@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 
 public class MainWindow extends AbstractWindowFrame {
 
@@ -36,28 +39,29 @@ public class MainWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeImgIcon() {
-		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.jpg"));
-		iconL.setBounds(219, 60, 60, 60);
+		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.png"));
+		iconL.setBounds(215, 40, 70, 70);
 		centerPanel.add(this.iconL);
 	}
 
 	private void initializeTitleLabel() {
 		this.titleL = new JLabel("Bienvenidos a Uroboros Game Studio");
-		titleL.setBounds(59, 121, 383, 30);
+		titleL.setHorizontalAlignment(SwingConstants.CENTER);
+		titleL.setBounds(50, 115, 400, 30);
 		titleL.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		centerPanel.add(this.titleL);
 	}
 
 	private void initializaOpenProyectButton() {
 		this.openButton = new JButton("Abrir proyecto");
-		openButton.setBounds(261, 172, 129, 23);
-		this.openButton.setEnabled(false);
+		openButton.setBounds(175, 220, 150, 23);
+		openButton.addActionListener(new OpenProjectActionListener(model, frame, centerPanel));
 		centerPanel.add(this.openButton);
 	}
 
 	private void initializeCreateProyectButton() {
-		this.createButton = new JButton("Crear proyecto nuevo");
-		createButton.setBounds(69, 172, 162, 23);
+		this.createButton = new JButton("Crear nuevo proyecto");
+		createButton.setBounds(150, 180, 200, 23);
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				model.createNewProyect();
@@ -65,15 +69,16 @@ public class MainWindow extends AbstractWindowFrame {
 				frame.dispose();
 			}
 		});
+		centerPanel.setLayout(null);
 		centerPanel.add(this.createButton);
 	}
 
 	private void initializeCenterPanel() {
-		centerPanel = new JPanel(new BorderLayout());
+		centerPanel = new JPanel();
 		centerPanel.setLayout(null);
 		centerPanel.setPreferredSize(new Dimension(500, 350));
 		centerPanel.setBackground(Color.white);
-		this.frame.add(centerPanel, BorderLayout.CENTER);
+		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeFrame() {

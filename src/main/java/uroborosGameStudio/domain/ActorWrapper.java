@@ -1,8 +1,5 @@
 package uroborosGameStudio.domain;
 
-import java.awt.Dimension;
-import java.awt.Point;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,20 +8,28 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Ability;
+import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.component.Scene;
+import org.team.uroboros.uroboros.engine.geometry.Dimension;
+import org.team.uroboros.uroboros.engine.geometry.Point;
+import org.team.uroboros.uroboros.engine.input.Key;
+import org.team.uroboros.uroboros.engine.ui.Graphics;
+import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.NombreVacioException;
 
 public class ActorWrapper extends GameObject  implements Serializable 
 {
 	
 	private static final long serialVersionUID = 1L;
 	public String path;
-	public Point point;
-	public Dimension dimension;
+	public java.awt.Point point;
+	public java.awt.Dimension dimension;
 	transient BufferedImage image;
 	public double frames;
 
@@ -33,15 +38,12 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.ext = ".act";
 		this.path = path;
 		readImage(path);
-		this.point = new Point(x, y);
-		this.dimension = new Dimension(width, height);
+		this.point = new java.awt.Point(x, y);
+		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = 1;
 	}
-	
-	public Point getPoint()
-	{
-		return this.point;
-	}
+
+	public ActorWrapper() {}
 
 	public double getRealWidth() {
 		return this.image.getWidth();
@@ -73,7 +75,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public Integer getY() {
 		return this.point.y;
 	}
-
+	
 	@Override
 	public Integer getWidth() {
 		return this.dimension.width;
@@ -86,6 +88,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	@Override
 	public void setName(String newName) {
+		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
 		this.name = newName;
 	}
@@ -109,10 +112,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 	}
 
 	@Override
-	public void setPosition(int x, int y) 
+	public void setPosition(Integer x, Integer y) 
 	{
-		this.point = new Point(x,y);
-		Game.getActor(name).translateTo(this.point);
+		this.point = new java.awt.Point(x,y);
+		Game.getActor(name).translateTo(x,y);
 	}
 
 	public Boolean hasName(String name) 
@@ -136,10 +139,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void setPathImageUEngine(String path) 
 	{
-		org.team.uroboros.uroboros.engine.geometry.Dimension dim = new org.team.uroboros.uroboros.engine.geometry.Dimension(this.getRealWidth(), this.getRealHeight());
-		org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
+		// org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
 		
-		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(point, dim));
+		// EVALUAR EL PUNTO PASADO AL FRAME
+		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite = new Sprite(spritesheet, 0);
 		Game.getActor(name).setTexture(sprite);
 	}
@@ -147,8 +150,57 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setDimensionImage(Integer width, Integer height) 
 	{
-		this.dimension = new Dimension(width, height);
+		this.dimension = new java.awt.Dimension(width, height);
 		Game.getActor(name).setDimension(width, height);
+	}
+	
+	public void load() 
+	{
+		readImage(this.path);
+		Game.createActor(this.name);
+		Actor actorLoaded = Game.getActor(this.name);
+		
+		SpriteSheet spritesheet = new SpriteSheet(this.path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
+		Sprite sprite= new Sprite(spritesheet, 0);
+		
+		actorLoaded.setTexture(sprite);
+		actorLoaded.learn(new TextureRenderer());
+		actorLoaded.translate(new Point(this.getX(), this.getY()));
+		actorLoaded.learn(new Ability() 
+		{	
+			Actor actor;
+			
+			@Override
+			public void onStart(Actor actor) 
+			{
+				this.actor =actor;
+			}
+			
+			@Override
+			public void onUpdate(Double deltaTime) 
+			{
+				if(Key.UP.isPressed()) 
+				{
+					this.actor.translate(0, 3);
+				}
+				if(Key.RIGHT.isPressed()) 
+				{
+					this.actor.translate(3, 0);
+				}
+				if(Key.DOWN.isPressed()) 
+				{
+					this.actor.translate(0, -3);
+				}
+				if(Key.LEFT.isPressed()) 
+				{
+					this.actor.translate(-3, 0);
+				}
+			}
+			
+			@Override
+			public void onRender(Graphics graphics) { }
+
+		});
 	}
 	
 }

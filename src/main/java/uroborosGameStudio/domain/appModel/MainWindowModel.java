@@ -1,7 +1,10 @@
 package uroborosGameStudio.domain.appModel;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
+import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
@@ -79,5 +82,31 @@ public class MainWindowModel
 	public Boolean validateName(String name) 
 	{
 		return this.project.existActorName(name);
+	}
+
+	public void loadProject(String path) 
+	{
+		try 
+		{
+			this.project = readFile(path);
+		} catch (ClassNotFoundException | IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.project.loadProject();
+	}
+	
+	private UGSProject readFile(String path)throws IOException, ClassNotFoundException 
+	{
+		FileInputStream file = new FileInputStream(path);
+		ObjectInputStream input = new ObjectInputStream(file);
+		UGSProject game = (UGSProject) input.readObject();
+		input.close();
+		return game;
+	}
+
+	public SceneWrapper deleteActor(ActorWrapper actor) {
+		return project.deleteActor(actor);
 	}
 }

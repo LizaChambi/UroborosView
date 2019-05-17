@@ -39,7 +39,7 @@ public abstract class GameObject implements Serializable
 
 	public abstract SceneWrapper selectedScene(MainWindowModel model);
 
-	public abstract void setPosition(int x, int y);
+	public abstract void setPosition(Integer x, Integer y);
 
 	public abstract Integer getX();
 
@@ -53,7 +53,7 @@ public abstract class GameObject implements Serializable
 
 	public abstract void setPathImage(String path);
 
-	public abstract void setDimensionImage(Integer valueOf, Integer valueOf2);
+	public abstract void setDimensionImage(Integer width, Integer height);
 
 
 }

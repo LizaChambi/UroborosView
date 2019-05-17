@@ -9,6 +9,7 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Game;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.exception.NombreVacioException;
 
 public class UGSProject extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -68,7 +69,7 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public void setName(String newTitle) {
-		//deleteFile(getSavedPath());
+		if(newTitle.equals("")) throw new NombreVacioException(this);
 		this.name = newTitle;
 	}
 
@@ -140,7 +141,7 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setPosition(int x, int y) {
+	public void setPosition(Integer x, Integer y) {
 		// TODO Auto-generated method stub
 	}
 
@@ -183,8 +184,17 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setDimensionImage(Integer width, Integer heigth) 
+	public void setDimensionImage(Integer width, Integer heigth) {}
+	
+	public void loadProject() 
 	{
-		// TODO Auto-generated method stub
+		this.scenes.forEach(scene -> scene.load());
+	}
+
+	public SceneWrapper deleteActor(ActorWrapper actor) 
+	{
+		SceneWrapper scene = searchScene(Game.getSceneWithActor(actor.getName()).getName());
+		scene.deleteActor(actor.getName());
+		return scene;
 	}
 }
