@@ -112,7 +112,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void setPosition(int x, int y) 
 	{
 		this.point = new Point(x,y);
-		Game.getActor(name).translateTo(this.getPoint());
+		Game.getActor(name).translateTo(this.point);
 	}
 
 	public Boolean hasName(String name) 
@@ -128,10 +128,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setPathImage(String path) 
 	{
-		// Falta pasar propiedades por la interface EN CASO de necesitar frames: 
+		// Pasar propiedades por la interface EN CASO de necesitar frames: 
 		this.path = path;
 		readImage(path);
-		
+		setPathImageUEngine(path);
+	}
+
+	private void setPathImageUEngine(String path) 
+	{
 		org.team.uroboros.uroboros.engine.geometry.Dimension dim = new org.team.uroboros.uroboros.engine.geometry.Dimension(this.getRealWidth(), this.getRealHeight());
 		org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
 		

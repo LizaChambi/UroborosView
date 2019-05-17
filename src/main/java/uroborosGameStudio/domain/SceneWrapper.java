@@ -188,12 +188,14 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setPathImage(String path) 
 	{
 		// TODO Auto-generated method stub
+		// FALTA LA POSIBILIDAD DE CAMBIAR EN U-ENGINE
 	}
 
 	@Override
 	public void setDimensionImage(Integer width, Integer height) 
 	{
 		// TODO Auto-generated method stub
+		// FALTA LA POSIBILIDAD DE CAMBIAR EN U-ENGINE
 	}
 
 }
