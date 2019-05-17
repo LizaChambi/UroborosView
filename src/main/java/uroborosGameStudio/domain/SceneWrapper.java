@@ -208,16 +208,9 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.forEach(actor -> actor.load());
 	}
 	
-	public void deleteActor(String name) 
-	{
+	public void deleteActor(String name) {
 		this.actors.removeIf(actor -> actor.hasName(name));
-		deleteActorUEngine(name);
-		
+		Game.removeActor(name);
 	}
 	
-	private void deleteActorUEngine(String name) 
-	{
-		Game.removeActor(name);;
-	}
-
 }

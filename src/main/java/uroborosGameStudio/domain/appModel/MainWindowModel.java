@@ -111,4 +111,8 @@ public class MainWindowModel
 	public SceneWrapper deleteActor(ActorWrapper actor) {
 		return project.deleteActor(actor);
 	}
+	
+	public void deleteScene(SceneWrapper scene) {
+		project.deleteScene(scene);
+	}
 }

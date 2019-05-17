@@ -197,4 +197,13 @@ public class UGSProject extends GameObject implements Serializable {
 		scene.deleteActor(actor.getName());
 		return scene;
 	}
+	
+	public void deleteScene(SceneWrapper scene) {
+		List<ActorWrapper> copy = scene.getActors();
+		scene.getActors().clear();
+		copy.forEach(actor -> Game.removeActor(actor.getName()));
+		copy.clear();
+		this.scenes.remove(scene);
+		Game.removeScene(scene.getName());
+	}
 }

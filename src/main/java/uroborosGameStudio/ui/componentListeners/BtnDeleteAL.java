@@ -41,8 +41,11 @@ public class BtnDeleteAL extends AbstractEditionListener {
 	{	
 		if(selectedNode.getLevel() == 1) {
 			scene = (SceneWrapper) gameObject;
+			model.deleteScene(scene);
+			
 			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
 			mdl.removeNodeFromParent(selectedNode);
+			setCanvas(scene);
 		}
 		
 		if(selectedNode.getLevel() == 2) {
