@@ -14,7 +14,7 @@ public class NombreVacioException extends RuntimeException{
 
 	@Override
 	public String getMessage() {
-		return game.toString() +" deberia tener un nombre NO vac\u00edo.";
+		return game.toString() + " debe tener un nombre.";
 	}
 
 }

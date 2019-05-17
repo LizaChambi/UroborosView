@@ -161,8 +161,41 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
 	}
 
+	@Override
+	public String getPathImage() 
+	{
+		return "";
+	}
+
+	@Override
+	public Integer getWidth() {
+		return 0;
+	}
+
+	@Override
+	public Integer getHeight() {
+		return 0;
+	}
+
+	@Override
+	public void setPathImage(String path) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setDimensionImage(Integer width, Integer heigth) {}
+	
 	public void loadProject() 
 	{
 		this.scenes.forEach(scene -> scene.load());
+	}
+
+	public SceneWrapper deleteActor(ActorWrapper actor) 
+	{
+		SceneWrapper scene = searchScene(Game.getSceneWithActor(actor.getName()).getName());
+		scene.deleteActor(actor.getName());
+		System.out.println("Estado de los actores de la escena luego de eliminar actor" + scene.getActors());
+		return scene;
 	}
 }

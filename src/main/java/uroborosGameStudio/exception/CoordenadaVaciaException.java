@@ -11,7 +11,7 @@ public class CoordenadaVaciaException extends NumberFormatException {
 	
 	@Override
 	public String toString() {
-		return "Mandaste un X o Y null";
+		return "Las coordenadas deben tener un valor numérico >= 0";
 	}
 
 }

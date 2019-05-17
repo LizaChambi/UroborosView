@@ -46,7 +46,7 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 			scene.addActor(newActor);
 			System.out.println(newActor);
 			System.out.println(actorsPanel);
-			actorsPanel.addActor(newActor);
+			//actorsPanel.addActor(newActor);
 			drawActor(newActor);
 			modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), selectedNode, modelNode.getChildCount(selectedNode));
 		}

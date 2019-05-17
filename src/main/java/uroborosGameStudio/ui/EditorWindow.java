@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -13,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -20,10 +23,14 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.dummy.DummyActors;
+import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
+import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
+import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
+import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
@@ -44,17 +51,27 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel gameEditorPanel;
 	private JPanel treePlayPanel;
 	private JPanel editorPanel;
-	private JPanel titleEditorPanel;
-	private JPanel optionsEditorPanel;
+	private JPanel propertiesEditPanel;
+	private JPanel editNamePanel;
 	private JTextArea textArea = new JTextArea(1, 1);
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
-	private JTextField nameTextField;
-	private JTextField posXTextField;
-	private JTextField posYTextField;
 	private ActorsPanel actorsPanel = new ActorsPanel();
-
+	private JTextField nameTextField = new JTextField("");
+	private JTextField posXTextField = new JTextField("0");
+	private JTextField posYTextField = new JTextField("0");
+	private JPanel panelEditPosition;
+	private JPanel panelEditImage;
+	private JLabel lblImage;
+	private JPanel panelEditDimension;
+	private JLabel lblDimension;
+	private JTextField textFieldPathImage = new JTextField("");
+	private JButton btnSetImage;
+	private JTextField textFieldWidth = new JTextField("0");
+	private JTextField textFieldHigh = new JTextField("0");
+	private JButton btnEditDimension;
+	private JButton btnEditImage;
 	public EditorWindow() 
 	{
 		super();
@@ -73,9 +90,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeTreePlayPanel();
 	
 		this.initializeEditorPanel();
-		this.initializeTitleEditorPanel();
-		this.initializeOptionsEditorPanel();
-		
+		this.initializePropertiesEditPanel();
 		this.optionsEditorPanel();
 		
 		this.initializeTreePanel();
@@ -83,7 +98,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.initializeCanvas();
 		this.initializeCodeTextArea();
-		playPanel.add(actorsPanel);
+		//playPanel.add(actorsPanel);
 		
 		this.frame.pack();
 	}
@@ -127,6 +142,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnPlay.addActionListener(new BtnPlayAL(canvas));
 		buttonPanel.add(btnPlay);
 		
+		JButton btnRemove = new JButton("Eliminar");
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
+		buttonPanel.add(btnRemove);
+		
 		/*
 		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
 		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, canvas, model), buttonPanel);
@@ -141,8 +160,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.canvas.setPreferredSize(new Dimension(666, 400));
 		this.canvas.setFocusTraversalKeysEnabled(true);
 		this.canvas.setBackground(Color.GREEN);
-		this.canvas.addOn(this.playPanel);
-		// this.playPanel.add(this.canvas);
+		this.playPanel.add(this.canvas);
 	}
 	
 	private void initializePlayPanel() {
@@ -161,7 +179,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, actorsPanel));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, actorsPanel));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -185,65 +203,30 @@ public class EditorWindow extends AbstractWindowFrame {
 		return root;
 	}
 
-	private void initializeEditorPanel() {
-		editorPanel = new JPanel(new BorderLayout());
+	private void initializeEditorPanel() 
+	{
+		editorPanel = new JPanel();
 		editorPanel.setPreferredSize(new Dimension(973, 263));
 		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
 	}
 	
-	private void initializeTitleEditorPanel() {
-		titleEditorPanel = new JPanel();
-		titleEditorPanel.setPreferredSize(new Dimension(973, 35));
-		FlowLayout fl_titlePanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
-		titleEditorPanel.setLayout(fl_titlePanel);
-		this.editorPanel.add(titleEditorPanel, BorderLayout.NORTH);
-	}
-	
-	private void initializeOptionsEditorPanel() {
-		optionsEditorPanel = new JPanel();
-		optionsEditorPanel.setPreferredSize(new Dimension(973, 228));
-		FlowLayout fl_optionsPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
-		optionsEditorPanel.setLayout(fl_optionsPanel);
-		this.editorPanel.add(optionsEditorPanel, BorderLayout.SOUTH);
+	private void initializePropertiesEditPanel() 
+	{
+		editorPanel.setLayout(null);
+		propertiesEditPanel = new JPanel();
+		propertiesEditPanel.setBounds(12, 12, 947, 239);
+		propertiesEditPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Panel de configuraci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		propertiesEditPanel.setPreferredSize(new Dimension(973, 35));
+		propertiesEditPanel.setLayout(new GridLayout(5, 1, 5, 0));
+		this.editorPanel.add(propertiesEditPanel);
 	}
 	
 	private void optionsEditorPanel() 
-	{	
-		JLabel lblTitleConf = new JLabel("Panel de Configuraci\u00F3n:");
-		titleEditorPanel.add(lblTitleConf);
-		
-		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(28, 60, 72, 23);
-		optionsEditorPanel.add(lblName);
-		
-		nameTextField = new JTextField("");
-		nameTextField.setBounds(110, 62, 100, 23);
-		nameTextField.setColumns(10);
-		optionsEditorPanel.add(nameTextField);
-		
-		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
-		btnEditName.setBounds(230, 62, 100, 23);
-		optionsEditorPanel.add(btnEditName);
-		
-		JLabel lblPosition = new JLabel("Posición (x, y):");
-		lblPosition.setBounds(350, 60, 80, 23);
-		optionsEditorPanel.add(lblPosition);
-		
-		posXTextField = new JTextField("0");
-		posXTextField.setBounds(450, 62, 50, 23);
-		posXTextField.setColumns(5);
-		optionsEditorPanel.add(posXTextField);
-		
-		posYTextField = new JTextField("0");
-		posYTextField.setBounds(500, 62, 50, 23);
-		posYTextField.setColumns(5);
-		optionsEditorPanel.add(posYTextField);
-		
-		JButton btnEditPosition = new JButton("Editar");
-		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
-		btnEditPosition.setBounds(550, 62, 100, 23);
-		optionsEditorPanel.add(btnEditPosition);
+	{
+		editName();
+		editPosition();
+		editImage();
+		editDimension();
 		
 		/*
 		new JLabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
@@ -251,21 +234,140 @@ public class EditorWindow extends AbstractWindowFrame {
 		new JLabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
 		nameTextField = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
 		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTextField, canvas), optionsEditorPanel, 230, 62, 100, 23);
-		new LabelUGS("Posici\u00f3n (x, y):", optionsEditorPanel, 350, 60, 80, 23);
+	
+		new JLabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
 		posXTextField = new TextFieldUGS("0",optionsEditorPanel, 450, 62, 50, 23,5).getTextField();
 		posYTextField = new TextFieldUGS("0",optionsEditorPanel, 500, 62, 50, 23,5).getTextField();
 		new ButtonUGS("Editar", new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);
 		*/
 	}
 
+	private void editDimension() {
+		inicializedEditDimensionPanel();
+		
+		lblDimension = new JLabel("Dimensiones:");
+		panelEditDimension.add(lblDimension);
+		
+		//textFieldWidth = new JTextField();
+		//textFieldWidth.setText("0");
+		panelEditDimension.add(textFieldWidth);
+		textFieldWidth.setColumns(10);
+		
+		//textFieldHigh = new JTextField();
+		//textFieldHigh.setText("0");
+		panelEditDimension.add(textFieldHigh);
+		textFieldHigh.setColumns(10);
+		
+		btnEditDimension = new JButton("Editar");
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+		panelEditDimension.add(btnEditDimension);
+	}
+
+	private void inicializedEditDimensionPanel() {
+		panelEditDimension = new JPanel();
+		panelEditDimension.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
+		propertiesEditPanel.add(panelEditDimension);
+	}
+
+	private void editImage() {
+		inicializedEditImagePanel();
+		panelEditImage.setLayout(null);
+		
+		lblImage = new JLabel("Imágen:");
+		lblImage.setBounds(5, 10, 57, 15);
+		panelEditImage.add(lblImage);
+		
+		textFieldPathImage = new JTextField();
+		textFieldPathImage.setEditable(false);
+		textFieldPathImage.setBounds(67, 8, 165, 19);
+		panelEditImage.add(textFieldPathImage);
+		textFieldPathImage.setColumns(10);
+		
+		btnSetImage = new JButton("Imagen...");
+		btnSetImage.addActionListener(new BtnOpenImageActionListener(textFieldPathImage,principalPanel, btnEditImage));
+		btnSetImage.setBounds(237, 5, 101, 25);
+		panelEditImage.add(btnSetImage);
+		
+		btnEditImage = new JButton("Editar");
+		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
+		btnEditImage.setBounds(345, 5, 76, 25);
+		panelEditImage.add(btnEditImage);
+	}
+
+	private void inicializedEditImagePanel() {
+		panelEditImage = new JPanel();
+		propertiesEditPanel.add(panelEditImage);
+	}
+
+	private void editPosition() {
+		inicializedEditPositionPanel();
+		panelEditPosition.setLayout(null);
+		
+		JLabel lblPosition = new JLabel("Posición (x, y):");
+		panelEditPosition.add(lblPosition);
+		lblPosition.setBounds(5, 7, 102, 15);
+		
+		posXTextField = new JTextField("0");
+		panelEditPosition.add(posXTextField);
+		posXTextField.setBounds(112, 5, 112, 19);
+		posXTextField.setColumns(5);
+		
+		posYTextField = new JTextField("0");
+		panelEditPosition.add(posYTextField);
+		posYTextField.setBounds(226, 5, 112, 19);
+		posYTextField.setColumns(5);
+		
+		JButton btnEditPosition = new JButton("Editar");
+		panelEditPosition.add(btnEditPosition);
+		btnEditPosition.setBounds(344, 2, 76, 25);
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
+	}
+
+	private void inicializedEditPositionPanel() {
+		panelEditPosition = new JPanel();
+		propertiesEditPanel.add(panelEditPosition);
+	}
+
+	private void editName() {
+		inicializedEditNamePanel();
+		
+		JLabel lblName = new JLabel("Nombre:");
+		lblName.setBounds(28, 60, 72, 23);
+		editNamePanel.add(lblName);
+
+		nameTextField = new JTextField("");
+		nameTextField.setBounds(110, 62, 100, 23);
+		nameTextField.setColumns(10);
+		editNamePanel.add(nameTextField);
+		
+		JButton btnEditName = new JButton("Editar");
+		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
+		btnEditName.setBounds(230, 62, 100, 23);
+		editNamePanel.add(btnEditName);
+	}
+
+	private void inicializedEditNamePanel() 
+	{
+		editNamePanel = new JPanel();
+		editNamePanel.setPreferredSize(new Dimension(973, 228));
+		editNamePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
+		propertiesEditPanel.add(editNamePanel);
+	}
+
 	private void initializeTreePlayPanel() {
-		treePlayPanel = new JPanel(new BorderLayout());
+		BorderLayout bl_treePlayPanel = new BorderLayout();
+		bl_treePlayPanel.setHgap(5);
+		bl_treePlayPanel.setVgap(5);
+		treePlayPanel = new JPanel(bl_treePlayPanel);
 		treePlayPanel.setPreferredSize(new Dimension(973, 400));
 		this.gameEditorPanel.add(treePlayPanel, BorderLayout.WEST);
 	}
 
 	private void initializeGameEditorPanel() {
-		gameEditorPanel = new JPanel(new BorderLayout());
+		BorderLayout bl_gameEditorPanel = new BorderLayout();
+		bl_gameEditorPanel.setVgap(5);
+		bl_gameEditorPanel.setHgap(5);
+		gameEditorPanel = new JPanel(bl_gameEditorPanel);
 		gameEditorPanel.setPreferredSize(new Dimension(973, 663));
 		this.centerPanel.add(gameEditorPanel, BorderLayout.CENTER);
 	}
@@ -297,18 +399,4 @@ public class EditorWindow extends AbstractWindowFrame {
 			this.canvas.onFrameVisible();
 		}
 	}
-
-	/* 	ELIMINAR UN NODO DEL ARBOL DE DIRECCIONES
-	 * 
-	protected void removeNode(ActionEvent e) 
-	{
-		DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) treeScenes.getLastSelectedPathComponent();
-		if (lastNode != null)
-		{
-			DefaultTreeModel mdl = (DefaultTreeModel) treeScenes.getModel();
-			mdl.removeNodeFromParent(lastNode);
-		}
-	}
-	*/
-
 }

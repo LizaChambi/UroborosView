@@ -82,7 +82,7 @@ public class ActorsPanel extends JLayeredPane  {
         label.addMouseListener(mh);
         label.addMouseMotionListener(mh);
         
-		ImageIcon ico = new ImageIcon(act.getPath());
+		ImageIcon ico = new ImageIcon(act.getPathImage());
 		ImageIcon ima = new ImageIcon(ico.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_SMOOTH));
 		label.setLayout(null);
 		label.setIcon(ima);

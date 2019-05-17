@@ -89,5 +89,4 @@ public class MainWindow extends AbstractWindowFrame {
 		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
 	}
-
 }

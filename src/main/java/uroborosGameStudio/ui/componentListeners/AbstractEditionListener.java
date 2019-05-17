@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +8,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.geometry.Rotation;
@@ -65,16 +66,15 @@ public abstract class AbstractEditionListener implements ActionListener, TreeSel
 	public void setCanvas(SceneWrapper sceneWpp) 
 	{
 		this.canvas.clear();
+		this.canvas.show();
 		sceneWpp.getActors().forEach(act -> drawActor(act));
 	}
 
 	public void drawActor(ActorWrapper actor) 
 	{
-		String spritesheetRoute = actor.getPath();
-		SpriteSheet spritesheet = new SpriteSheet(spritesheetRoute, new Frame(Point.ORIGIN, new Dimension(actor.getRealWidth(), actor.getRealHeight())));
-		Sprite sprite = new Sprite(spritesheet, 0, new Dimension(actor.getWidth(), actor.getHeight()));
+		Actor actorToDraw = Game.getActor(actor.getName());
 		
-		this.canvas.getGraphics().render(sprite, new Point(actor.getX(), actor.getY()), Rotation.NO_ROTATION);
+		this.canvas.getGameGraphics().render(actorToDraw.getTexture(), actorToDraw.getDimension(), actorToDraw.getPosition(), Rotation.NO_ROTATION);
 		this.canvas.show();
 		// this.canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null);
 	}
