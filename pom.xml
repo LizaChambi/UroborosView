@@ -24,9 +24,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.team-uroboros</groupId>
+			<groupId>com.github.TeamUroboros</groupId>
 			<artifactId>uroboros-engine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>develop-SNAPSHOT</version>
 		</dependency>
 		<!-- mockito -->
 		<dependency>
