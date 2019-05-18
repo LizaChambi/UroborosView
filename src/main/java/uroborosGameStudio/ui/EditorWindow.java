@@ -28,7 +28,6 @@ import javax.swing.tree.DefaultTreeModel;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.SceneWrapper;
-import uroborosGameStudio.dummy.DummyActors;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
@@ -43,7 +42,6 @@ import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 
 public class EditorWindow extends AbstractWindowFrame {
 
-	final DummyActors bdActors = new DummyActors();
 	private int idScene = 1;
 	
 	private Canvas canvas = new Canvas();
