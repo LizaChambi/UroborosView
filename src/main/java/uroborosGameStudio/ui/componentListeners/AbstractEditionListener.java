@@ -8,13 +8,10 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.team.uroboros.uroboros.engine.geometry.Dimension;
-import org.team.uroboros.uroboros.engine.geometry.Point;
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Rotation;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
-import org.team.uroboros.uroboros.engine.ui.resources.Frame;
-import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
-import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
@@ -64,21 +61,15 @@ public abstract class AbstractEditionListener implements ActionListener, TreeSel
 	public void setCanvas(SceneWrapper sceneWpp) 
 	{
 		this.canvas.clear();
-		sceneWpp.getActors().forEach(act -> drawActor(act));
+		this.canvas.show();
+		sceneWpp.getActors().forEach(actor -> drawActor(actor));
 	}
 
 	public void drawActor(ActorWrapper actor) 
 	{
+		Actor actorToDraw = Game.getActor(actor.getName());
 		
-		String spritesheetRoute = actor.getPathImage();
-		SpriteSheet spritesheet = new SpriteSheet(spritesheetRoute, new Frame(Point.ORIGIN, new Dimension(actor.getRealWidth(), actor.getRealHeight())));
-		Sprite sprite = new Sprite(spritesheet, 0);
-		
-		Dimension dim = new Dimension(actor.getWidth(), actor.getHeight());
-		Point point = new Point(actor.getX(), actor.getY());
-		this.canvas.getGameGraphics().render(sprite, dim, point, Rotation.NO_ROTATION);
+		this.canvas.getGameGraphics().render(actorToDraw.getTexture(), actorToDraw.getDimension(), actorToDraw.getPosition(), Rotation.NO_ROTATION);
 		this.canvas.show();
-		// this.canvas.getGraphics().drawImage(actor.getImage(), actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), null);
 	}
-
 }
