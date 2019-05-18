@@ -87,7 +87,6 @@ public class NewActorDialog extends JDialog
 	private void propertyImage() 
 	{
 		initializedPanelImage();
-		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		lblImage = new JLabel("Imágen:");
 		lblImage.setBounds(5, 10, 57, 15);
 		propertiesPanel.add(panelImage);
@@ -107,7 +106,7 @@ public class NewActorDialog extends JDialog
 		panelImage.add(btnOpenImage);
 		
 		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
-		// PARA HABILITAR ESTO, "panelFrame" TIENE QUE INICIALIZARSE ANTES
+		// Refactor:
 		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames));
 		
 		cbxHabilitarFrames.addItemListener(new ItemListener() {
@@ -137,7 +136,6 @@ public class NewActorDialog extends JDialog
 	private void dimensionFrames() 
 	{
 		inicializedDimensionFrame();
-		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		lblAncho = new JLabel("Ancho:");
 		lblAncho.setBounds(5, 7, 48, 15);
 		panelDimensionFrame.add(lblAncho);
@@ -160,7 +158,6 @@ public class NewActorDialog extends JDialog
 	private void titleDimensionFrames() 
 	{
 		inicializedTitleFrame();
-		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		lblFrames = new JLabel("Dimensión de los fotograma:");
 		lblFrames.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panelTitleFrame.add(lblFrames);
@@ -168,12 +165,11 @@ public class NewActorDialog extends JDialog
 
 	private void numberFrames() {
 		inicializedNumFrames();
-		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		lblNewLabel = new JLabel("Cantidad de fotogramas:");
 		lblNewLabel.setBounds(5, 6, 177, 15);
 		panelNumFrames.add(lblNewLabel);
 		
-		textFieldNumFrames = new JTextField("");
+		textFieldNumFrames = new JTextField("1");
 		textFieldNumFrames.setBounds(187, 5, 212, 18);
 		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
 		textFieldNumFrames.setColumns(10);
@@ -211,7 +207,6 @@ public class NewActorDialog extends JDialog
 	private void propertyName() 
 	{
 		initializedPanelName();
-		// REFACTORIZAR LOS COMPONENTES LUEGO DE TERMINAR LA VENTANA DE NUEVO ACTOR
 		JLabel lblName = new JLabel("Nombre:");
 		lblName.setBounds(5, 18, 60, 19);
 		panelName.add(lblName);

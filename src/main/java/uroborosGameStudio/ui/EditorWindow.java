@@ -43,7 +43,6 @@ import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 public class EditorWindow extends AbstractWindowFrame {
 
 	private int idScene = 1;
-	
 	private Canvas canvas = new Canvas();
 	private Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel northPanel;
@@ -76,8 +75,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditImage;
 	private JPanel menuPanel;
 	private JMenuBar menuBar;
-	private JMenu menu;
-	private JMenuItem menuItem;
 
 	public EditorWindow() 
 	{
@@ -132,14 +129,46 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializeMenuBar() {
 		menuBar = new JMenuBar();
+		optionsFile();
+		optionEdit();
+		optionsHelp();
+	}
+
+	private void optionEdit() 
+	{
+		JMenu edit = new JMenu("Edición");
 		
-		menu = new JMenu("Menú");
+		JMenuItem editItem = new JMenuItem("Borrar");
+		editItem.setEnabled(false);
+		edit.add(editItem);
+		
+		menuBar.add(edit);
+	}
+
+	private void optionsHelp() 
+	{
+		JMenu help = new JMenu("Ayuda");
+		
+		JMenuItem helpItem1 = new JMenuItem("Guía inicial");
+		helpItem1.setEnabled(false);
+		help.add(helpItem1);
+		
+		JMenuItem helpItem2 = new JMenuItem("Acerca de Uroboros Game Studio");
+		helpItem2.setEnabled(false);
+		help.add(helpItem2);
+		
+		menuBar.add(help);
+	}
+
+	private void optionsFile() 
+	{
+		JMenu menu = new JMenu("Archivo");
 		menu.setMnemonic(KeyEvent.VK_N);
 		menu.getAccessibleContext().setAccessibleDescription(
 		        "The only menu in this program that has menu items");
 		menuBar.add(menu);
 		
-		menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
+		JMenuItem menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.setEnabled(false);
 		menuItem.getAccessibleContext().setAccessibleDescription(
@@ -193,13 +222,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
-		
-		/*
-		new ButtonUGS("Nueva Escena", new BtnNewSceneAL(treeScenes, idScene, canvas), buttonPanel);
-		new ButtonUGS("Nuevo Actor", new BtnNewActorAL(treeScenes, canvas, model), buttonPanel);
-		new ButtonUGS("Guardar", new BtnSaveProjectAL(this.getModelObject()), buttonPanel);
-		new ButtonUGS("Play", new BtnPlayAL(canvas), buttonPanel);
-		*/
 	}
 
 	private void initializeCanvas() 
@@ -274,19 +296,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		editPosition();
 		editImage();
 		editDimension();
-		
-		/*
-		new JLabelUGS("Panel de Configuraci\u00F3n:", titleEditorPanel);
-		
-		new JLabelUGS("Nombre:", optionsEditorPanel, 28, 60, 72, 23);
-		nameTextField = new TextFieldUGS("",optionsEditorPanel, 110, 62, 100, 23, 10).getTextField();
-		new ButtonUGS("Editar", new BtnEditNameAL(treeScenes,nameTextField, canvas), optionsEditorPanel, 230, 62, 100, 23);
-	
-		new JLabelUGS("Posición (x, y):", optionsEditorPanel, 350, 60, 80, 23);
-		posXTextField = new TextFieldUGS("0",optionsEditorPanel, 450, 62, 50, 23,5).getTextField();
-		posYTextField = new TextFieldUGS("0",optionsEditorPanel, 500, 62, 50, 23,5).getTextField();
-		new ButtonUGS("Editar", new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model), optionsEditorPanel, 550, 62, 100, 23);
-		*/
 	}
 
 	private void editDimension() {
