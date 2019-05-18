@@ -130,15 +130,12 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeMenuPanel() {
 		menuPanel = new JPanel();
 		menuPanel.setPreferredSize(new Dimension(800, 35));
-		FlowLayout fl_buttonPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
-		menuPanel.setLayout(fl_buttonPanel);
-		this.northPanel.add(menuPanel, BorderLayout.NORTH);
 	}
 	
 	private void initializeMenuBar() {
 		menuBar = new JMenuBar();
 		
-		menu = new JMenu("Menu");
+		menu = new JMenu("Menú");
 		menu.setMnemonic(KeyEvent.VK_N);
 		menu.getAccessibleContext().setAccessibleDescription(
 		        "The only menu in this program that has menu items");
@@ -146,20 +143,24 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		menuItem.setEnabled(false);
 		menuItem.getAccessibleContext().setAccessibleDescription(
 		        "This doesn't really do anything");
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Abrir Proyecto", KeyEvent.VK_A);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		menuItem.setEnabled(false);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Guardar Proyecto", KeyEvent.VK_G);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		menuItem.setEnabled(false);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Salir", KeyEvent.VK_R);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_X, ActionEvent.ALT_MASK));
+		menuItem.setEnabled(false);
 		menu.add(menuItem);
 		
 		menuPanel.add(menuBar);
@@ -428,7 +429,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializeNorthPanel() {
 		northPanel = new JPanel(new BorderLayout());
-		northPanel.setPreferredSize(new Dimension(resolution.width, 75) );
+		northPanel.setPreferredSize(new Dimension(resolution.width, 40) );
 		this.principalPanel.add(northPanel, BorderLayout.NORTH);
 	}
 	
