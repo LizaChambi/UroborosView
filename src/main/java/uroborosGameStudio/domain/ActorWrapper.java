@@ -203,5 +203,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 		});
 	}
+
+	public java.awt.Point getPosition() 
+	{
+		return this.point;
+	}
 	
 }

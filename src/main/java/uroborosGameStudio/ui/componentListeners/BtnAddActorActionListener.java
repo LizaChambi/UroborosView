@@ -44,9 +44,9 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 			SceneWrapper scene = (SceneWrapper) gameObject;
 			ActorWrapper newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0, Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
 			scene.addActor(newActor);
-			System.out.println(newActor);
+			System.out.println("Actor a agregar: " + newActor);
 			System.out.println(actorsPanel);
-			//actorsPanel.addActor(newActor);
+			actorsPanel.addActor(newActor);
 			drawActor(newActor);
 			modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), selectedNode, modelNode.getChildCount(selectedNode));
 		}

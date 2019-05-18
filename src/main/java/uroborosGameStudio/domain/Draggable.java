@@ -7,9 +7,9 @@ public class Draggable
 	private String key;
 	private JLabel label;
 	
-	public Draggable(String name, JLabel label) 
+	public Draggable(String key, JLabel label) 
 	{
-		this.key = name;
+		this.key = key;
 		this.label = label;
 	}
 	

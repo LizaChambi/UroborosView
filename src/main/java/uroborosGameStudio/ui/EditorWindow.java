@@ -33,6 +33,7 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.MouseDragActorHandlers;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.components.ActorsPanel;
 
@@ -55,9 +56,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel editNamePanel;
 	private JTextArea textArea = new JTextArea(1, 1);
 	private JScrollPane scroollPanel;
-	private JPanel playPanel;
+	private JPanel playPanel = new JPanel(new BorderLayout());
 	private JTree treeScenes = new JTree();
-	private ActorsPanel actorsPanel = new ActorsPanel();
 	private JTextField nameTextField = new JTextField("");
 	private JTextField posXTextField = new JTextField("0");
 	private JTextField posYTextField = new JTextField("0");
@@ -72,6 +72,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JTextField textFieldHigh = new JTextField("0");
 	private JButton btnEditDimension;
 	private JButton btnEditImage;
+	private ActorsPanel actorsPanel = new ActorsPanel(canvas, model,treeScenes, posXTextField, posYTextField);
 	public EditorWindow() 
 	{
 		super();
@@ -97,12 +98,18 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializePlayPanel();
 		
 		this.initializeCanvas();
+		this.initializeActorsLayouts();
 		this.initializeCodeTextArea();
-		//playPanel.add(actorsPanel);
 		
 		this.frame.pack();
 	}
 	
+	private void initializeActorsLayouts() 
+	{
+		this.actorsPanel.setBackground(Color.WHITE);
+		this.playPanel.add(actorsPanel);
+	}
+
 	private void initializeFrame() {
 		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
@@ -139,7 +146,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnSave);
 		
 		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas));
+		btnPlay.addActionListener(new BtnPlayAL(canvas, actorsPanel, playPanel));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
@@ -164,9 +171,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializePlayPanel() {
-		playPanel = new JPanel(new BorderLayout());
+		//playPanel = new JPanel(new BorderLayout());
 		playPanel.setPreferredSize(new Dimension(666, 400));
-		playPanel.add(new ActorsPanel());
 		this.treePlayPanel.add(playPanel, BorderLayout.CENTER);
 	}
 	
@@ -248,13 +254,9 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblDimension = new JLabel("Dimensiones:");
 		panelEditDimension.add(lblDimension);
 		
-		//textFieldWidth = new JTextField();
-		//textFieldWidth.setText("0");
 		panelEditDimension.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
 		
-		//textFieldHigh = new JTextField();
-		//textFieldHigh.setText("0");
 		panelEditDimension.add(textFieldHigh);
 		textFieldHigh.setColumns(10);
 		

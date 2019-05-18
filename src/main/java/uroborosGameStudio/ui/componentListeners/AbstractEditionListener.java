@@ -10,13 +10,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Actor;
-import org.team.uroboros.uroboros.engine.geometry.Dimension;
-import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.geometry.Rotation;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
-import org.team.uroboros.uroboros.engine.ui.resources.Frame;
-import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
-import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
