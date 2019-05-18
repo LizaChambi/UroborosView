@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import org.team.uroboros.uroboros.engine.Game;
-
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
@@ -13,12 +11,8 @@ import uroborosGameStudio.domain.UGSProject;
 public class MainWindowModel 
 {
 	private UGSProject project;
-	String itemSelectComboBox;
 
-	public MainWindowModel()
-	{
-		this.itemSelectComboBox = "";
-	}
+	public MainWindowModel() {}
 	
 	public UGSProject getProject() 
 	{
@@ -53,14 +47,6 @@ public class MainWindowModel
 	public void addScene(SceneWrapper newScene) 
 	{
 		project.addScene(newScene);
-	}
-	
-	public String getItemSelectComboBox() {
-		return itemSelectComboBox;
-	}
-
-	public void setItemSelectComboBox(String msg) {
-		itemSelectComboBox = msg;
 	}
 
 	public void setProject(UGSProject project) {

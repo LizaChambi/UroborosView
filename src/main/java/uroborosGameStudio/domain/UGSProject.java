@@ -121,18 +121,9 @@ public class UGSProject extends GameObject implements Serializable {
 			}
 		});
 	}
-
-	public List<String> getSavesFiles() 
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
-	public void setSceneUEngine() 
-	{
-		// TODO Auto-generated method stub
-	}
+	public void setSceneUEngine() {}
 
 	@Override
 	public SceneWrapper selectedScene(MainWindowModel model) 
@@ -141,9 +132,7 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setPosition(Integer x, Integer y) {
-		// TODO Auto-generated method stub
-	}
+	public void setPosition(Integer x, Integer y) {}
 
 	@Override
 	public Integer getX() {
@@ -152,7 +141,6 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public Integer getY() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -178,10 +166,7 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setPathImage(String path) 
-	{
-		// TODO Auto-generated method stub
-	}
+	public void setPathImage(String path) {}
 
 	@Override
 	public void setDimensionImage(Integer width, Integer heigth) {}
@@ -198,12 +183,9 @@ public class UGSProject extends GameObject implements Serializable {
 		return scene;
 	}
 	
-	public void deleteScene(SceneWrapper scene) {
-		List<ActorWrapper> copy = scene.getActors();
-		scene.getActors().clear();
-		copy.forEach(actor -> Game.removeActor(actor.getName()));
-		copy.clear();
-		this.scenes.remove(scene);
+	public void deleteScene(SceneWrapper scene) 
+	{	
+		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
 	}
 }
