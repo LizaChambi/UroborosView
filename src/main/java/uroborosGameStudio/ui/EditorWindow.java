@@ -6,14 +6,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -70,6 +76,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JTextField textFieldHigh = new JTextField("0");
 	private JButton btnEditDimension;
 	private JButton btnEditImage;
+	private JPanel menuPanel;
+	private JMenuBar menuBar;
+	private JMenu menu;
+	private JMenuItem menuItem;
 
 	public EditorWindow() 
 	{
@@ -78,6 +88,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 		this.initializeGlobalPanel();
 		this.initializeNorthPanel();
+		this.initializeMenuPanel();
+		this.initializeMenuBar();
 		this.initializeButtonPanel();
 		this.toolbar();
 
@@ -98,6 +110,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeCanvas();
 		this.initializeCodeTextArea();
 		
+		this.frame.setJMenuBar(menuBar);
 		this.frame.pack();
 	}
 	
@@ -112,6 +125,44 @@ public class EditorWindow extends AbstractWindowFrame {
 		principalPanel = new JPanel(new BorderLayout());
 		principalPanel.setPreferredSize(new Dimension(resolution.width, resolution.height-30) );
 		this.frame.getContentPane().add(principalPanel, BorderLayout.CENTER);
+	}
+	
+	private void initializeMenuPanel() {
+		menuPanel = new JPanel();
+		menuPanel.setPreferredSize(new Dimension(800, 35));
+		FlowLayout fl_buttonPanel = new FlowLayout(FlowLayout.LEADING, 5, 5);
+		menuPanel.setLayout(fl_buttonPanel);
+		this.northPanel.add(menuPanel, BorderLayout.NORTH);
+	}
+	
+	private void initializeMenuBar() {
+		menuBar = new JMenuBar();
+		
+		menu = new JMenu("Menu");
+		menu.setMnemonic(KeyEvent.VK_N);
+		menu.getAccessibleContext().setAccessibleDescription(
+		        "The only menu in this program that has menu items");
+		menuBar.add(menu);
+		
+		menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+		        "This doesn't really do anything");
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Abrir Proyecto", KeyEvent.VK_A);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Guardar Proyecto", KeyEvent.VK_G);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Salir", KeyEvent.VK_R);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_X, ActionEvent.ALT_MASK));
+		menu.add(menuItem);
+		
+		menuPanel.add(menuBar);
 	}
 	
 	private void initializeButtonPanel() {
