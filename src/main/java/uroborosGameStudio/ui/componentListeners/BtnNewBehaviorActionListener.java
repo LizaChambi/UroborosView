@@ -3,12 +3,15 @@ package uroborosGameStudio.ui.componentListeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.BehaviorFile;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.ui.NewActorDialog;
+import uroborosGameStudio.ui.NewBehaviorDialog;
 
 public class BtnNewBehaviorActionListener implements ActionListener 
 {
@@ -27,9 +30,16 @@ public class BtnNewBehaviorActionListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		NewBehaviorDialog dialog = new NewBehaviorDialog(datosDePrueba);
+		dialog.setLocationRelativeTo(null);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+		
+		/*
 		BehaviorFile newBF = new BehaviorFile("Nombre", "Nuevo comportamiento agregado.", true);
 		datosDePrueba.addBehavior(newBF);
 		updateTable();
+		*/
 	}
 
 	private void updateTable() 
