@@ -228,7 +228,6 @@ public class NewActorDialog extends JDialog
 	{
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		{
-			
 			okButton.addPropertyChangeListener(new PropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent evt) 
 				{

@@ -27,11 +27,12 @@ public class ActorWrapper extends GameObject  implements Serializable
 {
 	
 	private static final long serialVersionUID = 1L;
-	public String path;
-	public java.awt.Point point;
-	public java.awt.Dimension dimension;
-	transient BufferedImage image;
-	public double frames;
+	private String path;
+	private java.awt.Point point;
+	private java.awt.Dimension dimension;
+	private transient BufferedImage image;
+	private double frames;
+	private AdmBehaviors behaviors;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -41,6 +42,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.point = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = 1;
+		this.behaviors = new AdmBehaviors();
 	}
 
 	public ActorWrapper() {}

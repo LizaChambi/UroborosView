@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -16,24 +17,31 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.AdmBehaviors;
+import uroborosGameStudio.domain.BehaviorFile;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
+import uroborosGameStudio.ui.componentListeners.BtnGlobalBehaviorsActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
+import uroborosGameStudio.ui.componentListeners.BtnNewBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
@@ -75,6 +83,14 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditImage;
 	private JPanel menuPanel;
 	private JMenuBar menuBar;
+	private JTable table;
+	private JPanel BehaviorButtonsPanel;
+	private JButton btnNewBehavior;
+	private JButton btnGlobalBehavior;
+	private JButton btnDeleteBehavior;
+	private JPanel behaviorPanel;
+	private JScrollPane tableBehaviorScrollPanel;
+	private AdmBehaviors datosDePrueba = new AdmBehaviors();
 
 	public EditorWindow() 
 	{
@@ -98,6 +114,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeEditorPanel();
 		this.initializePropertiesEditPanel();
 		this.optionsEditorPanel();
+		this.behaviorSettingPanel();
 		
 		this.initializeTreePanel();
 		this.initializePlayPanel();
@@ -281,13 +298,72 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializePropertiesEditPanel() 
 	{
-		editorPanel.setLayout(null);
+		this.inicializeOptionsEditionPanel();
+		this.inicializeBehaviorSettingPanel();
+	}
+
+	private void inicializeOptionsEditionPanel() 
+	{
+		editorPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		propertiesEditPanel = new JPanel();
-		propertiesEditPanel.setBounds(12, 12, 947, 239);
 		propertiesEditPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Panel de configuraci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		propertiesEditPanel.setPreferredSize(new Dimension(973, 35));
 		propertiesEditPanel.setLayout(new GridLayout(5, 1, 5, 0));
 		this.editorPanel.add(propertiesEditPanel);
+	}
+
+	private void inicializeBehaviorSettingPanel() 
+	{
+		behaviorPanel = new JPanel();
+		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		behaviorPanel.setLayout(null);
+		editorPanel.add(behaviorPanel);
+	}
+
+	private void behaviorSettingPanel() 
+	{
+		tableBehaviorScrollPanel = new JScrollPane();
+		tableBehaviorScrollPanel.setBounds(5, 23, 475, 195);
+		behaviorPanel.add(tableBehaviorScrollPanel);
+		
+		this.inicializeTable();
+		
+		BehaviorButtonsPanel = new JPanel();
+		BehaviorButtonsPanel.setBounds(5, 223, 475, 35);
+		behaviorPanel.add(BehaviorButtonsPanel);
+		
+		btnNewBehavior = new JButton("Nuevo");
+		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(table, model, datosDePrueba));
+		btnNewBehavior.setBounds(5, 5, 78, 25);
+		btnNewBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		
+		btnGlobalBehavior = new JButton("Agregar globales");
+		btnGlobalBehavior.setBounds(88, 5, 156, 25);
+		btnGlobalBehavior.addActionListener(new BtnGlobalBehaviorsActionListener());
+		btnGlobalBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		
+		btnDeleteBehavior = new JButton("Eliminar");
+		btnDeleteBehavior.setBounds(373, 5, 90, 25);
+		btnDeleteBehavior.setHorizontalAlignment(SwingConstants.TRAILING);
+		BehaviorButtonsPanel.setLayout(null);
+		BehaviorButtonsPanel.add(btnNewBehavior);
+		BehaviorButtonsPanel.add(btnGlobalBehavior);
+		BehaviorButtonsPanel.add(btnDeleteBehavior);
+	}
+
+	private void inicializeTable() 
+	{
+		table = new JTable();
+		table.setBounds(0, 0, 225, 64);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"", "", ""}
+			},
+			new String[] {
+				"Nombre", "Descripci\u00F3n", "Global"
+			}
+		));
+		tableBehaviorScrollPanel.setViewportView(table);
 	}
 	
 	private void optionsEditorPanel() 
