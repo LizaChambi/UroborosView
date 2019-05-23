@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -32,7 +31,6 @@ import javax.swing.tree.DefaultTreeModel;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.AdmBehaviors;
-import uroborosGameStudio.domain.BehaviorFile;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;

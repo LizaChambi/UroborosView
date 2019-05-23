@@ -1,29 +1,27 @@
 package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import uroborosGameStudio.domain.AdmBehaviors;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import java.awt.SystemColor;
-import javax.swing.JCheckBox;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
 
 public class NewBehaviorDialog extends JDialog 
 {
@@ -38,10 +36,13 @@ public class NewBehaviorDialog extends JDialog
 	private JPanel configDescriptionPanel;
 	private JPanel globalPanel;
 	private JPanel buttonPane;
+	private JTextArea textDescription;
+	private JCheckBox chbxIsGlobal;
+	private JTable table;
 	
-	public NewBehaviorDialog(AdmBehaviors datosDePrueba) 
+	public NewBehaviorDialog(AdmBehaviors datosDePrueba, JTable table) 
 	{
-		this.inicializeDialog(datosDePrueba);
+		this.inicializeDialog(datosDePrueba, table);
 		this.titlePanel();
 		this.configurationPanel();
 		this.buttonPanel();
@@ -52,12 +53,7 @@ public class NewBehaviorDialog extends JDialog
 		this.inicializeButtonPanel();
 		
 		JButton okButton = new JButton("Crear");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				
-			}
-		});
+		okButton.addActionListener(new BtnAddBehaviorActionListener(datosDePrueba, table, nameTextField, textDescription, chbxIsGlobal,this));
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 				
@@ -92,7 +88,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeGlobalPanel();
 		
-		JCheckBox chbxIsGlobal = new JCheckBox("Asignar como un comportamiento global.");
+		chbxIsGlobal = new JCheckBox("Asignar como un comportamiento global.");
 		chbxIsGlobal.setFont(new Font("Dialog", Font.PLAIN, 12));
 		globalPanel.add(chbxIsGlobal);
 	}
@@ -117,9 +113,9 @@ public class NewBehaviorDialog extends JDialog
 		lblDescription.setHorizontalTextPosition(SwingConstants.LEADING);
 		configDescriptionPanel.add(lblDescription, BorderLayout.NORTH);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		configDescriptionPanel.add(textArea);
+		textDescription = new JTextArea();
+		textDescription.setLineWrap(true);
+		configDescriptionPanel.add(textDescription);
 	}
 
 	private void inicializeDescriptionPanel() 
@@ -199,9 +195,10 @@ public class NewBehaviorDialog extends JDialog
 		contentPanel.add(titlePanel, BorderLayout.NORTH);
 	}
 
-	private void inicializeDialog(AdmBehaviors datosDePrueba) 
+	private void inicializeDialog(AdmBehaviors datosDePrueba, JTable table) 
 	{
 		this.datosDePrueba = datosDePrueba;
+		this.table = table;
 		setTitle("Nuevo comportamiento");
 		setBounds(100, 100, 450, 300);
 		BorderLayout borderLayout = new BorderLayout();
