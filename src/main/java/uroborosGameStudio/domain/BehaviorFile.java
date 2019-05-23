@@ -36,5 +36,10 @@ public class BehaviorFile
 	public void setIsGlobal(Boolean isGlobal) {
 		this.isGlobal = isGlobal;
 	}
+
+	public Boolean hasName(String name2) 
+	{
+		return this.name.equals(name2);
+	}
 	
 }

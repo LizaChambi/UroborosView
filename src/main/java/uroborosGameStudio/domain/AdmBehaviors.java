@@ -26,4 +26,9 @@ public class AdmBehaviors
 	{
 		return this.behaviors;
 	}
+
+	public Boolean validateName(String name) 
+	{
+		return this.behaviors.stream().anyMatch(behavior -> behavior.hasName(name));
+	}
 }

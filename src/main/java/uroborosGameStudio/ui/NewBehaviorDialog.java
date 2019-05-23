@@ -21,6 +21,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import uroborosGameStudio.domain.AdmBehaviors;
+import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
+import uroborosGameStudio.ui.componentListeners.BehaviorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
 
 public class NewBehaviorDialog extends JDialog 
@@ -39,6 +41,8 @@ public class NewBehaviorDialog extends JDialog
 	private JTextArea textDescription;
 	private JCheckBox chbxIsGlobal;
 	private JTable table;
+	private JButton okButton = new JButton("Crear");
+	private JLabel lblError;
 	
 	public NewBehaviorDialog(AdmBehaviors datosDePrueba, JTable table) 
 	{
@@ -52,8 +56,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeButtonPanel();
 		
-		JButton okButton = new JButton("Crear");
-		okButton.addActionListener(new BtnAddBehaviorActionListener(datosDePrueba, table, nameTextField, textDescription, chbxIsGlobal,this));
+		okButton.addActionListener(new BtnAddBehaviorActionListener(datosDePrueba, table, nameTextField, textDescription, chbxIsGlobal, this));
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 				
@@ -97,10 +100,11 @@ public class NewBehaviorDialog extends JDialog
 	private void inicializeGlobalPanel() 
 	{
 		globalPanel = new JPanel();
-		globalPanel.setBounds(12, 142, 431, 31);
+		globalPanel.setBounds(12, 142, 424, 31);
 		globalPanel.setFont(new Font("Dialog", Font.BOLD, 12));
 		FlowLayout flowLayout = (FlowLayout) globalPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEADING);
+		flowLayout.setHgap(0);
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		configPanel.add(globalPanel);
 	}
 
@@ -132,19 +136,20 @@ public class NewBehaviorDialog extends JDialog
 		
 		JLabel lblName = new JLabel("Nombre:");
 		lblName.setVerticalAlignment(SwingConstants.BOTTOM);
-		configNamePanel.add(lblName, BorderLayout.WEST);
 		lblName.setFont(new Font("Dialog", Font.PLAIN, 12));
+		configNamePanel.add(lblName, BorderLayout.WEST);
 			
 		this.inicializeTextNamePanel();
 			
-		JLabel lblNewLabel = new JLabel("Panel de errores");
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
-		textNamePanel.add(lblNewLabel);
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
+		lblError.setFont(new Font("Dialog", Font.PLAIN, 11));
+		textNamePanel.add(lblError);
 				
 		nameTextField = new JTextField();
-		textNamePanel.add(nameTextField);
+		nameTextField.addKeyListener(new BehaviorNameAdapterListener(okButton, datosDePrueba, lblError, nameTextField));
 		nameTextField.setColumns(10);
+		textNamePanel.add(nameTextField);
 	}
 
 
