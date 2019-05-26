@@ -141,9 +141,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void setPathImageUEngine(String path) 
 	{
-		// org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
-		
-		// EVALUAR EL PUNTO PASADO AL FRAME
 		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite = new Sprite(spritesheet, 0);
 		Game.getActor(name).setTexture(sprite);
