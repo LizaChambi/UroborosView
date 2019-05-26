@@ -43,6 +43,7 @@ import uroborosGameStudio.ui.componentListeners.BtnNewBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
+import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 
@@ -334,18 +335,19 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(table, model, datosDePrueba));
 		btnNewBehavior.setBounds(5, 5, 78, 25);
 		btnNewBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		BehaviorButtonsPanel.add(btnNewBehavior);
 		
 		btnGlobalBehavior = new JButton("Agregar globales");
 		btnGlobalBehavior.setBounds(88, 5, 156, 25);
 		btnGlobalBehavior.addActionListener(new BtnGlobalBehaviorsActionListener());
 		btnGlobalBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		BehaviorButtonsPanel.add(btnGlobalBehavior);
 		
 		btnDeleteBehavior = new JButton("Eliminar");
 		btnDeleteBehavior.setBounds(373, 5, 90, 25);
+		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(table, datosDePrueba, principalPanel));
 		btnDeleteBehavior.setHorizontalAlignment(SwingConstants.TRAILING);
 		BehaviorButtonsPanel.setLayout(null);
-		BehaviorButtonsPanel.add(btnNewBehavior);
-		BehaviorButtonsPanel.add(btnGlobalBehavior);
 		BehaviorButtonsPanel.add(btnDeleteBehavior);
 	}
 

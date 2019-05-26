@@ -31,4 +31,9 @@ public class AdmBehaviors
 	{
 		return this.behaviors.stream().anyMatch(behavior -> behavior.hasName(name));
 	}
+
+	public void removeBehaviorIndex(int index) 
+	{
+		this.behaviors.remove(index);
+	}
 }
