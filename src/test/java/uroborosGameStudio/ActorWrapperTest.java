@@ -10,17 +10,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.BehaviorFile;
 
 public class ActorWrapperTest {
 
 	ActorWrapper actor;
-
 	ActorWrapper pepe;
 	
 	@Before
 	public void setUp() {
-		String path = "D:\\Gabriel\\TIP\\repoOrganization\\UroborosGameStudio\\src\\main\\resources\\";
-		this.actor = new ActorWrapper("Actor0",path + "kids.png", 12, 15, 59, 89);
+		String path = "src/main/resources/";
+		this.actor = new ActorWrapper("Actor0", path + "kids.png", 12, 15, 59, 89);
 
 		this.pepe = mock(ActorWrapper.class);
 	}
@@ -86,4 +86,48 @@ public class ActorWrapperTest {
 		assertNull(pepe.getPosition());
 	}
 	
+	@Test
+	public void testCreateActorAndAddBehavior()
+	{
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
+		actor.addBehavior(behavior1);
+		assertTrue(actor.getBehaviors().contains(behavior1));
+		assertEquals(1, actor.getBehaviors().size());
+	}
+	
+	@Test
+	public void testCreateActorWith2BehaviorsAndRemoveBehaviorIndex1()
+	{
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		actor.addBehavior(behavior1);
+		actor.addBehavior(behavior2);
+
+		actor.removeBehaviorIndex(1);
+		
+		assertFalse(actor.getBehaviors().contains(behavior2));
+		assertEquals(1, actor.getBehaviors().size());
+	}
+	
+	@Test
+	public void testCreateActorWith2BehaviorsAndAskIfHasBehaviorNameTheReturnTrue()
+	{
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		actor.addBehavior(behavior1);
+		actor.addBehavior(behavior2);
+		
+		assertTrue(actor.hasBehaviorName("Mover"));
+	}
+	
+	@Test
+	public void testCreateActorWith2BehaviorsAndAskIfHasBehaviorNameTheReturnFalse()
+	{
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		actor.addBehavior(behavior1);
+		actor.addBehavior(behavior2);
+		
+		assertFalse(actor.hasBehaviorName("Rotar"));
+	}
 }
