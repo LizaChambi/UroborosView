@@ -45,7 +45,9 @@ import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -256,6 +258,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeCodeTextArea() {
+		textArea.addKeyListener(new CodeFieldListener(model, table, textArea));
 		textArea.setText("Editor de texto...");
 	}
 
@@ -355,6 +358,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		table = new JTable();
 		table.setBounds(0, 0, 225, 64);
+		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] { "Nombre", "Descripci\u00F3n", "Global"}

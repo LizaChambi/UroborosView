@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
 public class MainWindowModel 
 {
 	private UGSProject project;
-
+	private GameObject itemSelected;
+	private Integer fileSelected;
+	
 	public MainWindowModel() {}
 	
 	public UGSProject getProject() 
@@ -19,12 +22,12 @@ public class MainWindowModel
 		return project;
 	}
 
-	public void createNewProyect() 
+	public void createNewProject() 
 	{
 		this.project = new UGSProject("UGSProject", "T\u00EDtulo del Juego");
 	}
 
-	public String getProyectName() 
+	public String getProjectName() 
 	{
 		return project.getProjectName();
 	}
@@ -105,5 +108,25 @@ public class MainWindowModel
 	public boolean validateNameBehavior(String name) 
 	{
 		return this.project.existBehaviorName(name);
+	}
+
+	public void setDataTable(GameObject gameObject) 
+	{
+		this.itemSelected = gameObject;
+	}
+
+	public String getBehaviorFile(int index) 
+	{
+		return itemSelected.getBehaviorFileIndex(index);
+	}
+
+	public void setFileSelected(int row) 
+	{
+		this.fileSelected = row;
+	}
+
+	public void setTextBehaviorFile(String text) 
+	{
+		this.itemSelected.setBehaviorFileText(fileSelected, text);
 	}
 }

@@ -5,12 +5,14 @@ public class BehaviorFile
 	private String name;
 	private String description;
 	private Boolean isGlobal;
+	private String code;
 	
 	public BehaviorFile(String name, String description, Boolean isGlobal)
 	{
 		this.name = name;
 		this.description = description;
 		this.isGlobal = isGlobal;
+		this.code = "";
 	}
 
 	public String getName() {
@@ -40,6 +42,16 @@ public class BehaviorFile
 	public Boolean hasName(String name) 
 	{
 		return this.name.equals(name);
+	}
+
+	public String getCode() 
+	{
+		return this.code;
+	}
+
+	public void setCode(String text) 
+	{
+		this.code = text;
 	}
 	
 }

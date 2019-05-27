@@ -64,7 +64,7 @@ public class MainWindow extends AbstractWindowFrame {
 		createButton.setBounds(150, 180, 200, 23);
 		this.createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				model.createNewProyect();
+				model.createNewProject();
 				new EditorWindow().run();
 				frame.dispose();
 			}

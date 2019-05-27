@@ -238,5 +238,15 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.behaviors.removeBehaviorIndex(index);
 	}
 
-	
+	@Override
+	public String getBehaviorFileIndex(int index) 
+	{
+		return this.behaviors.getBehaviorFile(index);
+	}
+
+	@Override
+	public void setBehaviorFileText(Integer file, String text) 
+	{
+		this.behaviors.setCodeFile(file, text);
+	}	
 }

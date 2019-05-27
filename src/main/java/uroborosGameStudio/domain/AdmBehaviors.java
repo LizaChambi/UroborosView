@@ -36,4 +36,14 @@ public class AdmBehaviors
 	{
 		return this.behaviors.stream().anyMatch(behavior -> behavior.hasName(name));
 	}
+
+	public String getBehaviorFile(int index) 
+	{
+		return this.behaviors.get(index).getCode();
+	}
+
+	public void setCodeFile(Integer file, String text) 
+	{
+		this.behaviors.get(file).setCode(text);
+	}
 }

@@ -233,5 +233,14 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void removeBehaviorIndex(int fileSelected) 
 	{
 	}
+
+	@Override
+	public String getBehaviorFileIndex(int index) 
+	{
+		return "";
+	}
+
+	@Override
+	public void setBehaviorFileText(Integer file, String text) {}
 	
 }
