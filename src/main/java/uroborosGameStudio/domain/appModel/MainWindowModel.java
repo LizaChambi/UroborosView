@@ -101,4 +101,9 @@ public class MainWindowModel
 	public void deleteScene(SceneWrapper scene) {
 		project.deleteScene(scene);
 	}
+
+	public boolean validateNameBehavior(String name) 
+	{
+		return this.project.existBehaviorName(name);
+	}
 }

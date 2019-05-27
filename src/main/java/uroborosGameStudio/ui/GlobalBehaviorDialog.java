@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 public class GlobalBehaviorDialog extends JDialog 
 {
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JScrollPane globalBehaviorScrollPanel;
 	private JPanel buttonsPanel;

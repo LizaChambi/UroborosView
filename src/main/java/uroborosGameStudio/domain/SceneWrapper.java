@@ -212,5 +212,26 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.removeIf(actor -> actor.hasName(name));
 		Game.removeActor(name);
 	}
+
+	@Override
+	public List<BehaviorFile> getBehaviors() 
+	{
+		return new ArrayList<BehaviorFile>();
+	}
+
+	@Override
+	public void addBehavior(BehaviorFile newBehavior) 
+	{
+	}
+
+	public Boolean existBehaviorName(String name) 
+	{
+		return this.actors.stream().anyMatch(actor -> actor.hasBehaviorName(name));
+	}
+
+	@Override
+	public void removeBehaviorIndex(int fileSelected) 
+	{
+	}
 	
 }

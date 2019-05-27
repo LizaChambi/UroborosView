@@ -1,5 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,9 +17,9 @@ public class BtnEditDimensionImageActionListener extends AbstractEditionListener
 	private JTextField heightField;
 	private MainWindowModel model;
 	
-	public BtnEditDimensionImageActionListener(JTree treeScenes, Canvas canvas, JTextField textFieldWidth, JTextField textFieldHigh, MainWindowModel model) 
+	public BtnEditDimensionImageActionListener(JTable table, JTree treeScenes, Canvas canvas, JTextField textFieldWidth, JTextField textFieldHigh, MainWindowModel model) 
 	{
-		super(treeScenes, canvas);
+		super(treeScenes, canvas, table);
 		this.widthField = textFieldWidth;
 		this.heightField = textFieldHigh;
 		this.model = model;

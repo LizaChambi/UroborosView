@@ -1,5 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -21,9 +22,9 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 	JTextField height;
 	NewActorDialog dialog;
 	
-	public BtnAddActorActionListener(JTree treeScenes, Canvas canvas, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
+	public BtnAddActorActionListener(JTable table, JTree treeScenes, Canvas canvas, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
 	{
-		super(treeScenes, canvas);
+		super(treeScenes, canvas, table);
 		this.name = textFieldName;
 		this.pathImage =textFieldImagen;
 		//this.numFrames = textFieldNumFrames;

@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
@@ -63,10 +64,11 @@ public class NewActorDialog extends JDialog
 	private JPanel panelTitleFrame;
 	private JPanel panelDimensionFrame;
 	private Boolean enableNewActor = false;
+	private JTable table;
 
-	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	public NewActorDialog(JTable table, MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
-		initializedDialog(model, treeScenes, canvas);
+		initializedDialog(model, treeScenes, canvas, table);
 		initializedHeaderPanel();
 		titleLabel();
 		
@@ -238,7 +240,7 @@ public class NewActorDialog extends JDialog
 				}
 			});
 			
-			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new BtnAddActorActionListener(table,treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
@@ -295,8 +297,9 @@ public class NewActorDialog extends JDialog
 		headerPanel.add(lblTitle);
 	}
 
-	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
+		this.table = table;
 		this.model = model;
 		this.treeScenes=treeScenes;
 		this.canvas = canvas;

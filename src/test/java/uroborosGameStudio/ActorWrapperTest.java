@@ -30,8 +30,8 @@ public class ActorWrapperTest {
 	{
 		assertEquals("Actor0", actor.getName());
 		assertEquals(".act", actor.getExt());
-		assertEquals(new Point(12, 15), actor.point);
-		assertEquals(new Dimension(59, 89), actor.dimension);
+		assertEquals(new Point(12, 15), actor.getPosition());
+		assertEquals(new Dimension(59, 89), actor.getDimension());
 		
 	}
 	
@@ -83,7 +83,7 @@ public class ActorWrapperTest {
 		verify(pepe).setPosition(newPoint.x, newPoint.y);
 		
 		assertNotNull(pepe);
-		assertNull(pepe.point);
+		assertNull(pepe.getPosition());
 	}
 	
 }

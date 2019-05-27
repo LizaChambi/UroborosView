@@ -16,12 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import uroborosGameStudio.domain.AdmBehaviors;
-import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
+import org.team.uroboros.uroboros.engine.ui.Canvas;
+
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.BehaviorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
 
@@ -30,7 +32,6 @@ public class NewBehaviorDialog extends JDialog
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField nameTextField;
-	private AdmBehaviors datosDePrueba;
 	private JPanel titlePanel;
 	private JPanel configPanel;
 	private JPanel configNamePanel;
@@ -43,10 +44,13 @@ public class NewBehaviorDialog extends JDialog
 	private JTable table;
 	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
+	private JTree treeScenes;
+	private Canvas canvas;
+	private MainWindowModel model;
 	
-	public NewBehaviorDialog(AdmBehaviors datosDePrueba, JTable table) 
+	public NewBehaviorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
-		this.inicializeDialog(datosDePrueba, table);
+		this.inicializeDialog(model, treeScenes, canvas, table);
 		this.titlePanel();
 		this.configurationPanel();
 		this.buttonPanel();
@@ -56,7 +60,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeButtonPanel();
 		
-		okButton.addActionListener(new BtnAddBehaviorActionListener(datosDePrueba, table, nameTextField, textDescription, chbxIsGlobal, this));
+		okButton.addActionListener(new BtnAddBehaviorActionListener(treeScenes, canvas, table, nameTextField, textDescription, chbxIsGlobal, this));
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 				
@@ -147,7 +151,8 @@ public class NewBehaviorDialog extends JDialog
 		textNamePanel.add(lblError);
 				
 		nameTextField = new JTextField();
-		nameTextField.addKeyListener(new BehaviorNameAdapterListener(okButton, datosDePrueba, lblError, nameTextField));
+		
+		nameTextField.addKeyListener(new BehaviorNameAdapterListener(model, okButton, lblError, nameTextField));
 		nameTextField.setColumns(10);
 		textNamePanel.add(nameTextField);
 	}
@@ -200,10 +205,12 @@ public class NewBehaviorDialog extends JDialog
 		contentPanel.add(titlePanel, BorderLayout.NORTH);
 	}
 
-	private void inicializeDialog(AdmBehaviors datosDePrueba, JTable table) 
+	private void inicializeDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
-		this.datosDePrueba = datosDePrueba;
+		this.model = model;
 		this.table = table;
+		this.treeScenes = treeScenes;
+		this.canvas = canvas;
 		setTitle("Nuevo comportamiento");
 		setBounds(100, 100, 450, 300);
 		BorderLayout borderLayout = new BorderLayout();

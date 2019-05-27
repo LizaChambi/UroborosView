@@ -1,36 +1,49 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.AdmBehaviors;
+import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-public class BtnRemoveBehaviorActionListener extends AbstractTableListener implements ActionListener 
+import uroborosGameStudio.domain.GameObject;
+
+public class BtnRemoveBehaviorActionListener extends AbstractEditionListener
 {
 	private JPanel mainPanel;
 
-	public BtnRemoveBehaviorActionListener(JTable table, AdmBehaviors datosDePrueba, JPanel principalPanel) 
+	public BtnRemoveBehaviorActionListener(JTree treeScenes, Canvas canvas, JTable table, JPanel principalPanel) 
 	{
-		super(datosDePrueba, table);
+		super(treeScenes, canvas, table);
 		this.mainPanel = principalPanel;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateComponents(GameObject gameObject) 
 	{
 		int fileSelected = getTable().getSelectedRow();
 		if(fileSelected >= 0)
 		{
-			getModel().removeBehaviorIndex(fileSelected);
+			gameObject.removeBehaviorIndex(fileSelected);
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(mainPanel, "No se ah seleccionado ningún comportamiento para eliminar.");
+			JOptionPane.showMessageDialog(mainPanel,"No se ha seleccionado ningún comportamiento para eliminar.", "No se puedo eliminar", JOptionPane.INFORMATION_MESSAGE);
 		}
-		updateTable();
+		updateTable(gameObject);
+	}
+
+	@Override
+	public void updateComponents() {
+		// TODO Auto-generated method stub
+		
 	}
 }

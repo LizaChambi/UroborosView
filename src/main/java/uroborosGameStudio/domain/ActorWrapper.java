@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -25,7 +26,6 @@ import uroborosGameStudio.exception.NombreVacioException;
 
 public class ActorWrapper extends GameObject  implements Serializable 
 {
-	
 	private static final long serialVersionUID = 1L;
 	private String path;
 	private java.awt.Point point;
@@ -47,8 +47,23 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public ActorWrapper() {}
 
+	public List<BehaviorFile> getBehaviors()
+	{
+		return this.behaviors.getBehaviors();
+	}
+	
 	public double getRealWidth() {
 		return this.image.getWidth();
+	}
+	
+	public java.awt.Point getPosition()
+	{
+		return this.point;
+	}
+	
+	public java.awt.Dimension getDimension()
+	{
+		return this.dimension;
 	}
 
 	public double getRealHeight() {
@@ -205,5 +220,23 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 		});
 	}
+
+	@Override
+	public void addBehavior(BehaviorFile newBehavior) 
+	{
+		this.behaviors.addBehavior(newBehavior);
+	}
+
+	public Boolean hasBehaviorName(String name) 
+	{
+		return this.behaviors.hasBehaviorName(name);
+	}
+
+	@Override
+	public void removeBehaviorIndex(int index) 
+	{
+		this.behaviors.removeBehaviorIndex(index);
+	}
+
 	
 }

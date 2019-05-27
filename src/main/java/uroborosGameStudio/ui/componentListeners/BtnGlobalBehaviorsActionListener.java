@@ -6,11 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 
 import uroborosGameStudio.ui.GlobalBehaviorDialog;
-import uroborosGameStudio.ui.NewActorDialog;
 
 public class BtnGlobalBehaviorsActionListener implements ActionListener 
 {
-
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -19,5 +17,4 @@ public class BtnGlobalBehaviorsActionListener implements ActionListener
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
-
 }

@@ -36,4 +36,9 @@ public class AdmBehaviors
 	{
 		this.behaviors.remove(index);
 	}
+
+	public Boolean hasBehaviorName(String name) 
+	{
+		return this.behaviors.stream().anyMatch(behavior -> behavior.hasName(name));
+	}
 }

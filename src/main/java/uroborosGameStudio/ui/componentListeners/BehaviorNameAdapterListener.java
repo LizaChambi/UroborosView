@@ -7,22 +7,23 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import uroborosGameStudio.domain.AdmBehaviors;
+import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class BehaviorNameAdapterListener implements KeyListener 
 {
 	private JButton okButton;
-	private AdmBehaviors datosDePrueba;
 	private JLabel lblError;
 	private JTextField nameTextField;
+	private MainWindowModel model;
 	
-	public BehaviorNameAdapterListener(JButton okButton, AdmBehaviors datosDePrueba, JLabel lblError, JTextField nameTextField) 
+	public BehaviorNameAdapterListener(MainWindowModel model, JButton okButton, JLabel lblError, JTextField nameTextField) 
 	{
 		this.okButton = okButton;
-		this.datosDePrueba =datosDePrueba;
+		this.model =model;
 		this.lblError= lblError;
 		this.nameTextField =nameTextField;
 	}
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -79,7 +80,7 @@ public class BehaviorNameAdapterListener implements KeyListener
 		{
 			changeStatus("La letra inicial del nombre debe estar en mayúscula.", false);
 		}
-		if(datosDePrueba.validateName(name))
+		if(model.validateNameBehavior(name))
 		{
 			changeStatus("El nombre ingresado ya está en uso.", false);
 		}
@@ -93,7 +94,7 @@ public class BehaviorNameAdapterListener implements KeyListener
 	private boolean isValidName(String name) 
 	{
 		String letter = name.substring(0, 1);
-		return isUppercase(letter) && ! datosDePrueba.validateName(name);
+		return isUppercase(letter) && ! model.validateNameBehavior(name);
 	}
 
 }

@@ -188,4 +188,22 @@ public class UGSProject extends GameObject implements Serializable {
 		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
 	}
+
+	@Override
+	public List<BehaviorFile> getBehaviors() 
+	{
+		return new ArrayList<BehaviorFile>();
+	}
+
+	@Override
+	public void addBehavior(BehaviorFile newBehavior) {}
+
+	public boolean existBehaviorName(String name) 
+	{
+		return this.scenes.stream().anyMatch(scene -> scene.existBehaviorName(name));
+	}
+
+	@Override
+	public void removeBehaviorIndex(int fileSelected) {}
+
 }

@@ -1,5 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -10,7 +11,7 @@ import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
-public class SceneTreePanelTSL extends AbstractEditionListener 
+public class SceneTreePanelTSL extends AbstractEditionListener
 {
 	private JTextField textField;
 	private JTextField posXField;
@@ -20,9 +21,9 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField heightField;
 	private MainWindowModel model;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table) 
 	{
-		super(treeScenes, canvas);
+		super(treeScenes, canvas, table);
 		this.textField = textField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
@@ -47,7 +48,7 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		{
 			setCanvas(selectedScene);
 		}
-
+		this.updateTable(gameObject);
 		/* 
 		 * Cada tipo de GameObject debe cambiar el panel de edición:
 		 * 

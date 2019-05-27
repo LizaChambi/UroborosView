@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
@@ -55,5 +56,10 @@ public abstract class GameObject implements Serializable
 
 	public abstract void setDimensionImage(Integer width, Integer height);
 
+	public abstract List<BehaviorFile> getBehaviors();
+
+	public abstract void addBehavior(BehaviorFile newBehavior);
+
+	public abstract void removeBehaviorIndex(int fileSelected);
 
 }

@@ -1,27 +1,28 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import uroborosGameStudio.domain.AdmBehaviors;
+import org.team.uroboros.uroboros.engine.ui.Canvas;
+
 import uroborosGameStudio.domain.BehaviorFile;
+import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.ui.NewBehaviorDialog;
 
-public class BtnAddBehaviorActionListener extends AbstractTableListener implements ActionListener
+public class BtnAddBehaviorActionListener extends AbstractEditionListener
 {
 	private JTextField nameTextField;
 	private JTextArea textDescription;
 	private JCheckBox chbxIsGlobal;
 	private NewBehaviorDialog dialog;
 	
-	public BtnAddBehaviorActionListener(AdmBehaviors datosDePrueba, JTable table, JTextField nameTextField, JTextArea textDescription, JCheckBox chbxIsGlobal, NewBehaviorDialog behaviorDialog) 
+	public BtnAddBehaviorActionListener(JTree treeScenes, Canvas canvas, JTable table, JTextField nameTextField, JTextArea textDescription, JCheckBox chbxIsGlobal, NewBehaviorDialog behaviorDialog) 
 	{
-		super(datosDePrueba, table);
+		super(treeScenes, canvas, table);
 		this.nameTextField= nameTextField;
 		this.textDescription = textDescription;
 		this.chbxIsGlobal = chbxIsGlobal;
@@ -29,11 +30,24 @@ public class BtnAddBehaviorActionListener extends AbstractTableListener implemen
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateComponents(GameObject gameObject) 
 	{
 		BehaviorFile newBehavior = new BehaviorFile(nameTextField.getText(), textDescription.getText(), chbxIsGlobal.isSelected());
-		getModel().addBehavior(newBehavior);
-		this.updateTable();
+		gameObject.addBehavior(newBehavior);
+		this.updateTable(gameObject);
 		dialog.dispose();
+	}
+
+	@Override
+	public void updateComponents() {
+		// TODO Auto-generated method stub
+		
 	}
 }
