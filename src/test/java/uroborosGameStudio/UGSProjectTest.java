@@ -24,7 +24,7 @@ public class UGSProjectTest {
 	}
 	
 	@Test
-	public void testCreateNewUGSProyectWithNameAndGameTitle() {	
+	public void testCreateNewUGSProjectWithNameAndGameTitle() {	
 		File dir = new File(project.getPathRoot());
 		
 		assertEquals("DirectoryName", project.getProjectName());
@@ -35,7 +35,7 @@ public class UGSProjectTest {
 	}
 	
 	@Test
-	public void testCreateProyectDir() {
+	public void testCreateProjectDir() {
 		project.createProjectDir();
 		
 		String dp = System.getProperty("user.home");
