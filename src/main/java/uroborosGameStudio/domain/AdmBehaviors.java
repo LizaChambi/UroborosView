@@ -3,6 +3,8 @@ package uroborosGameStudio.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 public class AdmBehaviors 
 {
 	private List<BehaviorFile> behaviors;
@@ -45,5 +47,10 @@ public class AdmBehaviors
 	public void setCodeFile(Integer file, String text) 
 	{
 		this.behaviors.get(file).setCode(text);
+	}
+
+	public void evalBehaviorFiles(TypeScriptEngine engine) 
+	{
+		this.behaviors.forEach(behavior -> behavior.evalCode(engine));
 	}
 }

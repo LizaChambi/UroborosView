@@ -234,7 +234,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnSave);
 		
 		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas));
+		btnPlay.addActionListener(new BtnPlayAL(canvas, model));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");

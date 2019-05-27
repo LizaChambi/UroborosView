@@ -1,5 +1,7 @@
 package uroborosGameStudio.domain;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 public class BehaviorFile 
 {
 	private String name;
@@ -52,6 +54,11 @@ public class BehaviorFile
 	public void setCode(String text) 
 	{
 		this.code = text;
+	}
+
+	public void evalCode(TypeScriptEngine engine) 
+	{
+		engine.eval(code);
 	}
 	
 }

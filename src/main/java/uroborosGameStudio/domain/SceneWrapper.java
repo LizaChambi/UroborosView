@@ -17,6 +17,8 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
 
@@ -242,5 +244,10 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	@Override
 	public void setBehaviorFileText(Integer file, String text) {}
+
+	public void evalBehaviors(TypeScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
+	}
 	
 }

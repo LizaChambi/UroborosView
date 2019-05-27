@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
@@ -128,5 +130,12 @@ public class MainWindowModel
 	public void setTextBehaviorFile(String text) 
 	{
 		this.itemSelected.setBehaviorFileText(fileSelected, text);
+	}
+
+	public void evalBehaviors() 
+	{
+		TypeScriptEngine engine = new TypeScriptEngine("");
+		this.project.evalBehaviors(engine);
+		//"console.log('Hola mundo')"
 	}
 }

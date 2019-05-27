@@ -34,6 +34,11 @@
 			<artifactId>uroboros-engine</artifactId>
 			<version>develop-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.51lv3str1</groupId>
+			<artifactId>JTypeScript</artifactId>
+			<version>master-SNAPSHOT</version>
+		</dependency>
 		<!-- mockito -->
 		<dependency>
 		  <groupId>org.mockito</groupId>
