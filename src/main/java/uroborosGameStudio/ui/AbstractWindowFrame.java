@@ -32,10 +32,7 @@ public class AbstractWindowFrame implements Runnable, WindowListener, ComponentL
 	private void initializeFrame() {
 		this.frame = new JFrame(this.title);
 		this.frame.setLayout(new BorderLayout());
-		// this.frame.setPreferredSize(this.resolution);
-		// this.frame.setMinimumSize(this.resolution);
 		this.frame.setVisible(false);
-		// this.frame.setResizable(this.resizable); // default true
 		this.frame.setLocationRelativeTo(null);
 		this.frame.addWindowListener(this);
 		this.frame.addComponentListener(this);

@@ -16,27 +16,34 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditNameAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditPositionAL;
+import uroborosGameStudio.ui.componentListeners.BtnGlobalBehaviorsActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
+import uroborosGameStudio.ui.componentListeners.BtnNewBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
+import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 
@@ -75,6 +82,14 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditImage;
 	private JPanel menuPanel;
 	private JMenuBar menuBar;
+	private JTable table;
+	private JPanel BehaviorButtonsPanel;
+	private JButton btnNewBehavior;
+	private JButton btnGlobalBehavior;
+	private JButton btnDeleteBehavior;
+	private JPanel behaviorPanel;
+	private JScrollPane tableBehaviorScrollPanel;
+	private AdmBehaviors datosDePrueba = new AdmBehaviors();
 
 	public EditorWindow() 
 	{
@@ -98,6 +113,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.initializeEditorPanel();
 		this.initializePropertiesEditPanel();
 		this.optionsEditorPanel();
+		this.behaviorSettingPanel();
 		
 		this.initializeTreePanel();
 		this.initializePlayPanel();
@@ -204,11 +220,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void toolbar() 
 	{
 		JButton btnNewScena = new JButton("Nueva Escena");
-		btnNewScena.addActionListener(new BtnNewSceneAL(treeScenes, idScene, canvas));
+		btnNewScena.addActionListener(new BtnNewSceneAL(table, treeScenes, idScene, canvas));
 		buttonPanel.add(btnNewScena);
 		
 		JButton btnNewActor = new JButton("Nuevo Actor");
-		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
+		btnNewActor.addActionListener(new BtnNewActorAL(table, treeScenes, canvas, model));
 		buttonPanel.add(btnNewActor);
 		
 		JButton btnSave = new JButton("Guardar");
@@ -220,7 +236,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
-		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
+		btnRemove.addActionListener(new BtnDeleteAL(table, treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 	}
 
@@ -248,7 +264,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -281,13 +297,69 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void initializePropertiesEditPanel() 
 	{
-		editorPanel.setLayout(null);
+		this.inicializeOptionsEditionPanel();
+		this.inicializeBehaviorSettingPanel();
+	}
+
+	private void inicializeOptionsEditionPanel() 
+	{
+		editorPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		propertiesEditPanel = new JPanel();
-		propertiesEditPanel.setBounds(12, 12, 947, 239);
 		propertiesEditPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Panel de configuraci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		propertiesEditPanel.setPreferredSize(new Dimension(973, 35));
 		propertiesEditPanel.setLayout(new GridLayout(5, 1, 5, 0));
 		this.editorPanel.add(propertiesEditPanel);
+	}
+
+	private void inicializeBehaviorSettingPanel() 
+	{
+		behaviorPanel = new JPanel();
+		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		behaviorPanel.setLayout(null);
+		editorPanel.add(behaviorPanel);
+	}
+
+	private void behaviorSettingPanel() 
+	{
+		tableBehaviorScrollPanel = new JScrollPane();
+		tableBehaviorScrollPanel.setBounds(5, 23, 475, 195);
+		behaviorPanel.add(tableBehaviorScrollPanel);
+		
+		this.inicializeTable();
+		
+		BehaviorButtonsPanel = new JPanel();
+		BehaviorButtonsPanel.setBounds(5, 223, 475, 35);
+		behaviorPanel.add(BehaviorButtonsPanel);
+		
+		btnNewBehavior = new JButton("Nuevo");
+		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(model, treeScenes, canvas, table, datosDePrueba));
+		btnNewBehavior.setBounds(5, 5, 78, 25);
+		btnNewBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		BehaviorButtonsPanel.add(btnNewBehavior);
+		
+		btnGlobalBehavior = new JButton("Agregar globales");
+		btnGlobalBehavior.setBounds(88, 5, 156, 25);
+		btnGlobalBehavior.addActionListener(new BtnGlobalBehaviorsActionListener());
+		btnGlobalBehavior.setHorizontalAlignment(SwingConstants.LEADING);
+		BehaviorButtonsPanel.add(btnGlobalBehavior);
+		
+		btnDeleteBehavior = new JButton("Eliminar");
+		btnDeleteBehavior.setBounds(373, 5, 90, 25);
+		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(treeScenes, canvas, table, principalPanel));
+		btnDeleteBehavior.setHorizontalAlignment(SwingConstants.TRAILING);
+		BehaviorButtonsPanel.setLayout(null);
+		BehaviorButtonsPanel.add(btnDeleteBehavior);
+	}
+
+	private void inicializeTable() 
+	{
+		table = new JTable();
+		table.setBounds(0, 0, 225, 64);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {},
+			new String[] { "Nombre", "Descripci\u00F3n", "Global"}
+		));
+		tableBehaviorScrollPanel.setViewportView(table);
 	}
 	
 	private void optionsEditorPanel() 
@@ -315,7 +387,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		textFieldHigh.setColumns(10);
 		
 		btnEditDimension = new JButton("Editar");
-		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		panelEditDimension.add(btnEditDimension);
 	}
 
@@ -345,7 +417,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditImage.add(btnSetImage);
 		
 		btnEditImage = new JButton("Editar");
-		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
+		btnEditImage.addActionListener(new BtnEditImageActionListener(table, treeScenes, canvas, textFieldPathImage, model));
 		btnEditImage.setBounds(345, 5, 76, 25);
 		panelEditImage.add(btnEditImage);
 	}
@@ -376,7 +448,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
 		btnEditPosition.setBounds(344, 2, 76, 25);
-		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
+		btnEditPosition.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 	}
 
 	private void inicializedEditPositionPanel() {
@@ -397,7 +469,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editNamePanel.add(nameTextField);
 		
 		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
+		btnEditName.addActionListener(new BtnEditNameAL(table, treeScenes,nameTextField, canvas));
 		btnEditName.setBounds(230, 62, 100, 23);
 		editNamePanel.add(btnEditName);
 	}

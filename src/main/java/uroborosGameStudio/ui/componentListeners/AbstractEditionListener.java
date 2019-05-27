@@ -3,6 +3,7 @@ package uroborosGameStudio.ui.componentListeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -17,13 +18,14 @@ import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 
-public abstract class AbstractEditionListener implements ActionListener, TreeSelectionListener
+public abstract class AbstractEditionListener extends AbstractTableListener implements ActionListener, TreeSelectionListener
 {
 	public JTree treeScenes;
 	public Canvas canvas;
 	
-	public AbstractEditionListener(JTree treeScenes, Canvas canvas)
+	public AbstractEditionListener(JTree treeScenes, Canvas canvas, JTable table)
 	{
+		super(table);
 		this.treeScenes = treeScenes;
 		this.canvas = canvas;
 	}

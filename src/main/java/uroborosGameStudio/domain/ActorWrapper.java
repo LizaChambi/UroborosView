@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -25,13 +26,13 @@ import uroborosGameStudio.exception.NombreVacioException;
 
 public class ActorWrapper extends GameObject  implements Serializable 
 {
-	
 	private static final long serialVersionUID = 1L;
-	public String path;
-	public java.awt.Point point;
-	public java.awt.Dimension dimension;
-	transient BufferedImage image;
-	public double frames;
+	private String path;
+	private java.awt.Point point;
+	private java.awt.Dimension dimension;
+	private transient BufferedImage image;
+	private double frames;
+	private AdmBehaviors behaviors;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -41,12 +42,28 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.point = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = 1;
+		this.behaviors = new AdmBehaviors();
 	}
 
 	public ActorWrapper() {}
 
+	public List<BehaviorFile> getBehaviors()
+	{
+		return this.behaviors.getBehaviors();
+	}
+	
 	public double getRealWidth() {
 		return this.image.getWidth();
+	}
+	
+	public java.awt.Point getPosition()
+	{
+		return this.point;
+	}
+	
+	public java.awt.Dimension getDimension()
+	{
+		return this.dimension;
 	}
 
 	public double getRealHeight() {
@@ -139,9 +156,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void setPathImageUEngine(String path) 
 	{
-		// org.team.uroboros.uroboros.engine.geometry.Point point = new org.team.uroboros.uroboros.engine.geometry.Point(this.getX(), this.getY());
-		
-		// EVALUAR EL PUNTO PASADO AL FRAME
 		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite = new Sprite(spritesheet, 0);
 		Game.getActor(name).setTexture(sprite);
@@ -206,5 +220,23 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 		});
 	}
+
+	@Override
+	public void addBehavior(BehaviorFile newBehavior) 
+	{
+		this.behaviors.addBehavior(newBehavior);
+	}
+
+	public Boolean hasBehaviorName(String name) 
+	{
+		return this.behaviors.hasBehaviorName(name);
+	}
+
+	@Override
+	public void removeBehaviorIndex(int index) 
+	{
+		this.behaviors.removeBehaviorIndex(index);
+	}
+
 	
 }

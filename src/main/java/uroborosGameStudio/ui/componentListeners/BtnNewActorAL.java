@@ -1,6 +1,7 @@
 package uroborosGameStudio.ui.componentListeners;
 
 import javax.swing.JDialog;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -14,9 +15,9 @@ public class BtnNewActorAL extends AbstractEditionListener
 {
 	private MainWindowModel model;
 	
-	public BtnNewActorAL(JTree treeScenes, Canvas canvas, MainWindowModel model) 
+	public BtnNewActorAL(JTable table, JTree treeScenes, Canvas canvas, MainWindowModel model) 
 	{
-		super(treeScenes, canvas);
+		super(treeScenes, canvas, table);
 		this.model = model;
 	}
 
@@ -25,7 +26,7 @@ public class BtnNewActorAL extends AbstractEditionListener
 	{
 		if(selectedNode.getLevel() == 1)
 		{
-			NewActorDialog dialog = new NewActorDialog(model, treeScenes, canvas);
+			NewActorDialog dialog = new NewActorDialog(getTable(), model, treeScenes, canvas);
 			dialog.setLocationRelativeTo(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
