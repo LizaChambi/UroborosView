@@ -4,7 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+import javax.script.ScriptException;
+
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.GameObject;
@@ -134,20 +136,31 @@ public class MainWindowModel
 
 	public void evalBehaviors() 
 	{
-		TypeScriptEngine engine = new TypeScriptEngine("");
+		// TypeScriptEngine engine = new TypeScriptEngine("");
+		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
 		
-		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
-		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
-		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
-		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
-		engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
-		engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
-		engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
-		engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
-		engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
-		engine.eval("var Dimension = Java.type('org.team.uroboros.uroboros.engine.geometry.Dimension')");
-		engine.eval("var Graphics = Java.type('org.team.uroboros.uroboros.engine.ui.Graphics')");
+		try {
+			engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+			engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
+			engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
+			engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
+			engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
+			engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
+			engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
+			engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
+			engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
+			engine.eval("var Dimension = Java.type('org.team.uroboros.uroboros.engine.geometry.Dimension')");
+			engine.eval("var Graphics = Java.type('org.team.uroboros.uroboros.engine.ui.Graphics')");
+			engine.eval("var Ability = Java.type('org.team.uroboros.uroboros.engine.component.Ability')");
+			engine.eval("var Behaviour = Java.type('org.team.uroboros.uroboros.engine.component.Behaviour')");
+		} 
+
+		catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		/*
 		engine.eval("abstract class Ability {\n" + 
 				"\n" + 
 				"    public abstract onStart(actor): void\n" + 
@@ -167,6 +180,7 @@ public class MainWindowModel
 				"    public abstract onUpdate(deltaTime): void\n" + 
 				"\n" + 
 				"}");
+		*/
 		
 		this.project.evalBehaviors(engine);
 		//"console.log('Hola mundo')"

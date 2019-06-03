@@ -48,6 +48,7 @@ import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
+import uroborosGameStudio.ui.components.JavaScriptEditor;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -64,7 +65,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel editorPanel;
 	private JPanel propertiesEditPanel;
 	private JPanel editNamePanel;
-	private JTextArea textArea = new JTextArea(1, 1);
+	private JavaScriptEditor javaScriptEditor = new JavaScriptEditor();
+	private JTextArea textArea = javaScriptEditor.getJSTextArea();
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();

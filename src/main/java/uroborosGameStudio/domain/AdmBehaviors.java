@@ -3,7 +3,7 @@ package uroborosGameStudio.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 public class AdmBehaviors 
 {
@@ -49,8 +49,8 @@ public class AdmBehaviors
 		this.behaviors.get(file).setCode(text);
 	}
 
-	public void evalBehaviorFiles(TypeScriptEngine engine) 
+	public void evalBehaviorFiles(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
 	{
-		this.behaviors.forEach(behavior -> behavior.evalCode(engine));
+		this.behaviors.forEach(behavior -> behavior.evalCode(engine, actorWrapper));
 	}
 }

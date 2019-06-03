@@ -21,7 +21,7 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
-import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
@@ -122,6 +122,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		Scene selectedScene = Game.getSceneWithActor(this.name);
 		Game.setScene(selectedScene);
+		System.out.println(selectedScene.getName());
 	}
 
 	@Override
@@ -252,8 +253,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.behaviors.setCodeFile(file, text);
 	}
 
-	public void evalBehaviors(TypeScriptEngine engine) 
+	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.behaviors.evalBehaviorFiles(engine);
+		this.behaviors.evalBehaviorFiles(engine, this);
 	}	
 }
