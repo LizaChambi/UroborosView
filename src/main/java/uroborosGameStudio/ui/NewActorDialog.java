@@ -31,6 +31,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
+import uroborosGameStudio.ui.componentListeners.NumberWHAdapter;
 import uroborosGameStudio.ui.components.ButtonUGS;
 
 public class NewActorDialog extends JDialog 
@@ -65,6 +66,7 @@ public class NewActorDialog extends JDialog
 	private JPanel panelDimensionFrame;
 	private Boolean enableNewActor = false;
 	private JTable table;
+	private JLabel lblNumberError;
 
 	public NewActorDialog(JTable table, MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
@@ -139,22 +141,34 @@ public class NewActorDialog extends JDialog
 	{
 		inicializedDimensionFrame();
 		lblAncho = new JLabel("Ancho:");
-		lblAncho.setBounds(5, 7, 48, 15);
+		lblAncho.setBounds(10, 21, 48, 15);
 		panelDimensionFrame.add(lblAncho);
 		
+		lblNumberError = new JLabel("");
+		lblNumberError.setForeground(Color.RED);
+		lblNumberError.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblNumberError.setBounds(63, 0, 336, 14);
+		panelDimensionFrame.add(lblNumberError);
+
 		textFieldWidth = new JTextField("");
-		textFieldWidth.setBounds(58, 5, 135, 19);
+		textFieldWidth.addKeyListener(new NumberWHAdapter(textFieldWidth, textFieldHeight, okButton, model, lblNumberError));
+		textFieldWidth.setBounds(63, 19, 135, 19);
 		textFieldWidth.setColumns(10);
 		panelDimensionFrame.add(textFieldWidth);
 		
 		lblHigh = new JLabel("Alto:");
-		lblHigh.setBounds(217, 7, 40, 15);
+		lblHigh.setBounds(222, 21, 40, 15);
 		panelDimensionFrame.add(lblHigh);
 		
+
 		textFieldHeight = new JTextField("");
-		textFieldHeight.setBounds(259, 5, 135, 19);
+		textFieldHeight.addKeyListener(new NumberWHAdapter(textFieldWidth, textFieldHeight, okButton, model, lblNumberError));
+		textFieldHeight.setBounds(264, 19, 135, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);
+		
+		
+//		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
 	}
 
 	private void titleDimensionFrames() 
@@ -199,7 +213,7 @@ public class NewActorDialog extends JDialog
 
 	private void inicializedPanelFrames() {
 		panelFrames = new JPanel();
-		panelFrames.setBounds(5, 125, 421, 107);
+		panelFrames.setBounds(5, 125, 421, 135);
 		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
 		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
 		panelFrames.setVisible(false);
