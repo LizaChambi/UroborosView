@@ -319,7 +319,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void inicializeBehaviorSettingPanel() 
 	{
 		behaviorPanel = new JPanel();
-		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Habilidades y comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		behaviorPanel.setLayout(null);
 		editorPanel.add(behaviorPanel);
 	}

@@ -28,7 +28,7 @@ public abstract class AbstractTableListener
 			newTable[col][0] = actor.getBehaviors().get(col).getName();
 			newTable[col][1] = actor.getBehaviors().get(col).getDescription();
 			newTable[col][2] = actor.getBehaviors().get(col).getIsGlobal();
-			newTable[col][3] = actor.getBehaviors().get(col).getType().toString();
+			newTable[col][3] = actor.getBehaviors().get(col).getTypeView();
 		}
 		table.setModel(new DefaultTableModel(newTable, new Object[] {"Nombre", "Descripción", "Global", "Tipo"}));
 	}

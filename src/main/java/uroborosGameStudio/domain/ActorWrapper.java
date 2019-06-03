@@ -9,13 +9,10 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
-import org.team.uroboros.uroboros.engine.input.Key;
-import org.team.uroboros.uroboros.engine.ui.Graphics;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
@@ -122,7 +119,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		Scene selectedScene = Game.getSceneWithActor(this.name);
 		Game.setScene(selectedScene);
-		System.out.println(selectedScene.getName());
 	}
 
 	@Override
@@ -186,42 +182,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
-		// HABILIDAD DE PRUEBA
-		actorLoaded.learn(new Ability() 
-		{	
-			Actor actor;
-			
-			@Override
-			public void onStart(Actor actor) 
-			{
-				this.actor =actor;
-			}
-			
-			@Override
-			public void onUpdate(Double deltaTime) 
-			{
-				if(Key.UP.isPressed()) 
-				{
-					this.actor.translate(0, 3);
-				}
-				if(Key.RIGHT.isPressed()) 
-				{
-					this.actor.translate(3, 0);
-				}
-				if(Key.DOWN.isPressed()) 
-				{
-					this.actor.translate(0, -3);
-				}
-				if(Key.LEFT.isPressed()) 
-				{
-					this.actor.translate(-3, 0);
-				}
-			}
-			
-			@Override
-			public void onRender(Graphics graphics) { }
-
-		});
 	}
 
 	@Override

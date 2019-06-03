@@ -45,54 +45,12 @@ public class SceneWrapper extends GameObject implements Serializable
 	private void createActorUEngine(ActorWrapper actorWpp) 
 	{
 		Actor newActor = Game.createActor(actorWpp.getName());
-		
-		System.out.println("Nombre del actor en UEngine:" + Game.getActor(newActor.getName()));
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0);
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
-		
-		// HABILIDAD DE PRUEBA
-		
-		/*
-		newActor.learn(new Ability() 
-		{	
-			Actor actor;
-			
-			@Override
-			public void onStart(Actor actor) 
-			{
-				this.actor =actor;
-			}
-			
-			@Override
-			public void onUpdate(Double deltaTime) 
-			{
-				if(Key.UP.isPressed()) 
-				{
-					this.actor.translate(0, 3);
-				}
-				if(Key.RIGHT.isPressed()) 
-				{
-					this.actor.translate(3, 0);
-				}
-				if(Key.DOWN.isPressed()) 
-				{
-					this.actor.translate(0, -3);
-				}
-				if(Key.LEFT.isPressed()) 
-				{
-					this.actor.translate(-3, 0);
-				}
-			}
-			
-			@Override
-			public void onRender(Graphics graphics) { }
-
-		});
-		*/
 	}
 	
 

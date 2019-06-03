@@ -5,6 +5,7 @@ import javax.script.ScriptException;
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
+import org.team.uroboros.uroboros.engine.component.Behaviour;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
@@ -23,8 +24,54 @@ public class BehaviorFile
 		this.description = description;
 		this.isGlobal = isGlobal;
 		this.code = "";
+		this.addCode();
 	}
 	
+	private void addCode() 
+	{
+		switch(this.type)
+		{
+		case BEHAVIOR:
+			this.code = behaviorCode() ;
+			break;
+		case ABILITY:
+			this.code = abilityCode() ;
+			break;
+		}
+	}
+
+	private String abilityCode() {
+		return "Java.extend(Ability, {\n" + 
+				"\n" + 
+				"	onStart: function (actor) {\n" + 
+				"		 this.actor = actor;\n" + 
+				"	},\n" + 
+				"\n" + 
+				"	onUpdate: function (deltaTime) {\n" + 
+				"	\n" + 
+				"	},\n" + 
+				"\n" + 
+				"	onRender: function (graphics) {\n" + 
+				"	 \n" + 
+				"	},\n" + 
+				"	\n" + 
+				"});";
+	}
+
+	private String behaviorCode() {
+		return "Java.extend(Behaviour, {\n" + 
+				"\n" + 
+				"	onStart: function (actor) {\n" + 
+				"		 this.actor = actor;\n" + 
+				"	},\n" + 
+				"\n" + 
+				"	onUpdate: function (deltaTime) {\n" + 
+				"	\n" + 
+				"	},\n" + 
+				"\n" + 
+				"});";
+	}
+
 	public Action getType() {
 		return this.type;
 	}
@@ -69,18 +116,48 @@ public class BehaviorFile
 	}
 
 	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
-	{	// HACER UN SWITCH SEGUN EL TIPO DE LA ACCION (BEHAVIOR o ABILITY)
-		try {
-			// ESTA LINEA NO SE DEBE EJECUTAR CON BEHAVIORS
-			engine.eval("var " + name + " = " + code); // <----
+	{	
+		switch(this.type)
+		{
+		case BEHAVIOR:
 			
-			Ability ability =(Ability) engine.eval("new " + name + "();");
-			Actor actor = Game.getActor(actorWrapper.getName());
-			actor.learn(ability);
-		} catch (ScriptException e) {
-			// TODO Auto-generated catchs block
-			e.printStackTrace();
+			try 
+			{
+				Behaviour behaviour =(Behaviour) engine.eval("new " + name + "();");
+			} 
+			catch (ScriptException e) 
+			{
+				// TODO Auto-generated catchs block
+				e.printStackTrace();
+			}
+			
+			System.out.println("No soy una habilidad.");
+			break;
+			
+		case ABILITY:
+			try 
+			{
+				engine.eval("var " + name + " = " + code);
+				Ability ability =(Ability) engine.eval("new " + name + "();");
+				Actor actor = Game.getActor(actorWrapper.getName());
+				actor.learn(ability);
+			} 
+			catch (ScriptException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
-	
+
+	public String getTypeView() 
+	{
+		String typeView = "Habilidad";
+		if(this.type.equals(Action.BEHAVIOR))
+		{
+			typeView = "Comportamiento";
+		}
+		return typeView;
+	}
 }
