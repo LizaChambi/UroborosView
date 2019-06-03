@@ -1,6 +1,12 @@
 package uroborosGameStudio.domain;
 
-import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+import javax.script.ScriptException;
+
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Ability;
+import org.team.uroboros.uroboros.engine.component.Actor;
+
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 public class BehaviorFile 
 {
@@ -56,15 +62,25 @@ public class BehaviorFile
 	{
 		return this.code;
 	}
-
+	
 	public void setCode(String text) 
 	{
 		this.code = text;
 	}
 
-	public void evalCode(TypeScriptEngine engine) 
-	{
-		engine.eval(code);
+	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
+	{	// HACER UN SWITCH SEGUN EL TIPO DE LA ACCION (BEHAVIOR o ABILITY)
+		try {
+			// ESTA LINEA NO SE DEBE EJECUTAR CON BEHAVIORS
+			engine.eval("var " + name + " = " + code); // <----
+			
+			Ability ability =(Ability) engine.eval("new " + name + "();");
+			Actor actor = Game.getActor(actorWrapper.getName());
+			actor.learn(ability);
+		} catch (ScriptException e) {
+			// TODO Auto-generated catchs block
+			e.printStackTrace();
+		}
 	}
 	
 }
