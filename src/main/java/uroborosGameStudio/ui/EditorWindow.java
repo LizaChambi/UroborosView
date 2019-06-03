@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -436,11 +437,13 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblPosition.setBounds(5, 7, 102, 15);
 		
 		posXTextField = new JTextField("0");
+		posXTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posXTextField);
 		posXTextField.setBounds(112, 5, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
+		posYTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posYTextField);
 		posYTextField.setBounds(226, 5, 112, 19);
 		posYTextField.setColumns(5);
