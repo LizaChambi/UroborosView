@@ -43,12 +43,13 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.add(actorWpp);
 		createActorUEngine(actorWpp);
-		
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
 	{
-		Actor newActor = Game.createActor(actorWpp.getName());
+		// Actor newActor = Game.createActor(actorWpp.getName());
+		TSActor newActor = Game.createActor(TSActor.class, actorWpp.getName());
+		
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0);
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));

@@ -361,7 +361,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
-			new String[] { "Nombre", "Descripci\u00F3n", "Global"}
+			new String[] { "Nombre", "Descripci\u00F3n", "Global", "Tipo"}
 		));
 		tableBehaviorScrollPanel.setViewportView(table);
 	}

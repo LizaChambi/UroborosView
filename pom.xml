@@ -39,6 +39,22 @@
 			<artifactId>JTypeScript</artifactId>
 			<version>master-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>rsyntaxtextarea</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>autocomplete</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>languagesupport</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		
 		<!-- mockito -->
 		<dependency>
 		  <groupId>org.mockito</groupId>

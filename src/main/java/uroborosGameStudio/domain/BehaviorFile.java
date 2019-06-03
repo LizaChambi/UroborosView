@@ -8,13 +8,19 @@ public class BehaviorFile
 	private String description;
 	private Boolean isGlobal;
 	private String code;
+	private Action type;
 	
-	public BehaviorFile(String name, String description, Boolean isGlobal)
+	public BehaviorFile(String name, Action type, String description, Boolean isGlobal)
 	{
 		this.name = name;
+		this.type = type;
 		this.description = description;
 		this.isGlobal = isGlobal;
 		this.code = "";
+	}
+	
+	public Action getType() {
+		return this.type;
 	}
 
 	public String getName() {
