@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -47,8 +46,10 @@ import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -193,7 +194,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		        "This doesn't really do anything");
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				model.createNewProyect();
+				model.createNewProject();
 				new EditorWindow().run();
 				frame.dispose();
 			}
@@ -250,7 +251,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnSave);
 		
 		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas));
+		btnPlay.addActionListener(new BtnPlayAL(canvas, model));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
@@ -274,6 +275,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeCodeTextArea() {
+		textArea.addKeyListener(new CodeFieldListener(model, table, textArea));
 		textArea.setText("Editor de texto...");
 	}
 
@@ -373,9 +375,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		table = new JTable();
 		table.setBounds(0, 0, 225, 64);
+		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
-			new String[] { "Nombre", "Descripci\u00F3n", "Global"}
+			new String[] { "Nombre", "Descripci\u00F3n", "Global", "Tipo"}
 		));
 		tableBehaviorScrollPanel.setViewportView(table);
 	}

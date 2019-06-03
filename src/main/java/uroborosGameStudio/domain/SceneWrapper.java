@@ -17,6 +17,8 @@ import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
 
@@ -41,12 +43,13 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.add(actorWpp);
 		createActorUEngine(actorWpp);
-		
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
 	{
-		Actor newActor = Game.createActor(actorWpp.getName());
+		// Actor newActor = Game.createActor(actorWpp.getName());
+		TSActor newActor = Game.createActor(TSActor.class, actorWpp.getName());
+		
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0);
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
@@ -232,6 +235,20 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void removeBehaviorIndex(int fileSelected) 
 	{
+	}
+
+	@Override
+	public String getBehaviorFileIndex(int index) 
+	{
+		return "";
+	}
+
+	@Override
+	public void setBehaviorFileText(Integer file, String text) {}
+
+	public void evalBehaviors(TypeScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
 	}
 	
 }

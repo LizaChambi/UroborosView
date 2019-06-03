@@ -62,4 +62,8 @@ public abstract class GameObject implements Serializable
 
 	public abstract void removeBehaviorIndex(int fileSelected);
 
+	public abstract String getBehaviorFileIndex(int index);
+
+	public abstract void setBehaviorFileText(Integer file, String text);
+
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
 
+import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
+
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
 
@@ -205,5 +207,19 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public void removeBehaviorIndex(int fileSelected) {}
+
+	@Override
+	public String getBehaviorFileIndex(int index) 
+	{
+		return "";
+	}
+
+	@Override
+	public void setBehaviorFileText(Integer file, String text) {}
+
+	public void evalBehaviors(TypeScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalBehaviors(engine));
+	}
 
 }
