@@ -123,7 +123,7 @@ public class BehaviorFile
 			
 			try 
 			{
-				Behaviour behaviour =(Behaviour) engine.eval("new " + name + "();");
+				engine.eval("var " + name + " = " + code);
 			} 
 			catch (ScriptException e) 
 			{
@@ -131,16 +131,16 @@ public class BehaviorFile
 				e.printStackTrace();
 			}
 			
-			System.out.println("No soy una habilidad.");
+			System.out.println("Comportamiento");
 			break;
 			
 		case ABILITY:
 			try 
 			{
 				engine.eval("var " + name + " = " + code);
-				Ability ability =(Ability) engine.eval("new " + name + "();");
-				Actor actor = Game.getActor(actorWrapper.getName());
-				actor.learn(ability);
+				//Ability ability =(Ability) engine.eval("new " + name + "();");
+				//Actor actor = Game.getActor(actorWrapper.getName());
+				// actor.learn(ability);
 			} 
 			catch (ScriptException e) 
 			{
@@ -159,5 +159,21 @@ public class BehaviorFile
 			typeView = "Comportamiento";
 		}
 		return typeView;
+	}
+
+	public void learnAbility(Actor actor, EcmaScriptEngine engine) 
+	{
+		if (this.type == Action.ABILITY)
+		{
+			try {
+				Ability ability = (Ability) engine.eval("new " + name + "();");
+				actor.learn(ability);
+			} 
+			catch (ScriptException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

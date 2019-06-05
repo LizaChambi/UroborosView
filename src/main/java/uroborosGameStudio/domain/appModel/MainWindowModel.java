@@ -160,5 +160,6 @@ public class MainWindowModel
 		}
 		
 		this.project.evalBehaviors(engine);
+		this.project.actorsLearnAbilities(engine);
 	}
 }

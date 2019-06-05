@@ -209,5 +209,10 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
 	}
+
+	public void actorsLearnAbilities(EcmaScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.learnAbilities(engine));
+	}
 	
 }
