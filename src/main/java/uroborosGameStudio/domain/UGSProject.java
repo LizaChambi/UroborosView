@@ -3,6 +3,9 @@ package uroborosGameStudio.domain;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +30,17 @@ public class UGSProject extends GameObject implements Serializable {
 		this.ext = ".ugs";
 		this.projectName = projectName;
 		createProjectDir();
-		this.scenes = new ArrayList<SceneWrapper>();
-		createMainScene();
 		createFolderGlobalBehavior();
 		createFolderGlobalAbility();
+		this.scenes = new ArrayList<SceneWrapper>();
+		createMainScene();
 	}
 
 	private void createMainScene() {
 		this.scenes.add(new SceneWrapper("Escena0"));
 		Game.createScene("Escena0");
+		createFolderScene("Escena0");
+		toListOnlySubDirectories();
 	}
 
 	public String getPathRoot() {
@@ -59,17 +64,15 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 	
 	private void createFolderGlobalBehavior() {
-		String line = System.getProperty("file.separator");
-		File behavior = new File(pathRoot + line + "Global Behavior");
+		File behavior = new File(getSavedPath() + "Global Behavior");
 		this.pathBehavior = behavior.getPath();
 		behavior.mkdir();
 	}
 	
 	private void createFolderGlobalAbility() {
-		String line = System.getProperty("file.separator");
-		File behavior = new File(pathRoot + line + "Global Ability");
-		this.pathAbility = behavior.getPath();
-		behavior.mkdir();		
+		File ability = new File(getSavedPath() + "Global Ability");
+		this.pathAbility = ability.getPath();
+		ability.mkdir();		
 	}
 
 	public String getProjectName() {
@@ -79,6 +82,12 @@ public class UGSProject extends GameObject implements Serializable {
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
 		Game.createScene(newScene.getName());
+		createFolderScene(newScene.getName());
+	}
+
+	private void createFolderScene(String nameScene) {
+		File scene = new File(getSavedPath() + nameScene);
+		scene.mkdir();
 	}
 
 	@Override
@@ -96,6 +105,25 @@ public class UGSProject extends GameObject implements Serializable {
 	public SceneWrapper searchScene(String name) 
 	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
+	}
+	
+	public void toListOnlySubDirectories() {
+		Path dir = Paths.get(this.pathRoot);
+		try {
+			Files.walk(dir, 1)
+			     .filter(p -> Files.isDirectory(p) && ! p.equals(dir))
+			     .forEach(p -> System.out.println(p.getFileName()));
+			
+//			Delete Project
+//			Files.walk(dir, 1)
+//		      .sorted(Comparator.reverseOrder())
+//		      .map(Path::toFile)
+//		      .forEach(File::delete);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void saveProject() throws IOException
