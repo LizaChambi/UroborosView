@@ -18,6 +18,8 @@ public class UGSProject extends GameObject implements Serializable {
 	private String projectName;
 	private String pathRoot;
 	private List<SceneWrapper> scenes;
+	private String pathBehavior;
+	private String pathAbility;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
@@ -27,6 +29,8 @@ public class UGSProject extends GameObject implements Serializable {
 		createProjectDir();
 		this.scenes = new ArrayList<SceneWrapper>();
 		createMainScene();
+		createFolderGlobalBehavior();
+		createFolderGlobalAbility();
 	}
 
 	private void createMainScene() {
@@ -52,6 +56,20 @@ public class UGSProject extends GameObject implements Serializable {
 	public void createDir(File dir) {
 		this.pathRoot = dir.getPath();
 		dir.mkdir();
+	}
+	
+	private void createFolderGlobalBehavior() {
+		String line = System.getProperty("file.separator");
+		File behavior = new File(pathRoot + line + "Global Behavior");
+		this.pathBehavior = behavior.getPath();
+		behavior.mkdir();
+	}
+	
+	private void createFolderGlobalAbility() {
+		String line = System.getProperty("file.separator");
+		File behavior = new File(pathRoot + line + "Global Ability");
+		this.pathAbility = behavior.getPath();
+		behavior.mkdir();		
 	}
 
 	public String getProjectName() {
