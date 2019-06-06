@@ -1,5 +1,6 @@
 package uroborosGameStudio.domain;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
+	private String pathScene;
+	private String oldName;
 	
 	public SceneWrapper(String name)
 	{
@@ -116,7 +119,22 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getScene(name), newName);
+		this.oldName = name;
 		this.name = newName;
+		System.out.println("cambio el nombre del folder a " + newName);
+	}
+	
+	public String getPathScene() {
+		return pathScene;
+	}
+
+	public void setPathScene(String pathScene) {
+		this.pathScene = pathScene;
+	}
+
+	public void createFolderScene(String nameScene) {
+		File scene = new File(pathScene + nameScene);
+		scene.mkdir();
 	}
 
 	public Boolean hasName(String name2) 
@@ -128,6 +146,10 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		saveActors(savedPath);
 		saveFile(savedPath);
+		
+		File oldfolder = new File(savedPath +oldName);
+		File rename = new File(savedPath +name);
+		oldfolder.renameTo(rename);
 	}
 
 	private void saveActors(String savedPath)

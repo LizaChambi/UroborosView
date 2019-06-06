@@ -37,9 +37,11 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	private void createMainScene() {
-		this.scenes.add(new SceneWrapper("Escena0"));
+		SceneWrapper tmp = new SceneWrapper("Escena0");
+		tmp.setPathScene(getSavedPath());
+		this.scenes.add(tmp);
 		Game.createScene("Escena0");
-		createFolderScene("Escena0");
+		tmp.createFolderScene("Escena0");
 		toListOnlySubDirectories();
 	}
 
@@ -81,13 +83,9 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
+		newScene.setPathScene(getSavedPath());
 		Game.createScene(newScene.getName());
-		createFolderScene(newScene.getName());
-	}
-
-	private void createFolderScene(String nameScene) {
-		File scene = new File(getSavedPath() + nameScene);
-		scene.mkdir();
+		newScene.createFolderScene(newScene.getName());
 	}
 
 	@Override
@@ -141,8 +139,10 @@ public class UGSProject extends GameObject implements Serializable {
 		{ 
 			for (int x=0;x<ficheros.length;x++) 
 			{ 
-				File fileToDelete = new File(ficheros[x].toString()); 
-				fileToDelete.delete(); 
+				if(!ficheros[x].isDirectory()) {
+					File fileToDelete = new File(ficheros[x].toString()); 
+					fileToDelete.delete(); 
+				}
 			}
 		} 
 		else 
