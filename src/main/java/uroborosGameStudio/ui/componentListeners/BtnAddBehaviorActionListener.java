@@ -21,9 +21,9 @@ public class BtnAddBehaviorActionListener extends AbstractEditionListener
 	private JTextArea textDescription;
 	private JCheckBox chbxIsGlobal;
 	private NewBehaviorDialog dialog;
-	private JComboBox cboxTypeAction;
+	private JComboBox<?> cboxTypeAction;
 	
-	public BtnAddBehaviorActionListener(JComboBox cBoxTypeAction, JTree treeScenes, Canvas canvas, JTable table, JTextField nameTextField, JTextArea textDescription, JCheckBox chbxIsGlobal, NewBehaviorDialog behaviorDialog) 
+	public BtnAddBehaviorActionListener(JComboBox<?> cBoxTypeAction, JTree treeScenes, Canvas canvas, JTable table, JTextField nameTextField, JTextArea textDescription, JCheckBox chbxIsGlobal, NewBehaviorDialog behaviorDialog) 
 	{
 		super(treeScenes, canvas, table);
 		this.cboxTypeAction = cBoxTypeAction;
@@ -37,17 +37,25 @@ public class BtnAddBehaviorActionListener extends AbstractEditionListener
 	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) 
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void updateComponents(GameObject gameObject) 
-	{
-		//Action actType = this.getActionType();
-		BehaviorFile newBehavior = new BehaviorFile(nameTextField.getText(), (Action)cboxTypeAction.getSelectedItem(), textDescription.getText(), chbxIsGlobal.isSelected());
+	{	
+		BehaviorFile newBehavior = new BehaviorFile(nameTextField.getText(), this.getActionType(), textDescription.getText(), chbxIsGlobal.isSelected());
 		gameObject.addBehavior(newBehavior);
 		this.updateTable(gameObject);
 		dialog.dispose();
+	}
+
+	private Action getActionType() 
+	{
+		Action type = Action.ABILITY;
+		if (cboxTypeAction.getSelectedIndex() == 0)
+		{
+			type = Action.BEHAVIOR;
+		}
+		return type;
 	}
 	@Override
 	public void updateComponents() {

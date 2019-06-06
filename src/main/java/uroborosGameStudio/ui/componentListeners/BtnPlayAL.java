@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import com.team.uroboros.jtypescript.engine.TypeScriptEngine;
-
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class BtnPlayAL implements ActionListener 
@@ -23,13 +21,12 @@ public class BtnPlayAL implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		model.evalBehaviors();
-		
 		Thread t = new Thread() 
 		{	
 			@Override
 			public void run() 
 			{
+				model.evalBehaviors();
 				Game.start(canvas);
 			}
 		};

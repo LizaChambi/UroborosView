@@ -136,7 +136,6 @@ public class MainWindowModel
 
 	public void evalBehaviors() 
 	{
-		// TypeScriptEngine engine = new TypeScriptEngine("");
 		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
 		
 		try {
@@ -160,29 +159,7 @@ public class MainWindowModel
 			e.printStackTrace();
 		}
 		
-		/*
-		engine.eval("abstract class Ability {\n" + 
-				"\n" + 
-				"    public abstract onStart(actor): void\n" + 
-				"\n" + 
-				"    public abstract onUpdate(deltaTime): void\n" + 
-				"\n" + 
-				"    public abstract onRender(graphics): void\n" + 
-				"\n" + 
-				"}");
-		
-		engine.eval(""
-				+ "\n" + 
-				"abstract class Behaviour {\n" + 
-				"\n" + 
-				"    public abstract onStart(actor): void\n" + 
-				"\n" + 
-				"    public abstract onUpdate(deltaTime): void\n" + 
-				"\n" + 
-				"}");
-		*/
-		
 		this.project.evalBehaviors(engine);
-		//"console.log('Hola mundo')"
+		this.project.actorsLearnAbilities(engine);
 	}
 }

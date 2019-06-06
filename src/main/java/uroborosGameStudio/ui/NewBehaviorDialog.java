@@ -25,7 +25,6 @@ import javax.swing.border.TitledBorder;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.Action;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.BehaviorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
@@ -50,7 +49,7 @@ public class NewBehaviorDialog extends JDialog
 	private JTree treeScenes;
 	private Canvas canvas;
 	private MainWindowModel model;
-	private JComboBox cBoxTypeAction;
+	private JComboBox<String> cBoxTypeAction;
 	
 	public NewBehaviorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
@@ -143,9 +142,9 @@ public class NewBehaviorDialog extends JDialog
 		lblTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
 		actionPanel.add(lblTypeAction);
 		
-		cBoxTypeAction = new JComboBox();
+		cBoxTypeAction = new JComboBox<String>();
 		cBoxTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
-		cBoxTypeAction.setModel(new DefaultComboBoxModel(new Action[] {Action.BEHAVIOR, Action.ABILITY}));
+		cBoxTypeAction.setModel(new DefaultComboBoxModel<String>(new String[] {"Comportamiento", "Habilidad"}));
 		actionPanel.add(cBoxTypeAction);
 		configDescriptionPanel = new JPanel();
 		configDescriptionPanel.setBounds(12, 110, 424, 68);
