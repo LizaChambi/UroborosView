@@ -1,12 +1,17 @@
 package uroborosGameStudio.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
-public class AdmBehaviors 
-{
+public class AdmBehaviors implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<BehaviorFile> behaviors;
 	
 	public AdmBehaviors()

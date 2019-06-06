@@ -39,10 +39,13 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this.actors;
 	}
 	
-	public void addActor(ActorWrapper actorWpp)
-	{
+	public void addActor(ActorWrapper actorWpp)	{
+		String line = System.getProperty("file.separator");
 		this.actors.add(actorWpp);
+		actorWpp.setPathActor(pathScene + name + line);
 		createActorUEngine(actorWpp);
+		actorWpp.createFolderActor(actorWpp.getName());
+		System.out.println(pathScene);
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
@@ -102,22 +105,22 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	public void save(String savedPath) throws IOException
 	{
-		saveActors(savedPath);
-		saveFile(savedPath);
+		String line = System.getProperty("file.separator");
 		
 		File oldfolder = new File(savedPath +oldName);
 		File rename = new File(savedPath +name);
 		oldfolder.renameTo(rename);
+		
+		saveFile(savedPath + name + line);
+		saveActors(savedPath + name + line);
 	}
 
 	private void saveActors(String savedPath)
 	{
 		this.actors.forEach(act -> {
-			try 
-			{
-				act.saveFile(savedPath);
-			} catch (IOException e) 
-			{
+			try {
+				act.save(savedPath);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

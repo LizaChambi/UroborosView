@@ -32,6 +32,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private transient BufferedImage image;
 	private double frames;
 	private AdmBehaviors behaviors;
+	private String oldName;
+	private String pathActor;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -106,7 +108,9 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
+		this.oldName = name;
 		this.name = newName;
+		System.out.println("cambio el nombre del folderActor a " + newName);
 	}
 
 	@Override
@@ -222,5 +226,25 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		Actor actor = Game.getActor(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
+	}
+
+	public void save(String savedPath) throws IOException {
+		String line = System.getProperty("file.separator");
+		
+		File oldfolder = new File(savedPath +oldName);
+		File rename = new File(savedPath +name);
+		oldfolder.renameTo(rename);
+		
+		saveFile(savedPath + name + line);
+	}
+
+	public void setPathActor(String pathScene) {
+		this.pathActor = pathScene;
+	}
+
+	public void createFolderActor(String nameActor) {
+		String line = System.getProperty("file.separator");
+		File folder = new File(pathActor + nameActor);
+		folder.mkdir();
 	}
 }
