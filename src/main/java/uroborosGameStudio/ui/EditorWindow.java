@@ -400,18 +400,20 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditDimension.add(lblDimension);
 		
 		textFieldWidth = new JTextField();
+		textFieldWidth.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldWidth.setText("0");
 		panelEditDimension.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
 		
 		textFieldHigh = new JTextField();
+		textFieldHigh.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldHigh.setText("0");
 		panelEditDimension.add(textFieldHigh);
 		textFieldHigh.setColumns(10);
 		
-		btnEditDimension = new JButton("Editar");
-		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
-		panelEditDimension.add(btnEditDimension);
+//		btnEditDimension = new JButton("Editar");
+//		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+//		panelEditDimension.add(btnEditDimension);
 	}
 
 	private void inicializedEditDimensionPanel() {
