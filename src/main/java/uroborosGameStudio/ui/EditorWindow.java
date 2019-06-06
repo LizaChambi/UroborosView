@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -49,6 +50,9 @@ import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
+import java.awt.Component;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Rectangle;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -94,6 +98,14 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel behaviorPanel;
 	private JScrollPane tableBehaviorScrollPanel;
 	private AdmBehaviors datosDePrueba = new AdmBehaviors();
+	private JPanel collisionPanel;
+	private JTable tableCollision;
+	private JPanel tableCollisionPanel;
+	private JButton btnAddCollider;
+	private JButton btnRemoveCollider;
+	private JTabbedPane tabbedPanel;
+	private JScrollPane tableCollisionScrollPanel;
+	private JPanel buttonsCollisionPanel;
 
 	public EditorWindow() 
 	{
@@ -114,7 +126,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.initializeTreePlayPanel();
 	
-		this.initializeEditorPanel();
+		this.editorPanel();
 		this.initializePropertiesEditPanel();
 		this.optionsEditorPanel();
 		this.behaviorSettingPanel();
@@ -293,11 +305,81 @@ public class EditorWindow extends AbstractWindowFrame {
 		return root;
 	}
 
-	private void initializeEditorPanel() 
+	private void editorPanel() 
 	{
+		this.inicializeEditorPanel();
+		this.tableCollisionPanel();
+		this.buttonsCollisionPanel();
+	}
+
+	private void tableCollisionPanel() 
+	{
+		this.inicializeCollisionPanel();
+		this.inicializeTableCollisionPanel();
+		this.tableCollision();
+	}
+
+	private void inicializeEditorPanel() 
+	{
+		tabbedPanel = new JTabbedPane();	
 		editorPanel = new JPanel();
 		editorPanel.setPreferredSize(new Dimension(973, 263));
-		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
+		tabbedPanel.addTab("Propiedades", editorPanel);
+		this.gameEditorPanel.add(tabbedPanel, BorderLayout.SOUTH);
+	}
+
+	private void buttonsCollisionPanel() 
+	{
+		this.inicializeButtonsCollisionPanel();
+		
+		btnAddCollider = new JButton("Nuevo");
+		btnAddCollider.setBounds(12, 12, 90, 25);
+		buttonsCollisionPanel.add(btnAddCollider);
+		
+		btnRemoveCollider = new JButton("Eliminar");
+		btnRemoveCollider.setBounds(12, 49, 90, 25);
+		buttonsCollisionPanel.add(btnRemoveCollider);
+	}
+
+	private void inicializeButtonsCollisionPanel() 
+	{
+		buttonsCollisionPanel = new JPanel();
+		buttonsCollisionPanel.setBounds(515, 0, 451, 263);
+		buttonsCollisionPanel.setLayout(null);
+		collisionPanel.add(buttonsCollisionPanel);
+	}
+
+	private void inicializeTableCollisionPanel() 
+	{
+		tableCollisionPanel = new JPanel();
+		tableCollisionPanel.setBorder(new TitledBorder(null, "Tabla de colisiones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		tableCollisionPanel.setBounds(5, 5, 510, 256);
+		tableCollisionPanel.setLayout(null);
+		collisionPanel.add(tableCollisionPanel);
+	}
+
+	private void tableCollision() 
+	{
+		tableCollisionScrollPanel = new JScrollPane();
+		tableCollisionScrollPanel.setBounds(5, 20, 500, 228);
+		
+		tableCollision = new JTable();
+		tableCollision.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tableCollision.setModel(new DefaultTableModel(
+			new Object[][] {},
+			new String[] { "Nombre", "Descripci\u00F3n"}
+		));
+		
+		tableCollisionScrollPanel.setViewportView(tableCollision);
+		tableCollisionPanel.add(tableCollisionScrollPanel);
+	}
+
+	private void inicializeCollisionPanel() 
+	{
+		collisionPanel = new JPanel();
+		collisionPanel.setPreferredSize(new Dimension(973, 263));
+		collisionPanel.setLayout(null);
+		tabbedPanel.addTab("Colisiones", collisionPanel);
 	}
 	
 	private void initializePropertiesEditPanel() 
