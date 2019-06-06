@@ -45,7 +45,10 @@ import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
+import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
+import uroborosGameStudio.ui.components.JavaScriptEditor;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -62,7 +65,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel editorPanel;
 	private JPanel propertiesEditPanel;
 	private JPanel editNamePanel;
-	private JTextArea textArea = new JTextArea(1, 1);
+	private JavaScriptEditor javaScriptEditor = new JavaScriptEditor();
+	private JTextArea textArea = javaScriptEditor.getJSTextArea();
 	private JScrollPane scroollPanel;
 	private JPanel playPanel;
 	private JTree treeScenes = new JTree();
@@ -232,7 +236,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnSave);
 		
 		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas));
+		btnPlay.addActionListener(new BtnPlayAL(canvas, model));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
@@ -256,6 +260,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeCodeTextArea() {
+		textArea.addKeyListener(new CodeFieldListener(model, table, textArea));
 		textArea.setText("Editor de texto...");
 	}
 
@@ -314,7 +319,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void inicializeBehaviorSettingPanel() 
 	{
 		behaviorPanel = new JPanel();
-		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		behaviorPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Habilidades y comportamientos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		behaviorPanel.setLayout(null);
 		editorPanel.add(behaviorPanel);
 	}
@@ -355,9 +360,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		table = new JTable();
 		table.setBounds(0, 0, 225, 64);
+		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
-			new String[] { "Nombre", "Descripci\u00F3n", "Global"}
+			new String[] { "Nombre", "Descripci\u00F3n", "Global", "Tipo"}
 		));
 		tableBehaviorScrollPanel.setViewportView(table);
 	}

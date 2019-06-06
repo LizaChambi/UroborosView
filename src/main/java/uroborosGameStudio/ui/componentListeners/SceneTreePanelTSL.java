@@ -49,6 +49,7 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 			setCanvas(selectedScene);
 		}
 		this.updateTable(gameObject);
+		model.setDataTable(gameObject);
 		/* 
 		 * Cada tipo de GameObject debe cambiar el panel de edición:
 		 * 

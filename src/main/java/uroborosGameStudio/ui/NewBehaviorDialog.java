@@ -8,8 +8,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +49,7 @@ public class NewBehaviorDialog extends JDialog
 	private JTree treeScenes;
 	private Canvas canvas;
 	private MainWindowModel model;
+	private JComboBox<String> cBoxTypeAction;
 	
 	public NewBehaviorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
@@ -60,7 +63,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeButtonPanel();
 		
-		okButton.addActionListener(new BtnAddBehaviorActionListener(treeScenes, canvas, table, nameTextField, textDescription, chbxIsGlobal, this));
+		okButton.addActionListener(new BtnAddBehaviorActionListener(cBoxTypeAction, treeScenes, canvas, table, nameTextField, textDescription, chbxIsGlobal, this));
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 				
@@ -95,7 +98,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeGlobalPanel();
 		
-		chbxIsGlobal = new JCheckBox("Asignar como un comportamiento global.");
+		chbxIsGlobal = new JCheckBox("Asignar como acción de conocimiento global.");
 		chbxIsGlobal.setFont(new Font("Dialog", Font.PLAIN, 12));
 		globalPanel.add(chbxIsGlobal);
 	}
@@ -104,7 +107,7 @@ public class NewBehaviorDialog extends JDialog
 	private void inicializeGlobalPanel() 
 	{
 		globalPanel = new JPanel();
-		globalPanel.setBounds(12, 142, 424, 31);
+		globalPanel.setBounds(12, 190, 424, 31);
 		globalPanel.setFont(new Font("Dialog", Font.BOLD, 12));
 		FlowLayout flowLayout = (FlowLayout) globalPanel.getLayout();
 		flowLayout.setHgap(0);
@@ -116,7 +119,7 @@ public class NewBehaviorDialog extends JDialog
 	{
 		this.inicializeDescriptionPanel();
 		
-		JLabel lblDescription = new JLabel("Ingrese una breve descripción del nuevo comportamiento:");
+		JLabel lblDescription = new JLabel("Ingrese una breve descripción de la nueva acción:");
 		lblDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblDescription.setHorizontalTextPosition(SwingConstants.LEADING);
 		configDescriptionPanel.add(lblDescription, BorderLayout.NORTH);
@@ -128,8 +131,23 @@ public class NewBehaviorDialog extends JDialog
 
 	private void inicializeDescriptionPanel() 
 	{
+		
+		JPanel actionPanel = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) actionPanel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		actionPanel.setBounds(12, 67, 424, 31);
+		configPanel.add(actionPanel);
+		
+		JLabel lblTypeAction = new JLabel("Tipo de acción:");
+		lblTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
+		actionPanel.add(lblTypeAction);
+		
+		cBoxTypeAction = new JComboBox<String>();
+		cBoxTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
+		cBoxTypeAction.setModel(new DefaultComboBoxModel<String>(new String[] {"Comportamiento", "Habilidad"}));
+		actionPanel.add(cBoxTypeAction);
 		configDescriptionPanel = new JPanel();
-		configDescriptionPanel.setBounds(12, 67, 424, 68);
+		configDescriptionPanel.setBounds(12, 110, 424, 68);
 		configPanel.add(configDescriptionPanel);
 		configDescriptionPanel.setLayout(new BorderLayout(5, 5));
 	}
@@ -192,7 +210,7 @@ public class NewBehaviorDialog extends JDialog
 
 	private void title() 
 	{
-		JLabel lblTitle = new JLabel("Complete las siguientes propiedades del nuevo comportamiento:");
+		JLabel lblTitle = new JLabel("Complete las siguientes propiedades de la nueva acción:");
 		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
 		titlePanel.add(lblTitle);
 	}
@@ -211,8 +229,8 @@ public class NewBehaviorDialog extends JDialog
 		this.table = table;
 		this.treeScenes = treeScenes;
 		this.canvas = canvas;
-		setTitle("Nuevo comportamiento");
-		setBounds(100, 100, 450, 300);
+		setTitle("Nueva acción");
+		setBounds(100, 100, 450, 400);
 		BorderLayout borderLayout = new BorderLayout();
 		getContentPane().setLayout(borderLayout);
 		contentPanel.setLayout(new BorderLayout(0, 5));

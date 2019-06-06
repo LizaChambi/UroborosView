@@ -9,6 +9,7 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 
+import uroborosGameStudio.domain.Action;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.BehaviorFile;
 
@@ -89,7 +90,7 @@ public class ActorWrapperTest {
 	@Test
 	public void testCreateActorAndAddBehavior()
 	{
-		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", Action.ABILITY , "El actor dispara al presionar Space.", false);
 		actor.addBehavior(behavior1);
 		assertTrue(actor.getBehaviors().contains(behavior1));
 		assertEquals(1, actor.getBehaviors().size());
@@ -98,8 +99,8 @@ public class ActorWrapperTest {
 	@Test
 	public void testCreateActorWith2BehaviorsAndRemoveBehaviorIndex1()
 	{
-		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
-		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", Action.ABILITY, "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", Action.ABILITY, "El actor se mueve con los direccionamientos", true);		
 		actor.addBehavior(behavior1);
 		actor.addBehavior(behavior2);
 
@@ -112,8 +113,8 @@ public class ActorWrapperTest {
 	@Test
 	public void testCreateActorWith2BehaviorsAndAskIfHasBehaviorNameTheReturnTrue()
 	{
-		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
-		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", Action.ABILITY, "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", Action.ABILITY, "El actor se mueve con los direccionamientos", true);		
 		actor.addBehavior(behavior1);
 		actor.addBehavior(behavior2);
 		
@@ -123,8 +124,8 @@ public class ActorWrapperTest {
 	@Test
 	public void testCreateActorWith2BehaviorsAndAskIfHasBehaviorNameTheReturnFalse()
 	{
-		BehaviorFile behavior1 = new BehaviorFile("Disparar", "El actor dispara al presionar Space.", false);
-		BehaviorFile behavior2 = new BehaviorFile("Mover", "El actor se mueve con los direccionamientos", true);		
+		BehaviorFile behavior1 = new BehaviorFile("Disparar", Action.ABILITY, "El actor dispara al presionar Space.", false);
+		BehaviorFile behavior2 = new BehaviorFile("Mover", Action.ABILITY, "El actor se mueve con los direccionamientos", true);		
 		actor.addBehavior(behavior1);
 		actor.addBehavior(behavior2);
 		

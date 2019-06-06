@@ -6,16 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
-import org.team.uroboros.uroboros.engine.input.Key;
-import org.team.uroboros.uroboros.engine.ui.Graphics;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
+
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.exception.NombreVacioException;
@@ -41,7 +40,6 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.add(actorWpp);
 		createActorUEngine(actorWpp);
-		
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
@@ -53,44 +51,8 @@ public class SceneWrapper extends GameObject implements Serializable
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
-		
-		// HABILIDAD DE PRUEBA
-		newActor.learn(new Ability() 
-		{	
-			Actor actor;
-			
-			@Override
-			public void onStart(Actor actor) 
-			{
-				this.actor =actor;
-			}
-			
-			@Override
-			public void onUpdate(Double deltaTime) 
-			{
-				if(Key.UP.isPressed()) 
-				{
-					this.actor.translate(0, 3);
-				}
-				if(Key.RIGHT.isPressed()) 
-				{
-					this.actor.translate(3, 0);
-				}
-				if(Key.DOWN.isPressed()) 
-				{
-					this.actor.translate(0, -3);
-				}
-				if(Key.LEFT.isPressed()) 
-				{
-					this.actor.translate(-3, 0);
-				}
-			}
-			
-			@Override
-			public void onRender(Graphics graphics) { }
-
-		});
 	}
+	
 
 	public Integer cantActors() 
 	{
@@ -232,6 +194,25 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void removeBehaviorIndex(int fileSelected) 
 	{
+	}
+
+	@Override
+	public String getBehaviorFileIndex(int index) 
+	{
+		return "";
+	}
+
+	@Override
+	public void setBehaviorFileText(Integer file, String text) {}
+
+	public void evalBehaviors(EcmaScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
+	}
+
+	public void actorsLearnAbilities(EcmaScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.learnAbilities(engine));
 	}
 	
 }

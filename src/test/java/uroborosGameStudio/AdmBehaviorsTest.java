@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import uroborosGameStudio.domain.Action;
 import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.BehaviorFile;
 
@@ -19,8 +20,8 @@ public class AdmBehaviorsTest
 	@Before
 	public void setUp()	
 	{
-		this.behavior1 = new BehaviorFile("Movimiento", "Descripción de la acción de movimiento.", true);
-		this.behavior2 = new BehaviorFile("Disparar", "Descripción de la acción de disparar.", false);
+		this.behavior1 = new BehaviorFile("Movimiento", Action.BEHAVIOR, "Descripción de la acción de movimiento.", true);
+		this.behavior2 = new BehaviorFile("Disparar", Action.ABILITY, "Descripción de la acción de disparar.", false);
 		this.behaviors = new AdmBehaviors();
 	}
 	

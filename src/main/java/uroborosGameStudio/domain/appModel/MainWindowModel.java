@@ -4,14 +4,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import javax.script.ScriptException;
+
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
+
 import uroborosGameStudio.domain.ActorWrapper;
+import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 
 public class MainWindowModel 
 {
 	private UGSProject project;
-
+	private GameObject itemSelected;
+	private Integer fileSelected;
+	
 	public MainWindowModel() {}
 	
 	public UGSProject getProject() 
@@ -19,12 +26,12 @@ public class MainWindowModel
 		return project;
 	}
 
-	public void createNewProyect() 
+	public void createNewProject() 
 	{
 		this.project = new UGSProject("UGSProject", "T\u00EDtulo del Juego");
 	}
 
-	public String getProyectName() 
+	public String getProjectName() 
 	{
 		return project.getProjectName();
 	}
@@ -105,5 +112,54 @@ public class MainWindowModel
 	public boolean validateNameBehavior(String name) 
 	{
 		return this.project.existBehaviorName(name);
+	}
+
+	public void setDataTable(GameObject gameObject) 
+	{
+		this.itemSelected = gameObject;
+	}
+
+	public String getBehaviorFile(int index) 
+	{
+		return itemSelected.getBehaviorFileIndex(index);
+	}
+
+	public void setFileSelected(int row) 
+	{
+		this.fileSelected = row;
+	}
+
+	public void setTextBehaviorFile(String text) 
+	{
+		this.itemSelected.setBehaviorFileText(fileSelected, text);
+	}
+
+	public void evalBehaviors() 
+	{
+		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
+		
+		try {
+			engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+			engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
+			engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
+			engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
+			engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
+			engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
+			engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
+			engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
+			engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
+			engine.eval("var Dimension = Java.type('org.team.uroboros.uroboros.engine.geometry.Dimension')");
+			engine.eval("var Graphics = Java.type('org.team.uroboros.uroboros.engine.ui.Graphics')");
+			engine.eval("var Ability = Java.type('org.team.uroboros.uroboros.engine.component.Ability')");
+			engine.eval("var Behaviour = Java.type('org.team.uroboros.uroboros.engine.component.Behaviour')");
+		} 
+
+		catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.project.evalBehaviors(engine);
+		this.project.actorsLearnAbilities(engine);
 	}
 }
