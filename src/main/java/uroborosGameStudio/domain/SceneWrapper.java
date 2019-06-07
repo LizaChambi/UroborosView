@@ -40,9 +40,8 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 	
 	public void addActor(ActorWrapper actorWpp)	{
-		String line = System.getProperty("file.separator");
 		this.actors.add(actorWpp);
-		actorWpp.setPathActor(pathScene + name + line);
+		actorWpp.setPathActor(pathScene + name + line());
 		createActorUEngine(actorWpp);
 		actorWpp.createFolderActor(actorWpp.getName());
 		System.out.println(pathScene);
@@ -91,6 +90,8 @@ public class SceneWrapper extends GameObject implements Serializable
 		oldfolder.renameTo(rename);
 		
 		deleteOldProject();
+		
+		actors.forEach(act -> act.setPathActor(pathScene + name + line()));
 	}
 	
 	public String getPathScene() { return pathScene; }
@@ -126,9 +127,7 @@ public class SceneWrapper extends GameObject implements Serializable
 				}
 			}
 		} 
-		else { 
-			System.out.println("No existe el directorio"); 
-		}		
+		else { System.out.println("No existe el directorio"); }		
 	}
 
 	private void saveActors(String savedPath)
@@ -193,15 +192,13 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void setPathImage(String path) 
 	{
-		// TODO Auto-generated method stub
-		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
 	}
 
 	@Override
 	public void setDimensionImage(Integer width, Integer height) 
 	{
-		// TODO Auto-generated method stub
-		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
 	}
 	
 	public void load() 

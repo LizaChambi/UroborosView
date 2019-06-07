@@ -110,7 +110,13 @@ public class ActorWrapper extends GameObject  implements Serializable
 		Game.rename(Game.getActor(name), newName);
 		this.oldName = name;
 		this.name = newName;
+		
 		System.out.println("cambio el nombre del folderActor a " + newName);
+		System.out.println(pathActor);
+		
+		File oldfolder = new File(pathActor +oldName);
+		File rename = new File(pathActor +name);
+		oldfolder.renameTo(rename);
 		
 		deleteOldProject();
 	}
@@ -233,16 +239,13 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void save(String savedPath) throws IOException {
 		String line = System.getProperty("file.separator");
 		
-		File oldfolder = new File(savedPath +oldName);
-		File rename = new File(savedPath +name);
-		oldfolder.renameTo(rename);
-
 		
+
 		saveFile(savedPath + name + line);
 	}
 	
 	private void deleteOldProject() {
-		File file = new File(pathActor +oldName); 
+		File file = new File(pathActor +name); 
 		File[] ficheros = file.listFiles(); 
 		
 		if(file.exists()) { 
