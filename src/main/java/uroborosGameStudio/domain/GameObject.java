@@ -36,6 +36,31 @@ public abstract class GameObject implements Serializable
 		oos.close();
 	}
 	
+	public void createFolder(String path) {
+		File folder = new File(path);
+		folder.mkdir();
+	}
+	
+	public void deleteOldFiles(String path) 
+	{
+		File file = new File(path); 
+		File[] ficheros = file.listFiles(); 
+		if(file.exists()) 
+		{ 
+			for (int x=0;x<ficheros.length;x++) 
+			{ 
+				if(!ficheros[x].isDirectory()) {
+					File fileToDelete = new File(ficheros[x].toString()); 
+					fileToDelete.delete(); 
+				}
+			}
+		} 
+		else 
+		{ 
+			System.out.println("No existe el directorio"); 
+		}
+	}
+	
 	public String line() { return System.getProperty("file.separator");	}
 
 	public abstract void setSceneUEngine();

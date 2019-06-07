@@ -43,8 +43,7 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.add(actorWpp);
 		actorWpp.setPathActor(pathScene + name + line());
 		createActorUEngine(actorWpp);
-		actorWpp.createFolderActor(actorWpp.getName());
-		System.out.println(pathScene);
+		actorWpp.createFolder(actorWpp.getPathActor() + actorWpp.getName());
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
@@ -82,14 +81,11 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.oldName = name;
 		this.name = newName;
 		
-		System.out.println("cambio el nombre del folder a " + newName);
-		System.out.println(pathScene);
-		
 		File oldfolder = new File(pathScene +oldName);
 		File rename = new File(pathScene +name);
 		oldfolder.renameTo(rename);
 		
-		deleteOldProject();
+		deleteOldFiles(pathScene +name);
 		
 		actors.forEach(act -> act.setPathActor(pathScene + name + line()));
 	}
@@ -100,11 +96,6 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.pathScene = pathScene;
 	}
 
-	public void createFolderScene(String nameScene) {
-		File scene = new File(pathScene + nameScene);
-		scene.mkdir();
-	}
-
 	public Boolean hasName(String name2) 
 	{
 		return name == name2;
@@ -113,21 +104,6 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void save(String savedPath) throws IOException	{
 		saveFile(savedPath + name + line());
 		saveActors(savedPath + name + line());
-	}
-
-	private void deleteOldProject() {
-		File file = new File(pathScene +name); 
-		File[] ficheros = file.listFiles(); 
-		
-		if(file.exists()) { 
-			for (int x=0;x<ficheros.length;x++) { 
-				if(!ficheros[x].isDirectory()) {
-					File fileToDelete = new File(ficheros[x].toString()); 
-					fileToDelete.delete(); 
-				}
-			}
-		} 
-		else { System.out.println("No existe el directorio"); }		
 	}
 
 	private void saveActors(String savedPath)

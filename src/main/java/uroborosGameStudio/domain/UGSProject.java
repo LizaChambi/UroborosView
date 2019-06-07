@@ -41,7 +41,7 @@ public class UGSProject extends GameObject implements Serializable {
 		tmp.setPathScene(getSavedPath());
 		this.scenes.add(tmp);
 		Game.createScene("Escena0");
-		tmp.createFolderScene("Escena0");
+		tmp.createFolder(tmp.getPathScene() + "Escena0");
 		toListOnlySubDirectories();
 	}
 
@@ -55,8 +55,7 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void createProjectDir() {
 		String dp = System.getProperty("user.home");
-		String line = System.getProperty("file.separator");
-		File dir = new File(dp + line + this.projectName);
+		File dir = new File(dp + line() + this.projectName);
 		createDir(dir);
 	}
 
@@ -74,7 +73,7 @@ public class UGSProject extends GameObject implements Serializable {
 	private void createFolderGlobalAbility() {
 		File ability = new File(getSavedPath() + "Global Ability");
 		this.pathAbility = ability.getPath();
-		ability.mkdir();		
+		ability.mkdir();
 	}
 
 	public String getProjectName() {
@@ -85,7 +84,7 @@ public class UGSProject extends GameObject implements Serializable {
 		this.scenes.add(newScene);
 		newScene.setPathScene(getSavedPath());
 		Game.createScene(newScene.getName());
-		newScene.createFolderScene(newScene.getName());
+		newScene.createFolder(newScene.getPathScene() + newScene.getName());
 	}
 
 	@Override
@@ -126,34 +125,14 @@ public class UGSProject extends GameObject implements Serializable {
 	
 	public void saveProject() throws IOException
 	{
-		deleteOldProject();
+		deleteOldFiles(getPathRoot());
 		saveScenes();
 		saveFile(getSavedPath());
 	}
 	
-	private void deleteOldProject() 
-	{
-		File file = new File(getPathRoot()); 
-		File[] ficheros = file.listFiles(); 
-		if(file.exists()) 
-		{ 
-			for (int x=0;x<ficheros.length;x++) 
-			{ 
-				if(!ficheros[x].isDirectory()) {
-					File fileToDelete = new File(ficheros[x].toString()); 
-					fileToDelete.delete(); 
-				}
-			}
-		} 
-		else 
-		{ 
-			System.out.println("No existe el directorio"); 
-		}
-	}
-
 	public String getSavedPath() 
 	{
-		return getPathRoot() + System.getProperty("file.separator");
+		return getPathRoot() + line();
 	}
 
 	private void saveScenes() 
