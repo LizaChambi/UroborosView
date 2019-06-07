@@ -6,7 +6,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
@@ -23,17 +22,18 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField pathField;
 	private JTextField widthField;
 	private JTextField heightField;
-	private JComboBox cboxBody;
+	private JComboBox<?> cboxBody;
 	private JRadioButton rdStatic;
 	private JRadioButton rdDynamic;
 	private JRadioButton rdKinematic;
 	private JTable collisionTable;
+	private JTable behaviorsTable;
 	private MainWindowModel model;
 	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.textField = textField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
@@ -46,18 +46,14 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		this.rdStatic = rdStatic;
 		this.model = model;
 		this.collisionTable = tableCollision;
+		this.behaviorsTable = table;
 		this.textArea = textArea;
 	}
 
 	@Override
 	public void updateComponents(GameObject gameObject) 
 	{
-		textField.setText(gameObject.getName());
-		posXField.setText(gameObject.getX().toString());
-		posYField.setText(gameObject.getY().toString());
-		pathField.setText(gameObject.getPathImage());
-		widthField.setText(gameObject.getWidth().toString());
-		heightField.setText(gameObject.getHeight().toString());
+		this.setTextFieldsPropertiesView(gameObject);
 		textArea.setText("");
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
@@ -65,10 +61,32 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		{
 			setCanvas(selectedScene);
 		}
-		this.updateTable(gameObject);
+		this.updateTableBehavior(behaviorsTable, gameObject);
 		model.setDataTable(gameObject);
 		cboxBody.setSelectedItem(gameObject.getBody());
+		this.setPhysicsBodyView(gameObject);
+		this.updateTableCollider(collisionTable, gameObject);
 		
+		/* 
+		 * Cada tipo de GameObject debe cambiar el panel de edición:
+		 * 
+		 * IDEA): Cambiar el panel de edición por un panel propio para Actores/Scenas/Proyecto:
+		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDeScenes);
+		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDeActores);
+		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDelProyecto);
+		 */
+	}
+
+	private void setTextFieldsPropertiesView(GameObject gameObject) {
+		textField.setText(gameObject.getName());
+		posXField.setText(gameObject.getX().toString());
+		posYField.setText(gameObject.getY().toString());
+		pathField.setText(gameObject.getPathImage());
+		widthField.setText(gameObject.getWidth().toString());
+		heightField.setText(gameObject.getHeight().toString());
+	}
+
+	private void setPhysicsBodyView(GameObject gameObject) {
 		switch(gameObject.getPhysicsType())
 		{
 			case STATIC:
@@ -83,25 +101,12 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 				rdKinematic.setSelected(true);
 				break;
 		}
-		this.updateTableCollider(collisionTable, gameObject);
-		/* 
-		 * Cada tipo de GameObject debe cambiar el panel de edición:
-		 * 
-		 * IDEA): Cambiar el panel de edición por un panel propio para Actores/Scenas/Proyecto:
-		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDeScenes);
-		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDeActores);
-		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDelProyecto);
-		 */
 	}
 
 	@Override
-	public void updateComponents() {
-		// TODO Auto-generated method stub	
-	}
+	public void updateComponents() {}
 
 	@Override
-	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
-		// TODO Auto-generated method stub	
-	}
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {}
 
 }

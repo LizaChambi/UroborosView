@@ -7,19 +7,11 @@ import uroborosGameStudio.domain.GameObject;
 
 public abstract class AbstractTableListener 
 {
-	private JTable table;
-	
-	public AbstractTableListener(JTable table)
+	public AbstractTableListener()
 	{
-		this.table = table;
 	}
 	
-	public JTable getTable()
-	{
-		return this.table;
-	}
-	
-	protected void updateTable(GameObject actor) 
+	protected void updateTableBehavior(JTable table, GameObject actor) 
 	{
 		Object newTable[][] = new Object [actor.getBehaviors().size()][4];
 	

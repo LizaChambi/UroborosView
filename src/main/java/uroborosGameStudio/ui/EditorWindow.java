@@ -253,11 +253,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void toolbar() 
 	{
 		JButton btnNewScena = new JButton("Nueva Escena");
-		btnNewScena.addActionListener(new BtnNewSceneAL(table, treeScenes, idScene, canvas));
+		btnNewScena.addActionListener(new BtnNewSceneAL(treeScenes, idScene, canvas));
 		buttonPanel.add(btnNewScena);
 		
 		JButton btnNewActor = new JButton("Nuevo Actor");
-		btnNewActor.addActionListener(new BtnNewActorAL(table, treeScenes, canvas, model));
+		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
 		buttonPanel.add(btnNewActor);
 		
 		JButton btnSave = new JButton("Guardar");
@@ -269,7 +269,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
-		btnRemove.addActionListener(new BtnDeleteAL(table, treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 	}
 
@@ -350,7 +350,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonsColliderPanel.add(btnAddCollider);
 		
 		btnRemoveCollider = new JButton("Eliminar");
-		btnRemoveCollider.addActionListener(new BtnRemoveColliderActionListener(textArea, model,table, tableCollision, principalPanel));
+		btnRemoveCollider.addActionListener(new BtnRemoveColliderActionListener(textArea, model, tableCollision, principalPanel));
 		btnRemoveCollider.setBounds(410, 5, 90, 25);
 		buttonsColliderPanel.add(btnRemoveCollider);
 	}
@@ -612,7 +612,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		textFieldHigh.setColumns(10);
 		
 		btnEditDimension = new JButton("Editar");
-		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		panelEditDimension.add(btnEditDimension);
 	}
 
@@ -642,7 +642,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditImage.add(btnSetImage);
 		
 		btnEditImage = new JButton("Editar");
-		btnEditImage.addActionListener(new BtnEditImageActionListener(table, treeScenes, canvas, textFieldPathImage, model));
+		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
 		btnEditImage.setBounds(345, 5, 76, 25);
 		panelEditImage.add(btnEditImage);
 	}
@@ -673,7 +673,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
 		btnEditPosition.setBounds(344, 2, 76, 25);
-		btnEditPosition.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
 	}
 
 	private void inicializedEditPositionPanel() {
@@ -694,7 +694,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editNamePanel.add(nameTextField);
 		
 		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(table, treeScenes,nameTextField, canvas));
+		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
 		btnEditName.setBounds(230, 62, 100, 23);
 		editNamePanel.add(btnEditName);
 	}

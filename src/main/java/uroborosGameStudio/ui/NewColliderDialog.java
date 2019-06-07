@@ -29,7 +29,6 @@ public class NewColliderDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private MainWindowModel model;
-	private JTable table;
 	private JTree treeScenes;
 	private Canvas canvas;
 	private JButton okButton = new JButton("Crear");
@@ -46,7 +45,7 @@ public class NewColliderDialog extends JDialog {
 
 	public NewColliderDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table, JTable tableCollision) 
 	{
-		this.inicializeDialog(model, treeScenes, canvas, table, tableCollision);
+		this.inicializeDialog(model, treeScenes, canvas, tableCollision);
 		this.titlePanel();
 		this.configurationPanel();
 		this.buttonPanel();
@@ -101,7 +100,8 @@ public class NewColliderDialog extends JDialog {
 				
 		nameTextField = new JTextField();
 		
-		//nameTextField.addKeyListener(new BehaviorNameAdapterListener(model, okButton, lblError, nameTextField));
+		// Validacion del nombre inecesario por el momento.
+		//nameTextField.addKeyListener(new ColliderNameAdapterListener(model, okButton, lblError, nameTextField));
 		nameTextField.setColumns(10);
 		textNamePanel.add(nameTextField);
 	}
@@ -133,7 +133,7 @@ public class NewColliderDialog extends JDialog {
 	{
 		this.inicializeButtonPanel();
 		
-		okButton.addActionListener(new AddCollisionActionListener(nameTextField, textDescription, treeScenes,canvas, table, tableCollision, this));
+		okButton.addActionListener(new AddCollisionActionListener(nameTextField, textDescription, treeScenes,canvas, tableCollision, this));
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 				
@@ -174,11 +174,9 @@ public class NewColliderDialog extends JDialog {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 	}
 	
-	private void inicializeDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table, JTable tableCollision) 
+	private void inicializeDialog(MainWindowModel model, JTree treeScenes, Canvas canvas,JTable tableCollision) 
 	{
-		
 		this.model = model;
-		this.table = table;
 		this.treeScenes = treeScenes;
 		this.canvas = canvas;
 		this.tableCollision = tableCollision;

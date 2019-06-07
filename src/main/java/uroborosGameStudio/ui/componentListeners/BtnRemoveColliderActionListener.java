@@ -17,9 +17,8 @@ public class BtnRemoveColliderActionListener extends AbstractTableListener imple
 	private MainWindowModel model;
 	private JTextArea textArea;
 	
-	public BtnRemoveColliderActionListener(JTextArea textArea, MainWindowModel model, JTable table, JTable tableCollision, JPanel principalPanel) 
+	public BtnRemoveColliderActionListener(JTextArea textArea, MainWindowModel model, JTable tableCollision, JPanel principalPanel) 
 	{
-		super(table);
 		this.tableCollision = tableCollision;
 		this.principalPanel=principalPanel;
 		this.model = model;

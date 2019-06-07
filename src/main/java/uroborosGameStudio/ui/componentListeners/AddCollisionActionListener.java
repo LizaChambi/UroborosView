@@ -19,9 +19,9 @@ public class AddCollisionActionListener extends AbstractEditionListener
 	private JTextArea textDescription;
 	private NewColliderDialog dialog;
 	
-	public AddCollisionActionListener(JTextField nameTextField, JTextArea textDescription, JTree treeScenes, Canvas canvas, JTable table, JTable tableCollision, NewColliderDialog newColliderDialog) 
+	public AddCollisionActionListener(JTextField nameTextField, JTextArea textDescription, JTree treeScenes, Canvas canvas, JTable tableCollision, NewColliderDialog newColliderDialog) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.tableCollision = tableCollision;
 		this.nameTextField = nameTextField;
 		this.textDescription = textDescription;

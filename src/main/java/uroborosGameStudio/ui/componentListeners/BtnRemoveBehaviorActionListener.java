@@ -15,24 +15,24 @@ public class BtnRemoveBehaviorActionListener extends AbstractEditionListener
 {
 	private JPanel mainPanel;
 	private JTextArea textArea;
+	private JTable table;
 
 	public BtnRemoveBehaviorActionListener(JTextArea textArea, JTree treeScenes, Canvas canvas, JTable table, JPanel principalPanel) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.mainPanel = principalPanel;
 		this.textArea = textArea;
+		this.table = table;
 	}
 
 	@Override
 	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void updateComponents(GameObject gameObject) 
 	{
-		int fileSelected = getTable().getSelectedRow();
+		int fileSelected = this.table.getSelectedRow();
 		if(fileSelected >= 0)
 		{
 			gameObject.removeBehaviorIndex(fileSelected);
@@ -41,13 +41,11 @@ public class BtnRemoveBehaviorActionListener extends AbstractEditionListener
 		{
 			JOptionPane.showMessageDialog(mainPanel,"No se ha seleccionado ningún comportamiento para eliminar.", "No se puedo eliminar", JOptionPane.INFORMATION_MESSAGE);
 		}
-		updateTable(gameObject);
+		updateTableBehavior(table, gameObject);
 		textArea.setText("");
 	}
 
 	@Override
 	public void updateComponents() {
-		// TODO Auto-generated method stub
-		
 	}
 }
