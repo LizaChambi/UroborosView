@@ -9,7 +9,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -37,7 +40,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
@@ -59,9 +61,6 @@ import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -120,7 +119,6 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel typePhysicPanel;
 	private JPanel informationPanel;
 	private JLabel lblInformation;
-	private JButton btnEditBody;
 	private JComboBox cboxSelectBody = new JComboBox();
 	private JRadioButton rdStatic = new JRadioButton("Estático");
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
@@ -471,9 +469,6 @@ public class EditorWindow extends AbstractWindowFrame {
 			}
 		});
 		bodyMaterialPanel.add(cboxSelectBody);
-		
-		btnEditBody = new JButton("Editar");
-		bodyMaterialPanel.add(btnEditBody);
 	}
 
 	private void inicializeBodyFigurePanel() {
