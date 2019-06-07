@@ -53,6 +53,11 @@ import uroborosGameStudio.ui.components.JavaScriptEditor;
 import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Rectangle;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -105,7 +110,14 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnRemoveCollider;
 	private JTabbedPane tabbedPanel;
 	private JScrollPane tableCollisionScrollPanel;
-	private JPanel buttonsCollisionPanel;
+	private JPanel propertiesCollisionPanel;
+	private JLabel lblBodyMaterial;
+	private JPanel bodyMaterialPanel;
+	private JPanel bodyTypePanel;
+	private JPanel typePhysicPanel;
+	private JPanel informationPanel;
+	private JLabel lblInformation;
+	private JButton btnEditBody;
 
 	public EditorWindow() 
 	{
@@ -330,30 +342,112 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void buttonsCollisionPanel() 
 	{
-		this.inicializeButtonsCollisionPanel();
-		
-		btnAddCollider = new JButton("Nuevo");
-		btnAddCollider.setBounds(12, 12, 90, 25);
-		buttonsCollisionPanel.add(btnAddCollider);
-		
-		btnRemoveCollider = new JButton("Eliminar");
-		btnRemoveCollider.setBounds(12, 49, 90, 25);
-		buttonsCollisionPanel.add(btnRemoveCollider);
+		this.inicializePropertiesCollisionPanel();
+		this.bodyFigure();
+		this.physicType();
 	}
 
-	private void inicializeButtonsCollisionPanel() 
+	private void physicType() 
 	{
-		buttonsCollisionPanel = new JPanel();
-		buttonsCollisionPanel.setBounds(515, 0, 451, 263);
-		buttonsCollisionPanel.setLayout(null);
-		collisionPanel.add(buttonsCollisionPanel);
+		this.inicializePhysicTypePanel();
+		this.titlePhysicType();
+		this.selectType();
+		this.informationSelectedType();
+	}
+
+	private void titlePhysicType() {
+		JLabel lblPhysics = new JLabel("Tipo de física aplicada al cuerpo:");
+		lblPhysics.setBounds(5, 5, 232, 15);
+		bodyTypePanel.add(lblPhysics);
+	}
+
+	private void informationSelectedType() {
+		informationPanel = new JPanel();
+		informationPanel.setBounds(5, 62, 446, 52);
+		FlowLayout flowLayout_2 = (FlowLayout) informationPanel.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEADING);
+		bodyTypePanel.add(informationPanel);
+		
+		lblInformation = new JLabel("");
+		lblInformation.setFont(new Font("Droid Sans", Font.BOLD, 12));
+		informationPanel.add(lblInformation);
+	}
+
+	private void selectType() 
+	{
+		this.inicializeTypePhysicPanel();
+		
+		JRadioButton rdStatic = new JRadioButton("Estático");
+		typePhysicPanel.add(rdStatic);
+		rdStatic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		JRadioButton rdKinematic = new JRadioButton("Cinemático");
+		typePhysicPanel.add(rdKinematic);
+		rdKinematic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		JRadioButton rdDinamic = new JRadioButton("Dinámico");
+		typePhysicPanel.add(rdDinamic);
+		rdDinamic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		ButtonGroup typeGroup = new ButtonGroup();
+		typeGroup.add(rdStatic);
+		typeGroup.add(rdKinematic);
+		typeGroup.add(rdDinamic);
+	}
+
+	private void inicializeTypePhysicPanel() {
+		typePhysicPanel = new JPanel();
+		typePhysicPanel.setBounds(5, 25, 272, 33);
+		FlowLayout flowLayout_1 = (FlowLayout) typePhysicPanel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		bodyTypePanel.add(typePhysicPanel);
+	}
+
+	private void inicializePhysicTypePanel() {
+		bodyTypePanel = new JPanel();
+		bodyTypePanel.setBounds(0, 38, 451, 114);
+		bodyTypePanel.setLayout(null);
+		propertiesCollisionPanel.add(bodyTypePanel);
+	}
+
+	private void bodyFigure() 
+	{
+		this.inicializeBodyFigurePanel();
+		
+		lblBodyMaterial = new JLabel("Cuerpo:");
+		bodyMaterialPanel.add(lblBodyMaterial);
+		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectangulo"}));
+		comboBox.setFont(new Font("Dialog", Font.PLAIN, 12));
+		bodyMaterialPanel.add(comboBox);
+		
+		btnEditBody = new JButton("Editar");
+		bodyMaterialPanel.add(btnEditBody);
+	}
+
+	private void inicializeBodyFigurePanel() {
+		bodyMaterialPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) bodyMaterialPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEADING);
+		bodyMaterialPanel.setBounds(0, 0, 451, 36);
+		propertiesCollisionPanel.add(bodyMaterialPanel);
+	}
+
+	private void inicializePropertiesCollisionPanel() 
+	{
+		propertiesCollisionPanel = new JPanel();
+		propertiesCollisionPanel.setBounds(5, 12, 463, 239);
+		propertiesCollisionPanel.setLayout(null);
+		collisionPanel.add(propertiesCollisionPanel);
 	}
 
 	private void inicializeTableCollisionPanel() 
 	{
 		tableCollisionPanel = new JPanel();
 		tableCollisionPanel.setBorder(new TitledBorder(null, "Tabla de colisiones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tableCollisionPanel.setBounds(5, 5, 510, 256);
+		tableCollisionPanel.setBounds(456, 0, 510, 263);
 		tableCollisionPanel.setLayout(null);
 		collisionPanel.add(tableCollisionPanel);
 	}
@@ -361,7 +455,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void tableCollision() 
 	{
 		tableCollisionScrollPanel = new JScrollPane();
-		tableCollisionScrollPanel.setBounds(5, 20, 500, 228);
+		tableCollisionScrollPanel.setBounds(5, 20, 500, 208);
 		
 		tableCollision = new JTable();
 		tableCollision.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -372,6 +466,19 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		tableCollisionScrollPanel.setViewportView(tableCollision);
 		tableCollisionPanel.add(tableCollisionScrollPanel);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(5, 228, 500, 35);
+		tableCollisionPanel.add(panel);
+		panel.setLayout(null);
+		
+		btnAddCollider = new JButton("Nuevo");
+		btnAddCollider.setBounds(0, 5, 78, 25);
+		panel.add(btnAddCollider);
+		
+		btnRemoveCollider = new JButton("Eliminar");
+		btnRemoveCollider.setBounds(410, 5, 90, 25);
+		panel.add(btnRemoveCollider);
 	}
 
 	private void inicializeCollisionPanel() 
