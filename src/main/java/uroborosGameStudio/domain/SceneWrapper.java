@@ -82,7 +82,13 @@ public class SceneWrapper extends GameObject implements Serializable
 		Game.rename(Game.getScene(name), newName);
 		this.oldName = name;
 		this.name = newName;
+		
 		System.out.println("cambio el nombre del folder a " + newName);
+		System.out.println(pathScene);
+		
+		File oldfolder = new File(pathScene +oldName);
+		File rename = new File(pathScene +name);
+		oldfolder.renameTo(rename);
 		
 		deleteOldProject();
 	}
@@ -103,21 +109,13 @@ public class SceneWrapper extends GameObject implements Serializable
 		return name == name2;
 	}
 
-	public void save(String savedPath) throws IOException
-	{
-		String line = System.getProperty("file.separator");
-		
-		File oldfolder = new File(savedPath +oldName);
-		File rename = new File(savedPath +name);
-		oldfolder.renameTo(rename);
-		
-		
-		saveFile(savedPath + name + line);
-		saveActors(savedPath + name + line);
+	public void save(String savedPath) throws IOException	{
+		saveFile(savedPath + name + line());
+		saveActors(savedPath + name + line());
 	}
 
 	private void deleteOldProject() {
-		File file = new File(pathScene +oldName); 
+		File file = new File(pathScene +name); 
 		File[] ficheros = file.listFiles(); 
 		
 		if(file.exists()) { 

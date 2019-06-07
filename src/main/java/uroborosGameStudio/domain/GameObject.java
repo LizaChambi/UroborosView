@@ -35,6 +35,8 @@ public abstract class GameObject implements Serializable
 		oos.writeObject(this);
 		oos.close();
 	}
+	
+	public String line() { return System.getProperty("file.separator");	}
 
 	public abstract void setSceneUEngine();
 
