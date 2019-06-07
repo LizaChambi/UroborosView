@@ -230,7 +230,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void learnAbilities(EcmaScriptEngine engine) 
 	{
 		Actor actor = Game.getActor(name);
-		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
+		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine, pathActor + name + line()));
 	}
 
 	public void save(String savedPath) throws IOException {
