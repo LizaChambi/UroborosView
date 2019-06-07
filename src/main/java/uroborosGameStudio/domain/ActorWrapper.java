@@ -49,7 +49,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.frames = 1;
 		this.behaviors = new AdmBehaviors();
 		this.collisions = new AdmColliders();
-		this.body = "";
+		this.body = "Rectángulo";
 		this.physicType = Physics.STATIC;
 	}
 

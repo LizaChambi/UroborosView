@@ -9,6 +9,8 @@ import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
+import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
+import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
@@ -51,6 +53,8 @@ public class SceneWrapper extends GameObject implements Serializable
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
+		newActor.setAsStatic();
+		newActor.addPhysicsMaterial(new BoxMaterial(actorWpp.getWidth(), actorWpp.getHeight(), PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY));
 	}
 	
 
