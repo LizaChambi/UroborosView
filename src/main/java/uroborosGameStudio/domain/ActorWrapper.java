@@ -111,6 +111,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.oldName = name;
 		this.name = newName;
 		System.out.println("cambio el nombre del folderActor a " + newName);
+		
+		deleteOldProject();
 	}
 
 	@Override
@@ -234,8 +236,26 @@ public class ActorWrapper extends GameObject  implements Serializable
 		File oldfolder = new File(savedPath +oldName);
 		File rename = new File(savedPath +name);
 		oldfolder.renameTo(rename);
+
 		
 		saveFile(savedPath + name + line);
+	}
+	
+	private void deleteOldProject() {
+		File file = new File(pathActor +oldName); 
+		File[] ficheros = file.listFiles(); 
+		
+		if(file.exists()) { 
+			for (int x=0;x<ficheros.length;x++) { 
+				if(!ficheros[x].isDirectory()) {
+					File fileToDelete = new File(ficheros[x].toString()); 
+					fileToDelete.delete(); 
+				}
+			}
+		} 
+		else { 
+			System.out.println("No existe el directorio"); 
+		}		
 	}
 
 	public void setPathActor(String pathScene) {
