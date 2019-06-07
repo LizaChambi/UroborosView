@@ -13,6 +13,7 @@ import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
+import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
 import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
 import org.team.uroboros.uroboros.engine.physics.material.SphereMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
@@ -223,7 +224,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.behaviors.evalBehaviorFiles(engine, this);
+		this.behaviors.evalBehaviorFiles(engine);
 	}
 
 	public void learnAbilities(EcmaScriptEngine engine) 
@@ -266,11 +267,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 			PhysicsMaterial cuerpo = new SphereMaterial(this.getDimension().getWidth() * 0.5, PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
 			actor.addPhysicsMaterial(cuerpo);
 		}
-		else
+		if (body.equals("Rectángulo"))
 		{
-			// FALTA PODER INSTANCIAR UN CUERPO RECTANGULAR
-			//PhysicsMaterial cuerpo = 
-			//actor.addPhysicsMaterial(cuerpo);
+			PhysicsMaterial cuerpo = new BoxMaterial(this.getWidth(), this.getHeight(), PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
+			actor.addPhysicsMaterial(cuerpo);
 		}
 	}
 
@@ -313,5 +313,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void removeCollisionIndex(int index) 
 	{
 		this.collisions.removeColliderIndex(index);
+	}
+
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.collisions.evalColliders(engine, this.name);
 	}
 }

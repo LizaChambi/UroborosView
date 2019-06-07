@@ -38,6 +38,8 @@ public class CodeFieldListener implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
+		// VERIFICAR SI ESTE CODIGO ESTA BIEN O SI DEBEN SER SÍ O SÍ 2 IFS POR SEPARADOS
+		
 		if (tableCollisions.getSelectedRow()>=0)
 		{
 			model.setTextCollition(codeField.getText());

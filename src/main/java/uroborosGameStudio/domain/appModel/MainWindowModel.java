@@ -141,7 +141,7 @@ public class MainWindowModel
 		this.itemSelected.setBehaviorFileText(fileBehaviorSelected, text);
 	}
 
-	public void evalBehaviors() 
+	public void evalBehaviorsAndCollisions() 
 	{
 		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
 		
@@ -168,6 +168,8 @@ public class MainWindowModel
 		
 		this.project.evalBehaviors(engine);
 		this.project.actorsLearnAbilities(engine);
+		
+		this.project.evalCollisions(engine);
 	}
 
 	public void setFileCollisionSelected(int row) 

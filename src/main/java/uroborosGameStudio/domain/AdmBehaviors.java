@@ -49,8 +49,8 @@ public class AdmBehaviors
 		this.behaviors.get(file).setCode(text);
 	}
 
-	public void evalBehaviorFiles(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
+	public void evalBehaviorFiles(EcmaScriptEngine engine) 
 	{
-		this.behaviors.forEach(behavior -> behavior.evalCode(engine, actorWrapper));
+		this.behaviors.forEach(behavior -> behavior.evalCode(engine));
 	}
 }

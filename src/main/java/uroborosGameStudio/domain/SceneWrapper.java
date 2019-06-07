@@ -207,7 +207,7 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
+		this.actors.forEach(actor -> actor.evalBehaviors(engine));
 	}
 
 	public void actorsLearnAbilities(EcmaScriptEngine engine) 
@@ -255,5 +255,10 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	@Override
 	public void removeCollisionIndex(int index) {}
+
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.evalCollisions(engine));
+	}
 	
 }

@@ -26,7 +26,7 @@ public class BtnPlayAL implements ActionListener
 			@Override
 			public void run() 
 			{
-				model.evalBehaviors();
+				model.evalBehaviorsAndCollisions();
 				Game.start(canvas);
 			}
 		};

@@ -3,6 +3,8 @@ package uroborosGameStudio.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
+
 public class AdmColliders 
 {
 	private List<Collider> colliders;
@@ -29,6 +31,11 @@ public class AdmColliders
 	public void removeColliderIndex(int index) 
 	{
 		this.colliders.remove(index);
+	}
+
+	public void evalColliders(EcmaScriptEngine engine, String name) 
+	{
+		this.colliders.forEach(collider -> collider.evalCollider(engine, name));
 	}
 
 }

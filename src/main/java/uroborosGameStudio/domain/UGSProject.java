@@ -268,4 +268,9 @@ public class UGSProject extends GameObject implements Serializable {
 	@Override
 	public void removeCollisionIndex(int index) {}
 
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalCollisions(engine));
+	}
+
 }

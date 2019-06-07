@@ -115,7 +115,7 @@ public class BehaviorFile
 		this.code = text;
 	}
 
-	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
+	public void evalCode(EcmaScriptEngine engine) 
 	{	
 		switch(this.type)
 		{
@@ -138,9 +138,6 @@ public class BehaviorFile
 			try 
 			{
 				engine.eval("var " + name + " = " + code);
-				//Ability ability =(Ability) engine.eval("new " + name + "();");
-				//Actor actor = Game.getActor(actorWrapper.getName());
-				// actor.learn(ability);
 			} 
 			catch (ScriptException e) 
 			{

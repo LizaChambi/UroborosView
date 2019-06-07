@@ -1,5 +1,14 @@
 package uroborosGameStudio.domain;
 
+import java.util.function.Consumer;
+
+import javax.script.ScriptException;
+
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Actor;
+
+import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
+
 public class Collider 
 {
 	private String name;
@@ -27,5 +36,18 @@ public class Collider
 	
 	public void setCode(String newCode) {
 		this.code = newCode;
+	}
+
+	public void evalCollider(EcmaScriptEngine engine, String nameActor) 
+	{
+		Actor actor = Game.getActor(nameActor);
+		Consumer<Actor> collider;
+		try {
+			collider = (Consumer<Actor>) engine.eval(code);
+			actor.whenCollidesDo(collider);
+		} catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
