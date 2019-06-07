@@ -3,6 +3,7 @@ package uroborosGameStudio.ui.componentListeners;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -13,11 +14,13 @@ import uroborosGameStudio.domain.GameObject;
 public class BtnRemoveBehaviorActionListener extends AbstractEditionListener
 {
 	private JPanel mainPanel;
+	private JTextArea textArea;
 
-	public BtnRemoveBehaviorActionListener(JTree treeScenes, Canvas canvas, JTable table, JPanel principalPanel) 
+	public BtnRemoveBehaviorActionListener(JTextArea textArea, JTree treeScenes, Canvas canvas, JTable table, JPanel principalPanel) 
 	{
 		super(treeScenes, canvas, table);
 		this.mainPanel = principalPanel;
+		this.textArea = textArea;
 	}
 
 	@Override
@@ -39,6 +42,7 @@ public class BtnRemoveBehaviorActionListener extends AbstractEditionListener
 			JOptionPane.showMessageDialog(mainPanel,"No se ha seleccionado ningún comportamiento para eliminar.", "No se puedo eliminar", JOptionPane.INFORMATION_MESSAGE);
 		}
 		updateTable(gameObject);
+		textArea.setText("");
 	}
 
 	@Override

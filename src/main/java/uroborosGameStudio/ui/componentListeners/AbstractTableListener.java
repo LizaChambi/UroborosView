@@ -32,5 +32,17 @@ public abstract class AbstractTableListener
 		}
 		table.setModel(new DefaultTableModel(newTable, new Object[] {"Nombre", "Descripción", "Global", "Tipo"}));
 	}
+	
+	protected void updateTableCollider(JTable table, GameObject actor) 
+	{
+		Object newTable[][] = new Object [actor.getColliders().size()][2];
+		
+		for(int col = 0; col <actor.getColliders().size(); col++)
+		{
+			newTable[col][0] = actor.getColliders().get(col).getName();
+			newTable[col][1] = actor.getColliders().get(col).getDescription();
+		}
+		table.setModel(new DefaultTableModel(newTable, new Object[] {"Nombre", "Descripción"}));
+	}
 
 }

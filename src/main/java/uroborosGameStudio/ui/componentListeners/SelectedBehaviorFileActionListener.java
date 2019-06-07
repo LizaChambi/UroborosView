@@ -13,17 +13,20 @@ public class SelectedBehaviorFileActionListener implements MouseListener
 	private JTable table;
 	private JTextArea codeField;
 	private MainWindowModel model;
+	private JTable tableCollision;
 
-	public SelectedBehaviorFileActionListener(JTextArea textArea, JTable table, MainWindowModel model) 
+	public SelectedBehaviorFileActionListener(JTable tableCollision, JTextArea textArea, JTable table, MainWindowModel model) 
 	{
 		this.codeField = textArea;
 		this.table = table;
 		this.model = model;
+		this.tableCollision = tableCollision;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
+		tableCollision.clearSelection();
 		int row = table.rowAtPoint(e.getPoint());
 		model.setFileSelected(row);
 		codeField.setText(model.getBehaviorFile(row));

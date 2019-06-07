@@ -2,19 +2,25 @@ package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -45,19 +51,17 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
+import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
+import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
+import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
-import java.awt.Component;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Rectangle;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JRadioButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -95,16 +99,15 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditImage;
 	private JPanel menuPanel;
 	private JMenuBar menuBar;
-	private JTable table;
+	private JTable table = new JTable();
 	private JPanel BehaviorButtonsPanel;
 	private JButton btnNewBehavior;
 	private JButton btnGlobalBehavior;
 	private JButton btnDeleteBehavior;
 	private JPanel behaviorPanel;
 	private JScrollPane tableBehaviorScrollPanel;
-	private AdmBehaviors datosDePrueba = new AdmBehaviors();
 	private JPanel collisionPanel;
-	private JTable tableCollision;
+	private JTable tableCollision = new JTable();
 	private JPanel tableCollisionPanel;
 	private JButton btnAddCollider;
 	private JButton btnRemoveCollider;
@@ -118,6 +121,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel informationPanel;
 	private JLabel lblInformation;
 	private JButton btnEditBody;
+	private JComboBox cboxSelectBody = new JComboBox();
+	private JRadioButton rdStatic = new JRadioButton("Estático");
+	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
+	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
 
 	public EditorWindow() 
 	{
@@ -284,7 +291,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeCodeTextArea() {
-		textArea.addKeyListener(new CodeFieldListener(model, table, textArea));
+		textArea.addKeyListener(new CodeFieldListener(model, table, tableCollision, textArea));
 		textArea.setText("Editor de texto...");
 	}
 
@@ -293,7 +300,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -321,7 +328,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		this.inicializeEditorPanel();
 		this.tableCollisionPanel();
-		this.buttonsCollisionPanel();
+		this.propertiesCollisionPanel();
 	}
 
 	private void tableCollisionPanel() 
@@ -329,6 +336,25 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.inicializeCollisionPanel();
 		this.inicializeTableCollisionPanel();
 		this.tableCollision();
+		this.buttonsCollisionTable();
+	}
+
+	private void buttonsCollisionTable() 
+	{
+		JPanel buttonsColliderPanel = new JPanel();
+		buttonsColliderPanel.setBounds(5, 228, 500, 35);
+		tableCollisionPanel.add(buttonsColliderPanel);
+		buttonsColliderPanel.setLayout(null);
+		
+		btnAddCollider = new JButton("Nuevo");
+		btnAddCollider.addActionListener(new NewCollisionActionListener(model, treeScenes,canvas, table, tableCollision));
+		btnAddCollider.setBounds(0, 5, 78, 25);
+		buttonsColliderPanel.add(btnAddCollider);
+		
+		btnRemoveCollider = new JButton("Eliminar");
+		btnRemoveCollider.addActionListener(new BtnRemoveColliderActionListener(textArea, model,table, tableCollision, principalPanel));
+		btnRemoveCollider.setBounds(410, 5, 90, 25);
+		buttonsColliderPanel.add(btnRemoveCollider);
 	}
 
 	private void inicializeEditorPanel() 
@@ -340,7 +366,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.gameEditorPanel.add(tabbedPanel, BorderLayout.SOUTH);
 	}
 
-	private void buttonsCollisionPanel() 
+	private void propertiesCollisionPanel() 
 	{
 		this.inicializePropertiesCollisionPanel();
 		this.bodyFigure();
@@ -377,15 +403,33 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		this.inicializeTypePhysicPanel();
 		
-		JRadioButton rdStatic = new JRadioButton("Estático");
+		rdStatic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setStatic();
+			}
+		});
 		typePhysicPanel.add(rdStatic);
 		rdStatic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		JRadioButton rdKinematic = new JRadioButton("Cinemático");
+		rdKinematic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setKinematic();
+			}
+		});
 		typePhysicPanel.add(rdKinematic);
 		rdKinematic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		JRadioButton rdDinamic = new JRadioButton("Dinámico");
+		rdDinamic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setDynatic();
+			}
+		});
 		typePhysicPanel.add(rdDinamic);
 		rdDinamic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
@@ -418,10 +462,15 @@ public class EditorWindow extends AbstractWindowFrame {
 		bodyMaterialPanel.add(lblBodyMaterial);
 		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectangulo"}));
-		comboBox.setFont(new Font("Dialog", Font.PLAIN, 12));
-		bodyMaterialPanel.add(comboBox);
+		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
+		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
+		cboxSelectBody.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+					model.getItemSelected().setPhysicsBody((String)cboxSelectBody.getSelectedItem());
+			}
+		});
+		bodyMaterialPanel.add(cboxSelectBody);
 		
 		btnEditBody = new JButton("Editar");
 		bodyMaterialPanel.add(btnEditBody);
@@ -457,8 +506,8 @@ public class EditorWindow extends AbstractWindowFrame {
 		tableCollisionScrollPanel = new JScrollPane();
 		tableCollisionScrollPanel.setBounds(5, 20, 500, 208);
 		
-		tableCollision = new JTable();
 		tableCollision.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tableCollision.addMouseListener(new SelectedCollitionActionListener(table, textArea, tableCollision, model));
 		tableCollision.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] { "Nombre", "Descripci\u00F3n"}
@@ -466,19 +515,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		tableCollisionScrollPanel.setViewportView(tableCollision);
 		tableCollisionPanel.add(tableCollisionScrollPanel);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(5, 228, 500, 35);
-		tableCollisionPanel.add(panel);
-		panel.setLayout(null);
-		
-		btnAddCollider = new JButton("Nuevo");
-		btnAddCollider.setBounds(0, 5, 78, 25);
-		panel.add(btnAddCollider);
-		
-		btnRemoveCollider = new JButton("Eliminar");
-		btnRemoveCollider.setBounds(410, 5, 90, 25);
-		panel.add(btnRemoveCollider);
 	}
 
 	private void inicializeCollisionPanel() 
@@ -526,7 +562,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		behaviorPanel.add(BehaviorButtonsPanel);
 		
 		btnNewBehavior = new JButton("Nuevo");
-		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(model, treeScenes, canvas, table, datosDePrueba));
+		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(model, treeScenes, canvas, table));
 		btnNewBehavior.setBounds(5, 5, 78, 25);
 		btnNewBehavior.setHorizontalAlignment(SwingConstants.LEADING);
 		BehaviorButtonsPanel.add(btnNewBehavior);
@@ -539,7 +575,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		btnDeleteBehavior = new JButton("Eliminar");
 		btnDeleteBehavior.setBounds(373, 5, 90, 25);
-		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(treeScenes, canvas, table, principalPanel));
+		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(textArea, treeScenes, canvas, table, principalPanel));
 		btnDeleteBehavior.setHorizontalAlignment(SwingConstants.TRAILING);
 		BehaviorButtonsPanel.setLayout(null);
 		BehaviorButtonsPanel.add(btnDeleteBehavior);
@@ -547,9 +583,8 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void inicializeTable() 
 	{
-		table = new JTable();
 		table.setBounds(0, 0, 225, 64);
-		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
+		table.addMouseListener(new SelectedBehaviorFileActionListener(tableCollision, textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] { "Nombre", "Descripci\u00F3n", "Global", "Tipo"}

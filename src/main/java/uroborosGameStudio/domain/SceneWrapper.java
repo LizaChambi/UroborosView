@@ -214,5 +214,46 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.forEach(actor -> actor.learnAbilities(engine));
 	}
+
+	@Override
+	public void setStatic() {}
+
+	@Override
+	public void setKinematic() {}
+
+	@Override
+	public void setDynatic() {}
+
+	@Override
+	public void setPhysicsBody(String body) {}
+
+	@Override
+	public String getBody() {
+		return "Círculo";
+	}
+
+	@Override
+	public Physics getPhysicsType() {
+		return Physics.STATIC;
+	}
+
+	@Override
+	public List<Collider> getColliders() {
+		return new ArrayList<Collider>();
+	}
+
+	@Override
+	public void addCollision(Collider collition) {}
+
+	@Override
+	public String getCollitionCode(int index) {
+		return "";
+	}
+
+	@Override
+	public void setCollitionText(Integer index, String text) {}
+
+	@Override
+	public void removeCollisionIndex(int index) {}
 	
 }

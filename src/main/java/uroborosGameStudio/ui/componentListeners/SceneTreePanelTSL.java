@@ -1,8 +1,12 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
@@ -19,9 +23,15 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField pathField;
 	private JTextField widthField;
 	private JTextField heightField;
+	private JComboBox cboxBody;
+	private JRadioButton rdStatic;
+	private JRadioButton rdDynamic;
+	private JRadioButton rdKinematic;
+	private JTable collisionTable;
 	private MainWindowModel model;
+	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea) 
 	{
 		super(treeScenes, canvas, table);
 		this.textField = textField;
@@ -30,7 +40,13 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		this.pathField = textFieldPath;
 		this.widthField = textFieldWidth;
 		this.heightField = textFieldHigh;
+		this.cboxBody = cboxSelectBody;
+		this.rdDynamic = rdDinamic;
+		this.rdKinematic = rdKinematic;
+		this.rdStatic = rdStatic;
 		this.model = model;
+		this.collisionTable = tableCollision;
+		this.textArea = textArea;
 	}
 
 	@Override
@@ -42,6 +58,7 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		pathField.setText(gameObject.getPathImage());
 		widthField.setText(gameObject.getWidth().toString());
 		heightField.setText(gameObject.getHeight().toString());
+		textArea.setText("");
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)
@@ -50,6 +67,23 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		}
 		this.updateTable(gameObject);
 		model.setDataTable(gameObject);
+		cboxBody.setSelectedItem(gameObject.getBody());
+		
+		switch(gameObject.getPhysicsType())
+		{
+			case STATIC:
+				rdStatic.setSelected(true);
+				break;
+			
+			case DYNAMIC:
+				rdDynamic.setSelected(true);
+				break;
+				
+			case KINEMATIC:
+				rdKinematic.setSelected(true);
+				break;
+		}
+		this.updateTableCollider(collisionTable, gameObject);
 		/* 
 		 * Cada tipo de GameObject debe cambiar el panel de edición:
 		 * 

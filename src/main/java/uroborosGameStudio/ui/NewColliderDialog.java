@@ -8,10 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,100 +23,48 @@ import javax.swing.border.TitledBorder;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
-import uroborosGameStudio.ui.componentListeners.BehaviorNameAdapterListener;
-import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
+import uroborosGameStudio.ui.componentListeners.AddCollisionActionListener;
 
-public class NewBehaviorDialog extends JDialog 
-{
-	private static final long serialVersionUID = 1L;
+public class NewColliderDialog extends JDialog {
+
 	private final JPanel contentPanel = new JPanel();
-	private JTextField nameTextField;
+	private MainWindowModel model;
+	private JTable table;
+	private JTree treeScenes;
+	private Canvas canvas;
+	private JButton okButton = new JButton("Crear");
+	private JPanel buttonPane;
 	private JPanel titlePanel;
 	private JPanel configPanel;
 	private JPanel configNamePanel;
-	private JPanel textNamePanel;
-	private JPanel configDescriptionPanel;
-	private JPanel globalPanel;
-	private JPanel buttonPane;
-	private JTextArea textDescription;
-	private JCheckBox chbxIsGlobal;
-	private JTable table;
-	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
-	private JTree treeScenes;
-	private Canvas canvas;
-	private MainWindowModel model;
-	private JComboBox<String> cBoxTypeAction;
-	
-	public NewBehaviorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
+	private JPanel textNamePanel;
+	private JTextField nameTextField;
+	private JPanel configDescriptionPanel;
+	private JTextArea textDescription;
+	private JTable tableCollision;
+
+	public NewColliderDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table, JTable tableCollision) 
 	{
-		this.inicializeDialog(model, treeScenes, canvas, table);
+		this.inicializeDialog(model, treeScenes, canvas, table, tableCollision);
 		this.titlePanel();
 		this.configurationPanel();
 		this.buttonPanel();
 	}
-
-	private void buttonPanel() 
-	{
-		this.inicializeButtonPanel();
-		
-		okButton.addActionListener(new BtnAddBehaviorActionListener(cBoxTypeAction, treeScenes, canvas, table, nameTextField, textDescription, chbxIsGlobal, this));
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
-				
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				dispose();
-			}
-		});
-		buttonPane.add(cancelButton);
-	}
-
-	private void inicializeButtonPanel() {
-		buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-	}
-
-
+	
 	private void configurationPanel() 
 	{
 		this.inicializeConfigurationPanel();
 		
 		this.namePanel();
 		this.descriptionPanel();
-		this.globalPanel();
 	}
-
-
-	private void globalPanel() 
-	{
-		this.inicializeGlobalPanel();
-		
-		chbxIsGlobal = new JCheckBox("Asignar como acción de conocimiento global.");
-		chbxIsGlobal.setFont(new Font("Dialog", Font.PLAIN, 12));
-		globalPanel.add(chbxIsGlobal);
-	}
-
-
-	private void inicializeGlobalPanel() 
-	{
-		globalPanel = new JPanel();
-		globalPanel.setBounds(12, 190, 424, 31);
-		globalPanel.setFont(new Font("Dialog", Font.BOLD, 12));
-		FlowLayout flowLayout = (FlowLayout) globalPanel.getLayout();
-		flowLayout.setHgap(0);
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		configPanel.add(globalPanel);
-	}
-
+	
 	private void descriptionPanel() 
 	{
 		this.inicializeDescriptionPanel();
 		
-		JLabel lblDescription = new JLabel("Ingrese una breve descripción de la nueva acción:");
+		JLabel lblDescription = new JLabel("Ingrese una breve descripción de la nueva colisión:");
 		lblDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblDescription.setHorizontalTextPosition(SwingConstants.LEADING);
 		configDescriptionPanel.add(lblDescription, BorderLayout.NORTH);
@@ -128,31 +73,16 @@ public class NewBehaviorDialog extends JDialog
 		textDescription.setLineWrap(true);
 		configDescriptionPanel.add(textDescription);
 	}
-
+	
 	private void inicializeDescriptionPanel() 
 	{
 		
-		JPanel actionPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) actionPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
-		actionPanel.setBounds(12, 67, 424, 31);
-		configPanel.add(actionPanel);
-		
-		JLabel lblTypeAction = new JLabel("Tipo de acción:");
-		lblTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
-		actionPanel.add(lblTypeAction);
-		
-		cBoxTypeAction = new JComboBox<String>();
-		cBoxTypeAction.setFont(new Font("Dialog", Font.PLAIN, 12));
-		cBoxTypeAction.setModel(new DefaultComboBoxModel<String>(new String[] {"Comportamiento", "Habilidad"}));
-		actionPanel.add(cBoxTypeAction);
-		
 		configDescriptionPanel = new JPanel();
-		configDescriptionPanel.setBounds(12, 110, 424, 68);
+		configDescriptionPanel.setBounds(12, 67, 424, 68);
 		configPanel.add(configDescriptionPanel);
 		configDescriptionPanel.setLayout(new BorderLayout(5, 5));
 	}
-
+	
 	private void namePanel() 
 	{
 		this.inicializeNamePanel();
@@ -171,20 +101,18 @@ public class NewBehaviorDialog extends JDialog
 				
 		nameTextField = new JTextField();
 		
-		nameTextField.addKeyListener(new BehaviorNameAdapterListener(model, okButton, lblError, nameTextField));
+		//nameTextField.addKeyListener(new BehaviorNameAdapterListener(model, okButton, lblError, nameTextField));
 		nameTextField.setColumns(10);
 		textNamePanel.add(nameTextField);
 	}
-
-
+	
 	private void inicializeTextNamePanel() 
 	{
 		textNamePanel = new JPanel();
 		configNamePanel.add(textNamePanel);
 		textNamePanel.setLayout(new GridLayout(0, 1, 0, 0));
 	}
-
-
+	
 	private void inicializeNamePanel() 
 	{
 		configNamePanel = new JPanel();
@@ -192,8 +120,7 @@ public class NewBehaviorDialog extends JDialog
 		configPanel.add(configNamePanel);
 		configNamePanel.setLayout(new BorderLayout(5, 0));
 	}
-
-
+	
 	private void inicializeConfigurationPanel() 
 	{
 		configPanel = new JPanel();
@@ -202,7 +129,24 @@ public class NewBehaviorDialog extends JDialog
 		configPanel.setLayout(null);
 	}
 
-
+	private void buttonPanel() 
+	{
+		this.inicializeButtonPanel();
+		
+		okButton.addActionListener(new AddCollisionActionListener(nameTextField, textDescription, treeScenes,canvas, table, tableCollision, this));
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+				
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				dispose();
+			}
+		});
+		buttonPane.add(cancelButton);
+	}
+	
 	private void titlePanel() 
 	{
 		this.inicializeTitlePanel();
@@ -211,7 +155,7 @@ public class NewBehaviorDialog extends JDialog
 
 	private void title() 
 	{
-		JLabel lblTitle = new JLabel("Complete las siguientes propiedades de la nueva acción:");
+		JLabel lblTitle = new JLabel("Complete las siguientes propiedades del nueva colisión:");
 		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 12));
 		titlePanel.add(lblTitle);
 	}
@@ -223,15 +167,24 @@ public class NewBehaviorDialog extends JDialog
 		flowLayout.setAlignment(FlowLayout.LEADING);
 		contentPanel.add(titlePanel, BorderLayout.NORTH);
 	}
-
-	private void inicializeDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
+	
+	private void inicializeButtonPanel() {
+		buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+	}
+	
+	private void inicializeDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table, JTable tableCollision) 
 	{
+		
 		this.model = model;
 		this.table = table;
 		this.treeScenes = treeScenes;
 		this.canvas = canvas;
-		setTitle("Nueva acción");
-		setBounds(100, 100, 450, 400);
+		this.tableCollision = tableCollision;
+		
+		setTitle("Nueva colisión");
+		setBounds(100, 100, 450, 280);
 		BorderLayout borderLayout = new BorderLayout();
 		getContentPane().setLayout(borderLayout);
 		contentPanel.setLayout(new BorderLayout(0, 5));

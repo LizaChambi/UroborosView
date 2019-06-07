@@ -17,7 +17,9 @@ public class MainWindowModel
 {
 	private UGSProject project;
 	private GameObject itemSelected;
-	private Integer fileSelected;
+	private Integer fileBehaviorSelected;
+	private Integer fileColliderSelected;
+	private String textCode;
 	
 	public MainWindowModel() {}
 	
@@ -126,12 +128,17 @@ public class MainWindowModel
 
 	public void setFileSelected(int row) 
 	{
-		this.fileSelected = row;
+		this.fileBehaviorSelected = row;
+	}
+	
+	public GameObject getItemSelected()
+	{
+		return this.itemSelected;
 	}
 
 	public void setTextBehaviorFile(String text) 
 	{
-		this.itemSelected.setBehaviorFileText(fileSelected, text);
+		this.itemSelected.setBehaviorFileText(fileBehaviorSelected, text);
 	}
 
 	public void evalBehaviors() 
@@ -161,5 +168,20 @@ public class MainWindowModel
 		
 		this.project.evalBehaviors(engine);
 		this.project.actorsLearnAbilities(engine);
+	}
+
+	public void setFileCollisionSelected(int row) 
+	{
+		this.fileColliderSelected = row;
+	}
+
+	public String getCollitionCode(int row) 
+	{
+		return this.itemSelected.getCollitionCode(row);
+	}
+
+	public void setTextCollition(String text) 
+	{
+		this.itemSelected.setCollitionText(fileColliderSelected, text);
 	}
 }
