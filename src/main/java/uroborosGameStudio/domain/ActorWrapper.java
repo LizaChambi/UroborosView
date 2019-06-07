@@ -224,7 +224,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.behaviors.evalBehaviorFiles(engine, this);
+		this.behaviors.evalBehaviorFiles(engine, this, pathActor + name + line());
 	}
 
 	public void learnAbilities(EcmaScriptEngine engine) 

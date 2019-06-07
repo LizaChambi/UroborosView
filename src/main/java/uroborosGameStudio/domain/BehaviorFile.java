@@ -127,7 +127,7 @@ public class BehaviorFile implements Serializable
 		this.code = text;
 	}
 
-	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
+	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper, String path) 
 	{	
 		switch(this.type)
 		{
@@ -135,9 +135,10 @@ public class BehaviorFile implements Serializable
 			
 			try 
 			{
+				saveFile(path);
 				engine.eval("var " + name + " = " + code);
 			} 
-			catch (ScriptException e) 
+			catch (ScriptException | IOException e) 
 			{
 				// TODO Auto-generated catchs block
 				e.printStackTrace();
