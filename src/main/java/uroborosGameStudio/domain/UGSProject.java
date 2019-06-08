@@ -241,12 +241,12 @@ public class UGSProject extends GameObject implements Serializable {
 
 	@Override
 	public String getBody() {
-		return "Círculo";
+		return "";
 	}
 
 	@Override
 	public Physics getPhysicsType() {
-		return Physics.STATIC;
+		return Physics.NONE;
 	}
 
 	@Override

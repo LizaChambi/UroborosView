@@ -53,8 +53,6 @@ public class SceneWrapper extends GameObject implements Serializable
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
-		newActor.setAsStatic();
-		newActor.addPhysicsMaterial(new BoxMaterial(actorWpp.getWidth(), actorWpp.getHeight(), PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY));
 	}
 	
 
@@ -233,12 +231,12 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	@Override
 	public String getBody() {
-		return "Círculo";
+		return "";
 	}
 
 	@Override
 	public Physics getPhysicsType() {
-		return Physics.STATIC;
+		return Physics.NONE;
 	}
 
 	@Override

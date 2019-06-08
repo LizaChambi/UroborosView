@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -459,13 +460,18 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblBodyMaterial = new JLabel("Cuerpo:");
 		bodyMaterialPanel.add(lblBodyMaterial);
 		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
-		
+	
 		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
 		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
+		cboxSelectBody.setSelectedItem(null);
 		cboxSelectBody.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				if(cboxSelectBody.getSelectedItem() != null)
+				{
 					model.getItemSelected().setPhysicsBody((String)cboxSelectBody.getSelectedItem());
+				}
+					
 			}
 		});
 		bodyMaterialPanel.add(cboxSelectBody);

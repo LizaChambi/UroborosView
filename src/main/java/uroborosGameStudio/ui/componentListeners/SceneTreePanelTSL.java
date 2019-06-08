@@ -1,5 +1,7 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import java.awt.event.ItemEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
@@ -63,7 +65,7 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		}
 		this.updateTableBehavior(behaviorsTable, gameObject);
 		model.setDataTable(gameObject);
-		cboxBody.setSelectedItem(gameObject.getBody());
+		setSelectedBodyMaterialView(gameObject);
 		this.setPhysicsBodyView(gameObject);
 		this.updateTableCollider(collisionTable, gameObject);
 		
@@ -75,6 +77,19 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDeActores);
 		 * 		scrollPanelEdicion.setViewportView(panelDeEdicionDelProyecto);
 		 */
+	}
+
+	private void setSelectedBodyMaterialView(GameObject gameObject) 
+	{
+		String material = gameObject.getBody();
+		if (material.isEmpty())
+		{
+			cboxBody.setSelectedItem(null);
+		}
+		else
+		{
+			cboxBody.setSelectedItem(material);
+		}
 	}
 
 	private void setTextFieldsPropertiesView(GameObject gameObject) {
@@ -99,6 +114,12 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 				
 			case KINEMATIC:
 				rdKinematic.setSelected(true);
+				break;
+				
+			case NONE:
+				rdStatic.setSelected(false);
+				rdDynamic.setSelected(false);
+				rdKinematic.setSelected(false);
 				break;
 		}
 	}
