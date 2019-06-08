@@ -3,7 +3,11 @@ package uroborosGameStudio.domain;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -187,6 +191,20 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void deleteActor(String name) {
 		this.actors.removeIf(actor -> actor.hasName(name));
 		Game.removeActor(name);
+		deleteFolderSubDirectories(name);
+	}
+
+	private void deleteFolderSubDirectories(String actor) {
+		Path dir = Paths.get(getPathScene() + line() + name + line() + actor);
+		try {
+			Files.walk(dir, 1)
+		      .sorted(Comparator.reverseOrder())
+		      .map(Path::toFile)
+		      .forEach(File::delete);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	@Override

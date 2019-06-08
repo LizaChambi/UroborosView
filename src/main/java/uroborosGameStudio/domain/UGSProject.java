@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -42,7 +43,6 @@ public class UGSProject extends GameObject implements Serializable {
 		this.scenes.add(tmp);
 		Game.createScene("Escena0");
 		tmp.createFolder(tmp.getPathScene() + "Escena0");
-		toListOnlySubDirectories();
 	}
 
 	public String getPathRoot() {
@@ -104,18 +104,13 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
 	
-	public void toListOnlySubDirectories() {
-		Path dir = Paths.get(this.pathRoot);
+	public void deleteFolderSubDirectories(String nameScene) {
+		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
 		try {
 			Files.walk(dir, 1)
-			     .filter(p -> Files.isDirectory(p) && ! p.equals(dir))
-			     .forEach(p -> System.out.println(p.getFileName()));
-			
-//			Delete Project
-//			Files.walk(dir, 1)
-//		      .sorted(Comparator.reverseOrder())
-//		      .map(Path::toFile)
-//		      .forEach(File::delete);
+		      .sorted(Comparator.reverseOrder())
+		      .map(Path::toFile)
+		      .forEach(File::delete);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -214,6 +209,7 @@ public class UGSProject extends GameObject implements Serializable {
 	{	
 		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
+		deleteFolderSubDirectories(scene.getName());
 	}
 
 	@Override
