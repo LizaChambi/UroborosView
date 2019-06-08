@@ -8,18 +8,13 @@ import java.io.Serializable;
 
 import javax.script.ScriptException;
 
-import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
-import org.team.uroboros.uroboros.engine.component.Behaviour;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 public class BehaviorFile implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String description;
@@ -127,7 +122,7 @@ public class BehaviorFile implements Serializable
 		this.code = text;
 	}
 
-	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper, String path) 
+	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
 	{	
 		switch(this.type)
 		{
@@ -135,10 +130,9 @@ public class BehaviorFile implements Serializable
 			
 			try 
 			{
-				saveFile(path);
 				engine.eval("var " + name + " = " + code);
 			} 
-			catch (ScriptException | IOException e) 
+			catch (ScriptException e) 
 			{
 				// TODO Auto-generated catchs block
 				e.printStackTrace();
@@ -174,18 +168,15 @@ public class BehaviorFile implements Serializable
 		return typeView;
 	}
 
-	public void learnAbility(Actor actor, EcmaScriptEngine engine, String pathAbility) 
+	public void learnAbility(Actor actor, EcmaScriptEngine engine) 
 	{
 		if (this.type == Action.ABILITY)
 		{
 			try {
 				Ability ability = (Ability) engine.eval("new " + name + "();");
-				
-				saveFile(pathAbility);
-				
 				actor.learn(ability);
 			} 
-			catch (ScriptException | IOException e) 
+			catch (ScriptException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();

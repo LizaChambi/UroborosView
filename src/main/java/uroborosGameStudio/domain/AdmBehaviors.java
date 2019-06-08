@@ -8,9 +8,6 @@ import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 public class AdmBehaviors implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private List<BehaviorFile> behaviors;
 	
@@ -54,8 +51,8 @@ public class AdmBehaviors implements Serializable {
 		this.behaviors.get(file).setCode(text);
 	}
 
-	public void evalBehaviorFiles(EcmaScriptEngine engine, ActorWrapper actorWrapper, String path) 
+	public void evalBehaviorFiles(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
 	{
-		this.behaviors.forEach(behavior -> behavior.evalCode(engine, actorWrapper, path));
+		this.behaviors.forEach(behavior -> behavior.evalCode(engine, actorWrapper));
 	}
 }
