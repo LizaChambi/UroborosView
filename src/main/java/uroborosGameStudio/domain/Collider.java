@@ -43,13 +43,13 @@ public class Collider implements Serializable
 	public void evalCollider(EcmaScriptEngine engine, String nameActor) 
 	{
 		Actor actor = Game.getActor(nameActor);
-		Consumer<Actor> collider;
-		try {
-			collider = (Consumer<Actor>) engine.eval(code);
-			actor.whenCollidesDo(collider);
-		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		actor.whenCollidesDo((collider) -> {
+			try {
+				engine.eval(code);
+			} catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }
