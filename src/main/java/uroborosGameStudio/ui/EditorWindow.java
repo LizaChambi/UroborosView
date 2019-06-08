@@ -623,20 +623,15 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditDimension.add(lblDimension);
 		
 		textFieldWidth = new JTextField();
-//		textFieldWidth.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldWidth.setText("0");
 		panelEditDimension.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
 		
 		textFieldHigh = new JTextField();
-//		textFieldHigh.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldHigh.setText("0");
 		panelEditDimension.add(textFieldHigh);
 		textFieldHigh.setColumns(10);
 		
-//		btnEditDimension = new JButton("Editar");
-//		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
-//		panelEditDimension.add(btnEditDimension);
 		btnEditDimension = new JButton("Editar");
 		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		panelEditDimension.add(btnEditDimension);
@@ -687,13 +682,11 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblPosition.setBounds(5, 7, 102, 15);
 		
 		posXTextField = new JTextField("0");
-//		posXTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posXTextField);
 		posXTextField.setBounds(112, 5, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
-//		posYTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posYTextField);
 		posYTextField.setBounds(226, 5, 112, 19);
 		posYTextField.setColumns(5);

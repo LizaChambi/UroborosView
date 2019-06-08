@@ -107,7 +107,7 @@ public class UGSProject extends GameObject implements Serializable {
 	public void deleteFolderSubDirectories(String nameScene) {
 		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
 		try {
-			Files.walk(dir, 1)
+			Files.walk(dir, 2)
 		      .sorted(Comparator.reverseOrder())
 		      .map(Path::toFile)
 		      .forEach(File::delete);
@@ -209,7 +209,7 @@ public class UGSProject extends GameObject implements Serializable {
 	{	
 		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
-		deleteFolderSubDirectories(scene.getName());
+		deleteFolderSubDirectories(this.pathRoot + line()+ scene.getName(), 2);
 	}
 
 	@Override

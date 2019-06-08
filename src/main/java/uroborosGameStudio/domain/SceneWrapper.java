@@ -191,20 +191,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void deleteActor(String name) {
 		this.actors.removeIf(actor -> actor.hasName(name));
 		Game.removeActor(name);
-		deleteFolderSubDirectories(name);
-	}
-
-	private void deleteFolderSubDirectories(String actor) {
-		Path dir = Paths.get(getPathScene() + line() + name + line() + actor);
-		try {
-			Files.walk(dir, 1)
-		      .sorted(Comparator.reverseOrder())
-		      .map(Path::toFile)
-		      .forEach(File::delete);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		deleteFolderSubDirectories(getPathScene() + line() + this.name + line() + name, 1);
 	}
 
 	@Override

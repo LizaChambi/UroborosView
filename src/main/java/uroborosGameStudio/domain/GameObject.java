@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -54,6 +58,20 @@ public abstract class GameObject implements Serializable
 			}
 		} 
 		else { System.out.println("No existe el directorio"); }
+	}
+	
+	public void deleteFolderSubDirectories(String path, int maxDepth) {
+		Path dir = Paths.get(path);
+		try {
+			Files.walk(dir, maxDepth)
+		      .sorted(Comparator.reverseOrder())
+		      .map(Path::toFile)
+		      .forEach(File::delete);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public String line() { return System.getProperty("file.separator");	}
