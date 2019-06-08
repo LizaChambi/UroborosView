@@ -207,12 +207,58 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.actors.forEach(actor -> actor.evalBehaviors(engine));;
+		this.actors.forEach(actor -> actor.evalBehaviors(engine));
 	}
 
 	public void actorsLearnAbilities(EcmaScriptEngine engine) 
 	{
 		this.actors.forEach(actor -> actor.learnAbilities(engine));
+	}
+
+	@Override
+	public void setStatic() {}
+
+	@Override
+	public void setKinematic() {}
+
+	@Override
+	public void setDynatic() {}
+
+	@Override
+	public void setPhysicsBody(String body) {}
+
+	@Override
+	public String getBody() {
+		return "";
+	}
+
+	@Override
+	public Physics getPhysicsType() {
+		return Physics.NONE;
+	}
+
+	@Override
+	public List<Collider> getColliders() {
+		return new ArrayList<Collider>();
+	}
+
+	@Override
+	public void addCollision(Collider collition) {}
+
+	@Override
+	public String getCollitionCode(int index) {
+		return "";
+	}
+
+	@Override
+	public void setCollitionText(Integer index, String text) {}
+
+	@Override
+	public void removeCollisionIndex(int index) {}
+
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.actors.forEach(actor -> actor.evalCollisions(engine));
 	}
 	
 }

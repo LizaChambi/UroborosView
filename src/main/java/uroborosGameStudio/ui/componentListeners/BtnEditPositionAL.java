@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -17,9 +16,9 @@ public class BtnEditPositionAL extends AbstractEditionListener
 	private JTextField posY;
 	private MainWindowModel model;
 	
-	public BtnEditPositionAL(JTable table, JTree treeScenes, JTextField posX, JTextField posY, Canvas canvas, MainWindowModel model) 
+	public BtnEditPositionAL(JTree treeScenes, JTextField posX, JTextField posY, Canvas canvas, MainWindowModel model) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.posX = posX;
 		this.posY = posY;
 		this.model = model;

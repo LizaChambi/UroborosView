@@ -66,4 +66,26 @@ public abstract class GameObject implements Serializable
 
 	public abstract void setBehaviorFileText(Integer file, String text);
 
+	public abstract void setStatic();
+
+	public abstract void setKinematic();
+
+	public abstract void setDynatic();
+
+	public abstract void setPhysicsBody(String body);
+
+	public abstract String getBody();
+
+	public abstract Physics getPhysicsType();
+
+	public abstract List<Collider> getColliders();
+
+	public abstract void addCollision(Collider collition);
+
+	public abstract String getCollitionCode(int index);
+
+	public abstract void setCollitionText(Integer index, String text);
+
+	public abstract void removeCollisionIndex(int fileSelected);
+
 }

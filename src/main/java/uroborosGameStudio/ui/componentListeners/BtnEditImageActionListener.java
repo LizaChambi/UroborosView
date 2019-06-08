@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,9 +15,9 @@ public class BtnEditImageActionListener extends AbstractEditionListener {
 	private JTextField pathImageField;
 	private MainWindowModel model;
 	
-	public BtnEditImageActionListener(JTable table, JTree treeScenes, Canvas canvas, JTextField textFieldPathImage, MainWindowModel model) 
+	public BtnEditImageActionListener(JTree treeScenes, Canvas canvas, JTextField textFieldPathImage, MainWindowModel model) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.pathImageField = textFieldPathImage;
 		this.model = model;
 	}

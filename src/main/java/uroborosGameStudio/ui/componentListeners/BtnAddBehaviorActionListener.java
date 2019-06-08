@@ -22,15 +22,17 @@ public class BtnAddBehaviorActionListener extends AbstractEditionListener
 	private JCheckBox chbxIsGlobal;
 	private NewBehaviorDialog dialog;
 	private JComboBox<?> cboxTypeAction;
+	private JTable table;
 	
 	public BtnAddBehaviorActionListener(JComboBox<?> cBoxTypeAction, JTree treeScenes, Canvas canvas, JTable table, JTextField nameTextField, JTextArea textDescription, JCheckBox chbxIsGlobal, NewBehaviorDialog behaviorDialog) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.cboxTypeAction = cBoxTypeAction;
 		this.nameTextField= nameTextField;
 		this.textDescription = textDescription;
 		this.chbxIsGlobal = chbxIsGlobal;
 		this.dialog = behaviorDialog;
+		this.table = table;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class BtnAddBehaviorActionListener extends AbstractEditionListener
 	{	
 		BehaviorFile newBehavior = new BehaviorFile(nameTextField.getText(), this.getActionType(), textDescription.getText(), chbxIsGlobal.isSelected());
 		gameObject.addBehavior(newBehavior);
-		this.updateTable(gameObject);
+		this.updateTableBehavior(table, gameObject);
 		dialog.dispose();
 	}
 

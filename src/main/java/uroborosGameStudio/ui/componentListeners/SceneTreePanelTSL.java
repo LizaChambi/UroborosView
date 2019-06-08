@@ -1,6 +1,9 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,37 +22,51 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField pathField;
 	private JTextField widthField;
 	private JTextField heightField;
+	private JComboBox<?> cboxBody;
+	private JRadioButton rdStatic;
+	private JRadioButton rdDynamic;
+	private JRadioButton rdKinematic;
+	private JTable collisionTable;
+	private JTable behaviorsTable;
 	private MainWindowModel model;
+	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.textField = textField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
 		this.pathField = textFieldPath;
 		this.widthField = textFieldWidth;
 		this.heightField = textFieldHigh;
+		this.cboxBody = cboxSelectBody;
+		this.rdDynamic = rdDinamic;
+		this.rdKinematic = rdKinematic;
+		this.rdStatic = rdStatic;
 		this.model = model;
+		this.collisionTable = tableCollision;
+		this.behaviorsTable = table;
+		this.textArea = textArea;
 	}
 
 	@Override
 	public void updateComponents(GameObject gameObject) 
 	{
-		textField.setText(gameObject.getName());
-		posXField.setText(gameObject.getX().toString());
-		posYField.setText(gameObject.getY().toString());
-		pathField.setText(gameObject.getPathImage());
-		widthField.setText(gameObject.getWidth().toString());
-		heightField.setText(gameObject.getHeight().toString());
+		this.setTextFieldsPropertiesView(gameObject);
+		textArea.setText("");
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)
 		{
 			setCanvas(selectedScene);
 		}
-		this.updateTable(gameObject);
+		this.updateTableBehavior(behaviorsTable, gameObject);
 		model.setDataTable(gameObject);
+		setSelectedBodyMaterialView(gameObject);
+		this.setPhysicsBodyView(gameObject);
+		this.updateTableCollider(collisionTable, gameObject);
+		
 		/* 
 		 * Cada tipo de GameObject debe cambiar el panel de edición:
 		 * 
@@ -60,14 +77,55 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		 */
 	}
 
-	@Override
-	public void updateComponents() {
-		// TODO Auto-generated method stub	
+	private void setSelectedBodyMaterialView(GameObject gameObject) 
+	{
+		String material = gameObject.getBody();
+		if (material.isEmpty())
+		{
+			cboxBody.setSelectedItem(null);
+		}
+		else
+		{
+			cboxBody.setSelectedItem(material);
+		}
+	}
+
+	private void setTextFieldsPropertiesView(GameObject gameObject) {
+		textField.setText(gameObject.getName());
+		posXField.setText(gameObject.getX().toString());
+		posYField.setText(gameObject.getY().toString());
+		pathField.setText(gameObject.getPathImage());
+		widthField.setText(gameObject.getWidth().toString());
+		heightField.setText(gameObject.getHeight().toString());
+	}
+
+	private void setPhysicsBodyView(GameObject gameObject) {
+		switch(gameObject.getPhysicsType())
+		{
+			case STATIC:
+				rdStatic.setSelected(true);
+				break;
+			
+			case DYNAMIC:
+				rdDynamic.setSelected(true);
+				break;
+				
+			case KINEMATIC:
+				rdKinematic.setSelected(true);
+				break;
+				
+			case NONE:
+				rdStatic.setSelected(false);
+				rdDynamic.setSelected(false);
+				rdKinematic.setSelected(false);
+				break;
+		}
 	}
 
 	@Override
-	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {
-		// TODO Auto-generated method stub	
-	}
+	public void updateComponents() {}
+
+	@Override
+	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {}
 
 }

@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -25,9 +24,9 @@ public class BtnDeleteAL extends AbstractEditionListener {
 	private SceneWrapper scene;
 	private ActorWrapper actor;
 
-	public BtnDeleteAL(JTable table, JTree treeScenes, Canvas canvas, JTextField nameTextField, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPathImage, JTextField textFieldWidth, JTextField textFieldHigh, MainWindowModel model) 
+	public BtnDeleteAL(JTree treeScenes, Canvas canvas, JTextField nameTextField, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPathImage, JTextField textFieldWidth, JTextField textFieldHigh, MainWindowModel model) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.nameField = nameTextField;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;

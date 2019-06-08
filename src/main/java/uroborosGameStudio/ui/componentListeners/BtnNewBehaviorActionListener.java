@@ -9,7 +9,6 @@ import javax.swing.JTree;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.NewBehaviorDialog;
 
@@ -20,7 +19,7 @@ public class BtnNewBehaviorActionListener implements ActionListener
 	private Canvas canvas;
 	private MainWindowModel model;
 	
-	public BtnNewBehaviorActionListener(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table, AdmBehaviors datosDePrueba) 
+	public BtnNewBehaviorActionListener(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
 	{
 		this.model = model;
 		this.treeScenes = treeScenes;

@@ -2,10 +2,8 @@ package uroborosGameStudio.domain;
 
 import javax.script.ScriptException;
 
-import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
-import org.team.uroboros.uroboros.engine.component.Behaviour;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
@@ -115,7 +113,7 @@ public class BehaviorFile
 		this.code = text;
 	}
 
-	public void evalCode(EcmaScriptEngine engine, ActorWrapper actorWrapper) 
+	public void evalCode(EcmaScriptEngine engine) 
 	{	
 		switch(this.type)
 		{
@@ -138,9 +136,6 @@ public class BehaviorFile
 			try 
 			{
 				engine.eval("var " + name + " = " + code);
-				//Ability ability =(Ability) engine.eval("new " + name + "();");
-				//Actor actor = Game.getActor(actorWrapper.getName());
-				// actor.learn(ability);
 			} 
 			catch (ScriptException e) 
 			{

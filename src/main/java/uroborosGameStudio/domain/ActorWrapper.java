@@ -13,6 +13,9 @@ import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
+import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
+import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
+import org.team.uroboros.uroboros.engine.physics.material.SphereMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
@@ -32,6 +35,9 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private transient BufferedImage image;
 	private double frames;
 	private AdmBehaviors behaviors;
+	private AdmColliders collisions;
+	private String body;
+	private Physics physicType;
 
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
@@ -42,6 +48,9 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = 1;
 		this.behaviors = new AdmBehaviors();
+		this.collisions = new AdmColliders();
+		this.body = "";
+		this.physicType = Physics.NONE;
 	}
 
 	public ActorWrapper() {}
@@ -215,12 +224,99 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.behaviors.evalBehaviorFiles(engine, this);
+		this.behaviors.evalBehaviorFiles(engine);
 	}
 
 	public void learnAbilities(EcmaScriptEngine engine) 
 	{
 		Actor actor = Game.getActor(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
+	}
+
+	@Override
+	public void setStatic() 
+	{
+		this.physicType = Physics.STATIC;
+		Actor actor = Game.getActor(this.name);
+		actor.setAsStatic();
+	}
+
+	@Override
+	public void setKinematic() 
+	{
+		this.physicType = Physics.KINEMATIC;
+		Actor actor = Game.getActor(this.name);
+		actor.setAsKinematic();
+	}
+
+	@Override
+	public void setDynatic() 
+	{
+		this.physicType = Physics.DYNAMIC;
+		Actor actor = Game.getActor(this.name);
+		actor.setAsDynamic();
+	}
+
+	@Override
+	public void setPhysicsBody(String body) 
+	{
+		this.body = body;
+		Actor actor = Game.getActor(this.name);
+		if(body.equals("Círculo"))
+		{
+			PhysicsMaterial cuerpo = new SphereMaterial(this.getDimension().getWidth() * 0.5, PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
+			actor.addPhysicsMaterial(cuerpo);
+		}
+		if (body.equals("Rectángulo"))
+		{
+			PhysicsMaterial cuerpo = new BoxMaterial(this.getWidth(), this.getHeight(), PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
+			actor.addPhysicsMaterial(cuerpo);
+		}
+	}
+
+	@Override
+	public String getBody() 
+	{
+		return this.body;
+	}
+
+	@Override
+	public Physics getPhysicsType() 
+	{
+		return this.physicType;
+	}
+
+	@Override
+	public List<Collider> getColliders() 
+	{
+		return this.collisions.getColliders();
+	}
+
+	@Override
+	public void addCollision(Collider collition) 
+	{
+		this.collisions.addCollider(collition);
+	}
+
+	@Override
+	public String getCollitionCode(int index) {
+		return this.collisions.getCollitionIndex(index).getCode();
+	}
+
+	@Override
+	public void setCollitionText(Integer index, String text) 
+	{
+		this.collisions.getCollitionIndex(index).setCode(text);
+	}
+
+	@Override
+	public void removeCollisionIndex(int index) 
+	{
+		this.collisions.removeColliderIndex(index);
+	}
+
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.collisions.evalColliders(engine, this.name);
 	}
 }

@@ -1,6 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -13,9 +12,9 @@ public class BtnEditNameAL extends AbstractEditionListener
 {
 	private JTextField textField;
 
-	public BtnEditNameAL(JTable table, JTree treeScenes, JTextField textField,Canvas canvas) 
+	public BtnEditNameAL(JTree treeScenes, JTextField textField,Canvas canvas) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.textField = textField;
 	}
 
