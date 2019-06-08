@@ -1,8 +1,13 @@
 package uroborosGameStudio.domain;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -23,6 +28,8 @@ public class SceneWrapper extends GameObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
+	private String pathScene;
+	private String oldName;
 	
 	public SceneWrapper(String name)
 	{
@@ -36,10 +43,11 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this.actors;
 	}
 	
-	public void addActor(ActorWrapper actorWpp)
-	{
+	public void addActor(ActorWrapper actorWpp)	{
 		this.actors.add(actorWpp);
+		actorWpp.setPathActor(pathScene + name + line());
 		createActorUEngine(actorWpp);
+		actorWpp.createFolder(actorWpp.getPathActor() + actorWpp.getName());
 	}
 
 	private void createActorUEngine(ActorWrapper actorWpp) 
@@ -74,7 +82,22 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getScene(name), newName);
+		this.oldName = name;
 		this.name = newName;
+		
+		File oldfolder = new File(pathScene +oldName);
+		File rename = new File(pathScene +name);
+		oldfolder.renameTo(rename);
+		
+		deleteOldFiles(pathScene +name);
+		
+		actors.forEach(act -> act.setPathActor(pathScene + name + line()));
+	}
+	
+	public String getPathScene() { return pathScene; }
+
+	public void setPathScene(String pathScene) {
+		this.pathScene = pathScene;
 	}
 
 	public Boolean hasName(String name2) 
@@ -82,20 +105,17 @@ public class SceneWrapper extends GameObject implements Serializable
 		return name == name2;
 	}
 
-	public void save(String savedPath) throws IOException
-	{
-		saveActors(savedPath);
-		saveFile(savedPath);
+	public void save(String savedPath) throws IOException	{
+		saveFile(savedPath + name + line());
+		saveActors(savedPath + name + line());
 	}
 
 	private void saveActors(String savedPath)
 	{
 		this.actors.forEach(act -> {
-			try 
-			{
-				act.saveFile(savedPath);
-			} catch (IOException e) 
-			{
+			try {
+				act.save(savedPath);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -152,15 +172,13 @@ public class SceneWrapper extends GameObject implements Serializable
 	@Override
 	public void setPathImage(String path) 
 	{
-		// TODO Auto-generated method stub
-		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
 	}
 
 	@Override
 	public void setDimensionImage(Integer width, Integer height) 
 	{
-		// TODO Auto-generated method stub
-		// FALTA LA MÉTODO PARA CAMBIARLO EN U-ENGINE
+		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
 	}
 	
 	public void load() 
@@ -173,6 +191,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void deleteActor(String name) {
 		this.actors.removeIf(actor -> actor.hasName(name));
 		Game.removeActor(name);
+		deleteFolderSubDirectories(getPathScene() + line() + this.name + line() + name, 1);
 	}
 
 	@Override

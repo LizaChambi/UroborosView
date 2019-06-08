@@ -1,5 +1,11 @@
 package uroborosGameStudio.domain;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import javax.script.ScriptException;
 
 import org.team.uroboros.uroboros.engine.component.Ability;
@@ -7,13 +13,15 @@ import org.team.uroboros.uroboros.engine.component.Actor;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
-public class BehaviorFile 
+public class BehaviorFile implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String description;
 	private Boolean isGlobal;
 	private String code;
 	private Action type;
+	private String ext;
 	
 	public BehaviorFile(String name, Action type, String description, Boolean isGlobal)
 	{
@@ -23,6 +31,7 @@ public class BehaviorFile
 		this.isGlobal = isGlobal;
 		this.code = "";
 		this.addCode();
+		this.ext = ".adm";
 	}
 	
 	private void addCode() 
@@ -171,4 +180,15 @@ public class BehaviorFile
 			}
 		}
 	}
+	
+	public void saveFile(String savedPath) throws IOException {
+		File file = new File(savedPath + getName() + getExt());
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(this);
+		oos.close();
+	}
+
+	private String getExt() { return this.ext; }
+	
 }

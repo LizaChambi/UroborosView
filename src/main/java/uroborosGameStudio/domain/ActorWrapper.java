@@ -35,6 +35,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private transient BufferedImage image;
 	private double frames;
 	private AdmBehaviors behaviors;
+	private String oldName;
+	private String pathActor;
 	private AdmColliders collisions;
 	private String body;
 	private Physics physicType;
@@ -115,7 +117,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
+		this.oldName = name;
 		this.name = newName;
+		
+		File oldfolder = new File(pathActor +oldName);
+		File rename = new File(pathActor +name);
+		oldfolder.renameTo(rename);
+		
+		deleteOldFiles(pathActor +name);
 	}
 
 	@Override
@@ -232,6 +241,25 @@ public class ActorWrapper extends GameObject  implements Serializable
 		Actor actor = Game.getActor(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
 	}
+
+	public void save(String savedPath) throws IOException {
+		saveFile(savedPath + name + line());
+		
+		this.behaviors.getBehaviors().forEach(behavior -> {
+			try {
+				behavior.saveFile(savedPath + name + line());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+	
+	public void setPathActor(String pathScene) {
+		this.pathActor = pathScene;
+	}
+	
+	public String getPathActor() { return this.pathActor; }
 
 	@Override
 	public void setStatic() 

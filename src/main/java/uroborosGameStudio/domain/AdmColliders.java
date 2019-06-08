@@ -1,12 +1,14 @@
 package uroborosGameStudio.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
-public class AdmColliders 
+public class AdmColliders implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private List<Collider> colliders;
 	
 	public AdmColliders()

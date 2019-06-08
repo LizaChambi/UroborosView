@@ -56,6 +56,7 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
+import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
@@ -209,8 +210,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		menuBar.add(help);
 	}
 
-	private void optionsFile() 
-	{
+	private void optionsFile() {
 		JMenu menu = new JMenu("Archivo");
 		menu.setMnemonic(KeyEvent.VK_N);
 		menu.getAccessibleContext().setAccessibleDescription(
@@ -219,24 +219,40 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JMenuItem menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		menuItem.setEnabled(false);
+		menuItem.setEnabled(true);
 		menuItem.getAccessibleContext().setAccessibleDescription(
 		        "This doesn't really do anything");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				model.createNewProject();
+				new EditorWindow().run();
+				frame.dispose();
+			}
+		});
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Abrir Proyecto", KeyEvent.VK_A);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-		menuItem.setEnabled(false);
+		menuItem.setEnabled(true);
+		menuItem.addActionListener(new OpenProjectActionListener(model, frame, centerPanel));
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Guardar Proyecto", KeyEvent.VK_G);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-		menuItem.setEnabled(false);
+		menuItem.setEnabled(true);
+		menuItem.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Salir", KeyEvent.VK_R);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_X, ActionEvent.ALT_MASK));
-		menuItem.setEnabled(false);
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("quiero cerrar");
+				frame.dispose();
+			}
+		});
+		menuItem.setEnabled(true);
 		menu.add(menuItem);
 		
 		menuPanel.add(menuBar);

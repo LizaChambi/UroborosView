@@ -1,5 +1,6 @@
 package uroborosGameStudio.domain;
 
+import java.io.Serializable;
 import java.util.function.Consumer;
 
 import javax.script.ScriptException;
@@ -9,8 +10,9 @@ import org.team.uroboros.uroboros.engine.component.Actor;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
-public class Collider 
+public class Collider implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String description;
 	private String code;
@@ -41,13 +43,13 @@ public class Collider
 	public void evalCollider(EcmaScriptEngine engine, String nameActor) 
 	{
 		Actor actor = Game.getActor(nameActor);
-		Consumer<Actor> collider;
-		try {
-			collider = (Consumer<Actor>) engine.eval(code);
-			actor.whenCollidesDo(collider);
-		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		actor.whenCollidesDo((collider) -> {
+			try {
+				engine.eval(code);
+			} catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }

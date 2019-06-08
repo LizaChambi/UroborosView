@@ -3,7 +3,11 @@ package uroborosGameStudio.domain;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -18,6 +22,8 @@ public class UGSProject extends GameObject implements Serializable {
 	private String projectName;
 	private String pathRoot;
 	private List<SceneWrapper> scenes;
+	private String pathBehavior;
+	private String pathAbility;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
@@ -25,13 +31,18 @@ public class UGSProject extends GameObject implements Serializable {
 		this.ext = ".ugs";
 		this.projectName = projectName;
 		createProjectDir();
+		createFolderGlobalBehavior();
+		createFolderGlobalAbility();
 		this.scenes = new ArrayList<SceneWrapper>();
 		createMainScene();
 	}
 
 	private void createMainScene() {
-		this.scenes.add(new SceneWrapper("Escena0"));
+		SceneWrapper tmp = new SceneWrapper("Escena0");
+		tmp.setPathScene(getSavedPath());
+		this.scenes.add(tmp);
 		Game.createScene("Escena0");
+		tmp.createFolder(tmp.getPathScene() + "Escena0");
 	}
 
 	public String getPathRoot() {
@@ -44,14 +55,25 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void createProjectDir() {
 		String dp = System.getProperty("user.home");
-		String line = System.getProperty("file.separator");
-		File dir = new File(dp + line + this.projectName);
+		File dir = new File(dp + line() + this.projectName);
 		createDir(dir);
 	}
 
 	public void createDir(File dir) {
 		this.pathRoot = dir.getPath();
 		dir.mkdir();
+	}
+	
+	private void createFolderGlobalBehavior() {
+		File behavior = new File(getSavedPath() + "Global Behavior");
+		this.pathBehavior = behavior.getPath();
+		behavior.mkdir();
+	}
+	
+	private void createFolderGlobalAbility() {
+		File ability = new File(getSavedPath() + "Global Ability");
+		this.pathAbility = ability.getPath();
+		ability.mkdir();
 	}
 
 	public String getProjectName() {
@@ -60,7 +82,9 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
+		newScene.setPathScene(getSavedPath());
 		Game.createScene(newScene.getName());
+		newScene.createFolder(newScene.getPathScene() + newScene.getName());
 	}
 
 	@Override
@@ -80,34 +104,30 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
 	
+	public void deleteFolderSubDirectories(String nameScene) {
+		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
+		try {
+			Files.walk(dir, 2)
+		      .sorted(Comparator.reverseOrder())
+		      .map(Path::toFile)
+		      .forEach(File::delete);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void saveProject() throws IOException
 	{
-		deleteOldProject();
+		deleteOldFiles(getPathRoot());
 		saveScenes();
 		saveFile(getSavedPath());
 	}
 	
-	private void deleteOldProject() 
-	{
-		File file = new File(getPathRoot()); 
-		File[] ficheros = file.listFiles(); 
-		if(file.exists()) 
-		{ 
-			for (int x=0;x<ficheros.length;x++) 
-			{ 
-				File fileToDelete = new File(ficheros[x].toString()); 
-				fileToDelete.delete(); 
-			}
-		} 
-		else 
-		{ 
-			System.out.println("No existe el directorio"); 
-		}
-	}
-
 	public String getSavedPath() 
 	{
-		return getPathRoot() + System.getProperty("file.separator");
+		return getPathRoot() + line();
 	}
 
 	private void saveScenes() 
@@ -189,6 +209,7 @@ public class UGSProject extends GameObject implements Serializable {
 	{	
 		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
+		deleteFolderSubDirectories(this.pathRoot + line()+ scene.getName(), 2);
 	}
 
 	@Override
