@@ -68,9 +68,9 @@ public class NewActorDialog extends JDialog
 	private JTable table;
 	private JLabel lblNumberError;
 
-	public NewActorDialog(JTable table, MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
-		initializedDialog(model, treeScenes, canvas, table);
+		initializedDialog(model, treeScenes, canvas);
 		initializedHeaderPanel();
 		titleLabel();
 		
@@ -254,7 +254,7 @@ public class NewActorDialog extends JDialog
 				}
 			});
 			
-			okButton.addActionListener(new BtnAddActorActionListener(table,treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
@@ -311,9 +311,8 @@ public class NewActorDialog extends JDialog
 		headerPanel.add(lblTitle);
 	}
 
-	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas, JTable table) 
+	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
-		this.table = table;
 		this.model = model;
 		this.treeScenes=treeScenes;
 		this.canvas = canvas;

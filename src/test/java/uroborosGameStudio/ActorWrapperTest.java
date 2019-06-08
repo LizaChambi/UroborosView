@@ -12,6 +12,7 @@ import org.junit.Test;
 import uroborosGameStudio.domain.Action;
 import uroborosGameStudio.domain.ActorWrapper;
 import uroborosGameStudio.domain.BehaviorFile;
+import uroborosGameStudio.domain.Physics;
 
 public class ActorWrapperTest {
 
@@ -33,7 +34,11 @@ public class ActorWrapperTest {
 		assertEquals(".act", actor.getExt());
 		assertEquals(new Point(12, 15), actor.getPosition());
 		assertEquals(new Dimension(59, 89), actor.getDimension());
-		
+		assertTrue(actor.getBehaviors().isEmpty());
+		assertTrue(actor.getColliders().isEmpty());
+		assertTrue(actor.getBody().isEmpty());
+		assertTrue(actor.getColliders().isEmpty());
+		assertEquals(Physics.NONE, actor.getPhysicsType());
 	}
 	
 	@Test

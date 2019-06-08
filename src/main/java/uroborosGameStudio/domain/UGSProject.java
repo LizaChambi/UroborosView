@@ -252,4 +252,50 @@ public class UGSProject extends GameObject implements Serializable {
 		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
 	}
 
+	@Override
+	public void setStatic() {}
+
+	@Override
+	public void setKinematic() {}
+
+	@Override
+	public void setDynatic() {}
+
+	@Override
+	public void setPhysicsBody(String body) {}
+
+	@Override
+	public String getBody() {
+		return "";
+	}
+
+	@Override
+	public Physics getPhysicsType() {
+		return Physics.NONE;
+	}
+
+	@Override
+	public List<Collider> getColliders() {
+		return new ArrayList<Collider>();
+	}
+
+	@Override
+	public void addCollision(Collider collition) {}
+
+	@Override
+	public String getCollitionCode(int index) {
+		return "";
+	}
+
+	@Override
+	public void setCollitionText(Integer index, String text) {}
+
+	@Override
+	public void removeCollisionIndex(int index) {}
+
+	public void evalCollisions(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalCollisions(engine));
+	}
+
 }

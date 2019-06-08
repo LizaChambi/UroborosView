@@ -1,7 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
 
-import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -16,9 +15,9 @@ public class BtnNewSceneAL extends AbstractEditionListener
 {
 	private Integer idScene;
 	
-	public BtnNewSceneAL(JTable table, JTree treeScenes, int idScene, Canvas canvas) 
+	public BtnNewSceneAL(JTree treeScenes, int idScene, Canvas canvas) 
 	{
-		super(treeScenes, canvas, table);
+		super(treeScenes, canvas);
 		this.idScene = idScene;
 	}
 

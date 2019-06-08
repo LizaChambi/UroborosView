@@ -17,7 +17,8 @@ public class MainWindowModel
 {
 	private UGSProject project;
 	private GameObject itemSelected;
-	private Integer fileSelected;
+	private Integer fileBehaviorSelected;
+	private Integer fileColliderSelected;
 	
 	public MainWindowModel() {}
 	
@@ -126,34 +127,26 @@ public class MainWindowModel
 
 	public void setFileSelected(int row) 
 	{
-		this.fileSelected = row;
+		this.fileBehaviorSelected = row;
+	}
+	
+	public GameObject getItemSelected()
+	{
+		return this.itemSelected;
 	}
 
 	public void setTextBehaviorFile(String text) 
 	{
-		this.itemSelected.setBehaviorFileText(fileSelected, text);
+		this.itemSelected.setBehaviorFileText(fileBehaviorSelected, text);
 	}
 
-	public void evalBehaviors() 
+	public void evalBehaviorsAndCollisions() 
 	{
 		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
 		
 		try {
-			engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
-			engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
-			engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
-			engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
-			engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
-			engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
-			engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
-			engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
-			engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
-			engine.eval("var Dimension = Java.type('org.team.uroboros.uroboros.engine.geometry.Dimension')");
-			engine.eval("var Graphics = Java.type('org.team.uroboros.uroboros.engine.ui.Graphics')");
-			engine.eval("var Ability = Java.type('org.team.uroboros.uroboros.engine.component.Ability')");
-			engine.eval("var Behaviour = Java.type('org.team.uroboros.uroboros.engine.component.Behaviour')");
+			evalImportsUEngine(engine);
 		} 
-
 		catch (ScriptException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,5 +154,38 @@ public class MainWindowModel
 		
 		this.project.evalBehaviors(engine);
 		this.project.actorsLearnAbilities(engine);
+		this.project.evalCollisions(engine);
+	}
+
+	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
+	{
+		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
+		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
+		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
+		engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
+		engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
+		engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
+		engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
+		engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
+		engine.eval("var Dimension = Java.type('org.team.uroboros.uroboros.engine.geometry.Dimension')");
+		engine.eval("var Graphics = Java.type('org.team.uroboros.uroboros.engine.ui.Graphics')");
+		engine.eval("var Ability = Java.type('org.team.uroboros.uroboros.engine.component.Ability')");
+		engine.eval("var Behaviour = Java.type('org.team.uroboros.uroboros.engine.component.Behaviour')");
+	}
+
+	public void setFileCollisionSelected(int row) 
+	{
+		this.fileColliderSelected = row;
+	}
+
+	public String getCollitionCode(int row) 
+	{
+		return this.itemSelected.getCollitionCode(row);
+	}
+
+	public void setTextCollition(String text) 
+	{
+		this.itemSelected.setCollitionText(fileColliderSelected, text);
 	}
 }

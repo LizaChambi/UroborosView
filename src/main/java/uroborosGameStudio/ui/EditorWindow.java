@@ -2,21 +2,30 @@ package uroborosGameStudio.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -31,7 +40,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.AdmBehaviors;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
@@ -45,11 +53,14 @@ import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
+import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
+import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
+import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
 
 public class EditorWindow extends AbstractWindowFrame {
@@ -88,14 +99,31 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnEditImage;
 	private JPanel menuPanel;
 	private JMenuBar menuBar;
-	private JTable table;
+	private JTable table = new JTable();
 	private JPanel BehaviorButtonsPanel;
 	private JButton btnNewBehavior;
 	private JButton btnGlobalBehavior;
 	private JButton btnDeleteBehavior;
 	private JPanel behaviorPanel;
 	private JScrollPane tableBehaviorScrollPanel;
-	private AdmBehaviors datosDePrueba = new AdmBehaviors();
+	private JPanel collisionPanel;
+	private JTable tableCollision = new JTable();
+	private JPanel tableCollisionPanel;
+	private JButton btnAddCollider;
+	private JButton btnRemoveCollider;
+	private JTabbedPane tabbedPanel;
+	private JScrollPane tableCollisionScrollPanel;
+	private JPanel propertiesCollisionPanel;
+	private JLabel lblBodyMaterial;
+	private JPanel bodyMaterialPanel;
+	private JPanel bodyTypePanel;
+	private JPanel typePhysicPanel;
+	private JPanel informationPanel;
+	private JLabel lblInformation;
+	private JComboBox cboxSelectBody = new JComboBox();
+	private JRadioButton rdStatic = new JRadioButton("Estático");
+	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
+	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
 
 	public EditorWindow() 
 	{
@@ -116,7 +144,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		this.initializeTreePlayPanel();
 	
-		this.initializeEditorPanel();
+		this.editorPanel();
 		this.initializePropertiesEditPanel();
 		this.optionsEditorPanel();
 		this.behaviorSettingPanel();
@@ -241,11 +269,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void toolbar() 
 	{
 		JButton btnNewScena = new JButton("Nueva Escena");
-		btnNewScena.addActionListener(new BtnNewSceneAL(table, treeScenes, idScene, canvas));
+		btnNewScena.addActionListener(new BtnNewSceneAL(treeScenes, idScene, canvas));
 		buttonPanel.add(btnNewScena);
 		
 		JButton btnNewActor = new JButton("Nuevo Actor");
-		btnNewActor.addActionListener(new BtnNewActorAL(table, treeScenes, canvas, model));
+		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
 		buttonPanel.add(btnNewActor);
 		
 		JButton btnSave = new JButton("Guardar");
@@ -257,7 +285,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
-		btnRemove.addActionListener(new BtnDeleteAL(table, treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 	}
 
@@ -277,7 +305,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeCodeTextArea() {
-		textArea.addKeyListener(new CodeFieldListener(model, table, textArea));
+		textArea.addKeyListener(new CodeFieldListener(model, table, tableCollision, textArea));
 		textArea.setText("Editor de texto...");
 	}
 
@@ -286,7 +314,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -310,11 +338,207 @@ public class EditorWindow extends AbstractWindowFrame {
 		return root;
 	}
 
-	private void initializeEditorPanel() 
+	private void editorPanel() 
 	{
+		this.inicializeEditorPanel();
+		this.tableCollisionPanel();
+		this.propertiesCollisionPanel();
+	}
+
+	private void tableCollisionPanel() 
+	{
+		this.inicializeCollisionPanel();
+		this.inicializeTableCollisionPanel();
+		this.tableCollision();
+		this.buttonsCollisionTable();
+	}
+
+	private void buttonsCollisionTable() 
+	{
+		JPanel buttonsColliderPanel = new JPanel();
+		buttonsColliderPanel.setBounds(5, 228, 500, 35);
+		tableCollisionPanel.add(buttonsColliderPanel);
+		buttonsColliderPanel.setLayout(null);
+		
+		btnAddCollider = new JButton("Nuevo");
+		btnAddCollider.addActionListener(new NewCollisionActionListener(model, treeScenes,canvas, table, tableCollision));
+		btnAddCollider.setBounds(0, 5, 78, 25);
+		buttonsColliderPanel.add(btnAddCollider);
+		
+		btnRemoveCollider = new JButton("Eliminar");
+		btnRemoveCollider.addActionListener(new BtnRemoveColliderActionListener(textArea, model, tableCollision, principalPanel));
+		btnRemoveCollider.setBounds(410, 5, 90, 25);
+		buttonsColliderPanel.add(btnRemoveCollider);
+	}
+
+	private void inicializeEditorPanel() 
+	{
+		tabbedPanel = new JTabbedPane();	
 		editorPanel = new JPanel();
 		editorPanel.setPreferredSize(new Dimension(973, 263));
-		this.gameEditorPanel.add(editorPanel, BorderLayout.SOUTH);
+		tabbedPanel.addTab("Propiedades", editorPanel);
+		this.gameEditorPanel.add(tabbedPanel, BorderLayout.SOUTH);
+	}
+
+	private void propertiesCollisionPanel() 
+	{
+		this.inicializePropertiesCollisionPanel();
+		this.bodyFigure();
+		this.physicType();
+	}
+
+	private void physicType() 
+	{
+		this.inicializePhysicTypePanel();
+		this.titlePhysicType();
+		this.selectType();
+		this.informationSelectedType();
+	}
+
+	private void titlePhysicType() {
+		JLabel lblPhysics = new JLabel("Tipo de física aplicada al cuerpo:");
+		lblPhysics.setBounds(5, 5, 232, 15);
+		bodyTypePanel.add(lblPhysics);
+	}
+
+	private void informationSelectedType() {
+		informationPanel = new JPanel();
+		informationPanel.setBounds(5, 62, 446, 52);
+		FlowLayout flowLayout_2 = (FlowLayout) informationPanel.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEADING);
+		bodyTypePanel.add(informationPanel);
+		
+		lblInformation = new JLabel("");
+		lblInformation.setFont(new Font("Droid Sans", Font.BOLD, 12));
+		informationPanel.add(lblInformation);
+	}
+
+	private void selectType() 
+	{
+		this.inicializeTypePhysicPanel();
+		
+		rdStatic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setStatic();
+			}
+		});
+		typePhysicPanel.add(rdStatic);
+		rdStatic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		rdKinematic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setKinematic();
+			}
+		});
+		typePhysicPanel.add(rdKinematic);
+		rdKinematic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		rdDinamic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				model.getItemSelected().setDynatic();
+			}
+		});
+		typePhysicPanel.add(rdDinamic);
+		rdDinamic.setFont(new Font("Dialog", Font.PLAIN, 12));
+		
+		ButtonGroup typeGroup = new ButtonGroup();
+		typeGroup.add(rdStatic);
+		typeGroup.add(rdKinematic);
+		typeGroup.add(rdDinamic);
+	}
+
+	private void inicializeTypePhysicPanel() {
+		typePhysicPanel = new JPanel();
+		typePhysicPanel.setBounds(5, 25, 272, 33);
+		FlowLayout flowLayout_1 = (FlowLayout) typePhysicPanel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		bodyTypePanel.add(typePhysicPanel);
+	}
+
+	private void inicializePhysicTypePanel() {
+		bodyTypePanel = new JPanel();
+		bodyTypePanel.setBounds(0, 38, 451, 114);
+		bodyTypePanel.setLayout(null);
+		propertiesCollisionPanel.add(bodyTypePanel);
+	}
+
+	private void bodyFigure() 
+	{
+		this.inicializeBodyFigurePanel();
+		
+		lblBodyMaterial = new JLabel("Cuerpo:");
+		bodyMaterialPanel.add(lblBodyMaterial);
+		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
+	
+		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
+		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
+		cboxSelectBody.setSelectedItem(null);
+		cboxSelectBody.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(cboxSelectBody.getSelectedItem() != null)
+				{
+					model.getItemSelected().setPhysicsBody((String)cboxSelectBody.getSelectedItem());
+				}
+					
+			}
+		});
+		bodyMaterialPanel.add(cboxSelectBody);
+	}
+
+	private void inicializeBodyFigurePanel() {
+		bodyMaterialPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) bodyMaterialPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEADING);
+		bodyMaterialPanel.setBounds(0, 0, 451, 36);
+		propertiesCollisionPanel.add(bodyMaterialPanel);
+	}
+
+	private void inicializePropertiesCollisionPanel() 
+	{
+		propertiesCollisionPanel = new JPanel();
+		propertiesCollisionPanel.setBounds(5, 12, 463, 239);
+		propertiesCollisionPanel.setLayout(null);
+		collisionPanel.add(propertiesCollisionPanel);
+	}
+
+	private void inicializeTableCollisionPanel() 
+	{
+		tableCollisionPanel = new JPanel();
+		tableCollisionPanel.setBorder(new TitledBorder(null, "Tabla de colisiones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		tableCollisionPanel.setBounds(456, 0, 510, 263);
+		tableCollisionPanel.setLayout(null);
+		collisionPanel.add(tableCollisionPanel);
+	}
+
+	private void tableCollision() 
+	{
+		tableCollisionScrollPanel = new JScrollPane();
+		tableCollisionScrollPanel.setBounds(5, 20, 500, 208);
+		
+		tableCollision.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tableCollision.addMouseListener(new SelectedCollitionActionListener(table, textArea, tableCollision, model));
+		tableCollision.setModel(new DefaultTableModel(
+			new Object[][] {},
+			new String[] { "Nombre", "Descripci\u00F3n"}
+		));
+		
+		tableCollisionScrollPanel.setViewportView(tableCollision);
+		tableCollisionPanel.add(tableCollisionScrollPanel);
+	}
+
+	private void inicializeCollisionPanel() 
+	{
+		collisionPanel = new JPanel();
+		collisionPanel.setPreferredSize(new Dimension(973, 263));
+		collisionPanel.setLayout(null);
+		tabbedPanel.addTab("Colisiones", collisionPanel);
 	}
 	
 	private void initializePropertiesEditPanel() 
@@ -354,7 +578,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		behaviorPanel.add(BehaviorButtonsPanel);
 		
 		btnNewBehavior = new JButton("Nuevo");
-		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(model, treeScenes, canvas, table, datosDePrueba));
+		btnNewBehavior.addActionListener(new BtnNewBehaviorActionListener(model, treeScenes, canvas, table));
 		btnNewBehavior.setBounds(5, 5, 78, 25);
 		btnNewBehavior.setHorizontalAlignment(SwingConstants.LEADING);
 		BehaviorButtonsPanel.add(btnNewBehavior);
@@ -367,7 +591,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		btnDeleteBehavior = new JButton("Eliminar");
 		btnDeleteBehavior.setBounds(373, 5, 90, 25);
-		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(treeScenes, canvas, table, principalPanel));
+		btnDeleteBehavior.addActionListener(new BtnRemoveBehaviorActionListener(textArea, treeScenes, canvas, table, principalPanel));
 		btnDeleteBehavior.setHorizontalAlignment(SwingConstants.TRAILING);
 		BehaviorButtonsPanel.setLayout(null);
 		BehaviorButtonsPanel.add(btnDeleteBehavior);
@@ -375,9 +599,8 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void inicializeTable() 
 	{
-		table = new JTable();
 		table.setBounds(0, 0, 225, 64);
-		table.addMouseListener(new SelectedBehaviorFileActionListener(textArea, table, model));
+		table.addMouseListener(new SelectedBehaviorFileActionListener(tableCollision, textArea, table, model));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] { "Nombre", "Descripci\u00F3n", "Global", "Tipo"}
@@ -400,13 +623,13 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditDimension.add(lblDimension);
 		
 		textFieldWidth = new JTextField();
-		textFieldWidth.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+//		textFieldWidth.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldWidth.setText("0");
 		panelEditDimension.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
 		
 		textFieldHigh = new JTextField();
-		textFieldHigh.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+//		textFieldHigh.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		textFieldHigh.setText("0");
 		panelEditDimension.add(textFieldHigh);
 		textFieldHigh.setColumns(10);
@@ -414,6 +637,9 @@ public class EditorWindow extends AbstractWindowFrame {
 //		btnEditDimension = new JButton("Editar");
 //		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(table, treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 //		panelEditDimension.add(btnEditDimension);
+		btnEditDimension = new JButton("Editar");
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+		panelEditDimension.add(btnEditDimension);
 	}
 
 	private void inicializedEditDimensionPanel() {
@@ -442,7 +668,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditImage.add(btnSetImage);
 		
 		btnEditImage = new JButton("Editar");
-		btnEditImage.addActionListener(new BtnEditImageActionListener(table, treeScenes, canvas, textFieldPathImage, model));
+		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
 		btnEditImage.setBounds(345, 5, 76, 25);
 		panelEditImage.add(btnEditImage);
 	}
@@ -461,13 +687,13 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblPosition.setBounds(5, 7, 102, 15);
 		
 		posXTextField = new JTextField("0");
-		posXTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
+//		posXTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posXTextField);
 		posXTextField.setBounds(112, 5, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
-		posYTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
+//		posYTextField.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
 		panelEditPosition.add(posYTextField);
 		posYTextField.setBounds(226, 5, 112, 19);
 		posYTextField.setColumns(5);
@@ -475,7 +701,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
 		btnEditPosition.setBounds(344, 2, 76, 25);
-		btnEditPosition.addActionListener(new BtnEditPositionAL(table, treeScenes,posXTextField, posYTextField, canvas, model));
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
 	}
 
 	private void inicializedEditPositionPanel() {
@@ -496,7 +722,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editNamePanel.add(nameTextField);
 		
 		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(table, treeScenes,nameTextField, canvas));
+		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
 		btnEditName.setBounds(230, 62, 100, 23);
 		editNamePanel.add(btnEditName);
 	}

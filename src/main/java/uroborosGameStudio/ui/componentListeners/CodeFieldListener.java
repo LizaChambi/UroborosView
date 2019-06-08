@@ -11,13 +11,15 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 public class CodeFieldListener implements KeyListener 
 {
 	private MainWindowModel model;
-	private JTable table;
+	private JTable tableBehaviors;
+	private JTable tableCollisions;
 	private JTextArea codeField;
 
-	public CodeFieldListener(MainWindowModel model, JTable table, JTextArea textArea) 
+	public CodeFieldListener(MainWindowModel model, JTable table, JTable tableCollision, JTextArea textArea) 
 	{
 		this.model = model;
-		this.table = table;
+		this.tableBehaviors = table;
+		this.tableCollisions = tableCollision;
 		this.codeField = textArea;
 	}
 
@@ -36,7 +38,11 @@ public class CodeFieldListener implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		if (table.getSelectedRow()>=0)
+		if (tableCollisions.getSelectedRow()>=0)
+		{
+			model.setTextCollition(codeField.getText());
+		}
+		else
 		{
 			model.setTextBehaviorFile(codeField.getText());
 		}
