@@ -2,10 +2,8 @@ package uroborosGameStudio.domain;
 
 import javax.script.ScriptException;
 
-import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Ability;
 import org.team.uroboros.uroboros.engine.component.Actor;
-import org.team.uroboros.uroboros.engine.component.Behaviour;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 

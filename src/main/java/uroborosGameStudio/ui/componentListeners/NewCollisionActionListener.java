@@ -6,13 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
-import uroborosGameStudio.ui.NewActorDialog;
 import uroborosGameStudio.ui.NewColliderDialog;
 
 public class NewCollisionActionListener implements ActionListener 

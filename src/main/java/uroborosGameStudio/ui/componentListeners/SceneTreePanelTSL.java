@@ -1,7 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.event.ItemEvent;
-
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;

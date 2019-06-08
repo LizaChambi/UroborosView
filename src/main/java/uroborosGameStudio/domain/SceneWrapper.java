@@ -9,8 +9,6 @@ import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
-import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
-import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;

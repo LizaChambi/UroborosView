@@ -1,6 +1,5 @@
 package uroborosGameStudio.domain;
 
-import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
