@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 
 public class MainWindow extends AbstractWindowFrame {
@@ -62,13 +63,7 @@ public class MainWindow extends AbstractWindowFrame {
 	private void initializeCreateProyectButton() {
 		this.createButton = new JButton("Crear nuevo proyecto");
 		createButton.setBounds(150, 180, 200, 23);
-		this.createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				model.createNewProject();
-				new EditorWindow().run();
-				frame.dispose();
-			}
-		});
+		this.createButton.addActionListener(new CreateNewProjectAL(frame, model));
 		centerPanel.setLayout(null);
 		centerPanel.add(this.createButton);
 	}

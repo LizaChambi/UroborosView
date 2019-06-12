@@ -56,6 +56,7 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
+import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
@@ -213,22 +214,12 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void optionsFile() {
 		JMenu menu = new JMenu("Archivo");
 		menu.setMnemonic(KeyEvent.VK_N);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "The only menu in this program that has menu items");
 		menuBar.add(menu);
 		
 		JMenuItem menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.setEnabled(true);
-		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "This doesn't really do anything");
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				model.createNewProject();
-				new EditorWindow().run();
-				frame.dispose();
-			}
-		});
+		menuItem.addActionListener(new CreateNewProjectAL(frame, model));
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Abrir Proyecto", KeyEvent.VK_A);
@@ -248,7 +239,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		menuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("quiero cerrar");
 				frame.dispose();
 			}
 		});
