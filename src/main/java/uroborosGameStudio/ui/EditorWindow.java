@@ -55,6 +55,7 @@ import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
@@ -236,12 +237,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		menuItem = new JMenuItem("Salir", KeyEvent.VK_R);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_X, ActionEvent.ALT_MASK));
-		menuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
+		menuItem.addActionListener(new CloseProjectAL(frame));
 		menuItem.setEnabled(true);
 		menu.add(menuItem);
 		
