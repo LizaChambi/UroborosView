@@ -126,7 +126,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
 	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
 	private JPanel panelEditAudio;
-	private JTextField textFieldPathAudio;
+	private JTextField textFieldPathAudio = new JTextField();;
 
 	public EditorWindow() 
 	{
@@ -317,7 +317,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
@@ -651,7 +651,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		lblAudio.setBounds(5, 7, 45, 15);
 		panelEditAudio.add(lblAudio);
 		
-		textFieldPathAudio = new JTextField();
 		textFieldPathAudio.setEditable(false);
 		textFieldPathAudio.setBounds(55, 5, 180, 19);
 		textFieldPathAudio.setColumns(10);

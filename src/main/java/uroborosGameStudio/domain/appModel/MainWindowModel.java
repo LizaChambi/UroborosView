@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 
 import javax.script.ScriptException;
 
+import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.audio.Audio;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
@@ -193,7 +194,15 @@ public class MainWindowModel
 
 	public void playAudio() 
 	{
-		Audio audio = new Audio(this.getItemSelected().getPathAudio());
-		audio.loop();
+		String pathAudio = getCurrentScene().getPathAudio();
+		if(! pathAudio.isEmpty())
+		{
+			Audio audio = new Audio(pathAudio);
+			audio.loop();
+		}
+	}
+
+	private SceneWrapper getCurrentScene() {
+		return this.searchScene(Game.getCurrentScene().getName());
 	}
 }
