@@ -134,7 +134,7 @@ public class BehaviorFile implements Serializable
 			} 
 			catch (ScriptException e) 
 			{
-				// TODO Auto-generated catchs block
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

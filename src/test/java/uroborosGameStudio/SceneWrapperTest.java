@@ -33,6 +33,7 @@ public class SceneWrapperTest
 	{	
 		assertEquals("Scene0", scene.getName());
 		assertTrue(scene.getActors().isEmpty());
+		assertTrue(scene.getPathAudio().isEmpty());
 		assertEquals(".sce", scene.getExt());
 	}
 	
@@ -128,6 +129,13 @@ public class SceneWrapperTest
 		mockScene.deleteActor(actor0.getName());
 		
 		assertTrue(mockScene.getActors().isEmpty());
+	}
+	
+	@Test
+	public void testCreateSceneAndAddSetPathAudio() 
+	{
+		scene.setPathAudio("path/audio.WAV");
+		assertEquals("path/audio.WAV", scene.getPathAudio());
 	}
 	
 }

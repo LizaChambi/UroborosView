@@ -347,4 +347,12 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		this.collisions.evalColliders(engine, this.name);
 	}
+
+	@Override
+	public void setPathAudio(String path) {}
+
+	@Override
+	public String getPathAudio() {
+		return "";
+	}
 }

@@ -3,11 +3,7 @@ package uroborosGameStudio.domain;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -30,12 +26,19 @@ public class SceneWrapper extends GameObject implements Serializable
 	private List<ActorWrapper> actors;
 	private String pathScene;
 	private String oldName;
+	private String pathAudio;
 	
 	public SceneWrapper(String name)
 	{
 		this.name = name;
 		this.ext = ".sce";
 		this.actors = new ArrayList<ActorWrapper>();
+		this.pathAudio = "";
+	}
+	
+	public String getPathAudio()
+	{
+		return this.pathAudio;
 	}
 
 	public List<ActorWrapper> getActors()
@@ -278,6 +281,12 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
 		this.actors.forEach(actor -> actor.evalCollisions(engine));
+	}
+
+	@Override
+	public void setPathAudio(String path) 
+	{
+		this.pathAudio = path;
 	}
 	
 }
