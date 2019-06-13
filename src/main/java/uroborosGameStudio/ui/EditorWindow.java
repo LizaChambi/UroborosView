@@ -124,6 +124,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JRadioButton rdStatic = new JRadioButton("Estático");
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
 	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
+	private JPanel panelEditAudio;
+	private JTextField textFieldPathAudio;
 
 	public EditorWindow() 
 	{
@@ -614,6 +616,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editPosition();
 		editImage();
 		editDimension();
+		editAudio();
 	}
 
 	private void editDimension() {
@@ -635,6 +638,27 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnEditDimension = new JButton("Editar");
 		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
 		panelEditDimension.add(btnEditDimension);
+	}
+
+	private void editAudio() 
+	{
+		panelEditAudio = new JPanel();
+		panelEditAudio.setLayout(null);
+		propertiesEditPanel.add(panelEditAudio);
+		
+		JLabel lblAudio = new JLabel("Audio:");
+		lblAudio.setBounds(5, 7, 45, 15);
+		panelEditAudio.add(lblAudio);
+		
+		textFieldPathAudio = new JTextField();
+		textFieldPathAudio.setEditable(false);
+		textFieldPathAudio.setBounds(55, 5, 180, 19);
+		textFieldPathAudio.setColumns(10);
+		panelEditAudio.add(textFieldPathAudio);
+		
+		JButton btnSetAudio = new JButton("Audio...");
+		btnSetAudio.setBounds(243, 3, 97, 25);
+		panelEditAudio.add(btnSetAudio);
 	}
 
 	private void inicializedEditDimensionPanel() {
