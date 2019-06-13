@@ -128,4 +128,8 @@ public abstract class GameObject implements Serializable
 
 	public abstract void removeCollisionIndex(int fileSelected);
 
+	public abstract void setPathAudio(String path);
+
+	public abstract String getPathAudio();
+
 }

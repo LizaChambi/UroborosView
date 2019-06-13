@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 
 import javax.script.ScriptException;
 
+import org.team.uroboros.uroboros.engine.audio.Audio;
+
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 import uroborosGameStudio.domain.ActorWrapper;
@@ -187,5 +189,11 @@ public class MainWindowModel
 	public void setTextCollition(String text) 
 	{
 		this.itemSelected.setCollitionText(fileColliderSelected, text);
+	}
+
+	public void playAudio() 
+	{
+		Audio audio = new Audio(this.getItemSelected().getPathAudio());
+		audio.loop();
 	}
 }

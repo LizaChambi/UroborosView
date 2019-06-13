@@ -50,6 +50,7 @@ import uroborosGameStudio.ui.componentListeners.BtnGlobalBehaviorsActionListener
 import uroborosGameStudio.ui.componentListeners.BtnNewActorAL;
 import uroborosGameStudio.ui.componentListeners.BtnNewBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnNewSceneAL;
+import uroborosGameStudio.ui.componentListeners.BtnOpenAudioActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
@@ -658,6 +659,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JButton btnSetAudio = new JButton("Audio...");
 		btnSetAudio.setBounds(243, 3, 97, 25);
+		btnSetAudio.addActionListener(new BtnOpenAudioActionListener(textFieldPathAudio,principalPanel, model));
 		panelEditAudio.add(btnSetAudio);
 	}
 

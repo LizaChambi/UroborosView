@@ -294,4 +294,12 @@ public class UGSProject extends GameObject implements Serializable {
 		this.scenes.forEach(scene -> scene.evalCollisions(engine));
 	}
 
+	@Override
+	public void setPathAudio(String path) {}
+
+	@Override
+	public String getPathAudio() {
+		return "";
+	}
+
 }
