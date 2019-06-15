@@ -5,10 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.List;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -34,6 +30,7 @@ public abstract class GameObject implements Serializable
 	public void saveFile(String savedPath) throws IOException
 	{
 		File file = new File(savedPath + getName() + getExt());
+		
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(this);
@@ -43,35 +40,6 @@ public abstract class GameObject implements Serializable
 	public void createFolder(String path) {
 		File folder = new File(path);
 		folder.mkdir();
-	}
-	
-	public void deleteOldFiles(String path) {
-		File file = new File(path); 
-		File[] ficheros = file.listFiles(); 
-		
-		if(file.exists()) { 
-			for (int x=0;x<ficheros.length;x++) { 
-				if(!ficheros[x].isDirectory()) {
-					File fileToDelete = new File(ficheros[x].toString()); 
-					fileToDelete.delete(); 
-				}
-			}
-		} 
-		else { System.out.println("No existe el directorio"); }
-	}
-	
-	public void deleteFolderSubDirectories(String path, int maxDepth) {
-		Path dir = Paths.get(path);
-		try {
-			Files.walk(dir, maxDepth)
-		      .sorted(Comparator.reverseOrder())
-		      .map(Path::toFile)
-		      .forEach(File::delete);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 	
 	public String line() { return System.getProperty("file.separator");	}

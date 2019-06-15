@@ -1,5 +1,6 @@
 package uroborosGameStudio.domain;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +55,17 @@ public class AdmBehaviors implements Serializable {
 	public void evalBehaviorFiles(EcmaScriptEngine engine) 
 	{
 		this.behaviors.forEach(behavior -> behavior.evalCode(engine));
+	}
+
+	public void saveBehaviors(String savedPath) 
+	{
+		this.behaviors.forEach(behavior -> {
+			try {
+				behavior.saveFile(savedPath);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }
