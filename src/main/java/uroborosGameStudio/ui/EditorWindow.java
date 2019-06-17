@@ -9,10 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -58,9 +55,10 @@ import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
+import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.PhysicsBodyAL;
-import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
+import uroborosGameStudio.ui.componentListeners.RadioButtonML;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
@@ -404,33 +402,15 @@ public class EditorWindow extends AbstractWindowFrame {
 	{
 		this.inicializeTypePhysicPanel();
 		
-		rdStatic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setStatic();
-			}
-		});
+		rdStatic.addMouseListener(new RadioButtonML(model, rdStatic.getText()));
 		typePhysicPanel.add(rdStatic);
 		rdStatic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		rdKinematic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setKinematic();
-			}
-		});
+		rdKinematic.addMouseListener(new RadioButtonML(model, rdKinematic.getText()));
 		typePhysicPanel.add(rdKinematic);
 		rdKinematic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		rdDinamic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setDynatic();
-			}
-		});
+		rdDinamic.addMouseListener(new RadioButtonML(model, rdDinamic.getText()));
 		typePhysicPanel.add(rdDinamic);
 		rdDinamic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
