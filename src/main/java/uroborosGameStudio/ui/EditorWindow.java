@@ -59,6 +59,7 @@ import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
+import uroborosGameStudio.ui.componentListeners.PhysicsBodyAL;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
@@ -465,16 +466,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
 		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cboxSelectBody.setSelectedItem(null);
-		cboxSelectBody.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(cboxSelectBody.getSelectedItem() != null)
-				{
-					model.getItemSelected().setPhysicsBody((String)cboxSelectBody.getSelectedItem());
-				}
-					
-			}
-		});
+		cboxSelectBody.addActionListener(new PhysicsBodyAL(model, cboxSelectBody));
 		bodyMaterialPanel.add(cboxSelectBody);
 	}
 
