@@ -297,32 +297,13 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
-		DefaultMutableTreeNode root = createTreeNode();
+		DefaultMutableTreeNode root = model.createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
 		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
 	
-	private DefaultMutableTreeNode createTreeNode() 
-	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
-		for (int i=0; i < model.cantScenes(); i++)
-		{
-			SceneWrapper scene = model.getSceneIn(i);
-			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
-			child1.setUserObject(scene);
-			for (int si=0; si<scene.cantActors();si++)
-			{
-				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
-				child11.setUserObject(scene.getActorIn(si));
-				child1.add(child11);
-			}
-			root.add(child1);
-		}
-		return root;
-	}
-
 	private void editorPanel() 
 	{
 		this.inicializeEditorPanel();
@@ -398,8 +379,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		informationPanel.add(lblInformation);
 	}
 
-	private void selectType() 
-	{
+	private void selectType() {
 		this.inicializeTypePhysicPanel();
 		
 		rdStatic.addMouseListener(new RadioButtonML(model, rdStatic.getText()));
@@ -723,12 +703,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	@Override
-	protected void open() 
-	{
+	protected void open() {
 		super.open();
-		if(this.getFrame().isVisible() )
-		{
-			this.canvas.onFrameVisible();
-		}
+		if(this.getFrame().isVisible()) { this.canvas.onFrameVisible(); }
 	}
 }
