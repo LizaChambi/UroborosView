@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -48,52 +49,56 @@ public abstract class GameObject implements Serializable
 
 	public abstract SceneWrapper selectedScene(MainWindowModel model);
 
-	public abstract void setPosition(Integer x, Integer y);
+	public void setPosition(Integer x, Integer y) {};
 
-	public abstract Integer getX();
+	public Integer getX() {return 0;};
 
-	public abstract Integer getY();
+	public Integer getY() {return 0;};
 
-	public abstract String getPathImage();
+	public String getPathImage(){return "";};
 
-	public abstract Integer getWidth();
+	public Integer getWidth(){return 0;};
 
-	public abstract Integer getHeight();
+	public Integer getHeight(){ return 0;};
 
-	public abstract void setPathImage(String path);
+	public void setPathImage(String path) {};
 
-	public abstract void setDimensionImage(Integer width, Integer height);
+	public void setDimensionImage(Integer width, Integer height) {};
 
-	public abstract List<BehaviorFile> getBehaviors();
+	public List<BehaviorFile> getBehaviors(){
+		return new ArrayList<BehaviorFile>();
+	};
 
-	public abstract void addBehavior(BehaviorFile newBehavior);
+	public void addBehavior(BehaviorFile newBehavior) {};
 
-	public abstract void removeBehaviorIndex(int fileSelected);
+	public void removeBehaviorIndex(int fileSelected) {};
 
-	public abstract String getBehaviorFileIndex(int index);
+	public String getBehaviorFileIndex(int index){ return "";};
 
-	public abstract void setBehaviorFileText(Integer file, String text);
+	public void setBehaviorFileText(Integer file, String text) {};
 
-	public abstract void setPhysicsBody(String body);
+	public void setPhysicsBody(String body) {};
 
-	public abstract String getBody();
+	public String getBody(){return "";};
 
-	public abstract Physics getPhysicsType();
+	public Physics getPhysicsType(){return Physics.NONE;};
 
-	public abstract List<Collider> getColliders();
+	public List<Collider> getColliders(){
+		return new ArrayList<Collider>();
+	};
 
-	public abstract void addCollision(Collider collition);
+	public void addCollision(Collider collition) {};
 
-	public abstract String getCollitionCode(int index);
+	public String getCollitionCode(int index){return "";};
 
-	public abstract void setCollitionText(Integer index, String text);
+	public void setCollitionText(Integer index, String text) {};
 
-	public abstract void removeCollisionIndex(int fileSelected);
+	public void removeCollisionIndex(int fileSelected) {};
 
 	public abstract void setPathAudio(String path);
 
 	public abstract String getPathAudio();
 
-	public abstract void setPhysicsType(Physics type);
+	public void setPhysicsType(Physics type) {};
 
 }

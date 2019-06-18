@@ -120,49 +120,9 @@ public class SceneWrapper extends GameObject implements Serializable
 		return this;
 	}
 
-	@Override
-	public void setPosition(Integer x, Integer y) {}
-
-	@Override
-	public Integer getX() {
-		return 0;
-	}
-
-	@Override
-	public Integer getY() {
-		return 0;
-	}
-
 	public Boolean existActorName(String name) 
 	{
 		return this.actors.stream().anyMatch(actor -> actor.hasName(name));
-	}
-
-	@Override
-	public String getPathImage() {
-		return "";
-	}
-
-	@Override
-	public Integer getWidth() {
-		return 0;
-	}
-
-	@Override
-	public Integer getHeight() {
-		return 0;
-	}
-
-	@Override
-	public void setPathImage(String path) 
-	{
-		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
-	}
-
-	@Override
-	public void setDimensionImage(Integer width, Integer height) 
-	{
-		// FALTA EL MÉTODO PARA CAMBIARLO EN U-ENGINE
 	}
 	
 	public void load() 
@@ -177,33 +137,10 @@ public class SceneWrapper extends GameObject implements Serializable
 		Game.removeActor(name);
 	}
 
-	@Override
-	public List<BehaviorFile> getBehaviors() 
-	{
-		return new ArrayList<BehaviorFile>();
-	}
-
-	@Override
-	public void addBehavior(BehaviorFile newBehavior) 
-	{
-	}
-
 	public Boolean existBehaviorName(String name) 
 	{
 		return this.actors.stream().anyMatch(actor -> actor.hasBehaviorName(name));
 	}
-
-	@Override
-	public void removeBehaviorIndex(int fileSelected) {}
-
-	@Override
-	public String getBehaviorFileIndex(int index) 
-	{
-		return "";
-	}
-
-	@Override
-	public void setBehaviorFileText(Integer file, String text) {}
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
@@ -215,38 +152,6 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.actors.forEach(actor -> actor.learnAbilities(engine));
 	}
 
-	@Override
-	public void setPhysicsBody(String body) {}
-
-	@Override
-	public String getBody() {
-		return "";
-	}
-
-	@Override
-	public Physics getPhysicsType() {
-		return Physics.NONE;
-	}
-
-	@Override
-	public List<Collider> getColliders() {
-		return new ArrayList<Collider>();
-	}
-
-	@Override
-	public void addCollision(Collider collition) {}
-
-	@Override
-	public String getCollitionCode(int index) {
-		return "";
-	}
-
-	@Override
-	public void setCollitionText(Integer index, String text) {}
-
-	@Override
-	public void removeCollisionIndex(int index) {}
-
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
 		this.actors.forEach(actor -> actor.evalCollisions(engine));
@@ -257,8 +162,4 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.pathAudio = path;
 	}
-
-	@Override
-	public void setPhysicsType(Physics type) {}
-	
 }

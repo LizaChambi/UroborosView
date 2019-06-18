@@ -175,45 +175,10 @@ public class UGSProject extends GameObject implements Serializable {
 		return null;
 	}
 
-	@Override
-	public void setPosition(Integer x, Integer y) {}
-
-	@Override
-	public Integer getX() {
-		return 0;
-	}
-
-	@Override
-	public Integer getY() {
-		return 0;
-	}
-
 	public Boolean existActorName(String name) 
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
 	}
-
-	@Override
-	public String getPathImage() 
-	{
-		return "";
-	}
-
-	@Override
-	public Integer getWidth() {
-		return 0;
-	}
-
-	@Override
-	public Integer getHeight() {
-		return 0;
-	}
-
-	@Override
-	public void setPathImage(String path) {}
-
-	@Override
-	public void setDimensionImage(Integer width, Integer heigth) {}
 	
 	public void loadProject() 
 	{
@@ -233,31 +198,10 @@ public class UGSProject extends GameObject implements Serializable {
 		Game.removeScene(scene.getName());
 	}
 
-	@Override
-	public List<BehaviorFile> getBehaviors() 
-	{
-		return new ArrayList<BehaviorFile>();
-	}
-
-	@Override
-	public void addBehavior(BehaviorFile newBehavior) {}
-
 	public boolean existBehaviorName(String name) 
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existBehaviorName(name));
 	}
-
-	@Override
-	public void removeBehaviorIndex(int fileSelected) {}
-
-	@Override
-	public String getBehaviorFileIndex(int index) 
-	{
-		return "";
-	}
-
-	@Override
-	public void setBehaviorFileText(Integer file, String text) {}
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
@@ -268,38 +212,6 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
 	}
-
-	@Override
-	public void setPhysicsBody(String body) {}
-
-	@Override
-	public String getBody() {
-		return "";
-	}
-
-	@Override
-	public Physics getPhysicsType() {
-		return Physics.NONE;
-	}
-
-	@Override
-	public List<Collider> getColliders() {
-		return new ArrayList<Collider>();
-	}
-
-	@Override
-	public void addCollision(Collider collition) {}
-
-	@Override
-	public String getCollitionCode(int index) {
-		return "";
-	}
-
-	@Override
-	public void setCollitionText(Integer index, String text) {}
-
-	@Override
-	public void removeCollisionIndex(int index) {}
 
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
@@ -313,8 +225,5 @@ public class UGSProject extends GameObject implements Serializable {
 	public String getPathAudio() {
 		return "";
 	}
-
-	@Override
-	public void setPhysicsType(Physics type) {}
 
 }
