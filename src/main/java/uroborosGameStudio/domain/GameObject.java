@@ -74,12 +74,6 @@ public abstract class GameObject implements Serializable
 
 	public abstract void setBehaviorFileText(Integer file, String text);
 
-	public abstract void setStatic();
-
-	public abstract void setKinematic();
-
-	public abstract void setDynatic();
-
 	public abstract void setPhysicsBody(String body);
 
 	public abstract String getBody();
@@ -99,5 +93,7 @@ public abstract class GameObject implements Serializable
 	public abstract void setPathAudio(String path);
 
 	public abstract String getPathAudio();
+
+	public abstract void setPhysicsType(Physics type);
 
 }

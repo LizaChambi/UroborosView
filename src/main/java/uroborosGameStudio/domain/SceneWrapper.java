@@ -194,9 +194,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void removeBehaviorIndex(int fileSelected) 
-	{
-	}
+	public void removeBehaviorIndex(int fileSelected) {}
 
 	@Override
 	public String getBehaviorFileIndex(int index) 
@@ -216,15 +214,6 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.actors.forEach(actor -> actor.learnAbilities(engine));
 	}
-
-	@Override
-	public void setStatic() {}
-
-	@Override
-	public void setKinematic() {}
-
-	@Override
-	public void setDynatic() {}
 
 	@Override
 	public void setPhysicsBody(String body) {}
@@ -268,5 +257,8 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		this.pathAudio = path;
 	}
+
+	@Override
+	public void setPhysicsType(Physics type) {}
 	
 }

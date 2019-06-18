@@ -185,13 +185,18 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private void loadActorUEngine() 
 	{
 		Actor actorLoaded = Game.createActor(this.name);
+		
 		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite= new Sprite(spritesheet, 0);
 		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
+		
+		this.setPhysicsBodyUEngine(this.body);
+		this.setPhysicsTypeUEngine(this.physicType);
 	}
+
 
 	@Override
 	public void addBehavior(BehaviorFile newBehavior) 
@@ -242,33 +247,38 @@ public class ActorWrapper extends GameObject  implements Serializable
 	}
 
 	@Override
-	public void setStatic() 
+	public void setPhysicsType(Physics type)
 	{
-		this.physicType = Physics.STATIC;
-		Actor actor = Game.getActor(this.name);
-		actor.setAsStatic();
+		this.physicType = type;
+		this.setPhysicsTypeUEngine(type);
 	}
 
-	@Override
-	public void setKinematic() 
+	private void setPhysicsTypeUEngine(Physics type) 
 	{
-		this.physicType = Physics.KINEMATIC;
 		Actor actor = Game.getActor(this.name);
-		actor.setAsKinematic();
-	}
-
-	@Override
-	public void setDynatic() 
-	{
-		this.physicType = Physics.DYNAMIC;
-		Actor actor = Game.getActor(this.name);
-		actor.setAsDynamic();
+		if (type.equals(Physics.DYNAMIC))
+		{
+			actor.setAsDynamic();
+		}
+		if (type.equals(Physics.KINEMATIC))
+		{
+			actor.setAsKinematic();
+		}
+		if (type.equals(Physics.STATIC))
+		{
+			actor.setAsStatic();
+		}
 	}
 
 	@Override
 	public void setPhysicsBody(String body) 
 	{
 		this.body = body;
+		setPhysicsBodyUEngine(body);
+	}
+
+	private void setPhysicsBodyUEngine(String body) 
+	{
 		Actor actor = Game.getActor(this.name);
 		if(body.equals("Círculo"))
 		{

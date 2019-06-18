@@ -270,15 +270,6 @@ public class UGSProject extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setStatic() {}
-
-	@Override
-	public void setKinematic() {}
-
-	@Override
-	public void setDynatic() {}
-
-	@Override
 	public void setPhysicsBody(String body) {}
 
 	@Override
@@ -322,5 +313,8 @@ public class UGSProject extends GameObject implements Serializable {
 	public String getPathAudio() {
 		return "";
 	}
+
+	@Override
+	public void setPhysicsType(Physics type) {}
 
 }
