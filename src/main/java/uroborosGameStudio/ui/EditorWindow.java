@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
@@ -37,7 +38,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
@@ -125,6 +125,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JRadioButton rdStatic = new JRadioButton("Estático");
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
 	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
+	private JLabel lblErrorNumber;
 
 	public EditorWindow() 
 	{
@@ -617,22 +618,31 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
-		lblPosition.setBounds(5, 7, 102, 15);
+		lblPosition.setBounds(10, 28, 102, 15);
+		
+		lblErrorNumber = new JLabel("");
+		lblErrorNumber.setForeground(Color.RED);
+		lblErrorNumber.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblErrorNumber.setBounds(117, 11, 189, 14);
+		panelEditPosition.add(lblErrorNumber);
 		
 		posXTextField = new JTextField("0");
+//		posXTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posXTextField);
-		posXTextField.setBounds(112, 5, 112, 19);
+		posXTextField.setBounds(117, 26, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
+//		posYTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posYTextField);
-		posYTextField.setBounds(226, 5, 112, 19);
+		posYTextField.setBounds(231, 26, 112, 19);
 		posYTextField.setColumns(5);
+		
 		
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
-		btnEditPosition.setBounds(344, 2, 76, 25);
-		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
+		btnEditPosition.setBounds(349, 23, 76, 25);
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 	}
 
 	private void inicializedEditPositionPanel() {
@@ -650,12 +660,8 @@ public class EditorWindow extends AbstractWindowFrame {
 		nameTextField = new JTextField("");
 		nameTextField.setBounds(110, 62, 100, 23);
 		nameTextField.setColumns(10);
+		nameTextField.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
 		editNamePanel.add(nameTextField);
-		
-		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
-		btnEditName.setBounds(230, 62, 100, 23);
-		editNamePanel.add(btnEditName);
 	}
 
 	private void inicializedEditNamePanel() 
