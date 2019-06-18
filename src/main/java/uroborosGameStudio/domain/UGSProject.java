@@ -141,10 +141,20 @@ public class UGSProject extends GameObject implements Serializable {
 	
 	private void deleteFolders(File archivo) 
 	{
-		if(archivo.isDirectory())
+		if(archivo.isDirectory() && ! isGameFolder(archivo.getPath()) )
 		{
 			archivo.delete(); 
 		}
+	}
+	
+	private Boolean isGameFolder(String path)
+	{
+		return isEqualPath(path, this.pathAbilities) && isEqualPath(path, this.pathBehaviors);
+	}
+
+	private boolean isEqualPath(String path1, String path2) 
+	{
+		return path1.equals(path2);
 	}
 	
 	public String getSavedPath() 
