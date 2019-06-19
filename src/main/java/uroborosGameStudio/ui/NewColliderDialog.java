@@ -27,6 +27,7 @@ import uroborosGameStudio.ui.componentListeners.AddCollisionActionListener;
 
 public class NewColliderDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private MainWindowModel model;
 	private JTree treeScenes;

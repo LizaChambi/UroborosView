@@ -149,7 +149,7 @@ public class UGSProject extends GameObject implements Serializable {
 	
 	private Boolean isGameFolder(String path)
 	{
-		return isEqualPath(path, this.pathAbilities) && isEqualPath(path, this.pathBehaviors);
+		return isEqualPath(path, this.pathAbilities) || isEqualPath(path, this.pathBehaviors);
 	}
 
 	private boolean isEqualPath(String path1, String path2) 
