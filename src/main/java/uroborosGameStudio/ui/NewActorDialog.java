@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -31,6 +29,7 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
+import uroborosGameStudio.ui.componentListeners.CloseWindowDialogAL;
 import uroborosGameStudio.ui.componentListeners.NumberWHAdapter;
 import uroborosGameStudio.ui.components.ButtonUGS;
 
@@ -110,9 +109,7 @@ public class NewActorDialog extends JDialog
 		panelImage.add(btnOpenImage);
 		
 		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
-		// Refactor:
-		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames));
-		
+		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames)); ???
 		cbxHabilitarFrames.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(cbxHabilitarFrames.isSelected())
@@ -166,9 +163,6 @@ public class NewActorDialog extends JDialog
 		textFieldHeight.setBounds(264, 19, 135, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);
-		
-		
-//		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
 	}
 
 	private void titleDimensionFrames() 
@@ -260,12 +254,7 @@ public class NewActorDialog extends JDialog
 			getRootPane().setDefaultButton(okButton);
 		}
 		
-		new ButtonUGS("Cancel", new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				dispose();
-			}
-		}, buttonPanel);
+		new ButtonUGS("Cancel", new CloseWindowDialogAL(this), buttonPanel);
 		
 	}
 

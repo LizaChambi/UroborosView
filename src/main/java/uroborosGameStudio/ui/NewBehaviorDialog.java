@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -28,6 +26,7 @@ import org.team.uroboros.uroboros.engine.ui.Canvas;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.BehaviorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddBehaviorActionListener;
+import uroborosGameStudio.ui.componentListeners.CloseWindowDialogAL;
 
 public class NewBehaviorDialog extends JDialog 
 {
@@ -68,12 +67,7 @@ public class NewBehaviorDialog extends JDialog
 		getRootPane().setDefaultButton(okButton);
 				
 		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				dispose();
-			}
-		});
+		cancelButton.addActionListener(new CloseWindowDialogAL(this));
 		buttonPane.add(cancelButton);
 	}
 
