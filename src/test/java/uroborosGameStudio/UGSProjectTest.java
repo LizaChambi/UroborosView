@@ -42,8 +42,8 @@ public class UGSProjectTest {
 		String line = System.getProperty("file.separator");
 		
 		assertEquals(dp + line + "DirectoryName", project.getPathRoot());
-		assertEquals(dp + line + "Global Behaviors", project.getPathRoot());
-		assertEquals(dp + line + "Global Abilities", project.getPathRoot());
+		assertEquals(dp + line + project.getProjectName() + line + "Global Behaviors", project.getPathBehaviors());
+		assertEquals(dp + line + project.getProjectName() + line + "Global Abilities", project.getPathAbilities());
 	}
 	
 	@Test
