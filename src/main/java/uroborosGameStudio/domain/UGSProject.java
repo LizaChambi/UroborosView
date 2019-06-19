@@ -3,11 +3,7 @@ package uroborosGameStudio.domain;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
@@ -22,27 +18,35 @@ public class UGSProject extends GameObject implements Serializable {
 	private String projectName;
 	private String pathRoot;
 	private List<SceneWrapper> scenes;
-	private String pathBehavior;
-	private String pathAbility;
+	private String pathBehaviors;
+	private String pathAbilities;
 	
 	public UGSProject(String projectName, String gameName) 
 	{
 		this.name = gameName;
 		this.ext = ".ugs";
 		this.projectName = projectName;
+		this.pathRoot = System.getProperty("user.home") + line() + this.projectName;
+		this.pathBehaviors = this.pathRoot + line() + "Global Behaviors";
+		this.pathAbilities = this.pathRoot + line() + "Global Abilities";
 		createProjectDir();
-		createFolderGlobalBehavior();
-		createFolderGlobalAbility();
 		this.scenes = new ArrayList<SceneWrapper>();
 		createMainScene();
 	}
+	
+	public String getPathBehaviors()
+	{
+		return this.pathBehaviors;
+	}
+	
+	public String getPathAbilities()
+	{
+		return this.pathAbilities;
+	}
 
-	private void createMainScene() {
-		SceneWrapper tmp = new SceneWrapper("Escena0");
-		tmp.setPathScene(getSavedPath());
-		this.scenes.add(tmp);
-		Game.createScene("Escena0");
-		tmp.createFolder(tmp.getPathScene() + "Escena0");
+	private void createMainScene() 
+	{
+		this.addScene(new SceneWrapper("Escena0"));
 	}
 
 	public String getPathRoot() {
@@ -53,27 +57,11 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes;
 	}
 
-	public void createProjectDir() {
-		String dp = System.getProperty("user.home");
-		File dir = new File(dp + line() + this.projectName);
-		createDir(dir);
-	}
-
-	public void createDir(File dir) {
-		this.pathRoot = dir.getPath();
-		dir.mkdir();
-	}
-	
-	private void createFolderGlobalBehavior() {
-		File behavior = new File(getSavedPath() + "Global Behavior");
-		this.pathBehavior = behavior.getPath();
-		behavior.mkdir();
-	}
-	
-	private void createFolderGlobalAbility() {
-		File ability = new File(getSavedPath() + "Global Ability");
-		this.pathAbility = ability.getPath();
-		ability.mkdir();
+	public void createProjectDir() 
+	{
+		createFolder(pathRoot);
+		createFolder(pathBehaviors);
+		createFolder(pathAbilities);
 	}
 
 	public String getProjectName() {
@@ -82,9 +70,7 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
-		newScene.setPathScene(getSavedPath());
 		Game.createScene(newScene.getName());
-		newScene.createFolder(newScene.getPathScene() + newScene.getName());
 	}
 
 	@Override
@@ -103,7 +89,7 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
-	
+	/*
 	public void deleteFolderSubDirectories(String nameScene) {
 		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
 		try {
@@ -117,12 +103,58 @@ public class UGSProject extends GameObject implements Serializable {
 		}
 		
 	}
+	*/
 	
 	public void saveProject() throws IOException
 	{
 		deleteOldFiles(getPathRoot());
-		saveScenes();
 		saveFile(getSavedPath());
+		saveScenes();
+	}
+	
+	public void deleteOldFiles(String path) {
+		File file = new File(path); 
+		File[] files = file.listFiles();
+		if(file.exists()) 
+		{
+			for (int x=0;x<files.length;x++) 
+			{
+				deleteFiles(files[x]);
+				deleteFolders(files[x]);
+			}
+			
+		} 
+		else { System.out.println("No existe el directorio"); }
+	}
+
+	private void deleteFiles(File archivo) 
+	{
+		if(archivo.isDirectory())
+		{
+			deleteOldFiles(archivo.getPath());
+		}
+		else
+		{
+			archivo.delete(); 
+		}
+	}
+	
+	private void deleteFolders(File archivo) 
+	{
+		if(archivo.isDirectory() && ! isGameFolder(archivo.getPath()) )
+		{
+			archivo.delete(); 
+		}
+	}
+	
+	private Boolean isGameFolder(String path)
+	{
+		return isEqualPath(path, this.pathAbilities) || isEqualPath(path, this.pathBehaviors);
+	}
+
+	private boolean isEqualPath(String path1, String path2) 
+	{
+		return path1.equals(path2);
 	}
 	
 	public String getSavedPath() 
@@ -132,10 +164,10 @@ public class UGSProject extends GameObject implements Serializable {
 
 	private void saveScenes() 
 	{
-		this.scenes.forEach(esc -> {
+		this.scenes.forEach(scene -> {
 			try 
 			{
-				esc.save(getSavedPath());
+				scene.save(getSavedPath());
 			} catch (IOException e) 
 			{
 				// TODO Auto-generated catch block
@@ -153,45 +185,10 @@ public class UGSProject extends GameObject implements Serializable {
 		return null;
 	}
 
-	@Override
-	public void setPosition(Integer x, Integer y) {}
-
-	@Override
-	public Integer getX() {
-		return 0;
-	}
-
-	@Override
-	public Integer getY() {
-		return 0;
-	}
-
 	public Boolean existActorName(String name) 
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existActorName(name));
 	}
-
-	@Override
-	public String getPathImage() 
-	{
-		return "";
-	}
-
-	@Override
-	public Integer getWidth() {
-		return 0;
-	}
-
-	@Override
-	public Integer getHeight() {
-		return 0;
-	}
-
-	@Override
-	public void setPathImage(String path) {}
-
-	@Override
-	public void setDimensionImage(Integer width, Integer heigth) {}
 	
 	public void loadProject() 
 	{
@@ -209,34 +206,12 @@ public class UGSProject extends GameObject implements Serializable {
 	{	
 		this.scenes.removeIf(sce -> sce.hasName(scene.getName()));
 		Game.removeScene(scene.getName());
-		deleteFolderSubDirectories(this.pathRoot + line()+ scene.getName(), 2);
 	}
-
-	@Override
-	public List<BehaviorFile> getBehaviors() 
-	{
-		return new ArrayList<BehaviorFile>();
-	}
-
-	@Override
-	public void addBehavior(BehaviorFile newBehavior) {}
 
 	public boolean existBehaviorName(String name) 
 	{
 		return this.scenes.stream().anyMatch(scene -> scene.existBehaviorName(name));
 	}
-
-	@Override
-	public void removeBehaviorIndex(int fileSelected) {}
-
-	@Override
-	public String getBehaviorFileIndex(int index) 
-	{
-		return "";
-	}
-
-	@Override
-	public void setBehaviorFileText(Integer file, String text) {}
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
@@ -247,47 +222,6 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
 	}
-
-	@Override
-	public void setStatic() {}
-
-	@Override
-	public void setKinematic() {}
-
-	@Override
-	public void setDynatic() {}
-
-	@Override
-	public void setPhysicsBody(String body) {}
-
-	@Override
-	public String getBody() {
-		return "";
-	}
-
-	@Override
-	public Physics getPhysicsType() {
-		return Physics.NONE;
-	}
-
-	@Override
-	public List<Collider> getColliders() {
-		return new ArrayList<Collider>();
-	}
-
-	@Override
-	public void addCollision(Collider collition) {}
-
-	@Override
-	public String getCollitionCode(int index) {
-		return "";
-	}
-
-	@Override
-	public void setCollitionText(Integer index, String text) {}
-
-	@Override
-	public void removeCollisionIndex(int index) {}
 
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{

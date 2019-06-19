@@ -1,15 +1,6 @@
 package uroborosGameStudio.domain;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.script.ScriptException;
-
-import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.component.Actor;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 

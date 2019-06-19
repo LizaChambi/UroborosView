@@ -151,7 +151,7 @@ public class NewActorDialog extends JDialog
 		panelDimensionFrame.add(lblNumberError);
 
 		textFieldWidth = new JTextField("");
-		textFieldWidth.addKeyListener(new NumberWHAdapter(textFieldWidth, textFieldHeight, okButton, model, lblNumberError));
+		textFieldWidth.addKeyListener(new NumberWHAdapter(okButton, lblNumberError));
 		textFieldWidth.setBounds(63, 19, 135, 19);
 		textFieldWidth.setColumns(10);
 		panelDimensionFrame.add(textFieldWidth);
@@ -162,7 +162,7 @@ public class NewActorDialog extends JDialog
 		
 
 		textFieldHeight = new JTextField("");
-		textFieldHeight.addKeyListener(new NumberWHAdapter(textFieldWidth, textFieldHeight, okButton, model, lblNumberError));
+		textFieldHeight.addKeyListener(new NumberWHAdapter(okButton, lblNumberError));
 		textFieldHeight.setBounds(264, 19, 135, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);

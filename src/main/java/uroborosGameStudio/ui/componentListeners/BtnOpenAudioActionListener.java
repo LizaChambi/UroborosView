@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class BtnOpenAudioActionListener implements ActionListener

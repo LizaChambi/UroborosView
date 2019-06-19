@@ -5,10 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
@@ -34,6 +31,7 @@ public abstract class GameObject implements Serializable
 	public void saveFile(String savedPath) throws IOException
 	{
 		File file = new File(savedPath + getName() + getExt());
+		
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(this);
@@ -45,91 +43,62 @@ public abstract class GameObject implements Serializable
 		folder.mkdir();
 	}
 	
-	public void deleteOldFiles(String path) {
-		File file = new File(path); 
-		File[] ficheros = file.listFiles(); 
-		
-		if(file.exists()) { 
-			for (int x=0;x<ficheros.length;x++) { 
-				if(!ficheros[x].isDirectory()) {
-					File fileToDelete = new File(ficheros[x].toString()); 
-					fileToDelete.delete(); 
-				}
-			}
-		} 
-		else { System.out.println("No existe el directorio"); }
-	}
-	
-	public void deleteFolderSubDirectories(String path, int maxDepth) {
-		Path dir = Paths.get(path);
-		try {
-			Files.walk(dir, maxDepth)
-		      .sorted(Comparator.reverseOrder())
-		      .map(Path::toFile)
-		      .forEach(File::delete);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
 	public String line() { return System.getProperty("file.separator");	}
 
 	public abstract void setSceneUEngine();
 
 	public abstract SceneWrapper selectedScene(MainWindowModel model);
 
-	public abstract void setPosition(Integer x, Integer y);
+	public void setPosition(Integer x, Integer y) {};
 
-	public abstract Integer getX();
+	public Integer getX() {return 0;};
 
-	public abstract Integer getY();
+	public Integer getY() {return 0;};
 
-	public abstract String getPathImage();
+	public String getPathImage(){return "";};
 
-	public abstract Integer getWidth();
+	public Integer getWidth(){return 0;};
 
-	public abstract Integer getHeight();
+	public Integer getHeight(){ return 0;};
 
-	public abstract void setPathImage(String path);
+	public void setPathImage(String path) {};
 
-	public abstract void setDimensionImage(Integer width, Integer height);
+	public void setDimensionImage(Integer width, Integer height) {};
 
-	public abstract List<BehaviorFile> getBehaviors();
+	public List<BehaviorFile> getBehaviors(){
+		return new ArrayList<BehaviorFile>();
+	};
 
-	public abstract void addBehavior(BehaviorFile newBehavior);
+	public void addBehavior(BehaviorFile newBehavior) {};
 
-	public abstract void removeBehaviorIndex(int fileSelected);
+	public void removeBehaviorIndex(int fileSelected) {};
 
-	public abstract String getBehaviorFileIndex(int index);
+	public String getBehaviorFileIndex(int index){ return "";};
 
-	public abstract void setBehaviorFileText(Integer file, String text);
+	public void setBehaviorFileText(Integer file, String text) {};
 
-	public abstract void setStatic();
+	public void setPhysicsBody(String body) {};
 
-	public abstract void setKinematic();
+	public String getBody(){return "";};
 
-	public abstract void setDynatic();
+	public Physics getPhysicsType(){return Physics.NONE;};
 
-	public abstract void setPhysicsBody(String body);
+	public List<Collider> getColliders(){
+		return new ArrayList<Collider>();
+	};
 
-	public abstract String getBody();
+	public void addCollision(Collider collition) {};
 
-	public abstract Physics getPhysicsType();
+	public String getCollitionCode(int index){return "";};
 
-	public abstract List<Collider> getColliders();
+	public void setCollitionText(Integer index, String text) {};
 
-	public abstract void addCollision(Collider collition);
-
-	public abstract String getCollitionCode(int index);
-
-	public abstract void setCollitionText(Integer index, String text);
-
-	public abstract void removeCollisionIndex(int fileSelected);
+	public void removeCollisionIndex(int fileSelected) {};
 
 	public abstract void setPathAudio(String path);
 
 	public abstract String getPathAudio();
+
+	public void setPhysicsType(Physics type) {};
 
 }

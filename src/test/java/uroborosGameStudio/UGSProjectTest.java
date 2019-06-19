@@ -42,19 +42,8 @@ public class UGSProjectTest {
 		String line = System.getProperty("file.separator");
 		
 		assertEquals(dp + line + "DirectoryName", project.getPathRoot());
-	}
-	
-	@Test
-	public void testCreateFolder() {
-		String dp = System.getProperty("user.home");
-		String line = System.getProperty("file.separator");
-		project.createDir(new File(dp + line + "DirectoryName"));
-		
-		File file = new File(project.getPathRoot());
-		
-		assertTrue(file.exists());
-		assertTrue(file.isDirectory());
-		assertEquals(dp + line + "DirectoryName", file.getAbsolutePath());
+		assertEquals(dp + line + project.getProjectName() + line + "Global Behaviors", project.getPathBehaviors());
+		assertEquals(dp + line + project.getProjectName() + line + "Global Abilities", project.getPathAbilities());
 	}
 	
 	@Test

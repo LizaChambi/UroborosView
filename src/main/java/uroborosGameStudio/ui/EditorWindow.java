@@ -40,6 +40,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.Physics;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
@@ -57,8 +58,8 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
-import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
+import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
@@ -424,7 +425,7 @@ public class EditorWindow extends AbstractWindowFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				model.getItemSelected().setStatic();
+				model.getItemSelected().setPhysicsType(Physics.STATIC);
 			}
 		});
 		typePhysicPanel.add(rdStatic);
@@ -434,7 +435,7 @@ public class EditorWindow extends AbstractWindowFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				model.getItemSelected().setKinematic();
+				model.getItemSelected().setPhysicsType(Physics.KINEMATIC);
 			}
 		});
 		typePhysicPanel.add(rdKinematic);
@@ -444,7 +445,7 @@ public class EditorWindow extends AbstractWindowFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				model.getItemSelected().setDynatic();
+				model.getItemSelected().setPhysicsType(Physics.DYNAMIC);
 			}
 		});
 		typePhysicPanel.add(rdDinamic);

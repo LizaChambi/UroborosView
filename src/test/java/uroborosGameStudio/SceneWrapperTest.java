@@ -38,7 +38,8 @@ public class SceneWrapperTest
 	}
 	
 	@Test
-	public void testMockSceneAddTwoActorsDoNothing() {	
+	public void testMockSceneAddTwoActorsDoNothing() 
+	{
 		doNothing().when(mockScene).addActor(isA(ActorWrapper.class));
 		
 		mockScene.addActor(actor0);

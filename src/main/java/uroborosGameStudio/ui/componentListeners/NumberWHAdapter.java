@@ -5,23 +5,14 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class NumberWHAdapter implements KeyListener {
 
-	private JTextField textFieldH;
 	private JButton okButton;
-	private MainWindowModel model;
 	private JLabel lblError;
-	private JTextField textFieldW;
 
-	public NumberWHAdapter(JTextField textFieldWidth, JTextField textFieldHeight, JButton okButton, MainWindowModel model, JLabel lblNumberError) {
-		this.textFieldW = textFieldWidth;
-		this.textFieldH = textFieldHeight;
+	public NumberWHAdapter(JButton okButton, JLabel lblNumberError) {
 		this.okButton = okButton;
-		this.model = model;
 		this.lblError = lblNumberError;
 	}
 
