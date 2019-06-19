@@ -3,6 +3,7 @@ package uroborosGameStudio.ui.componentListeners;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import uroborosGameStudio.domain.Physics;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class RadioButtonML implements MouseListener{
@@ -17,9 +18,9 @@ public class RadioButtonML implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(this.rdText == "Estático") {	model.getItemSelected().setStatic(); }
-		if(this.rdText == "Cinemático") { model.getItemSelected().setKinematic(); }
-		if(this.rdText == "Dinámico") {	model.getItemSelected().setDynatic(); }
+		if(this.rdText == "Estático") {	model.getItemSelected().setPhysicsType(Physics.STATIC);; }
+		if(this.rdText == "Cinemático") { model.getItemSelected().setPhysicsType(Physics.KINEMATIC); }
+		if(this.rdText == "Dinámico") {	model.getItemSelected().setPhysicsType(Physics.DYNAMIC); }
 	}
 
 	@Override

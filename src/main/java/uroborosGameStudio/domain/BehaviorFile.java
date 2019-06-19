@@ -1,9 +1,8 @@
 package uroborosGameStudio.domain;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.script.ScriptException;
@@ -31,7 +30,7 @@ public class BehaviorFile implements Serializable
 		this.isGlobal = isGlobal;
 		this.code = "";
 		this.addCode();
-		this.ext = ".adm";
+		this.ext = ".js";
 	}
 	
 	private void addCode() 
@@ -157,12 +156,12 @@ public class BehaviorFile implements Serializable
 		}
 	}
 	
-	public void saveFile(String savedPath) throws IOException {
-		File file = new File(savedPath + getName() + getExt());
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this);
-		oos.close();
+	public void saveFile(String savedPath) throws IOException 
+	{
+		FileWriter file = new FileWriter(savedPath + getName() + getExt());
+		BufferedWriter fileWriter = new BufferedWriter(file);
+		fileWriter.write(code);
+		fileWriter.close();
 	}
 
 	private String getExt() { return this.ext; }

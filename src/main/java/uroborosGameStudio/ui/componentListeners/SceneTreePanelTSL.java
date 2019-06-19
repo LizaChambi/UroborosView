@@ -19,7 +19,8 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField textField;
 	private JTextField posXField;
 	private JTextField posYField;
-	private JTextField pathField;
+	private JTextField pathImageField;
+	private JTextField pathAudioField;
 	private JTextField widthField;
 	private JTextField heightField;
 	private JComboBox<?> cboxBody;
@@ -31,13 +32,14 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private MainWindowModel model;
 	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea,JTextField textAudioPath) 
 	{
 		super(treeScenes, canvas);
 		this.textField = textField;
+		this.pathAudioField = textAudioPath;
 		this.posXField = posXTextField;
 		this.posYField = posYTextField;
-		this.pathField = textFieldPath;
+		this.pathImageField = textFieldPath;
 		this.widthField = textFieldWidth;
 		this.heightField = textFieldHigh;
 		this.cboxBody = cboxSelectBody;
@@ -94,9 +96,10 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		textField.setText(gameObject.getName());
 		posXField.setText(gameObject.getX().toString());
 		posYField.setText(gameObject.getY().toString());
-		pathField.setText(gameObject.getPathImage());
+		pathImageField.setText(gameObject.getPathImage());
 		widthField.setText(gameObject.getWidth().toString());
 		heightField.setText(gameObject.getHeight().toString());
+		pathAudioField.setText(gameObject.getPathAudio());	
 	}
 
 	private void setPhysicsBodyView(GameObject gameObject) {

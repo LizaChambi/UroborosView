@@ -7,6 +7,9 @@ import java.io.ObjectInputStream;
 import javax.script.ScriptException;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.audio.Audio;
+
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 import uroborosGameStudio.domain.ActorWrapper;
@@ -207,5 +210,19 @@ public class MainWindowModel
 			root.add(child1);
 		}
 		return root;
+	}
+
+	public void playAudio() 
+	{
+		String pathAudio = getCurrentScene().getPathAudio();
+		if(! pathAudio.isEmpty())
+		{
+			Audio audio = new Audio(pathAudio);
+			audio.loop();
+		}
+	}
+
+	private SceneWrapper getCurrentScene() {
+		return this.searchScene(Game.getCurrentScene().getName());
 	}
 }

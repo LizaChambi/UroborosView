@@ -27,6 +27,7 @@ public class BtnPlayAL implements ActionListener
 			public void run() 
 			{
 				model.evalBehaviorsAndCollisions();
+				model.playAudio();
 				Game.start(canvas);
 			}
 		};

@@ -29,14 +29,12 @@ import uroborosGameStudio.exception.NombreVacioException;
 public class ActorWrapper extends GameObject  implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
-	private String path;
+	private String pathImage;
 	private java.awt.Point point;
 	private java.awt.Dimension dimension;
 	private transient BufferedImage image;
 	private double frames;
 	private AdmBehaviors behaviors;
-	private String oldName;
-	private String pathActor;
 	private AdmColliders collisions;
 	private String body;
 	private Physics physicType;
@@ -44,7 +42,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
 		this.ext = ".act";
-		this.path = path;
+		this.pathImage = path;
 		readImage(path);
 		this.point = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(width, height);
@@ -117,14 +115,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getActor(name), newName);
-		this.oldName = name;
 		this.name = newName;
-		
-		File oldfolder = new File(pathActor +oldName);
-		File rename = new File(pathActor +name);
-		oldfolder.renameTo(rename);
-		
-		deleteOldFiles(pathActor +name);
 	}
 
 	@Override
@@ -159,14 +150,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	@Override
 	public String getPathImage() {
-		return this.path;
+		return this.pathImage;
 	}
 
 	@Override
 	public void setPathImage(String path) 
 	{
 		// Pasar propiedades por la interface EN CASO de necesitar frames: 
-		this.path = path;
+		this.pathImage = path;
 		readImage(path);
 		setPathImageUEngine(path);
 	}
@@ -187,20 +178,25 @@ public class ActorWrapper extends GameObject  implements Serializable
 	
 	public void load() 
 	{
-		readImage(this.path);
+		readImage(this.pathImage);
 		loadActorUEngine();
 	}
 
 	private void loadActorUEngine() 
 	{
 		Actor actorLoaded = Game.createActor(this.name);
-		SpriteSheet spritesheet = new SpriteSheet(this.path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
+		
+		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite= new Sprite(spritesheet, 0);
 		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
+		
+		this.setPhysicsBodyUEngine(this.body);
+		this.setPhysicsTypeUEngine(this.physicType);
 	}
+
 
 	@Override
 	public void addBehavior(BehaviorFile newBehavior) 
@@ -242,53 +238,47 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
 	}
 
-	public void save(String savedPath) throws IOException {
-		saveFile(savedPath + name + line());
-		
-		this.behaviors.getBehaviors().forEach(behavior -> {
-			try {
-				behavior.saveFile(savedPath + name + line());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-	}
-	
-	public void setPathActor(String pathScene) {
-		this.pathActor = pathScene;
-	}
-	
-	public String getPathActor() { return this.pathActor; }
-
-	@Override
-	public void setStatic() 
+	public void save(String savedPath) throws IOException 
 	{
-		this.physicType = Physics.STATIC;
-		Actor actor = Game.getActor(this.name);
-		actor.setAsStatic();
+		String dir = savedPath + name + line();
+		createFolder(dir);
+		saveFile(dir);
+		this.behaviors.saveBehaviors(dir);
 	}
 
 	@Override
-	public void setKinematic() 
+	public void setPhysicsType(Physics type)
 	{
-		this.physicType = Physics.KINEMATIC;
-		Actor actor = Game.getActor(this.name);
-		actor.setAsKinematic();
+		this.physicType = type;
+		this.setPhysicsTypeUEngine(type);
 	}
 
-	@Override
-	public void setDynatic() 
+	private void setPhysicsTypeUEngine(Physics type) 
 	{
-		this.physicType = Physics.DYNAMIC;
 		Actor actor = Game.getActor(this.name);
-		actor.setAsDynamic();
+		if (type.equals(Physics.DYNAMIC))
+		{
+			actor.setAsDynamic();
+		}
+		if (type.equals(Physics.KINEMATIC))
+		{
+			actor.setAsKinematic();
+		}
+		if (type.equals(Physics.STATIC))
+		{
+			actor.setAsStatic();
+		}
 	}
 
 	@Override
 	public void setPhysicsBody(String body) 
 	{
 		this.body = body;
+		setPhysicsBodyUEngine(body);
+	}
+
+	private void setPhysicsBodyUEngine(String body) 
+	{
 		Actor actor = Game.getActor(this.name);
 		if(body.equals("Círculo"))
 		{
@@ -346,5 +336,13 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
 		this.collisions.evalColliders(engine, this.name);
+	}
+
+	@Override
+	public void setPathAudio(String path) {}
+
+	@Override
+	public String getPathAudio() {
+		return "";
 	}
 }
