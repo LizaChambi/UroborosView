@@ -642,7 +642,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
-		lblPosition.setBounds(10, 28, 102, 15);
+		lblPosition.setBounds(5, 29, 102, 15);
 		
 		lblErrorNumber = new JLabel("");
 		lblErrorNumber.setForeground(Color.RED);
@@ -678,21 +678,27 @@ public class EditorWindow extends AbstractWindowFrame {
 		inicializedEditNamePanel();
 		
 		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(28, 60, 72, 23);
+		lblName.setBounds(5, 25, 72, 23);
 		editNamePanel.add(lblName);
 		
+		JLabel lblErrorName = new JLabel("");
+		lblErrorName.setForeground(Color.RED);
+		lblErrorName.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblErrorName.setBounds(87, 11, 250, 14);
+		editNamePanel.add(lblErrorName);
+
 		nameTextField = new JTextField("");
-		nameTextField.setBounds(110, 62, 100, 23);
+		nameTextField.setBounds(87, 25, 150, 23);
 		nameTextField.setColumns(10);
-		nameTextField.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
+		nameTextField.addActionListener(new BtnEditNameAL(treeScenes, nameTextField, canvas, model, lblErrorName));
 		editNamePanel.add(nameTextField);
+		
 	}
 
 	private void inicializedEditNamePanel() 
 	{
 		editNamePanel = new JPanel();
-		editNamePanel.setPreferredSize(new Dimension(973, 228));
-		editNamePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
+		editNamePanel.setLayout(null);
 		propertiesEditPanel.add(editNamePanel);
 	}
 
