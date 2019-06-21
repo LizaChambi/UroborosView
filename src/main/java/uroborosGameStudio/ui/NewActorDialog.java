@@ -53,6 +53,7 @@ public class NewActorDialog extends JDialog
 	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
 	private JPanel panelFrames = new JPanel();
+	private JPanel panelFrames_1;
 	private JLabel lblAncho;
 	private JTextField textFieldWidth;
 	private JLabel lblHigh;
@@ -194,30 +195,33 @@ public class NewActorDialog extends JDialog
 
 	private void inicializedDimensionFrame() {
 		panelDimensionFrame = new JPanel();
+		panelDimensionFrame.setBounds(5, 85, 411, 44);
 		panelDimensionFrame.setLayout(null);
-		panelFrames.add(panelDimensionFrame);
+		panelFrames_1.add(panelDimensionFrame);
 	}
 
 	private void inicializedTitleFrame() 
 	{
 		panelTitleFrame = new JPanel();
+		panelTitleFrame.setBounds(5, 59, 411, 25);
 		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		panelFrames.add(panelTitleFrame);
+		panelFrames_1.add(panelTitleFrame);
 	}
 
 	private void inicializedNumFrames() {
+		panelFrames_1.setLayout(null);
 		panelNumFrames = new JPanel();
+		panelNumFrames.setBounds(5, 22, 411, 35);
 		panelNumFrames.setLayout(null);
-		panelFrames.add(panelNumFrames);
+		panelFrames_1.add(panelNumFrames);
 	}
 
 	private void inicializedPanelFrames() {
-		panelFrames = new JPanel();
-		panelFrames.setBounds(5, 125, 421, 135);
-		panelFrames.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
-		panelFrames.setLayout(new GridLayout(0, 1, 0, 0));
-		panelFrames.setVisible(false);
-		propertiesPanel.add(panelFrames);
+		panelFrames_1 = new JPanel();
+		panelFrames_1.setBounds(8, 125, 421, 141);
+		panelFrames_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
+		panelFrames_1.setVisible(false);
+		propertiesPanel.add(panelFrames_1);
 	}
 
 	private void propertyName() 

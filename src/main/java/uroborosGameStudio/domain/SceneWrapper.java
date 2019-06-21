@@ -52,12 +52,22 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		Actor newActor = Game.createActor(actorWpp.getName());
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
+		// 
 		Sprite sprite = new Sprite(spritesheet, 0);
+		// Texture sprite = new Animation(spritesheet, 1, 0,1,2,3); lista de los indices que usa la animacion
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
 	}
+	/*
+	 * - Si es animacion: 
+	 * 		- creo el spritesheet con los frames que me pasan or parametro
+	 * 		- crear el sprite con el frame inicial
+	 * 		- crear una textura Animation con los indices a utilizar para generar la animacion
+	 * 		- setar textura por la creada (Animation)
+	 * 		- ejecutar la animacion con el learn(new TextureRenderer());
+	 */
 	
 
 	public Integer cantActors() 
