@@ -47,7 +47,7 @@ public class BtnEditNameAL extends AbstractEditionListener
 	}
 
 	private void validateName(String name, GameObject gameObject) {
-		if (!isValidName(name)) {
+		if (!isValidName(name, gameObject)) {
 			notifyError(name);
 		} else {
 			notifyPass(name, gameObject);
@@ -65,7 +65,7 @@ public class BtnEditNameAL extends AbstractEditionListener
 		}
 	}
 
-	private boolean isValidName(String name) {
+	private boolean isValidName(String name, GameObject gameObject) {
 		return !model.validateName(name);
 	}
 
