@@ -38,6 +38,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private AdmColliders collisions;
 	private String body;
 	private Physics physicType;
+	private Integer ratio;
 
 	/*
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
@@ -54,25 +55,24 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.physicType = Physics.NONE;
 	}
 	*/
-	
-	public ActorWrapper() {}
 
 	public ActorWrapper(String name, String path, int x, int y) 
 	{
 		this.name = name;
-		this.ext = ".act";
 		this.pathImage = path;
 		readImage(path);
 		this.point = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(this.getRealWidth(), this.getRealHeight());
 		this.frames = 1;
+		this.ext = ".act";
 		this.behaviors = new AdmBehaviors();
 		this.collisions = new AdmColliders();
 		this.body = "";
 		this.physicType = Physics.NONE;
+		this.ratio = 0;
 	}
 
-	public ActorWrapper(String name, String path, int x, int y, int width, int height, int sprites) 
+	public ActorWrapper(String name, String path, int x, int y, int width, int height, int sprites, int ratio) 
 	{
 		this.name = name;
 		this.ext = ".act";
@@ -85,6 +85,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.collisions = new AdmColliders();
 		this.body = "";
 		this.physicType = Physics.NONE;
+		this.ratio = ratio;
 	}
 
 	public List<BehaviorFile> getBehaviors()
@@ -386,5 +387,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public double getSprites() 
 	{
 		return this.frames;
+	}
+
+	public Integer getRatio() 
+	{
+		return this.ratio;
 	}
 }

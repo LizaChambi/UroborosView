@@ -73,7 +73,7 @@ public class SceneWrapper extends GameObject implements Serializable
 			indexAux = indexs.toArray(indexAux); 
 			
 			SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), objects);
-			Texture sprite = new Animation(spritesheet, 2,indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
+			Texture sprite = new Animation(spritesheet, actorWpp.getRatio(), indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
 			newActor.setDimension(dimension);
 			newActor.setTexture(sprite);
 			newActor.learn(new TextureRenderer());

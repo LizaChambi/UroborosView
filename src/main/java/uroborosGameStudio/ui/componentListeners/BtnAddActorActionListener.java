@@ -1,6 +1,7 @@
 package uroborosGameStudio.ui.componentListeners;
 
 import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -21,9 +22,10 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 	JTextField width;
 	JTextField height;
 	JCheckBox animationEnable;
+	JSpinner ratio;
 	NewActorDialog dialog;
 	
-	public BtnAddActorActionListener(JTree treeScenes, Canvas canvas, JCheckBox cbxFramesEnable, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
+	public BtnAddActorActionListener(JTree treeScenes, Canvas canvas, JSpinner spinnerRatio, JCheckBox cbxFramesEnable, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
 	{
 		super(treeScenes, canvas);
 		this.name = textFieldName;
@@ -33,6 +35,7 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 		this.width = textFieldWidth;
 		this.height = textFieldHeight;
 		this.dialog = dialog;
+		this.ratio = spinnerRatio;
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 			ActorWrapper newActor;
 			if(animationEnable.isSelected())
 			{
-				newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0, Integer.parseInt(width.getText()), Integer.parseInt(height.getText()),Integer.parseInt(numFrames.getText()));
+				newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0, Integer.parseInt(width.getText()), Integer.parseInt(height.getText()),Integer.parseInt(numFrames.getText()), Integer.parseInt(ratio.getValue().toString()));
 			}
 			else
 			{

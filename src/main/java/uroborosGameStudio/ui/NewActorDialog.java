@@ -151,7 +151,7 @@ public class NewActorDialog extends JDialog
 		panelRatio.add(lblRatio);
 		
 		spinnerRatio = new JSpinner();
-		spinnerRatio.setModel(new SpinnerListModel(new String[] {"0,5", "1", "1,5", "2", "2,5", "3", "3,5", "4", "4,5", "5", "5,5", "6", "6,5", "7", "7,5", "8", "8,5", "9", "9,5", "10"}));
+		spinnerRatio.setModel(new SpinnerListModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}));
 		panelRatio.add(spinnerRatio);
 	}
 
@@ -279,7 +279,7 @@ public class NewActorDialog extends JDialog
 					}
 				}
 			});
-			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, cbxFramesEnable, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, spinnerRatio, cbxFramesEnable, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
