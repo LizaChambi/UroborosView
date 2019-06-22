@@ -32,6 +32,9 @@ import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.NumberWHAdapter;
 import uroborosGameStudio.ui.components.ButtonUGS;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 
 public class NewActorDialog extends JDialog 
 {
@@ -67,6 +70,8 @@ public class NewActorDialog extends JDialog
 	private Boolean enableNewActor = false;
 	private JTable table;
 	private JLabel lblNumberError;
+	private JPanel panelRatio;
+	private JSpinner spinnerRatio;
 
 	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
 	{
@@ -135,24 +140,44 @@ public class NewActorDialog extends JDialog
 		numberFrames();
 		titleDimensionFrames();
 		dimensionFrames();
+		ratioSpriteSheets();
+	}
+
+	private void ratioSpriteSheets() 
+	{
+		inicializeRatioPanel();
+		
+		JLabel lblRatio = new JLabel("Ratio:");
+		panelRatio.add(lblRatio);
+		
+		spinnerRatio = new JSpinner();
+		spinnerRatio.setModel(new SpinnerListModel(new String[] {"0,5", "1", "1,5", "2", "2,5", "3", "3,5", "4", "4,5", "5", "5,5", "6", "6,5", "7", "7,5", "8", "8,5", "9", "9,5", "10"}));
+		panelRatio.add(spinnerRatio);
+	}
+
+	private void inicializeRatioPanel() {
+		panelRatio = new JPanel();
+		panelRatio.setBounds(5, 122, 411, 30);
+		panelSpriteSheet.add(panelRatio);
+		panelRatio.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 	}
 
 	private void dimensionFrames() 
 	{
 		inicializedDimensionFrame();
 		lblAncho = new JLabel("Ancho:");
-		lblAncho.setBounds(10, 21, 48, 15);
+		lblAncho.setBounds(5, 21, 48, 15);
 		panelDimensionFrame.add(lblAncho);
 		
 		lblNumberError = new JLabel("");
 		lblNumberError.setForeground(Color.RED);
 		lblNumberError.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblNumberError.setBounds(63, 0, 336, 14);
+		lblNumberError.setBounds(63, 0, 336, 15);
 		panelDimensionFrame.add(lblNumberError);
 
 		textFieldWidth = new JTextField("");
 		textFieldWidth.addKeyListener(new NumberWHAdapter(okButton, lblNumberError));
-		textFieldWidth.setBounds(63, 19, 135, 19);
+		textFieldWidth.setBounds(55, 19, 150, 19);
 		textFieldWidth.setColumns(10);
 		panelDimensionFrame.add(textFieldWidth);
 		
@@ -163,10 +188,9 @@ public class NewActorDialog extends JDialog
 
 		textFieldHeight = new JTextField("");
 		textFieldHeight.addKeyListener(new NumberWHAdapter(okButton, lblNumberError));
-		textFieldHeight.setBounds(264, 19, 135, 19);
+		textFieldHeight.setBounds(258, 19, 141, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);
-		
 		
 //		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
 	}
@@ -194,7 +218,7 @@ public class NewActorDialog extends JDialog
 
 	private void inicializedDimensionFrame() {
 		panelDimensionFrame = new JPanel();
-		panelDimensionFrame.setBounds(5, 85, 411, 44);
+		panelDimensionFrame.setBounds(5, 75, 411, 45);
 		panelDimensionFrame.setLayout(null);
 		panelSpriteSheet.add(panelDimensionFrame);
 	}
@@ -202,7 +226,7 @@ public class NewActorDialog extends JDialog
 	private void inicializedTitleFrame() 
 	{
 		panelTitleFrame = new JPanel();
-		panelTitleFrame.setBounds(5, 59, 411, 25);
+		panelTitleFrame.setBounds(5, 53, 411, 19);
 		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		panelSpriteSheet.add(panelTitleFrame);
 	}
@@ -210,13 +234,13 @@ public class NewActorDialog extends JDialog
 	private void inicializedNumFrames() {
 		panelSpriteSheet.setLayout(null);
 		panelNumFrames = new JPanel();
-		panelNumFrames.setBounds(5, 22, 411, 35);
+		panelNumFrames.setBounds(5, 22, 411, 30);
 		panelNumFrames.setLayout(null);
 		panelSpriteSheet.add(panelNumFrames);
 	}
 
 	private void inicializedPanelFrames() {
-		panelSpriteSheet.setBounds(8, 125, 421, 141);
+		panelSpriteSheet.setBounds(8, 125, 421, 160);
 		panelSpriteSheet.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Sprite sheets", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
 		panelSpriteSheet.setVisible(false);
 		propertiesPanel.add(panelSpriteSheet);

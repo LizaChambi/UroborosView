@@ -66,7 +66,6 @@ public class SceneWrapper extends GameObject implements Serializable
 				indexs.add(i);
 				x+=actorWpp.getWidth();
 			}
-			//No me lo quiere parsear a Frame
 			Frame[] objects = new Frame[frames.size()]; 
 			objects = frames.toArray(objects); 
 			
