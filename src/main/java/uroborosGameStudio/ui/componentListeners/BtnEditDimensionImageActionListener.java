@@ -29,20 +29,27 @@ public class BtnEditDimensionImageActionListener extends AbstractEditionListener
 
 	@Override
 	public void updateComponents(GameObject gameObject) {
-		String regex = ".*[0-9]";
 		String width = this.widthField.getText();
 		String height = this.heightField.getText();
 		
+		if(!width.isEmpty() && !height.isEmpty()) {
+			validateNumber(gameObject, width, height);
+		} else { 
+			lblError.setText("Por favor, ingrese un n\u00famero"); 
+		}
+	}
+
+	private void validateNumber(GameObject gameObject, String width, String height) {
+		String regex = ".*[0-9]";
 		if(width.matches(regex) & height.matches(regex)) {
 			gameObject.setDimensionImage(Integer.valueOf(width), Integer.valueOf(height));
 			lblError.setText("");
 			//Actualizar canvas: Notar que el gameObject siempre sera un actor y no puede venir null
 			SceneWrapper selectedScene = gameObject.selectedScene(model);
-			if (selectedScene != null)
-			{
+			if (selectedScene != null) {
 				setCanvas(selectedScene);
 			}
-		} else { lblError.setText("Solo ingresar numeros"); }
+		} else { lblError.setText("Solo ingresar n\u00fameros");	}
 	}
 	
 	@Override

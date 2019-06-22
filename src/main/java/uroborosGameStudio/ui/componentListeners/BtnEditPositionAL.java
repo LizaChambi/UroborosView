@@ -29,10 +29,18 @@ public class BtnEditPositionAL extends AbstractEditionListener
 	
 	@Override
 	public void updateComponents(GameObject gameObject) {
-		String regex = ".*[0-9]";
 		String x = this.posX.getText();
 		String y = this.posY.getText();
 		
+		if(!x.isEmpty() && !y.isEmpty()) {
+			validateNumber(gameObject, x, y);
+		} else {
+			lblError.setText("Por favor, ingrese un n\u00famero");
+		}
+	}
+
+	private void validateNumber(GameObject gameObject, String x, String y) {
+		String regex = ".*[0-9]";
 		if(x.matches(regex) & y.matches(regex)) {
 			gameObject.setPosition(Integer.parseInt(x), Integer.parseInt(y));
 			lblError.setText("");
@@ -42,7 +50,7 @@ public class BtnEditPositionAL extends AbstractEditionListener
 			{
 				setCanvas(selectedScene);
 			}
-		} else { lblError.setText("Solo ingresar numeros"); }
+		} else { lblError.setText("Solo ingresar n\u00fameros"); }
 	}
 	
 	@Override
