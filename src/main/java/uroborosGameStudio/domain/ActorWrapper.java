@@ -39,6 +39,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private String body;
 	private Physics physicType;
 
+	/*
 	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
 		this.name = name;
 		this.ext = ".act";
@@ -52,15 +53,46 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.body = "";
 		this.physicType = Physics.NONE;
 	}
-
+	*/
+	
 	public ActorWrapper() {}
+
+	public ActorWrapper(String name, String path, int x, int y) 
+	{
+		this.name = name;
+		this.ext = ".act";
+		this.pathImage = path;
+		readImage(path);
+		this.point = new java.awt.Point(x, y);
+		this.dimension = new java.awt.Dimension(this.getRealWidth(), this.getRealHeight());
+		this.frames = 1;
+		this.behaviors = new AdmBehaviors();
+		this.collisions = new AdmColliders();
+		this.body = "";
+		this.physicType = Physics.NONE;
+	}
+
+	public ActorWrapper(String name, String path, int x, int y, int width, int height, int sprites) 
+	{
+		this.name = name;
+		this.ext = ".act";
+		this.pathImage = path;
+		readImage(path);
+		this.point = new java.awt.Point(x, y);
+		this.dimension = new java.awt.Dimension(width, height);
+		this.frames = sprites;
+		this.behaviors = new AdmBehaviors();
+		this.collisions = new AdmColliders();
+		this.body = "";
+		this.physicType = Physics.NONE;
+	}
 
 	public List<BehaviorFile> getBehaviors()
 	{
 		return this.behaviors.getBehaviors();
 	}
 	
-	public double getRealWidth() {
+	public int getRealWidth() {
 		return this.image.getWidth();
 	}
 	
@@ -74,7 +106,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		return this.dimension;
 	}
 
-	public double getRealHeight() {
+	public int getRealHeight() {
 		return this.image.getHeight();
 	}
 
@@ -344,5 +376,15 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public String getPathAudio() {
 		return "";
+	}
+
+	public boolean isAnimation() 
+	{
+		return this.frames>1;
+	}
+
+	public double getSprites() 
+	{
+		return this.frames;
 	}
 }

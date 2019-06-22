@@ -1,5 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,14 +20,16 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 	JTextField numFrames;
 	JTextField width;
 	JTextField height;
+	JCheckBox animationEnable;
 	NewActorDialog dialog;
 	
-	public BtnAddActorActionListener(JTree treeScenes, Canvas canvas, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
+	public BtnAddActorActionListener(JTree treeScenes, Canvas canvas, JCheckBox cbxFramesEnable, JTextField textFieldName, JTextField textFieldImagen, JTextField textFieldNumFrames, JTextField textFieldWidth, JTextField textFieldHeight, NewActorDialog dialog) 
 	{
 		super(treeScenes, canvas);
 		this.name = textFieldName;
 		this.pathImage =textFieldImagen;
-		//this.numFrames = textFieldNumFrames;
+		this.animationEnable = cbxFramesEnable;
+		this.numFrames = textFieldNumFrames;
 		this.width = textFieldWidth;
 		this.height = textFieldHeight;
 		this.dialog = dialog;
@@ -39,7 +42,15 @@ public class BtnAddActorActionListener extends AbstractEditionListener
 		if(selectedNode.getLevel() == 1)
 		{
 			SceneWrapper scene = (SceneWrapper) gameObject;
-			ActorWrapper newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0, Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
+			ActorWrapper newActor;
+			if(animationEnable.isSelected())
+			{
+				newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0, Integer.parseInt(width.getText()), Integer.parseInt(height.getText()),Integer.parseInt(numFrames.getText()));
+			}
+			else
+			{
+				newActor = new ActorWrapper(name.getText(), pathImage.getText(), 0, 0);
+			}
 			scene.addActor(newActor);
 			drawActor(newActor);
 			modelNode.insertNodeInto( new DefaultMutableTreeNode(newActor), selectedNode, modelNode.getChildCount(selectedNode));

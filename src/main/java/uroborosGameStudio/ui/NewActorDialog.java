@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -53,13 +52,13 @@ public class NewActorDialog extends JDialog
 	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
 	private JPanel panelFrames = new JPanel();
-	private JPanel panelFrames_1;
+	private JPanel panelSpriteSheet = new JPanel();
 	private JLabel lblAncho;
 	private JTextField textFieldWidth;
 	private JLabel lblHigh;
 	private JTextField textFieldHeight;
 	private JLabel lblNewLabel;
-	private JCheckBox cbxHabilitarFrames;
+	private JCheckBox cbxFramesEnable;
 	private JLabel lblFrames;
 	private JPanel panelNumFrames;
 	private JTextField textFieldNumFrames;
@@ -110,24 +109,24 @@ public class NewActorDialog extends JDialog
 		panelImage.setLayout(null);
 		panelImage.add(btnOpenImage);
 		
-		cbxHabilitarFrames = new JCheckBox("Habilitar fotogramas");
+		cbxFramesEnable = new JCheckBox("Habilitar animación");
 		// Refactor:
 		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames));
 		
-		cbxHabilitarFrames.addItemListener(new ItemListener() {
+		cbxFramesEnable.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if(cbxHabilitarFrames.isSelected())
+				if(cbxFramesEnable.isSelected())
 				{
-					panelFrames.setVisible(true);
+					panelSpriteSheet.setVisible(true);
 				}
 				else
 				{
-					panelFrames.setVisible(false);
+					panelSpriteSheet.setVisible(false);
 				}
 			}
 		});
-		cbxHabilitarFrames.setBounds(0, 36, 420, 23);
-		panelImage.add(cbxHabilitarFrames);
+		cbxFramesEnable.setBounds(0, 36, 420, 23);
+		panelImage.add(cbxFramesEnable);
 	}
 
 	private void propertyFrames() 
@@ -175,19 +174,19 @@ public class NewActorDialog extends JDialog
 	private void titleDimensionFrames() 
 	{
 		inicializedTitleFrame();
-		lblFrames = new JLabel("Dimensión de los fotograma:");
+		lblFrames = new JLabel("Dimensión de los sprites:");
 		lblFrames.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panelTitleFrame.add(lblFrames);
 	}
 
 	private void numberFrames() {
 		inicializedNumFrames();
-		lblNewLabel = new JLabel("Cantidad de fotogramas:");
-		lblNewLabel.setBounds(5, 6, 177, 15);
+		lblNewLabel = new JLabel("Cantidad de sprites:");
+		lblNewLabel.setBounds(5, 6, 150, 15);
 		panelNumFrames.add(lblNewLabel);
 		
 		textFieldNumFrames = new JTextField("1");
-		textFieldNumFrames.setBounds(187, 5, 212, 18);
+		textFieldNumFrames.setBounds(157, 5, 242, 18);
 		textFieldNumFrames.setPreferredSize(new Dimension(4, 18));
 		textFieldNumFrames.setColumns(10);
 		panelNumFrames.add(textFieldNumFrames);
@@ -197,7 +196,7 @@ public class NewActorDialog extends JDialog
 		panelDimensionFrame = new JPanel();
 		panelDimensionFrame.setBounds(5, 85, 411, 44);
 		panelDimensionFrame.setLayout(null);
-		panelFrames_1.add(panelDimensionFrame);
+		panelSpriteSheet.add(panelDimensionFrame);
 	}
 
 	private void inicializedTitleFrame() 
@@ -205,23 +204,22 @@ public class NewActorDialog extends JDialog
 		panelTitleFrame = new JPanel();
 		panelTitleFrame.setBounds(5, 59, 411, 25);
 		panelTitleFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		panelFrames_1.add(panelTitleFrame);
+		panelSpriteSheet.add(panelTitleFrame);
 	}
 
 	private void inicializedNumFrames() {
-		panelFrames_1.setLayout(null);
+		panelSpriteSheet.setLayout(null);
 		panelNumFrames = new JPanel();
 		panelNumFrames.setBounds(5, 22, 411, 35);
 		panelNumFrames.setLayout(null);
-		panelFrames_1.add(panelNumFrames);
+		panelSpriteSheet.add(panelNumFrames);
 	}
 
 	private void inicializedPanelFrames() {
-		panelFrames_1 = new JPanel();
-		panelFrames_1.setBounds(8, 125, 421, 141);
-		panelFrames_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Fotogramas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
-		panelFrames_1.setVisible(false);
-		propertiesPanel.add(panelFrames_1);
+		panelSpriteSheet.setBounds(8, 125, 421, 141);
+		panelSpriteSheet.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Sprite sheets", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
+		panelSpriteSheet.setVisible(false);
+		propertiesPanel.add(panelSpriteSheet);
 	}
 
 	private void propertyName() 
@@ -257,8 +255,7 @@ public class NewActorDialog extends JDialog
 					}
 				}
 			});
-			
-			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, cbxFramesEnable, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
