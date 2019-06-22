@@ -83,7 +83,7 @@ public class SceneWrapper extends GameObject implements Serializable
 		this.name = newName;
 	}
 
-	public Boolean hasName(String name2) 
+	public boolean hasName(String name2) 
 	{
 		return name == name2;
 	}
