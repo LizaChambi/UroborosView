@@ -146,11 +146,14 @@ public class NewActorDialog extends JDialog
 	private void ratioSpriteSheets() 
 	{
 		inicializeRatioPanel();
+		panelRatio.setLayout(null);
 		
 		JLabel lblRatio = new JLabel("Ratio:");
+		lblRatio.setBounds(5, 7, 42, 15);
 		panelRatio.add(lblRatio);
 		
 		spinnerRatio = new JSpinner();
+		spinnerRatio.setBounds(52, 5, 50, 20);
 		spinnerRatio.setModel(new SpinnerListModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}));
 		panelRatio.add(spinnerRatio);
 	}
@@ -159,7 +162,6 @@ public class NewActorDialog extends JDialog
 		panelRatio = new JPanel();
 		panelRatio.setBounds(5, 122, 411, 30);
 		panelSpriteSheet.add(panelRatio);
-		panelRatio.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 	}
 
 	private void dimensionFrames() 

@@ -55,42 +55,20 @@ public class SceneWrapper extends GameObject implements Serializable
 		if(actorWpp.isAnimation())
 		{
 			System.out.println("Soy una animación");
-			Actor newActor = Game.createActor(actorWpp.getName());
-			List<Frame> frames = new ArrayList<Frame>();
-			List<Integer> indexs = new ArrayList<Integer>();
-			Integer x = 0;
-			Dimension dimension = new Dimension(actorWpp.getWidth(), actorWpp.getHeight());
-			for (int i = 0; i < actorWpp.getSprites(); i++)
-			{
-				frames.add(new Frame(new Point(x,0), dimension));
-				indexs.add(i);
-				x+=actorWpp.getWidth();
-			}
-			Frame[] objects = new Frame[frames.size()]; 
-			objects = frames.toArray(objects); 
-			
-			Integer[] indexAux = new Integer[indexs.size()]; 
-			indexAux = indexs.toArray(indexAux); 
-			
-			SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), objects);
-			Texture sprite = new Animation(spritesheet, actorWpp.getRatio(), indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
-			newActor.setDimension(dimension);
-			newActor.setTexture(sprite);
-			newActor.learn(new TextureRenderer());
+			createAnimation(actorWpp);
 		}
 		else
 		{
-			System.out.println("NO soy una animacion");
-			Actor newActor = Game.createActor(actorWpp.getName());
-			SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
-			Sprite sprite = new Sprite(spritesheet, 0);
-			newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
-			newActor.setTexture(sprite);
-			newActor.learn(new TextureRenderer());
-			newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
+			createSimpleActor(actorWpp);
 		}
-		
 	}
+	/*
+	 * PODRIA AGREGAR LA POSIBILIDAD DE EDITAR LA ANIMACION EN LA BAARA DE ARRIBA Y EL MENU DE EDICION.
+	 * 		- Cantidad de sprites
+	 * 		- Dimension de los sprites
+	 * 		- Ratio.
+	 */
+	
 	/*
 	 * - Si es animacion: 
 	 * 		- creo el spritesheet con los frames que me pasan por parametro
@@ -99,6 +77,42 @@ public class SceneWrapper extends GameObject implements Serializable
 	 * 		- setar textura por la creada (Animation)
 	 * 		- ejecutar la animacion con el learn(new TextureRenderer());
 	 */
+
+	private void createSimpleActor(ActorWrapper actorWpp) {
+		System.out.println("NO soy una animacion");
+		Actor newActor = Game.createActor(actorWpp.getName());
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
+		Sprite sprite = new Sprite(spritesheet, 0);
+		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
+		newActor.setTexture(sprite);
+		newActor.learn(new TextureRenderer());
+		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
+	}
+
+	private void createAnimation(ActorWrapper actorWpp) {
+		Actor newActor = Game.createActor(actorWpp.getName());
+		List<Frame> frames = new ArrayList<Frame>();
+		List<Integer> indexs = new ArrayList<Integer>();
+		Integer x = 0;
+		Dimension dimension = new Dimension(actorWpp.getWidth(), actorWpp.getHeight());
+		for (int i = 0; i < actorWpp.getSprites(); i++)
+		{
+			frames.add(new Frame(new Point(x,0), dimension));
+			indexs.add(i);
+			x+=actorWpp.getWidth();
+		}
+		Frame[] objects = new Frame[frames.size()]; 
+		objects = frames.toArray(objects); 
+		
+		Integer[] indexAux = new Integer[indexs.size()]; 
+		indexAux = indexs.toArray(indexAux); 
+		
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), objects);
+		Texture sprite = new Animation(spritesheet, actorWpp.getRatio(), indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
+		newActor.setDimension(dimension);
+		newActor.setTexture(sprite);
+		newActor.learn(new TextureRenderer());
+	}
 	
 
 	public Integer cantActors() 

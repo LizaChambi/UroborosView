@@ -88,6 +88,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.ratio = ratio;
 	}
 
+	public ActorWrapper() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<BehaviorFile> getBehaviors()
 	{
 		return this.behaviors.getBehaviors();
