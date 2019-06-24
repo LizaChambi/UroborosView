@@ -23,7 +23,6 @@ public class ActorWrapperTest {
 	public void setUp() {
 		String path = "src/main/resources/";
 		this.actor = new ActorWrapper("Actor0", path + "kids.png", 12, 15, 59, 89, 3, 2);
-
 		this.pepe = mock(ActorWrapper.class);
 	}
 

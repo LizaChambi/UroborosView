@@ -163,6 +163,7 @@ public class MainWindowModel
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
 	{
 		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+		engine.eval("var GameObject = Java.type('org.team.uroboros.uroboros.engine.GameObject')");
 		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
 		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
 		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
