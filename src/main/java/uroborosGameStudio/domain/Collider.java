@@ -2,6 +2,11 @@ package uroborosGameStudio.domain;
 
 import java.io.Serializable;
 
+import javax.script.ScriptException;
+
+import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.component.Behaviour;
+
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
 public class Collider implements Serializable
@@ -35,7 +40,17 @@ public class Collider implements Serializable
 	}
 
 	@SuppressWarnings("unchecked")
-	public void evalCollider(EcmaScriptEngine engine, String nameActor) {
+	public void evalCollider(EcmaScriptEngine engine, String nameActor) 
+	{
+		try {
+			engine.eval("var " + name + " = " + this.code);
+			Behaviour behaviour = (Behaviour) engine.eval("new " + name + "();");
+			Game.getActor(nameActor).whenCollidesDo(behaviour);
+		} catch (ScriptException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		try {
 //			Object consumer = engine.eval(this.code);
 //
