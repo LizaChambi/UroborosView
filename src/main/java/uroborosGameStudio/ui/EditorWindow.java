@@ -9,10 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -40,8 +37,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
-import uroborosGameStudio.domain.Physics;
-import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
@@ -58,9 +53,13 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.BtnStopActionListener;
+import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
+import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
+import uroborosGameStudio.ui.componentListeners.PhysicsBodyAL;
+import uroborosGameStudio.ui.componentListeners.RadioButtonML;
 import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
@@ -127,6 +126,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JRadioButton rdStatic = new JRadioButton("Estático");
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
 	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
+	private JLabel lblErrorNumber;
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
 	private JButton btnStop;;
@@ -219,22 +219,12 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void optionsFile() {
 		JMenu menu = new JMenu("Archivo");
 		menu.setMnemonic(KeyEvent.VK_N);
-		menu.getAccessibleContext().setAccessibleDescription(
-		        "The only menu in this program that has menu items");
 		menuBar.add(menu);
 		
 		JMenuItem menuItem = new JMenuItem("Nuevo Proyecto", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.setEnabled(true);
-		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "This doesn't really do anything");
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				model.createNewProject();
-				new EditorWindow().run();
-				frame.dispose();
-			}
-		});
+		menuItem.addActionListener(new CreateNewProjectAL(frame, model));
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Abrir Proyecto", KeyEvent.VK_A);
@@ -251,13 +241,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		menuItem = new JMenuItem("Salir", KeyEvent.VK_R);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_X, ActionEvent.ALT_MASK));
-		menuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("quiero cerrar");
-				frame.dispose();
-			}
-		});
+		menuItem.addActionListener(new CloseProjectAL(frame));
 		menuItem.setEnabled(true);
 		menu.add(menuItem);
 		
@@ -322,32 +306,13 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
-		DefaultMutableTreeNode root = createTreeNode();
+		DefaultMutableTreeNode root = model.createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
 		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
 	
-	private DefaultMutableTreeNode createTreeNode() 
-	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
-		for (int i=0; i < model.cantScenes(); i++)
-		{
-			SceneWrapper scene = model.getSceneIn(i);
-			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
-			child1.setUserObject(scene);
-			for (int si=0; si<scene.cantActors();si++)
-			{
-				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
-				child11.setUserObject(scene.getActorIn(si));
-				child1.add(child11);
-			}
-			root.add(child1);
-		}
-		return root;
-	}
-
 	private void editorPanel() 
 	{
 		this.inicializeEditorPanel();
@@ -423,37 +388,18 @@ public class EditorWindow extends AbstractWindowFrame {
 		informationPanel.add(lblInformation);
 	}
 
-	private void selectType() 
-	{
+	private void selectType() {
 		this.inicializeTypePhysicPanel();
 		
-		rdStatic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setPhysicsType(Physics.STATIC);
-			}
-		});
+		rdStatic.addMouseListener(new RadioButtonML(model, rdStatic.getText()));
 		typePhysicPanel.add(rdStatic);
 		rdStatic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		rdKinematic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setPhysicsType(Physics.KINEMATIC);
-			}
-		});
+		rdKinematic.addMouseListener(new RadioButtonML(model, rdKinematic.getText()));
 		typePhysicPanel.add(rdKinematic);
 		rdKinematic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
-		rdDinamic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				model.getItemSelected().setPhysicsType(Physics.DYNAMIC);
-			}
-		});
+		rdDinamic.addMouseListener(new RadioButtonML(model, rdDinamic.getText()));
 		typePhysicPanel.add(rdDinamic);
 		rdDinamic.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
@@ -489,16 +435,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
 		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cboxSelectBody.setSelectedItem(null);
-		cboxSelectBody.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(cboxSelectBody.getSelectedItem() != null)
-				{
-					model.getItemSelected().setPhysicsBody((String)cboxSelectBody.getSelectedItem());
-				}
-					
-			}
-		});
+		cboxSelectBody.addActionListener(new PhysicsBodyAL(model, cboxSelectBody));
 		bodyMaterialPanel.add(cboxSelectBody);
 	}
 
@@ -711,22 +648,31 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
-		lblPosition.setBounds(5, 7, 102, 15);
+		lblPosition.setBounds(10, 28, 102, 15);
+		
+		lblErrorNumber = new JLabel("");
+		lblErrorNumber.setForeground(Color.RED);
+		lblErrorNumber.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblErrorNumber.setBounds(117, 11, 189, 14);
+		panelEditPosition.add(lblErrorNumber);
 		
 		posXTextField = new JTextField("0");
+//		posXTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posXTextField);
-		posXTextField.setBounds(112, 5, 112, 19);
+		posXTextField.setBounds(117, 26, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
+//		posYTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posYTextField);
-		posYTextField.setBounds(226, 5, 112, 19);
+		posYTextField.setBounds(231, 26, 112, 19);
 		posYTextField.setColumns(5);
+		
 		
 		JButton btnEditPosition = new JButton("Editar");
 		panelEditPosition.add(btnEditPosition);
-		btnEditPosition.setBounds(344, 2, 76, 25);
-		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model));
+		btnEditPosition.setBounds(349, 23, 76, 25);
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 	}
 
 	private void inicializedEditPositionPanel() {
@@ -744,12 +690,8 @@ public class EditorWindow extends AbstractWindowFrame {
 		nameTextField = new JTextField("");
 		nameTextField.setBounds(110, 62, 100, 23);
 		nameTextField.setColumns(10);
+		nameTextField.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
 		editNamePanel.add(nameTextField);
-		
-		JButton btnEditName = new JButton("Editar");
-		btnEditName.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
-		btnEditName.setBounds(230, 62, 100, 23);
-		editNamePanel.add(btnEditName);
 	}
 
 	private void inicializedEditNamePanel() 
@@ -797,12 +739,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	@Override
-	protected void open() 
-	{
+	protected void open() {
 		super.open();
-		if(this.getFrame().isVisible() )
-		{
-			this.canvas.onFrameVisible();
-		}
+		if(this.getFrame().isVisible()) { this.canvas.onFrameVisible(); }
 	}
 }

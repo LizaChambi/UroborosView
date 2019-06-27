@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import uroborosGameStudio.ui.componentListeners.CloseWindowDialogAL;
 
 public class GlobalBehaviorDialog extends JDialog 
 {
@@ -44,11 +44,7 @@ public class GlobalBehaviorDialog extends JDialog
 		buttonPane.add(okButton);
 		
 		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				dispose();
-			}});
+		cancelButton.addActionListener(new CloseWindowDialogAL(this));
 		buttonPane.add(cancelButton);
 	}
 

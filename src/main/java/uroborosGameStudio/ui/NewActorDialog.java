@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -17,9 +15,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.SpinnerListModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -30,11 +29,9 @@ import uroborosGameStudio.domain.appModel.MainWindowModel;
 import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
 import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
+import uroborosGameStudio.ui.componentListeners.CloseWindowDialogAL;
 import uroborosGameStudio.ui.componentListeners.NumberWHAdapter;
 import uroborosGameStudio.ui.components.ButtonUGS;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
 
 public class NewActorDialog extends JDialog 
 {
@@ -54,7 +51,6 @@ public class NewActorDialog extends JDialog
 	private JButton btnOpenImage;
 	private JButton okButton = new JButton("Crear");
 	private JLabel lblError;
-	private JPanel panelFrames = new JPanel();
 	private JPanel panelSpriteSheet = new JPanel();
 	private JLabel lblAncho;
 	private JTextField textFieldWidth;
@@ -68,7 +64,6 @@ public class NewActorDialog extends JDialog
 	private JPanel panelTitleFrame;
 	private JPanel panelDimensionFrame;
 	private Boolean enableNewActor = false;
-	private JTable table;
 	private JLabel lblNumberError;
 	private JPanel panelRatio;
 	private JSpinner spinnerRatio;
@@ -115,9 +110,6 @@ public class NewActorDialog extends JDialog
 		panelImage.add(btnOpenImage);
 		
 		cbxFramesEnable = new JCheckBox("Habilitar animación");
-		// Refactor:
-		//cbxHabilitarFrames.addItemListener(new CboxEnableFrameListener(cbxHabilitarFrames, panelFrames));
-		
 		cbxFramesEnable.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(cbxFramesEnable.isSelected())
@@ -187,7 +179,6 @@ public class NewActorDialog extends JDialog
 		lblHigh.setBounds(222, 21, 40, 15);
 		panelDimensionFrame.add(lblHigh);
 		
-
 		textFieldHeight = new JTextField("");
 		textFieldHeight.addKeyListener(new NumberWHAdapter(okButton, lblNumberError));
 		textFieldHeight.setBounds(258, 19, 141, 19);
@@ -287,12 +278,7 @@ public class NewActorDialog extends JDialog
 			getRootPane().setDefaultButton(okButton);
 		}
 		
-		new ButtonUGS("Cancel", new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				dispose();
-			}
-		}, buttonPanel);
+		new ButtonUGS("Cancel", new CloseWindowDialogAL(this), buttonPanel);
 		
 	}
 

@@ -121,36 +121,12 @@ public class BehaviorFile implements Serializable
 		this.code = text;
 	}
 
-	public void evalCode(EcmaScriptEngine engine) 
-	{	
-		switch(this.type)
-		{
-		case BEHAVIOR:
-			
-			try 
-			{
-				engine.eval("var " + name + " = " + code);
-			} 
-			catch (ScriptException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			System.out.println("Comportamiento");
-			break;
-			
-		case ABILITY:
-			try 
-			{
-				engine.eval("var " + name + " = " + code);
-			} 
-			catch (ScriptException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
+	public void evalCode(EcmaScriptEngine engine){
+		try {
+			engine.eval("var " + name + " = " + code);
+		} catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

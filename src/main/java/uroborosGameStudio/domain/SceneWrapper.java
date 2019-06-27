@@ -134,7 +134,8 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void setName(String newName) {
+	public void setName(String newName) 
+	{
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
