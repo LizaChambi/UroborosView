@@ -99,6 +99,6 @@ public abstract class GameObject implements Serializable
 
 	public abstract String getPathAudio();
 
-	public void setPhysicsType(Physics type) {};
+	public void setPhysicsType(Physics type) {}
 
 }

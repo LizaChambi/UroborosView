@@ -196,15 +196,16 @@ public class MainWindowModel
 
 	public void playAudio() 
 	{
-		String pathAudio = getCurrentScene().getPathAudio();
-		if(! pathAudio.isEmpty())
-		{
-			Audio audio = new Audio(pathAudio);
-			audio.loop();
-		}
+		getCurrentScene().playAudio();
 	}
 
 	private SceneWrapper getCurrentScene() {
 		return this.searchScene(Game.getCurrentScene().getName());
 	}
+
+	public void stopAudio() 
+	{
+		getCurrentScene().stopAudio();
+	}
+
 }

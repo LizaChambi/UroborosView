@@ -192,6 +192,7 @@ public class UGSProject extends GameObject implements Serializable {
 	
 	public void loadProject() 
 	{
+		System.out.println("Lista de escenas: " + scenes);
 		this.scenes.forEach(scene -> scene.load());
 	}
 

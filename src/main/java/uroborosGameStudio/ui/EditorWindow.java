@@ -57,6 +57,7 @@ import uroborosGameStudio.ui.componentListeners.BtnPlayAL;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
+import uroborosGameStudio.ui.componentListeners.BtnStopActionListener;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.NewCollisionActionListener;
 import uroborosGameStudio.ui.componentListeners.OpenProjectActionListener;
@@ -127,7 +128,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JRadioButton rdKinematic = new JRadioButton("Cinemático");
 	private JRadioButton rdDinamic = new JRadioButton("Dinámico");
 	private JPanel panelEditAudio;
-	private JTextField textFieldPathAudio = new JTextField();;
+	private JTextField textFieldPathAudio = new JTextField();
+	private JButton btnStop;;
 
 	public EditorWindow() 
 	{
@@ -291,6 +293,10 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
+		
+		btnStop = new JButton("Detener");
+		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model));
+		buttonPanel.add(btnStop);
 	}
 
 	private void initializeCanvas() 

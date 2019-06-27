@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.audio.Audio;
 import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
@@ -26,6 +27,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
 	private String pathAudio;
+	private org.team.uroboros.uroboros.engine.audio.Audio audio;
 	
 	public SceneWrapper(String name)
 	{
@@ -216,5 +218,22 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setPathAudio(String path) 
 	{
 		this.pathAudio = path;
+	}
+
+	public void playAudio() 
+	{
+		if(! pathAudio.isEmpty())
+		{
+			this.audio = new Audio(pathAudio);
+			audio.loop();
+		}
+	}
+
+	public void stopAudio() 
+	{
+		if(! pathAudio.isEmpty())
+		{
+			audio.stop();
+		}
 	}
 }
