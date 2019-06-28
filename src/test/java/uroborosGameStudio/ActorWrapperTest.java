@@ -22,8 +22,7 @@ public class ActorWrapperTest {
 	@Before
 	public void setUp() {
 		String path = "src/main/resources/";
-		this.actor = new ActorWrapper("Actor0", path + "kids.png", 12, 15, 59, 89);
-
+		this.actor = new ActorWrapper("Actor0", path + "kids.png", 12, 15, 59, 89, 3, 2);
 		this.pepe = mock(ActorWrapper.class);
 	}
 
@@ -37,7 +36,8 @@ public class ActorWrapperTest {
 		assertTrue(actor.getBehaviors().isEmpty());
 		assertTrue(actor.getColliders().isEmpty());
 		assertTrue(actor.getBody().isEmpty());
-		assertTrue(actor.getColliders().isEmpty());
+		assertTrue(actor.getSprites() == 3);
+		assertTrue(actor.getRatio() == 2);
 		assertEquals(Physics.NONE, actor.getPhysicsType());
 	}
 	

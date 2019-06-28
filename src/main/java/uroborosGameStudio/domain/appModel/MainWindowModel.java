@@ -8,7 +8,6 @@ import javax.script.ScriptException;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.Game;
-import org.team.uroboros.uroboros.engine.audio.Audio;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
@@ -164,11 +163,13 @@ public class MainWindowModel
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
 	{
 		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+		engine.eval("var GameObject = Java.type('org.team.uroboros.uroboros.engine.GameObject')");
 		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
 		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
 		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
 		engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
 		engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
+		engine.eval("var Animation = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Animation')");
 		engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
 		engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
 		engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
@@ -214,15 +215,16 @@ public class MainWindowModel
 
 	public void playAudio() 
 	{
-		String pathAudio = getCurrentScene().getPathAudio();
-		if(! pathAudio.isEmpty())
-		{
-			Audio audio = new Audio(pathAudio);
-			audio.loop();
-		}
+		getCurrentScene().playAudio();
 	}
 
 	private SceneWrapper getCurrentScene() {
 		return this.searchScene(Game.getCurrentScene().getName());
 	}
+
+	public void stopAudio() 
+	{
+		getCurrentScene().stopAudio();
+	}
+
 }

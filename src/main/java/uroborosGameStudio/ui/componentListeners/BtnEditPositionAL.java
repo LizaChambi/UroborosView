@@ -42,7 +42,12 @@ public class BtnEditPositionAL extends AbstractEditionListener
 			{
 				setCanvas(selectedScene);
 			}
-		} else { lblError.setText("Solo ingresar numeros"); }
+		} else 
+		{ 
+			lblError.setText("Solo se puede ingresar numeros");
+			this.posX.setText(gameObject.getX().toString());
+			this.posY.setText(gameObject.getY().toString());
+		}
 	}
 	
 	@Override

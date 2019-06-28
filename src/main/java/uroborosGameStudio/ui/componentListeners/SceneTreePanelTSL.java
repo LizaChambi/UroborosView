@@ -11,8 +11,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.GameObject;
+import uroborosGameStudio.domain.Physics;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
+import uroborosGameStudio.ui.components.UGSRadioButton;
 
 public class SceneTreePanelTSL extends AbstractEditionListener
 {
@@ -24,15 +26,15 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private JTextField widthField;
 	private JTextField heightField;
 	private JComboBox<?> cboxBody;
-	private JRadioButton rdStatic;
-	private JRadioButton rdDynamic;
-	private JRadioButton rdKinematic;
+	private UGSRadioButton rdStatic;
+	private UGSRadioButton rdDynamic;
+	private UGSRadioButton rdKinematic;
 	private JTable collisionTable;
 	private JTable behaviorsTable;
 	private MainWindowModel model;
 	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, JRadioButton rdStatic, JRadioButton rdKinematic, JRadioButton rdDinamic, JTable tableCollision, JTextArea textArea,JTextField textAudioPath) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, UGSRadioButton rdStatic, UGSRadioButton rdKinematic, UGSRadioButton rdDinamic, JTable tableCollision, JTextArea textArea,JTextField textAudioPath) 
 	{
 		super(treeScenes, canvas);
 		this.textField = textField;
@@ -102,27 +104,15 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		pathAudioField.setText(gameObject.getPathAudio());	
 	}
 
-	private void setPhysicsBodyView(GameObject gameObject) {
-		switch(gameObject.getPhysicsType())
-		{
-			case STATIC:
-				rdStatic.setSelected(true);
-				break;
-			
-			case DYNAMIC:
-				rdDynamic.setSelected(true);
-				break;
-				
-			case KINEMATIC:
-				rdKinematic.setSelected(true);
-				break;
-				
-			case NONE:
-				rdStatic.setSelected(false);
-				rdDynamic.setSelected(false);
-				rdKinematic.setSelected(false);
-				break;
-		}
+	private void setPhysicsBodyView(GameObject gameObject) 
+	{
+		rdStatic.setSelected(false);
+		rdDynamic.setSelected(false);
+		rdKinematic.setSelected(false);
+		Physics type = gameObject.getPhysicsType();
+		rdStatic.selectIt(type);
+		rdDynamic.selectIt(type);
+		rdKinematic.selectIt(type);
 	}
 
 	@Override

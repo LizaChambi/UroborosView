@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -17,9 +18,11 @@ import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
 import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
 import org.team.uroboros.uroboros.engine.physics.material.SphereMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
+import org.team.uroboros.uroboros.engine.ui.resources.Animation;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
+import org.team.uroboros.uroboros.engine.ui.resources.Texture;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
@@ -38,29 +41,48 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private AdmColliders collisions;
 	private String body;
 	private Physics physicType;
+	private Integer ratio;
 
-	public ActorWrapper(String name, String path, Integer x, Integer y, Integer width, Integer height) {
+	public ActorWrapper(String name, String path, int x, int y) 
+	{
 		this.name = name;
-		this.ext = ".act";
-		this.pathImage = path;
-		readImage(path);
+		setPathImageLocal(path);
 		this.point = new java.awt.Point(x, y);
-		this.dimension = new java.awt.Dimension(width, height);
+		this.dimension = new java.awt.Dimension(this.getRealWidth(), this.getRealHeight());
 		this.frames = 1;
+		this.ext = ".act";
 		this.behaviors = new AdmBehaviors();
 		this.collisions = new AdmColliders();
 		this.body = "";
 		this.physicType = Physics.NONE;
+		this.ratio = 0;
 	}
 
-	public ActorWrapper() {}
+	public ActorWrapper(String name, String path, int x, int y, int width, int height, int sprites, int ratio) 
+	{
+		this.name = name;
+		this.ext = ".act";
+		setPathImageLocal(path);
+		this.point = new java.awt.Point(x, y);
+		this.dimension = new java.awt.Dimension(width, height);
+		this.frames = sprites;
+		this.behaviors = new AdmBehaviors();
+		this.collisions = new AdmColliders();
+		this.body = "";
+		this.physicType = Physics.NONE;
+		this.ratio = ratio;
+	}
+
+	public ActorWrapper() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public List<BehaviorFile> getBehaviors()
 	{
 		return this.behaviors.getBehaviors();
 	}
 	
-	public double getRealWidth() {
+	public int getRealWidth() {
 		return this.image.getWidth();
 	}
 	
@@ -74,7 +96,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		return this.dimension;
 	}
 
-	public double getRealHeight() {
+	public int getRealHeight() {
 		return this.image.getHeight();
 	}
 
@@ -156,10 +178,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setPathImage(String path) 
 	{
-		// Pasar propiedades por la interface EN CASO de necesitar frames: 
+		setPathImageLocal(path);
+		setPathImageUEngine(path);
+	}
+
+	private void setPathImageLocal(String path) 
+	{
 		this.pathImage = path;
 		readImage(path);
-		setPathImageUEngine(path);
 	}
 
 	private void setPathImageUEngine(String path) 
@@ -183,7 +209,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	}
 
 	private void loadActorUEngine() 
-	{
+	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNAIMAGEN COMUN
 		Actor actorLoaded = Game.createActor(this.name);
 		
 		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
@@ -191,6 +217,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
+		System.out.println("Punto a recrear: " + this.getX() + " , " + this.getY());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
 		
 		this.setPhysicsBodyUEngine(this.body);
@@ -344,5 +371,75 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public String getPathAudio() {
 		return "";
+	}
+
+	public boolean isAnimation() 
+	{
+		return this.frames>1;
+	}
+
+	public double getSprites() 
+	{
+		return this.frames;
+	}
+
+	public Integer getRatio() 
+	{
+		return this.ratio;
+	}
+	
+	public void setSprites (int sprites) 
+	{
+		this.frames = sprites;
+	}
+	
+	public void setRatio(int ratio)
+	{
+		this.ratio = ratio;
+	}
+	
+	@Override
+	public void setAnimation (String image, int sprites, Dimension newDim, int ratio) 
+	{
+		setPathImageLocal(image);
+		setDimensionImage(newDim.getWidth().intValue(), newDim.getHeight().intValue());
+		setRatio(ratio);
+		setSprites(sprites);
+		
+		setAnimationUEngine(image, sprites, newDim, ratio);
+	}
+
+	private void setAnimationUEngine(String image, int sprites, Dimension newDim, int ratio) 
+	{
+		Texture sprite = generateSprite(image, sprites, newDim, ratio); 
+		Game.getActor(name).setTexture(sprite);
+	}
+
+	private Texture generateSprite(String image, int sprites, Dimension newDim, int ratio) 
+	{
+		List<Frame> frames = new ArrayList<Frame>();
+		List<Integer> indexs = new ArrayList<Integer>();
+		
+		Dimension dimension = new Dimension(newDim.getWidth(), newDim.getHeight());
+		generateFrames(sprites, newDim, frames, indexs, dimension);
+		Frame[] objects = new Frame[frames.size()]; 
+		objects = frames.toArray(objects); 
+		
+		Integer[] indexAux = new Integer[indexs.size()]; 
+		indexAux = indexs.toArray(indexAux);
+		
+		SpriteSheet spritesheet = new SpriteSheet(image, objects);
+		return new Animation(spritesheet, ratio, indexAux);
+	}
+
+	private void generateFrames(int sprites, Dimension newDim, List<Frame> frames, List<Integer> indexs,
+			Dimension dimension) {
+		Integer x = 0;
+		for (int i = 0; i < sprites; i++)
+		{
+			frames.add(new Frame(new Point(x,0), dimension));
+			indexs.add(i);
+			x = (int) (x + newDim.getWidth());
+		}
 	}
 }

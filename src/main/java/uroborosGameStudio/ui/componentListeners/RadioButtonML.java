@@ -18,7 +18,7 @@ public class RadioButtonML implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(this.rdText == "Estático") {	model.getItemSelected().setPhysicsType(Physics.STATIC);; }
+		if(this.rdText == "Estático") {	model.getItemSelected().setPhysicsType(Physics.STATIC); }
 		if(this.rdText == "Cinemático") { model.getItemSelected().setPhysicsType(Physics.KINEMATIC); }
 		if(this.rdText == "Dinámico") {	model.getItemSelected().setPhysicsType(Physics.DYNAMIC); }
 	}

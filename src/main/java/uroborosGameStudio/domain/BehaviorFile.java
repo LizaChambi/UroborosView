@@ -35,14 +35,10 @@ public class BehaviorFile implements Serializable
 	
 	private void addCode() 
 	{
-		switch(this.type)
+		this.code = abilityCode() ;
+		if(this.type.equals(Action.BEHAVIOR))
 		{
-		case BEHAVIOR:
 			this.code = behaviorCode() ;
-			break;
-		case ABILITY:
-			this.code = abilityCode() ;
-			break;
 		}
 	}
 

@@ -20,7 +20,7 @@ public class SceneWrapperTest
 	@Before
 	public void setUp() {
 		String path = "src/main/resources/";
-		this.actor0 = new ActorWrapper("Actor0",path + "kids.png", 12, 15, 59, 89);
+		this.actor0 = new ActorWrapper("Actor0",path + "kids.png", 12, 15, 59, 89,3,2);
 		this.actor1 = new ActorWrapper();
 
 		scene = new SceneWrapper("Scene0");
