@@ -1,7 +1,5 @@
 package uroborosGameStudio.ui.componentListeners;
 
-import java.awt.event.ActionEvent;
-
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -9,6 +7,7 @@ import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.GameObject;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class BtnStopActionListener extends AbstractEditionListener {
@@ -25,13 +24,11 @@ public class BtnStopActionListener extends AbstractEditionListener {
 	@Override
 	public void updateComponents(GameObject gameObject) 
 	{
-		Game.end();
 		model.stopAudio();
-		System.out.println("DETUVE EL AUDIO CON EXITO");
+		Game.end(); // luego de esta linea se borra el curent scene en UEngine
+		this.canvas.clear();
+		this.canvas.show();
 		model.getProject().loadProject();
-		//System.out.println("NOMBRE DE LA ESCENA A SETEAR" + model.getSceneIn(0).getName());
-		//Game.setScene(model.getSceneIn(0).getName());
-		//setCanvas(model.getSceneIn(0));
 	}
 	
 	@Override

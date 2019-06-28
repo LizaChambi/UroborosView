@@ -60,7 +60,7 @@ public class Collider implements Serializable
 		try {
 			engine.eval("var " + name + " = " + this.code);
 			Behaviour behaviour = (Behaviour) engine.eval("new " + name + "();");
-			Game.getActor(nameActor).whenCollidesDo(behaviour);
+			Game.getActorOnCurrentScene(nameActor).whenCollidesDo(behaviour);
 		} catch (ScriptException e) 
 		{
 			// TODO Auto-generated catch block

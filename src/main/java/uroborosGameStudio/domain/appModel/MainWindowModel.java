@@ -154,7 +154,6 @@ public class MainWindowModel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		this.project.evalBehaviors(engine);
 		this.project.actorsLearnAbilities(engine);
 		this.project.evalCollisions(engine);

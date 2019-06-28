@@ -8,6 +8,7 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.audio.Audio;
 import org.team.uroboros.uroboros.engine.component.Actor;
+import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
@@ -65,7 +66,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	private void createSimpleActor(ActorWrapper actorWpp) {
-		Actor newActor = Game.createActor(actorWpp.getName());
+		Actor newActor = Game.createActorOnCurrentScene(actorWpp.getName());
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0);
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
@@ -76,7 +77,7 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	private void createAnimation(ActorWrapper actorWpp) 
 	{
-		Actor newActor = Game.createActor(actorWpp.getName());
+		Actor newActor = Game.createActorOnCurrentScene(actorWpp.getName());
 		List<Frame> frames = new ArrayList<Frame>();
 		List<Integer> indexs = new ArrayList<Integer>();
 		Dimension dimension = new Dimension(actorWpp.getWidth(), actorWpp.getHeight());
@@ -164,6 +165,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setSceneUEngine() 
 	{
 		Game.setScene(this.name);
+		System.out.println("Escena "+ this.name + " seleccionada: " + Game.getCurrentScene().getName());
 	}
 
 	@Override
@@ -181,6 +183,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		Game.createScene(this.name);
 		Game.setScene(this.name);
+		System.out.println("Escena seleccionada: " + Game.getCurrentScene().getName());
 		this.actors.forEach(actor -> actor.load());
 	}
 	

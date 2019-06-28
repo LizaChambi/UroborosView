@@ -136,7 +136,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setName(String newName) {
 		if(newName.equals("")) throw new NombreVacioException(this);
-		Game.rename(Game.getActor(name), newName);
+		Game.rename(Game.getActorOnCurrentScene(name), newName);
 		this.name = newName;
 	}
 
@@ -150,8 +150,9 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		Scene selectedScene = Game.getSceneWithActor(this.name);
 		Game.setScene(selectedScene);
+		System.out.println("Escena "+ selectedScene.getName() +" seleccionada: " + Game.getCurrentScene().getName());
 	}
-
+	
 	@Override
 	public SceneWrapper selectedScene(MainWindowModel model) 
 	{
@@ -162,7 +163,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	public void setPosition(Integer x, Integer y) 
 	{
 		this.point = new java.awt.Point(x,y);
-		Game.getActor(name).translateTo(x,y);
+		Game.getActorOnCurrentScene(name).translateTo(x,y);
 	}
 
 	public Boolean hasName(String name) 
@@ -192,14 +193,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		SpriteSheet spritesheet = new SpriteSheet(path, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite = new Sprite(spritesheet, 0);
-		Game.getActor(name).setTexture(sprite);
+		Game.getActorOnCurrentScene(name).setTexture(sprite);
 	}
 
 	@Override
 	public void setDimensionImage(Integer width, Integer height) 
 	{
 		this.dimension = new java.awt.Dimension(width, height);
-		Game.getActor(name).setDimension(width, height);
+		Game.getActorOnCurrentScene(name).setDimension(width, height);
 	}
 	
 	public void load() 
@@ -210,16 +211,16 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void loadActorUEngine() 
 	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNAIMAGEN COMUN
-		Actor actorLoaded = Game.createActor(this.name);
-		
+		Actor actorLoaded = Game.createActorOnCurrentScene(this.name);
+		System.out.println("CREADA LA ACTOR: " + actorLoaded.getName());
 		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite= new Sprite(spritesheet, 0);
 		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
 		actorLoaded.setTexture(sprite);
 		actorLoaded.learn(new TextureRenderer());
-		System.out.println("Punto a recrear: " + this.getX() + " , " + this.getY());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
 		
+		System.out.println("Actor " + this.name + " en posición: " + this.getX() + " , " + this.getY());
 		this.setPhysicsBodyUEngine(this.body);
 		this.setPhysicsTypeUEngine(this.physicType);
 	}
@@ -261,7 +262,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void learnAbilities(EcmaScriptEngine engine) 
 	{
-		Actor actor = Game.getActor(name);
+		Actor actor = Game.getActorOnCurrentScene(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
 	}
 
@@ -282,7 +283,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void setPhysicsTypeUEngine(Physics type) 
 	{
-		Actor actor = Game.getActor(this.name);
+		Actor actor = Game.getActorOnCurrentScene(this.name);
 		if (type.equals(Physics.DYNAMIC))
 		{
 			actor.setAsDynamic();
@@ -306,7 +307,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void setPhysicsBodyUEngine(String body) 
 	{
-		Actor actor = Game.getActor(this.name);
+		Actor actor = Game.getActorOnCurrentScene(this.name);
 		if(body.equals("Círculo"))
 		{
 			PhysicsMaterial cuerpo = new SphereMaterial(this.getDimension().getWidth() * 0.5, PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
@@ -412,7 +413,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	private void setAnimationUEngine(String image, int sprites, Dimension newDim, int ratio) 
 	{
 		Texture sprite = generateSprite(image, sprites, newDim, ratio); 
-		Game.getActor(name).setTexture(sprite);
+		Game.getActorOnCurrentScene(name).setTexture(sprite);
 	}
 
 	private Texture generateSprite(String image, int sprites, Dimension newDim, int ratio) 
