@@ -20,7 +20,22 @@ public class Collider implements Serializable
 	{
 		this.name = name;
 		this.description = description;
-		this.code = "";
+		this.code = behaviorCode();
+	}
+
+	private String behaviorCode() 
+	{
+		return "Java.extend(Behaviour, {\n" + 
+				"\n" + 
+				"	onStart: function (actor) {\n" + 
+				"		 this.actor = actor;\n" + 
+				"	},\n" + 
+				"\n" + 
+				"	onUpdate: function (deltaTime) {\n" + 
+				"	\n" + 
+				"	},\n" + 
+				"\n" + 
+				"});";
 	}
 
 	public String getName() {
