@@ -134,7 +134,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
 	private JLabel lblErrorDimension;
-	private JButton btnStop;
+	private JButton btnStop = new JButton("Detener");
+	private JButton btnPlay;
 	private JPanel consolePanel;
 	private JTextArea txtConsoleErrores;
 	private JScrollPane scrollPane;
@@ -285,16 +286,15 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnSave.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		buttonPanel.add(btnSave);
 		
-		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas, model));
+		btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new BtnPlayAL(canvas, model, btnStop, btnPlay));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 		
-		btnStop = new JButton("Detener");
-		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model));
+		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
 	}
 
