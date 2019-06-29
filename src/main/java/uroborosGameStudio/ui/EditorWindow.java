@@ -646,13 +646,11 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditAudio.add(lblAudio);
 		
 		textFieldPathAudio.setEditable(false);
-//		textFieldPathAudio.setBounds(65, 13, 180, 19);
 		textFieldPathAudio.setBounds(60, 12, 284, 19);
 		textFieldPathAudio.setColumns(10);
 		panelEditAudio.add(textFieldPathAudio);
 		
 		JButton btnSetAudio = new JButton("Audio...");
-//		btnSetAudio.setBounds(253, 11, 97, 25);
 		btnSetAudio.setBounds(354, 10, 97, 25);
 		btnSetAudio.addActionListener(new BtnOpenAudioActionListener(textFieldPathAudio,principalPanel, model));
 		panelEditAudio.add(btnSetAudio);
@@ -661,9 +659,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void inicializedEditDimensionPanel() {
 		panelEditDimension = new JPanel();
 		panelEditDimension.setLayout(null);
-//		panelEditDimension.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
 		panelEditDimension.setBounds(5, 161, 473, 48);
-//		panelEditDimension.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
 		propertiesEditPanel.add(panelEditDimension);
 	}
 
@@ -705,7 +701,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
 		lblPosition.setBounds(5, 29, 102, 15);
-//		lblPosition.setBounds(5, 17, 112, 15);
 		
 		lblErrorNumber = new JLabel("");
 		lblErrorNumber.setForeground(Color.RED);
@@ -744,7 +739,6 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JLabel lblName = new JLabel("Nombre:");
 		lblName.setBounds(5, 25, 72, 15);
-//		lblName.setBounds(5, 4, 60, 15);
 		editNamePanel.add(lblName);
 		
 		JLabel lblErrorName = new JLabel("");
@@ -755,7 +749,6 @@ public class EditorWindow extends AbstractWindowFrame {
 
 		nameTextField = new JTextField("");
 		nameTextField.setBounds(87, 21, 150, 20);
-//		nameTextField.setBounds(70, 2, 219, 19);
 		nameTextField.setColumns(10);
 		nameTextField.addActionListener(new BtnEditNameAL(treeScenes, nameTextField, canvas, model, lblErrorName));
 		editNamePanel.add(nameTextField);
