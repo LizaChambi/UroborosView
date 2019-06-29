@@ -82,6 +82,10 @@ public class MainWindowModel
 	{
 		return this.project.existActorName(name);
 	}
+	
+	public boolean validateNameScene(String name) {
+		return this.project.existSceneName(name);
+	}
 
 	public void loadProject(String path) 
 	{

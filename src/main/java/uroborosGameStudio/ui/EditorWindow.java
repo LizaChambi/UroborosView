@@ -133,11 +133,12 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JLabel lblErrorNumber;
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
+	private JLabel lblErrorDimension;
 	private JButton btnStop;
 	private JPanel consolePanel;
 	private JTextArea txtConsoleErrores;
 	private JScrollPane scrollPane;
-	private TextAreaOutputStream taos;;
+	private TextAreaOutputStream taos;
 
 	public EditorWindow() 
 	{
@@ -338,7 +339,7 @@ public class EditorWindow extends AbstractWindowFrame {
 
 	private void consoleLogProperties() {
 		txtConsoleErrores = new JTextArea();
-		txtConsoleErrores.setText("console para errores");
+		txtConsoleErrores.setText("");
 		
 		taos = new TextAreaOutputStream(txtConsoleErrores);
 		PrintStream ps = new PrintStream(taos);
@@ -363,7 +364,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel = new JPanel();
 		consolePanel.setPreferredSize(new Dimension(973, 263));
 		consolePanel.setLayout(null);
-		tabbedPanel.addTab("Consola de Errores", consolePanel);
+		tabbedPanel.addTab("Consola de Logs", consolePanel);
 	}
 
 	private void buttonsCollisionTable() 
@@ -605,21 +606,32 @@ public class EditorWindow extends AbstractWindowFrame {
 		inicializedEditDimensionPanel();
 		
 		lblDimension = new JLabel("Dimensiones:");
+		lblDimension.setBounds(5, 29, 102, 15);
 		panelEditDimension.add(lblDimension);
 		
+		lblErrorDimension = new JLabel("");
+		lblErrorDimension.setBounds(117, 11, 226, 14);
+		lblErrorDimension.setForeground(Color.RED);
+		lblErrorDimension.setFont(new Font("Dialog", Font.PLAIN, 11));
+		panelEditDimension.add(lblErrorDimension);
+
 		textFieldWidth = new JTextField();
+		textFieldWidth.setBounds(117, 26, 112, 19);
 		textFieldWidth.setText("0");
 		panelEditDimension.add(textFieldWidth);
 		textFieldWidth.setColumns(10);
 		
 		textFieldHigh = new JTextField();
+		textFieldHigh.setBounds(231, 26, 112, 19);
 		textFieldHigh.setText("0");
 		panelEditDimension.add(textFieldHigh);
 		textFieldHigh.setColumns(10);
 		
 		btnEditDimension = new JButton("Editar");
-		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model));
+		btnEditDimension.setBounds(349, 23, 76, 25);
+		btnEditDimension.addActionListener(new BtnEditDimensionImageActionListener(treeScenes, canvas, textFieldWidth, textFieldHigh, model, lblErrorDimension));
 		panelEditDimension.add(btnEditDimension);
+		
 	}
 
 	private void editAudio() 
@@ -630,24 +642,24 @@ public class EditorWindow extends AbstractWindowFrame {
 		propertiesEditPanel.add(panelEditAudio);
 		
 		JLabel lblAudio = new JLabel("Audio:");
-		lblAudio.setBounds(5, 7, 45, 15);
+		lblAudio.setBounds(5, 15, 45, 15);
 		panelEditAudio.add(lblAudio);
 		
 		textFieldPathAudio.setEditable(false);
-		textFieldPathAudio.setBounds(55, 5, 284, 19);
+		textFieldPathAudio.setBounds(60, 12, 284, 19);
 		textFieldPathAudio.setColumns(10);
 		panelEditAudio.add(textFieldPathAudio);
 		
 		JButton btnSetAudio = new JButton("Audio...");
-		btnSetAudio.setBounds(345, 2, 97, 25);
+		btnSetAudio.setBounds(354, 10, 97, 25);
 		btnSetAudio.addActionListener(new BtnOpenAudioActionListener(textFieldPathAudio,principalPanel, model));
 		panelEditAudio.add(btnSetAudio);
 	}
 
 	private void inicializedEditDimensionPanel() {
 		panelEditDimension = new JPanel();
+		panelEditDimension.setLayout(null);
 		panelEditDimension.setBounds(5, 161, 473, 48);
-		panelEditDimension.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 2));
 		propertiesEditPanel.add(panelEditDimension);
 	}
 
@@ -656,23 +668,23 @@ public class EditorWindow extends AbstractWindowFrame {
 		panelEditImage.setLayout(null);
 		
 		lblImage = new JLabel("Imágen:");
-		lblImage.setBounds(5, 10, 57, 15);
+		lblImage.setBounds(5, 28, 57, 15);
 		panelEditImage.add(lblImage);
 		
 		textFieldPathImage = new JTextField();
 		textFieldPathImage.setEditable(false);
-		textFieldPathImage.setBounds(67, 8, 165, 19);
+		textFieldPathImage.setBounds(77, 26, 165, 19);
 		panelEditImage.add(textFieldPathImage);
 		textFieldPathImage.setColumns(10);
 		
 		btnSetImage = new JButton("Imagen...");
 		btnSetImage.addActionListener(new BtnOpenImageActionListener(textFieldPathImage,principalPanel, btnEditImage));
-		btnSetImage.setBounds(237, 5, 101, 25);
+		btnSetImage.setBounds(247, 23, 101, 25);
 		panelEditImage.add(btnSetImage);
 		
 		btnEditImage = new JButton("Editar");
 		btnEditImage.addActionListener(new BtnEditImageActionListener(treeScenes, canvas, textFieldPathImage, model));
-		btnEditImage.setBounds(345, 5, 76, 25);
+		btnEditImage.setBounds(355, 23, 76, 25);
 		panelEditImage.add(btnEditImage);
 	}
 
@@ -688,30 +700,36 @@ public class EditorWindow extends AbstractWindowFrame {
 		
 		JLabel lblPosition = new JLabel("Posición (x, y):");
 		panelEditPosition.add(lblPosition);
-		lblPosition.setBounds(5, 17, 112, 15);
+		lblPosition.setBounds(5, 29, 102, 15);
 		
 		lblErrorNumber = new JLabel("");
 		lblErrorNumber.setForeground(Color.RED);
 		lblErrorNumber.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblErrorNumber.setBounds(117, 1, 189, 13);
+		lblErrorNumber.setBounds(117, 11, 189, 14);
 		panelEditPosition.add(lblErrorNumber);
 		
 		posXTextField = new JTextField("0");
 		posXTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posXTextField);
-		posXTextField.setBounds(117, 16, 112, 19);
+		posXTextField.setBounds(117, 26, 112, 19);
 		posXTextField.setColumns(5);
 		
 		posYTextField = new JTextField("0");
 		posYTextField.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
 		panelEditPosition.add(posYTextField);
-		posYTextField.setBounds(231, 16, 112, 19);
+		posYTextField.setBounds(231, 26, 112, 19);
 		posYTextField.setColumns(5);
+		
+		JButton btnEditPosition = new JButton("Editar");
+		panelEditPosition.add(btnEditPosition);
+		btnEditPosition.setBounds(349, 23, 76, 25);
+		btnEditPosition.addActionListener(new BtnEditPositionAL(treeScenes,posXTextField, posYTextField, canvas, model, lblErrorNumber));
+
 	}
 
 	private void inicializedEditPositionPanel() {
 		panelEditPosition = new JPanel();
-		panelEditPosition.setBounds(5, 53, 473, 48);
+		panelEditPosition.setBounds(5, 64, 473, 48);
 		propertiesEditPanel.add(panelEditPosition);
 	}
 
@@ -720,21 +738,29 @@ public class EditorWindow extends AbstractWindowFrame {
 		editNamePanel.setLayout(null);
 		
 		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(5, 4, 60, 15);
+		lblName.setBounds(5, 25, 72, 15);
 		editNamePanel.add(lblName);
 		
+		JLabel lblErrorName = new JLabel("");
+		lblErrorName.setForeground(Color.RED);
+		lblErrorName.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblErrorName.setBounds(87, 5, 250, 14);
+		editNamePanel.add(lblErrorName);
+
 		nameTextField = new JTextField("");
-		nameTextField.setBounds(70, 2, 219, 19);
+		nameTextField.setBounds(87, 21, 150, 20);
 		nameTextField.setColumns(10);
-		nameTextField.addActionListener(new BtnEditNameAL(treeScenes,nameTextField, canvas));
+		nameTextField.addActionListener(new BtnEditNameAL(treeScenes, nameTextField, canvas, model, lblErrorName));
 		editNamePanel.add(nameTextField);
+		
 	}
 
 	private void inicializedEditNamePanel() 
 	{
 		propertiesEditPanel.setLayout(null);
 		editNamePanel = new JPanel();
-		editNamePanel.setBounds(5, 22, 473, 31);
+		editNamePanel.setLayout(null);
+		editNamePanel.setBounds(5, 22, 473, 43);
 		editNamePanel.setPreferredSize(new Dimension(973, 228));
 		propertiesEditPanel.add(editNamePanel);
 	}
