@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.PrintStream;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -134,7 +133,8 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
 	private JLabel lblErrorDimension;
-	private JButton btnStop;
+	private JButton btnStop = new JButton("Detener");
+	private JButton btnPlay;
 	private JPanel consolePanel;
 	private JTextArea txtConsoleErrores;
 	private JScrollPane scrollPane;
@@ -285,16 +285,15 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnSave.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		buttonPanel.add(btnSave);
 		
-		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new BtnPlayAL(canvas, model));
+		btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new BtnPlayAL(canvas, model, btnStop, btnPlay));
 		buttonPanel.add(btnPlay);
 		
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 		
-		btnStop = new JButton("Detener");
-		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model));
+		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
 	}
 
@@ -340,15 +339,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void consoleLogProperties() {
 		txtConsoleErrores = new JTextArea();
 		txtConsoleErrores.setText("");
-		
 		taos = new TextAreaOutputStream(txtConsoleErrores);
-		PrintStream ps = new PrintStream(taos);
-		System.setOut(ps);
-		System.setErr(ps);
 		
 		scrollPane = new JScrollPane(this.txtConsoleErrores);
-		scrollPane.setSize(973, 263);
-		scrollPane.setPreferredSize(new Dimension(973, 263));
+		scrollPane.setBounds(10, 10, 950, 250);
+		scrollPane.setPreferredSize(new Dimension(945, 240));
 		consolePanel.add(scrollPane);
 	}
 
@@ -364,7 +359,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel = new JPanel();
 		consolePanel.setPreferredSize(new Dimension(973, 263));
 		consolePanel.setLayout(null);
-		tabbedPanel.addTab("Consola de Logs", consolePanel);
+		tabbedPanel.addTab("Console Log", consolePanel);
 	}
 
 	private void buttonsCollisionTable() 
