@@ -173,6 +173,7 @@ public class MainWindowModel
 		engine.eval("var SpriteSheet = Java.type('org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet')");
 		engine.eval("var Sprite = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Sprite')");
 		engine.eval("var Animation = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Animation')");
+		engine.eval("var Audio = Java.type('org.team.uroboros.uroboros.engine.audio.Audio')");
 		engine.eval("var TextureRenderer = Java.type('org.team.uroboros.uroboros.engine.ui.TextureRenderer')");
 		engine.eval("var Point = Java.type('org.team.uroboros.uroboros.engine.geometry.Point')");
 		engine.eval("var Key = Java.type('org.team.uroboros.uroboros.engine.input.Key')");
