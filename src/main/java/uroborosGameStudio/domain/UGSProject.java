@@ -89,21 +89,6 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
-	/*
-	public void deleteFolderSubDirectories(String nameScene) {
-		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
-		try {
-			Files.walk(dir, 2)
-		      .sorted(Comparator.reverseOrder())
-		      .map(Path::toFile)
-		      .forEach(File::delete);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	*/
 	
 	public void saveProject() throws IOException
 	{
@@ -194,13 +179,6 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		this.scenes.forEach(scene -> scene.load());
 	}
-	/*
-	public void reloadCurrentScene()
-	{
-		System.out.println("Escena seleccionada antes de recargar: " + Game.getCurrentScene().getName());
-		searchScene(Game.getCurrentScene().getName()).load();
-	}
-	*/
 
 	public SceneWrapper deleteActor(ActorWrapper actor) 
 	{

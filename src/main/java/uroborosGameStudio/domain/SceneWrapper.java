@@ -183,7 +183,6 @@ public class SceneWrapper extends GameObject implements Serializable
 	{
 		Game.createScene(this.name);
 		Game.setScene(this.name);
-		System.out.println("Escena seleccionada: " + Game.getCurrentScene().getName());
 		this.actors.forEach(actor -> actor.load());
 	}
 	

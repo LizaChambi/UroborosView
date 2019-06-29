@@ -210,9 +210,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 	}
 
 	private void loadActorUEngine() 
-	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNAIMAGEN COMUN
+	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNA IMAGEN COMUN
 		Actor actorLoaded = Game.createActorOnCurrentScene(this.name);
-		System.out.println("CREADA LA ACTOR: " + actorLoaded.getName());
 		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
 		Sprite sprite= new Sprite(spritesheet, 0);
 		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
@@ -220,7 +219,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
 		
-		System.out.println("Actor " + this.name + " en posición: " + this.getX() + " , " + this.getY());
 		this.setPhysicsBodyUEngine(this.body);
 		this.setPhysicsTypeUEngine(this.physicType);
 	}
