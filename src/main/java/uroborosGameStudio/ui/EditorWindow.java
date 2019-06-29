@@ -340,15 +340,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void consoleLogProperties() {
 		txtConsoleErrores = new JTextArea();
 		txtConsoleErrores.setText("");
-		
 		taos = new TextAreaOutputStream(txtConsoleErrores);
-		PrintStream ps = new PrintStream(taos);
-		System.setOut(ps);
-		System.setErr(ps);
 		
 		scrollPane = new JScrollPane(this.txtConsoleErrores);
-		scrollPane.setSize(973, 263);
-		scrollPane.setPreferredSize(new Dimension(973, 263));
+		scrollPane.setBounds(10, 10, 950, 250);
+		scrollPane.setPreferredSize(new Dimension(945, 240));
 		consolePanel.add(scrollPane);
 	}
 
@@ -364,7 +360,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel = new JPanel();
 		consolePanel.setPreferredSize(new Dimension(973, 263));
 		consolePanel.setLayout(null);
-		tabbedPanel.addTab("Consola de Logs", consolePanel);
+		tabbedPanel.addTab("Console Log", consolePanel);
 	}
 
 	private void buttonsCollisionTable() 
