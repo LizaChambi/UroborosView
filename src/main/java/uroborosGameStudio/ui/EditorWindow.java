@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.PrintStream;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -65,6 +66,7 @@ import uroborosGameStudio.ui.componentListeners.SceneTreePanelTSL;
 import uroborosGameStudio.ui.componentListeners.SelectedBehaviorFileActionListener;
 import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
+import uroborosGameStudio.ui.components.TextAreaOutputStream;
 import uroborosGameStudio.ui.components.UGSRadioButton;
 
 public class EditorWindow extends AbstractWindowFrame {
@@ -131,7 +133,11 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JLabel lblErrorNumber;
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
-	private JButton btnStop;;
+	private JButton btnStop;
+	private JPanel consolePanel;
+	private JTextArea txtConsoleErrores;
+	private JScrollPane scrollPane;
+	private TextAreaOutputStream taos;;
 
 	public EditorWindow() 
 	{
@@ -326,6 +332,23 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.inicializeEditorPanel();
 		this.tableCollisionPanel();
 		this.propertiesCollisionPanel();
+		this.initializeConsoleLogPanel();
+		this.consoleLogProperties();
+	}
+
+	private void consoleLogProperties() {
+		txtConsoleErrores = new JTextArea();
+		txtConsoleErrores.setText("console para errores");
+		
+		taos = new TextAreaOutputStream(txtConsoleErrores);
+		PrintStream ps = new PrintStream(taos);
+		System.setOut(ps);
+		System.setErr(ps);
+		
+		scrollPane = new JScrollPane(this.txtConsoleErrores);
+		scrollPane.setSize(973, 263);
+		scrollPane.setPreferredSize(new Dimension(973, 263));
+		consolePanel.add(scrollPane);
 	}
 
 	private void tableCollisionPanel() 
@@ -334,6 +357,13 @@ public class EditorWindow extends AbstractWindowFrame {
 		this.inicializeTableCollisionPanel();
 		this.tableCollision();
 		this.buttonsCollisionTable();
+	}
+	
+	private void initializeConsoleLogPanel() {
+		consolePanel = new JPanel();
+		consolePanel.setPreferredSize(new Dimension(973, 263));
+		consolePanel.setLayout(null);
+		tabbedPanel.addTab("Consola de Errores", consolePanel);
 	}
 
 	private void buttonsCollisionTable() 
