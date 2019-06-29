@@ -149,14 +149,14 @@ public class MainWindowModel
 		
 		try {
 			evalImportsUEngine(engine);
+			this.project.evalBehaviors(engine);
+			this.project.actorsLearnAbilities(engine);
+			this.project.evalCollisions(engine);
 		} 
 		catch (ScriptException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.project.evalBehaviors(engine);
-		this.project.actorsLearnAbilities(engine);
-		this.project.evalCollisions(engine);
 	}
 
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
