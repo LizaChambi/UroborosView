@@ -67,8 +67,8 @@ public abstract class AbstractEditionListener extends AbstractTableListener impl
 
 	public void drawActor(ActorWrapper actor) 
 	{
-		Actor actorToDraw = Game.getActor(actor.getName());
-		
+		Game.setScene(Game.getSceneWithActor(actor.getName()));
+		Actor actorToDraw = Game.getActorOnCurrentScene(actor.getName());
 		this.canvas.getGameGraphics().render(actorToDraw.getTexture(), actorToDraw.getDimension(), actorToDraw.getPosition(), Rotation.NO_ROTATION);
 		this.canvas.show();
 	}

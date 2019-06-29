@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.team.uroboros.uroboros.engine.Game;
+import org.team.uroboros.uroboros.engine.audio.Audio;
 import org.team.uroboros.uroboros.engine.component.Actor;
+import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
+import org.team.uroboros.uroboros.engine.ui.resources.Animation;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
 import org.team.uroboros.uroboros.engine.ui.resources.Sprite;
 import org.team.uroboros.uroboros.engine.ui.resources.SpriteSheet;
+import org.team.uroboros.uroboros.engine.ui.resources.Texture;
 
 import com.team.uroboros.jtypescript.engine.EcmaScriptEngine;
 
@@ -24,6 +28,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	private static final long serialVersionUID = 1L;
 	private List<ActorWrapper> actors;
 	private String pathAudio;
+	private org.team.uroboros.uroboros.engine.audio.Audio audio;
 	
 	public SceneWrapper(String name)
 	{
@@ -50,13 +55,60 @@ public class SceneWrapper extends GameObject implements Serializable
 
 	public void createActorUEngine(ActorWrapper actorWpp) 
 	{
-		Actor newActor = Game.createActor(actorWpp.getName());
+		if(actorWpp.isAnimation())
+		{
+			createAnimation(actorWpp);
+		}
+		else
+		{
+			createSimpleActor(actorWpp);
+		}
+	}
+
+	private void createSimpleActor(ActorWrapper actorWpp) {
+		Actor newActor = Game.createActorOnCurrentScene(actorWpp.getName());
 		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), new Frame(new Point(0,0), new Dimension(actorWpp.getRealWidth(), actorWpp.getRealHeight())));
 		Sprite sprite = new Sprite(spritesheet, 0);
 		newActor.setDimension(new Dimension(actorWpp.getWidth(), actorWpp.getHeight()));
 		newActor.setTexture(sprite);
 		newActor.learn(new TextureRenderer());
 		newActor.translate(new Point(actorWpp.getX(), actorWpp.getY()));
+	}
+
+	private void createAnimation(ActorWrapper actorWpp) 
+	{
+		Actor newActor = Game.createActorOnCurrentScene(actorWpp.getName());
+		List<Frame> frames = new ArrayList<Frame>();
+		List<Integer> indexs = new ArrayList<Integer>();
+		Dimension dimension = new Dimension(actorWpp.getWidth(), actorWpp.getHeight());
+		
+		generateFrames(actorWpp, frames, indexs, dimension);
+		Frame[] objects = new Frame[frames.size()]; 
+		objects = frames.toArray(objects); 
+		Integer[] indexAux = new Integer[indexs.size()]; 
+		indexAux = indexs.toArray(indexAux); 
+		
+		createAnimationUEngine(actorWpp, newActor, dimension, objects, indexAux);
+	}
+
+	private void generateFrames(ActorWrapper actorWpp, List<Frame> frames, List<Integer> indexs, Dimension dimension) 
+	{
+		Integer x = 0;
+		for (int i = 0; i < actorWpp.getSprites(); i++)
+		{
+			frames.add(new Frame(new Point(x,0), dimension));
+			indexs.add(i);
+			x+=actorWpp.getWidth();
+		}
+	}
+
+	private void createAnimationUEngine(ActorWrapper actorWpp, Actor newActor, Dimension dimension, Frame[] objects,Integer[] indexAux) 
+	{
+		SpriteSheet spritesheet = new SpriteSheet(actorWpp.getPathImage(), objects);
+		Texture sprite = new Animation(spritesheet, actorWpp.getRatio(), indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
+		newActor.setDimension(dimension);
+		newActor.setTexture(sprite);
+		newActor.learn(new TextureRenderer());
 	}
 	
 
@@ -77,7 +129,8 @@ public class SceneWrapper extends GameObject implements Serializable
 	}
 
 	@Override
-	public void setName(String newName) {
+	public void setName(String newName) 
+	{
 		if(newName.equals("")) throw new NombreVacioException(this);
 		Game.rename(Game.getScene(name), newName);
 		this.name = newName;
@@ -112,6 +165,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setSceneUEngine() 
 	{
 		Game.setScene(this.name);
+		System.out.println("Escena "+ this.name + " seleccionada: " + Game.getCurrentScene().getName());
 	}
 
 	@Override
@@ -161,5 +215,22 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setPathAudio(String path) 
 	{
 		this.pathAudio = path;
+	}
+
+	public void playAudio() 
+	{
+		if(! pathAudio.isEmpty())
+		{
+			this.audio = new Audio(pathAudio);
+			audio.loop();
+		}
+	}
+
+	public void stopAudio() 
+	{
+		if(! pathAudio.isEmpty())
+		{
+			audio.stop();
+		}
 	}
 }

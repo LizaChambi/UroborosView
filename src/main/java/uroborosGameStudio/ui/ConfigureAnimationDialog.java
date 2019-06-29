@@ -5,13 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,15 +23,13 @@ import javax.swing.border.TitledBorder;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.appModel.MainWindowModel;
-import uroborosGameStudio.ui.componentListeners.ActorNameAdapterListener;
-import uroborosGameStudio.ui.componentListeners.BtnAddActorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnOpenImageActionListener;
 import uroborosGameStudio.ui.componentListeners.CloseWindowDialogAL;
+import uroborosGameStudio.ui.componentListeners.EditAnimationActionListener;
 import uroborosGameStudio.ui.componentListeners.NumberWHAdapter;
 import uroborosGameStudio.ui.components.ButtonUGS;
 
-public class NewActorDialog extends JDialog 
-{
+public class ConfigureAnimationDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel globalPanel = new JPanel();
 	private MainWindowModel model;
@@ -43,21 +38,17 @@ public class NewActorDialog extends JDialog
 	private JPanel headerPanel;
 	private JPanel propertiesPanel;
 	private JPanel buttonPanel;
-	private JPanel panelName;
-	private JTextField textFieldName;
 	private JPanel panelImage;
 	private JLabel lblImage;
 	private JTextField textFieldImagen;
 	private JButton btnOpenImage;
-	private JButton okButton = new JButton("Crear");
-	private JLabel lblError;
+	private JButton okButton = new JButton("Aceptar");
 	private JPanel panelSpriteSheet = new JPanel();
 	private JLabel lblAncho;
 	private JTextField textFieldWidth;
 	private JLabel lblHigh;
 	private JTextField textFieldHeight;
 	private JLabel lblNewLabel;
-	private JCheckBox cbxFramesEnable;
 	private JLabel lblFrames;
 	private JPanel panelNumFrames;
 	private JTextField textFieldNumFrames;
@@ -67,10 +58,10 @@ public class NewActorDialog extends JDialog
 	private JLabel lblNumberError;
 	private JPanel panelRatio;
 	private JSpinner spinnerRatio;
-
-	public NewActorDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	
+	public ConfigureAnimationDialog(JTree treeScenes, Canvas canvas, MainWindowModel model) 
 	{
-		initializedDialog(model, treeScenes, canvas);
+		initializedDialog(treeScenes, canvas, model);
 		initializedHeaderPanel();
 		titleLabel();
 		
@@ -83,7 +74,6 @@ public class NewActorDialog extends JDialog
 
 	private void properties() 
 	{
-		propertyName();
 		propertyImage();
 		propertyFrames();
 	}
@@ -108,22 +98,6 @@ public class NewActorDialog extends JDialog
 		btnOpenImage.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panelImage.setLayout(null);
 		panelImage.add(btnOpenImage);
-		
-		cbxFramesEnable = new JCheckBox("Habilitar animación");
-		cbxFramesEnable.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if(cbxFramesEnable.isSelected())
-				{
-					panelSpriteSheet.setVisible(true);
-				}
-				else
-				{
-					panelSpriteSheet.setVisible(false);
-				}
-			}
-		});
-		cbxFramesEnable.setBounds(0, 36, 420, 23);
-		panelImage.add(cbxFramesEnable);
 	}
 
 	private void propertyFrames() 
@@ -184,8 +158,6 @@ public class NewActorDialog extends JDialog
 		textFieldHeight.setBounds(258, 19, 141, 19);
 		textFieldHeight.setColumns(10);
 		panelDimensionFrame.add(textFieldHeight);
-		
-//		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
 	}
 
 	private void titleDimensionFrames() 
@@ -233,30 +205,9 @@ public class NewActorDialog extends JDialog
 	}
 
 	private void inicializedPanelFrames() {
-		panelSpriteSheet.setBounds(8, 125, 421, 160);
+		panelSpriteSheet.setBounds(8, 75, 421, 160);
 		panelSpriteSheet.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Sprite sheets", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
-		panelSpriteSheet.setVisible(false);
 		propertiesPanel.add(panelSpriteSheet);
-	}
-
-	private void propertyName() 
-	{
-		initializedPanelName();
-		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(5, 18, 60, 19);
-		panelName.add(lblName);
-		
-		lblError = new JLabel("");
-		lblError.setForeground(Color.RED);
-		lblError.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblError.setBounds(70, 0, 346, 15);
-		panelName.add(lblError);
-		
-		textFieldName = new JTextField("");
-		textFieldName.addKeyListener(new ActorNameAdapterListener(textFieldName, okButton, model,lblError));
-		textFieldName.setBounds(70, 18, 346, 19);
-		textFieldName.setColumns(10);
-		panelName.add(textFieldName);
 	}
 
 	private void buttons() 
@@ -272,12 +223,12 @@ public class NewActorDialog extends JDialog
 					}
 				}
 			});
-			okButton.addActionListener(new BtnAddActorActionListener(treeScenes, canvas, spinnerRatio, cbxFramesEnable, textFieldName, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, this));
+			okButton.addActionListener(new EditAnimationActionListener(treeScenes, canvas, textFieldImagen, textFieldNumFrames, textFieldWidth, textFieldHeight, spinnerRatio, model, this));
 			okButton.setEnabled(false);
 			buttonPanel.add(okButton);
 			getRootPane().setDefaultButton(okButton);
 		}
-		
+
 		new ButtonUGS("Cancel", new CloseWindowDialogAL(this), buttonPanel);
 		
 	}
@@ -291,22 +242,25 @@ public class NewActorDialog extends JDialog
 	private void initializedPropertiesPanel() 
 	{
 		propertiesPanel = new JPanel();
-		propertiesPanel.setBorder(new TitledBorder(null, "Propiedades", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
+		propertiesPanel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Animaci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(64, 64, 64)));
 		propertiesPanel.setLayout(null);
 		globalPanel.add(propertiesPanel);
 	}
 
 	private void initializedPanelImage() {
+		
+		JPanel panelNote = new JPanel();
+		FlowLayout fl_panelNote = (FlowLayout) panelNote.getLayout();
+		fl_panelNote.setAlignment(FlowLayout.LEADING);
+		panelNote.setBounds(8, 42, 421, 21);
+		propertiesPanel.add(panelNote);
+		
+		JLabel lblNote = new JLabel("Nota: Asegúrese que la imagen elegida sea una hoja de sprites.");
+		lblNote.setFont(new Font("Dialog", Font.PLAIN, 12));
+		panelNote.add(lblNote);
 		panelImage = new JPanel();
-		panelImage.setBounds(5, 60, 428, 59);
+		panelImage.setBounds(8, 12, 421, 33);
 		propertiesPanel.add(panelImage);
-	}
-
-	private void initializedPanelName() {
-		panelName = new JPanel();
-		panelName.setBounds(5, 17, 428, 43);
-		panelName.setLayout(null);
-		propertiesPanel.add(panelName);
 	}
 
 	private void initializedHeaderPanel() 
@@ -324,13 +278,13 @@ public class NewActorDialog extends JDialog
 		headerPanel.add(lblTitle);
 	}
 
-	private void initializedDialog(MainWindowModel model, JTree treeScenes, Canvas canvas) 
+	private void initializedDialog(JTree treeScenes, Canvas canvas, MainWindowModel model2) 
 	{
-		this.model = model;
 		this.treeScenes=treeScenes;
 		this.canvas = canvas;
-		setTitle("Nuevo Actor");
-		setBounds(100, 100, 450, 400);
+		this.model = model2;
+		setTitle("Editar animación");
+		setBounds(100, 100, 450, 380);
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
 		globalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

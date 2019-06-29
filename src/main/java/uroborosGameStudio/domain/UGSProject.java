@@ -89,21 +89,6 @@ public class UGSProject extends GameObject implements Serializable {
 	{
 		return this.scenes.stream().filter(scene -> scene.getName().equals(name)).findFirst().get();
 	}
-	/*
-	public void deleteFolderSubDirectories(String nameScene) {
-		Path dir = Paths.get(this.pathRoot + line()+ nameScene);
-		try {
-			Files.walk(dir, 2)
-		      .sorted(Comparator.reverseOrder())
-		      .map(Path::toFile)
-		      .forEach(File::delete);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	*/
 	
 	public void saveProject() throws IOException
 	{
@@ -219,17 +204,20 @@ public class UGSProject extends GameObject implements Serializable {
 
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.scenes.forEach(scene -> scene.evalBehaviors(engine));
+		this.searchScene(Game.getCurrentScene().getName()).evalBehaviors(engine);;
+		// this.scenes.forEach(scene -> scene.evalBehaviors(engine));
 	}
 
 	public void actorsLearnAbilities(EcmaScriptEngine engine) 
 	{
-		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
+		this.searchScene(Game.getCurrentScene().getName()).actorsLearnAbilities(engine);
+		// this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
 	}
 
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
-		this.scenes.forEach(scene -> scene.evalCollisions(engine));
+		this.searchScene(Game.getCurrentScene().getName()).evalCollisions(engine);
+		// this.scenes.forEach(scene -> scene.evalCollisions(engine));
 	}
 
 	@Override

@@ -41,10 +41,7 @@ public class BtnOpenAudioActionListener implements ActionListener
 		if (archivo != null)
 		{
 			this.pathAudioField.setText(archivo.getAbsolutePath());
-			
-			// DESCOMENTAR CUANDO ESTE ARREGLADO EL PATH EN U-ENGINE
-			//this.model.getItemSelected().setPathAudio(archivo.getAbsolutePath());
-			this.model.getItemSelected().setPathAudio(archivo.getName());
+			this.model.getItemSelected().setPathAudio(archivo.getAbsolutePath());
 		}
 	}
 

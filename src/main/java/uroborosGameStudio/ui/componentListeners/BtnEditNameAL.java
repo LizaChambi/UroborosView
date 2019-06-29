@@ -47,7 +47,6 @@ public class BtnEditNameAL extends AbstractEditionListener
 	}
 
 	private void validateName(String name, GameObject gameObject) {
-		System.out.println("es un nombre valido: " + isValidName(name, gameObject));
 		if (!isValidName(name, gameObject)) {
 			notifyError(name);
 		} else {
@@ -61,13 +60,13 @@ public class BtnEditNameAL extends AbstractEditionListener
 	}
 
 	private void notifyError(String name) {
-		if(model.validateNameScene(name)) {
+		if(model.validateName(name)) {
 			changeStatus("El nombre ingresado ya está en uso.");
 		}
 	}
 
 	private boolean isValidName(String name, GameObject gameObject) {
-		return !model.validateNameScene(name);
+		return !model.validateName(name);
 	}
 
 	@Override

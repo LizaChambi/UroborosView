@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.team.uroboros.uroboros.engine.geometry.Dimension;
+
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public abstract class GameObject implements Serializable
@@ -99,6 +101,8 @@ public abstract class GameObject implements Serializable
 
 	public abstract String getPathAudio();
 
-	public void setPhysicsType(Physics type) {};
+	public void setPhysicsType(Physics type) {}
+
+	public void setAnimation (String image, int sprites, Dimension newDim, int ratio) {};
 
 }
