@@ -29,12 +29,13 @@ public class BtnStopActionListener extends AbstractEditionListener {
 	{
 		model.stopAudio();
 		Game.end();
-
 		model.getProject().loadProject();
-		
+		updateUI(gameObject);
+	}
+
+	private void updateUI(GameObject gameObject) {
 		btnStop.setEnabled(false);
 		btnPlay.setEnabled(true);
-		
 		setCanvas(gameObject.selectedScene(model));
 	}
 	
@@ -42,6 +43,7 @@ public class BtnStopActionListener extends AbstractEditionListener {
 	public void updeteComponent(DefaultMutableTreeNode selectedNode, GameObject gameObject) {}
 
 	@Override
-	public void updateComponents() {}
+	public void updateComponents() {
+	}
 
 }

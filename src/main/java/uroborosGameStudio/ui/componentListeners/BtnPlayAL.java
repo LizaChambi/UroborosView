@@ -38,6 +38,10 @@ public class BtnPlayAL implements ActionListener
 			}
 		};
 		t.start();
+		updateButtons();
+	}
+
+	private void updateButtons() {
 		this.btnPlay.setEnabled(false);
 		this.btnStop.setEnabled(true);
 	}
