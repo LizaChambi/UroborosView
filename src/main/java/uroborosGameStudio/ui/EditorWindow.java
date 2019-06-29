@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.PrintStream;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
