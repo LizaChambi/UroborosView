@@ -8,7 +8,6 @@ import java.util.List;
 import org.team.uroboros.uroboros.engine.Game;
 import org.team.uroboros.uroboros.engine.audio.Audio;
 import org.team.uroboros.uroboros.engine.component.Actor;
-import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
@@ -165,7 +164,7 @@ public class SceneWrapper extends GameObject implements Serializable
 	public void setSceneUEngine() 
 	{
 		Game.setScene(this.name);
-		System.out.println("Escena "+ this.name + " seleccionada: " + Game.getCurrentScene().getName());
+//		System.out.println("Escena "+ this.name + " seleccionada: " + Game.getCurrentScene().getName());
 	}
 
 	@Override

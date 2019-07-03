@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.List;
 
-import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.domain.UGSProject;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
@@ -40,17 +38,17 @@ public class BtnSaveProjectAL implements ActionListener {
 		UGSProject game = (UGSProject) input.readObject();
 		input.close();
 		
-		System.out.println("Nombre de juego: " + game.getName());
-		System.out.println("Escenas: " + game.getScenes());
-
-		List<SceneWrapper> scenes = game.getScenes();
-
-		for (int i = 0; i < scenes.size(); i++) {
-			System.out.println("Nombre de Escena " + i + ": " + scenes.get(i).getName());
-			System.out.println("Actores de Escena " + i + ": " + scenes.get(i).getActors().size());
-			System.out.println(game.getPathRoot());
-			System.out.println("** FIN DE ESCENA **");
-		}
+//		System.out.println("Nombre de juego: " + game.getName());
+//		System.out.println("Escenas: " + game.getScenes());
+//
+//		List<SceneWrapper> scenes = game.getScenes();
+//
+//		for (int i = 0; i < scenes.size(); i++) {
+//			System.out.println("Nombre de Escena " + i + ": " + scenes.get(i).getName());
+//			System.out.println("Actores de Escena " + i + ": " + scenes.get(i).getActors().size());
+//			System.out.println(game.getPathRoot());
+//			System.out.println("** FIN DE ESCENA **");
+//		}
 	}
 
 }
