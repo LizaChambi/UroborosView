@@ -292,6 +292,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
+		btnStop.setEnabled(false);
 		
 		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
