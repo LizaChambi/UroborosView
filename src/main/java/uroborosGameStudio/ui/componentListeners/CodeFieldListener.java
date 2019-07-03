@@ -38,14 +38,32 @@ public class CodeFieldListener implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		if (tableCollisions.getSelectedRow()>=0)
+		if(hasFileSelected())
 		{
-			model.setTextCollition(codeField.getText());
+			setCodeFile(codeField.getText());
+		}
+
+	}
+
+	private void setCodeFile(String code) 
+	{
+		if (hasSelectedColliderFile())
+		{
+			model.setTextCollition(code);
 		}
 		else
 		{
-			model.setTextBehaviorFile(codeField.getText());
+			model.setTextBehaviorFile(code);
 		}
+	}
+
+	private boolean hasSelectedColliderFile() {
+		return tableCollisions.getSelectedRow()>=0;
+	}
+
+	private boolean hasFileSelected() 
+	{
+		return tableCollisions.getSelectedRow() != -1;
 	}
 
 }

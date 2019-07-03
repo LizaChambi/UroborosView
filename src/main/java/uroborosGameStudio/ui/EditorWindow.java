@@ -53,6 +53,7 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.BtnStopActionListener;
+import uroborosGameStudio.ui.componentListeners.ClearConsoleActionListener;
 import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
@@ -67,6 +68,8 @@ import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
 import uroborosGameStudio.ui.components.TextAreaOutputStream;
 import uroborosGameStudio.ui.components.UGSRadioButton;
+import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -136,7 +139,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JButton btnStop = new JButton("Detener");
 	private JButton btnPlay;
 	private JPanel consolePanel;
-	private JTextArea txtConsoleErrores;
+	private JTextArea txtConsole = new JTextArea();
 	private JScrollPane scrollPane;
 	private TextAreaOutputStream taos;
 
@@ -175,6 +178,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeFrame() {
+		this.frame.setTitle("Uroboros Game Studio - " + model.getPathProject());
 		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
@@ -292,6 +296,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		JButton btnRemove = new JButton("Eliminar");
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
+		btnStop.setEnabled(false);
 		
 		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
@@ -337,12 +342,21 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void consoleLogProperties() {
-		txtConsoleErrores = new JTextArea();
-		txtConsoleErrores.setText("");
-		taos = new TextAreaOutputStream(txtConsoleErrores);
 		
-		scrollPane = new JScrollPane(this.txtConsoleErrores);
-		scrollPane.setBounds(10, 10, 950, 250);
+		JButton btnClearConsole = new JButton("Limpiar consola");
+		btnClearConsole.addActionListener(new ClearConsoleActionListener(txtConsole));
+		btnClearConsole.setBounds(10, 5, 100, 25);
+		consolePanel.add(btnClearConsole);
+		
+		taos = new TextAreaOutputStream(txtConsole);
+		txtConsole.setBorder(new EmptyBorder(5, 5, 5, 5));
+		txtConsole.setEditable(false);
+		txtConsole.setForeground(Color.WHITE);
+		txtConsole.setBackground(Color.BLACK);
+		txtConsole.setFont(new Font("Cousine", Font.PLAIN, 12));
+		
+		scrollPane = new JScrollPane(this.txtConsole);
+		scrollPane.setBounds(10, 32, 950, 228);
 		scrollPane.setPreferredSize(new Dimension(945, 240));
 		consolePanel.add(scrollPane);
 	}

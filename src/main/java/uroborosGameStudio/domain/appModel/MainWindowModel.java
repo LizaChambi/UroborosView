@@ -231,4 +231,9 @@ public class MainWindowModel
 		getCurrentScene().stopAudio();
 	}
 
+	public String getPathProject() 
+	{
+		return this.project.getPathRoot();
+	}
+
 }
