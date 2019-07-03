@@ -175,6 +175,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeFrame() {
+		this.frame.setTitle("Uroboros Game Studio - " + model.getPathProject());
 		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
