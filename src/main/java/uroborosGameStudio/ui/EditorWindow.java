@@ -69,6 +69,7 @@ import uroborosGameStudio.ui.components.JavaScriptEditor;
 import uroborosGameStudio.ui.components.TextAreaOutputStream;
 import uroborosGameStudio.ui.components.UGSRadioButton;
 import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
 
 public class EditorWindow extends AbstractWindowFrame {
 
@@ -348,6 +349,11 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel.add(btnClearConsole);
 		
 		taos = new TextAreaOutputStream(txtConsole);
+		txtConsole.setBorder(new EmptyBorder(5, 5, 5, 5));
+		txtConsole.setEditable(false);
+		txtConsole.setForeground(Color.WHITE);
+		txtConsole.setBackground(Color.BLACK);
+		txtConsole.setFont(new Font("Cousine", Font.PLAIN, 12));
 		
 		scrollPane = new JScrollPane(this.txtConsole);
 		scrollPane.setBounds(10, 32, 950, 228);
