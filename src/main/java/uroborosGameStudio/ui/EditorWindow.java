@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -68,8 +69,6 @@ import uroborosGameStudio.ui.componentListeners.SelectedCollitionActionListener;
 import uroborosGameStudio.ui.components.JavaScriptEditor;
 import uroborosGameStudio.ui.components.TextAreaOutputStream;
 import uroborosGameStudio.ui.components.UGSRadioButton;
-import javax.swing.ImageIcon;
-import javax.swing.border.EmptyBorder;
 
 public class EditorWindow extends AbstractWindowFrame {
 
