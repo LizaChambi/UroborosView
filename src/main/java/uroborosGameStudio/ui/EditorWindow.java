@@ -38,7 +38,10 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.Body;
+import uroborosGameStudio.domain.Circle;
 import uroborosGameStudio.domain.Physics;
+import uroborosGameStudio.domain.Rectangle;
 import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
@@ -501,7 +504,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		bodyMaterialPanel.add(lblBodyMaterial);
 		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
 	
-		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
+		cboxSelectBody.setModel(new DefaultComboBoxModel(new Body[] {new Circle(), new Rectangle()}));
 		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cboxSelectBody.setSelectedItem(null);
 		cboxSelectBody.addActionListener(new PhysicsBodyAL(model, cboxSelectBody));

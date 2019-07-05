@@ -10,6 +10,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.Body;
+import uroborosGameStudio.domain.Circle;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.Physics;
 import uroborosGameStudio.domain.SceneWrapper;
@@ -83,14 +85,25 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 
 	private void setSelectedBodyMaterialView(GameObject gameObject) 
 	{
-		String material = gameObject.getBody();
-		if (material.isEmpty())
+		Body material = gameObject.getBody();
+		if (material.getName().isEmpty())
 		{
 			cboxBody.setSelectedItem(null);
 		}
 		else
 		{
-			cboxBody.setSelectedItem(material);
+			Body select = (Body) cboxBody.getItemAt(0);
+			// hay que hacer un cboxBody personalizado que me pueda responder con al indice del cuerpo:
+			// 0 = circulo
+			// 1 = rectangulo
+			// así no hay que meter el if que hay a continuación:
+			if(material.getName().equals("Círculo"))
+			{
+				cboxBody.setSelectedItem(cboxBody.getItemAt(0));
+			}
+			else {
+				cboxBody.setSelectedItem(cboxBody.getItemAt(1));
+			}
 		}
 	}
 

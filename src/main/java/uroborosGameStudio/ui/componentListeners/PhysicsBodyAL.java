@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import uroborosGameStudio.domain.Body;
 import uroborosGameStudio.domain.appModel.MainWindowModel;
 
 public class PhysicsBodyAL implements ActionListener{
@@ -20,7 +21,7 @@ public class PhysicsBodyAL implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(cbox.getSelectedItem() != null) {
-			model.getItemSelected().setPhysicsBody((String)cbox.getSelectedItem());
+			model.getItemSelected().setPhysicsBody((Body)cbox.getSelectedItem());
 		}
 	}
 
