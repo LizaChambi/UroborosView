@@ -197,25 +197,6 @@ public class MainWindowModel
 	{
 		this.itemSelected.setCollitionText(fileColliderSelected, text);
 	}
-	
-	public DefaultMutableTreeNode createTreeNode() 
-	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(this.getProject());
-		for (int i=0; i < this.cantScenes(); i++)
-		{
-			SceneWrapper scene = this.getSceneIn(i);
-			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
-			child1.setUserObject(scene);
-			for (int si=0; si<scene.cantActors();si++)
-			{
-				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
-				child11.setUserObject(scene.getActorIn(si));
-				child1.add(child11);
-			}
-			root.add(child1);
-		}
-		return root;
-	}
 
 	public void playAudio() 
 	{

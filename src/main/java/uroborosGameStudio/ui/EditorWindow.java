@@ -39,6 +39,7 @@ import javax.swing.tree.DefaultTreeModel;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.Physics;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
@@ -326,13 +327,32 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
-		DefaultMutableTreeNode root = model.createTreeNode();
+		DefaultMutableTreeNode root = this.createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
 		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
 	
+	private DefaultMutableTreeNode createTreeNode() 
+	{
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
+		for (int i=0; i < model.cantScenes(); i++)
+		{
+			SceneWrapper scene = model.getSceneIn(i);
+			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
+			child1.setUserObject(scene);
+			for (int subI=0; subI<scene.cantActors();subI++)
+			{
+				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
+				child11.setUserObject(scene.getActorIn(subI));
+				child1.add(child11);
+			}
+			root.add(child1);
+		}
+		return root;
+	}
+
 	private void editorPanel() 
 	{
 		this.inicializeEditorPanel();
