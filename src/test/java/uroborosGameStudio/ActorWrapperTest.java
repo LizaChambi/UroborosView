@@ -35,7 +35,7 @@ public class ActorWrapperTest {
 		assertEquals(new Dimension(59, 89), actor.getDimension());
 		assertTrue(actor.getBehaviors().isEmpty());
 		assertTrue(actor.getColliders().isEmpty());
-		assertTrue(actor.getBody().isEmpty());
+		assertTrue(actor.getBody().getName().isEmpty());
 		assertTrue(actor.getSprites() == 3);
 		assertTrue(actor.getRatio() == 2);
 		assertEquals(Physics.NONE, actor.getPhysicsType());
