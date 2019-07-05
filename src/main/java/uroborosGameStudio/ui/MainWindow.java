@@ -69,15 +69,17 @@ public class MainWindow extends AbstractWindowFrame {
 	}
 
 	private void initializaOpenProyectButton() {
-		this.openButton = new JButton("Abrir proyecto");
-		openButton.setBounds(300, 338, 150, 23);
+		this.openButton = new JButton("Abrir proyecto", new ImageIcon("images/open-folder-icon.png"));
+		openButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		openButton.setBounds(280, 338, 170, 50);
 		openButton.addActionListener(new OpenProjectActionListener(model, frame, centerPanel));
 		centerPanel.add(this.openButton);
 	}
 
 	private void initializeCreateProyectButton() {
-		this.createButton = new JButton("Crear nuevo proyecto");
-		createButton.setBounds(50, 338, 165, 23);
+		this.createButton = new JButton("Nuevo proyecto", new ImageIcon("images/folder-new-icon.png"));
+		createButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		createButton.setBounds(45, 338, 190, 50);
 		this.createButton.addActionListener(new CreateNewProjectAL(frame, model));
 		centerPanel.setLayout(null);
 		centerPanel.add(this.createButton);
