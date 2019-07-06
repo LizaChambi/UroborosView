@@ -97,6 +97,7 @@ public class UGSProject extends GameObject implements Serializable {
 		saveScenes();
 	}
 	
+	// este metodo debe ser privado
 	public void deleteOldFiles(String path) {
 		File file = new File(path); 
 		File[] files = file.listFiles();

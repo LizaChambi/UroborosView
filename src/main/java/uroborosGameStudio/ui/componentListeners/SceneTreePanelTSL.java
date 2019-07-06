@@ -1,7 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
 import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -11,7 +10,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
 import uroborosGameStudio.domain.Body;
-import uroborosGameStudio.domain.Circle;
 import uroborosGameStudio.domain.GameObject;
 import uroborosGameStudio.domain.Physics;
 import uroborosGameStudio.domain.SceneWrapper;

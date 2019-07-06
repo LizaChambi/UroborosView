@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import javax.script.ScriptException;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.Game;
 

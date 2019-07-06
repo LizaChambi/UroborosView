@@ -25,8 +25,6 @@ public class NumberWHAdapter implements KeyListener {
 		} else {
 			changeStatus("", true);
 		}
-//		int space = KeyEvent.VK_SPACE; disable
-//		int bkSpace = KeyEvent.VK_BACK_SPACE; ignore
 	}
 	
 	private void changeStatus(String info, boolean enable) {
