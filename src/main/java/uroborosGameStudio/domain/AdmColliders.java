@@ -40,4 +40,9 @@ public class AdmColliders implements Serializable
 		this.colliders.forEach(collider -> collider.evalCollider(engine, name));
 	}
 
+	public boolean hasColliders() 
+	{
+		return ! colliders.isEmpty();
+	}
+
 }

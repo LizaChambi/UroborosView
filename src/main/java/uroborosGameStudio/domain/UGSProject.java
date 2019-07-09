@@ -71,6 +71,7 @@ public class UGSProject extends GameObject implements Serializable {
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
 		Game.createScene(newScene.getName());
+		Game.setScene(newScene.getName());
 	}
 
 	@Override
@@ -225,5 +226,4 @@ public class UGSProject extends GameObject implements Serializable {
 	public String getPathAudio() {
 		return "";
 	}
-
 }

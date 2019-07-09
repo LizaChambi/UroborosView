@@ -1,5 +1,6 @@
 package uroborosGameStudio.ui.componentListeners;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -31,12 +32,14 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	private UGSRadioButton rdKinematic;
 	private JTable collisionTable;
 	private JTable behaviorsTable;
+	private JButton btnPlay;
 	private MainWindowModel model;
 	private JTextArea textArea;
 	
-	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, UGSRadioButton rdStatic, UGSRadioButton rdKinematic, UGSRadioButton rdDinamic, JTable tableCollision, JTextArea textArea,JTextField textAudioPath) 
+	public SceneTreePanelTSL(JTree treeScenes, JTextField textField, Canvas canvas, MainWindowModel model, JTextField posXTextField, JTextField posYTextField, JTextField textFieldPath, JTextField textFieldWidth, JTextField textFieldHigh, JTable table, JComboBox<?> cboxSelectBody, UGSRadioButton rdStatic, UGSRadioButton rdKinematic, UGSRadioButton rdDinamic, JTable tableCollision, JTextArea textArea,JTextField textAudioPath, JButton btnPlay) 
 	{
 		super(treeScenes, canvas);
+		this.btnPlay = btnPlay;
 		this.textField = textField;
 		this.pathAudioField = textAudioPath;
 		this.posXField = posXTextField;
@@ -58,7 +61,6 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 	public void updateComponents(GameObject gameObject) 
 	{
 		this.setTextFieldsPropertiesView(gameObject);
-		textArea.setText("");
 		gameObject.setSceneUEngine();
 		SceneWrapper selectedScene = gameObject.selectedScene(model);
 		if (selectedScene != null)
@@ -112,7 +114,9 @@ public class SceneTreePanelTSL extends AbstractEditionListener
 		pathImageField.setText(gameObject.getPathImage());
 		widthField.setText(gameObject.getWidth().toString());
 		heightField.setText(gameObject.getHeight().toString());
-		pathAudioField.setText(gameObject.getPathAudio());	
+		pathAudioField.setText(gameObject.getPathAudio());
+		textArea.setText("");
+		btnPlay.setEnabled(true);
 	}
 
 	private void setPhysicsBodyView(GameObject gameObject) 

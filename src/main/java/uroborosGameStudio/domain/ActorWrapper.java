@@ -422,4 +422,9 @@ public class ActorWrapper extends GameObject  implements Serializable
 			x = (int) (x + newDim.getWidth());
 		}
 	}
+
+	public boolean hasCollidersOrBehaviors() 
+	{
+		return this.behaviors.hasBehaviors() || this.collisions.hasColliders();
+	}
 }

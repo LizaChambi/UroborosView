@@ -148,18 +148,25 @@ public class MainWindowModel
 
 	public void evalBehaviorsAndCollisions() 
 	{
-		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
-		
-		try {
-			evalImportsUEngine(engine);
-			this.project.evalBehaviors(engine);
-			this.project.actorsLearnAbilities(engine);
-			this.project.evalCollisions(engine);
-		} 
-		catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(hasBehaviorsOrCollisions())
+		{
+			EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
+			try {
+				evalImportsUEngine(engine);
+				this.project.evalBehaviors(engine);
+				this.project.actorsLearnAbilities(engine);
+				this.project.evalCollisions(engine);
+			} 
+			catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+	}
+
+	private boolean hasBehaviorsOrCollisions() 
+	{
+		return this.getCurrentScene().hasBehaviorsOrCollitions();
 	}
 
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 

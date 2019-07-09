@@ -294,6 +294,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		buttonPanel.add(btnSave);
 		
 		btnPlay = new JButton("Ejecutar", new ImageIcon("images/play-icon.png"));
+		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new BtnPlayAL(canvas, model, btnStop, btnPlay));
 		buttonPanel.add(btnPlay);
 		btnStop.setEnabled(false);
@@ -332,7 +333,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
 		DefaultMutableTreeNode root = this.createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio, btnPlay));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}

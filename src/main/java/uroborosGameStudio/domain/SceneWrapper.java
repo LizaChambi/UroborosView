@@ -231,4 +231,9 @@ public class SceneWrapper extends GameObject implements Serializable
 			audio.stop();
 		}
 	}
+
+	public boolean hasBehaviorsOrCollitions() 
+	{
+		return this.actors.stream().anyMatch(actor -> actor.hasCollidersOrBehaviors());
+	}
 }

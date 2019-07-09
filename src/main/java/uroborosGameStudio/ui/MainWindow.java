@@ -30,8 +30,8 @@ public class MainWindow extends AbstractWindowFrame {
 		this.initializeFrame();
 		this.initializeCenterPanel();
 		
-		this.initializeCreateProyectButton();
-		this.initializaOpenProyectButton();
+		this.initializeCreateProjectButton();
+		this.initializaOpenProjectButton();
 		this.initializeTitleLabel();
 		this.initializeImgIcon();
 		
@@ -68,7 +68,7 @@ public class MainWindow extends AbstractWindowFrame {
 		centerPanel.add(this.titleL);
 	}
 
-	private void initializaOpenProyectButton() {
+	private void initializaOpenProjectButton() {
 		this.openButton = new JButton("Abrir proyecto", new ImageIcon("images/open-folder-icon.png"));
 		openButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		openButton.setBounds(280, 338, 170, 50);
@@ -76,7 +76,7 @@ public class MainWindow extends AbstractWindowFrame {
 		centerPanel.add(this.openButton);
 	}
 
-	private void initializeCreateProyectButton() {
+	private void initializeCreateProjectButton() {
 		this.createButton = new JButton("Nuevo proyecto", new ImageIcon("images/folder-new-icon.png"));
 		createButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		createButton.setBounds(45, 338, 190, 50);
