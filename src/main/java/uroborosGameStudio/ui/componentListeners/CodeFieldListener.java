@@ -42,7 +42,6 @@ public class CodeFieldListener implements KeyListener
 		{
 			setCodeFile(codeField.getText());
 		}
-
 	}
 
 	private void setCodeFile(String code) 

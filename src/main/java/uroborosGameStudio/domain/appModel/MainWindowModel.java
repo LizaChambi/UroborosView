@@ -153,9 +153,12 @@ public class MainWindowModel
 			EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
 			try {
 				evalImportsUEngine(engine);
-				this.project.evalBehaviors(engine);
-				this.project.actorsLearnAbilities(engine);
-				this.project.evalCollisions(engine);
+				//this.project.evalBehaviors(engine);
+				this.project.evalAllBehaviors(engine);
+				// this.project.actorsLearnAbilities(engine);
+				this.project.actorsLearnAllAbilities(engine);
+				//this.project.evalCollisions(engine);
+				this.project.evalAllCollisions(engine);
 			} 
 			catch (ScriptException e) {
 				// TODO Auto-generated catch block

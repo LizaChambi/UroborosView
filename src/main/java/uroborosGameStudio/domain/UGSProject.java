@@ -204,19 +204,43 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().anyMatch(scene -> scene.existBehaviorName(name));
 	}
 
+	/*
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.searchScene(Game.getCurrentScene().getName()).evalBehaviors(engine);;
+		this.searchScene(Game.getCurrentScene().getName()).evalBehaviors(engine);
+	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS ESCENAS
+	public void evalAllBehaviors(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalBehaviors(engine));
 	}
 
+	/*
 	public void actorsLearnAbilities(EcmaScriptEngine engine) 
 	{
 		this.searchScene(Game.getCurrentScene().getName()).actorsLearnAbilities(engine);
 	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS HABILIDADES
+	public void actorsLearnAllAbilities(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
+	}
 
+	/*
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
 		this.searchScene(Game.getCurrentScene().getName()).evalCollisions(engine);
+	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS COLISIONES
+	public void evalAllCollisions(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalCollisions(engine));
 	}
 
 	@Override

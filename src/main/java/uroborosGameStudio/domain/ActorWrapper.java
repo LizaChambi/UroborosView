@@ -256,7 +256,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void learnAbilities(EcmaScriptEngine engine) 
 	{
-		Actor actor = Game.getActorOnCurrentScene(name);
+		// Actor actor = Game.getActorOnCurrentScene(name);
+		Actor actor = Game.getActor(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
 	}
 
