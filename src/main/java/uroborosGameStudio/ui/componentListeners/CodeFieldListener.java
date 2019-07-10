@@ -51,19 +51,26 @@ public class CodeFieldListener implements KeyListener
 		{
 			model.setTextCollition(code);
 		}
-		else
+		
+		if(hasSelectedBehaviorFile())
 		{
 			model.setTextBehaviorFile(code);
 		}
 	}
 
-	private boolean hasSelectedColliderFile() {
+	private boolean hasSelectedBehaviorFile() 
+	{
+		return this.tableBehaviors.getSelectedRow()>=0;
+	}
+
+	private boolean hasSelectedColliderFile() 
+	{
 		return tableCollisions.getSelectedRow()>=0;
 	}
 
 	private boolean hasFileSelected() 
 	{
-		return tableCollisions.getSelectedRow() != -1;
+		return (tableCollisions.getSelectedRow() != -1) || (tableBehaviors.getSelectedRow() != -1);
 	}
 
 }

@@ -399,6 +399,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel.setPreferredSize(new Dimension(973, 263));
 		consolePanel.setLayout(null);
 		tabbedPanel.addTab("Console Log", consolePanel);
+		tabbedPanel.setIconAt(2, new ImageIcon(EditorWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 	}
 
 	private void buttonsCollisionTable() 
