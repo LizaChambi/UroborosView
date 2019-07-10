@@ -140,7 +140,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
 	private JLabel lblErrorDimension;
-	private JButton btnStop = new JButton("Detener", new ImageIcon("images/stop-icon.png"));
+	private JButton btnStop = new JButton("Detener", new ImageIcon("images/Stop-Normal-Yellow-icon.png"));
 	private JButton btnPlay;
 	private JPanel consolePanel;
 	private JTextArea txtConsole = new JTextArea();
@@ -281,19 +281,19 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void toolbar() 
 	{
-		JButton btnNewScena = new JButton("Nueva Escena", new ImageIcon("images/scene-icon.png"));
+		JButton btnNewScena = new JButton("Nueva Escena", new ImageIcon("images/add-icon.png"));
 		btnNewScena.addActionListener(new BtnNewSceneAL(treeScenes, idScene, canvas));
 		buttonPanel.add(btnNewScena);
 		
-		JButton btnNewActor = new JButton("Nuevo Actor", new ImageIcon("images/actor-icon.png"));
+		JButton btnNewActor = new JButton("Nuevo Actor", new ImageIcon("images/user-add-icon.png"));
 		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
 		buttonPanel.add(btnNewActor);
 		
-		JButton btnSave = new JButton("Guardar", new ImageIcon("images/save-icon.png"));
+		JButton btnSave = new JButton("Guardar", new ImageIcon("images/Save-as-icon.png"));
 		btnSave.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		buttonPanel.add(btnSave);
 		
-		btnPlay = new JButton("Ejecutar", new ImageIcon("images/play-icon.png"));
+		btnPlay = new JButton("Ejecutar", new ImageIcon("images/Play-Green-icon.png"));
 		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new BtnPlayAL(canvas, model, btnStop, btnPlay));
 		buttonPanel.add(btnPlay);
@@ -303,7 +303,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
 		
-		JButton btnRemove = new JButton("Eliminar", new ImageIcon("images/delete-icon.png"));
+		JButton btnRemove = new JButton("Eliminar", new ImageIcon("images/Actions-stop-icon.png"));
 		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
 		buttonPanel.add(btnRemove);
 	}
@@ -426,6 +426,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editorPanel = new JPanel();
 		editorPanel.setPreferredSize(new Dimension(973, 263));
 		tabbedPanel.addTab("Propiedades", editorPanel);
+		tabbedPanel.setIconAt(0, new ImageIcon("images/Pen-icon.png"));
 		this.gameEditorPanel.add(tabbedPanel, BorderLayout.SOUTH);
 	}
 
@@ -560,6 +561,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		collisionPanel.setPreferredSize(new Dimension(973, 263));
 		collisionPanel.setLayout(null);
 		tabbedPanel.addTab("Colisiones", collisionPanel);
+		tabbedPanel.setIconAt(1, new ImageIcon(EditorWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/HardDrive.gif")));
 	}
 	
 	private void initializePropertiesEditPanel() 
