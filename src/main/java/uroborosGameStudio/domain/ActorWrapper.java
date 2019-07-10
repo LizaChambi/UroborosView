@@ -207,11 +207,41 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void loadActorUEngine() 
 	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNA IMAGEN COMUN
+		
 		Actor actorLoaded = Game.createActorOnCurrentScene(this.name);
-		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
-		Sprite sprite= new Sprite(spritesheet, 0);
-		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
-		actorLoaded.setTexture(sprite);
+		if(isAnimation())
+		{
+			// Cargar animacion
+			List<Frame> frames = new ArrayList<Frame>();
+			List<Integer> indexs = new ArrayList<Integer>();
+			Dimension dimension = new Dimension(this.getWidth(), this.getHeight());
+			
+			Integer x = 0;
+			for (int i = 0; i < this.getSprites(); i++)
+			{
+				frames.add(new Frame(new Point(x,0), dimension));
+				indexs.add(i);
+				x+=this.getWidth();
+			}
+			
+			Frame[] objects = new Frame[frames.size()]; 
+			objects = frames.toArray(objects); 
+			Integer[] indexAux = new Integer[indexs.size()]; 
+			indexAux = indexs.toArray(indexAux); 
+			
+			SpriteSheet spritesheet = new SpriteSheet(this.pathImage, objects);
+			Texture sprite = new Animation(spritesheet, this.ratio, indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
+			actorLoaded.setDimension(dimension);
+			actorLoaded.setTexture(sprite);
+		}
+		else
+		{
+			SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
+			Sprite sprite= new Sprite(spritesheet, 0);
+			actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
+			actorLoaded.setTexture(sprite);
+		}
+		
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
 		
