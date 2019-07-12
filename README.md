@@ -50,7 +50,7 @@ Esta herramienta está pensada para programadores que quieran crear sus propios 
 
 Cuando el usuario quiera agregar una escena al juego, por ejemplo, el sistema responde con el siguiente flujo:
 
-![Technology Architecture](images/Diagrama de flujo.jpg)
+![Technology Architecture](images/Estructura.jpg)
 
 **EditorWindow.java** es la interfaz principal en donde el usuario interactúa con el sitema.
 
