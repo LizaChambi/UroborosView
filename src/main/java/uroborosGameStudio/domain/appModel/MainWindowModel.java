@@ -176,6 +176,9 @@ public class MainWindowModel
 	{
 		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
 		engine.eval("var GameObject = Java.type('org.team.uroboros.uroboros.engine.GameObject')");
+		engine.eval("var SphereMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.SphereMaterial')");
+		engine.eval("var BoxMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.BoxMaterial')");
+		engine.eval("var PhysicsMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial')");
 		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
 		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
 		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
