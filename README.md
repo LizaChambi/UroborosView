@@ -1,7 +1,7 @@
 # Uroboros Game Studio
 * ***Develop*** branch: [![Build Status](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio.svg?branch=develop)](https://travis-ci.com/UroborosGameTeam/UroborosGameStudio)
 
-![Uroboros Logo](images/Uroboros-Logo.png)
+![Uroboros Logo](images/icons_size//Uroboros-Logo.png)
 
 ### Objetivo
 Uroboros Game Studio es un editor de videojuegos que utiliza el framework de videojuegos Uroboros.
@@ -50,7 +50,7 @@ Esta herramienta está pensada para programadores que quieran crear sus propios 
 
 Cuando el usuario quiera agregar una escena al juego, por ejemplo, el sistema responde con el siguiente flujo:
 
-![Technology Architecture](images/Estructura.jpg)
+![Technology Architecture](images/Diagrama de flujo.jpg)
 
 **MainWindowDomain.java** es el moderador entre la vista y el modelo. En caso de necesitarlo, puede solicitar guardar archivos en un directorio predeterminado para el usuario.
 
