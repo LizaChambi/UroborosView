@@ -50,13 +50,17 @@ Esta herramienta está pensada para programadores que quieran crear sus propios 
 
 Cuando el usuario quiera agregar una escena al juego, por ejemplo, el sistema responde con el siguiente flujo:
 
-![Technology Architecture](images/Estructura.jpg)
+![Technology Architecture](images/Diagrama de flujo.jpg)
 
-**MainWindowDomain.java** es el moderador entre la vista y el modelo. En caso de necesitarlo, puede solicitar guardar archivos en un directorio predeterminado para el usuario.
+**EditorWindow.java** es la interfaz principal en donde el usuario interactúa con el sitema.
 
-**UGSProject.java** es el modelo principal que contiene toda la lógica del proyecto en creación y delegar tareas a otros objetos del dominio.
+**MainWindowModel.java** es el moderador entre la vista y el modelo. En caso de necesitarlo, puede solicitar guardar o cargar archivos en un directorio predeterminado para el usuario.
+
+**UGSProject.java** es el modelo principal que contiene toda la lógica del proyecto en creación y delega tareas a otros objetos del dominio.
 
 **Uroboros Engine** sera utilizado como dependencia y es fundamental para el funcionamiento de Uroboros Game Studio, ya que este contiene toda la lógica de juego que usará el proyecto del usuario.
+
+**Game.java** Es la clase principal de Uroboros Engine con el cual tendremos comunicación directa, contiene la mayoría de las funciones que se pueden realizar en el framework.
 
 #### Tecnología
 > Implementación de Dominio: Java
