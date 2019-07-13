@@ -39,12 +39,14 @@ public class MainWindow extends AbstractWindowFrame {
 	}
 
 	private void initializeImgIcon() {
-		this.iconL = new JLabel(new ImageIcon("images/icon-logo-resize.png"));
+		this.iconL = new JLabel();
+		//this.iconL.setIcon(new ImageIcon("images/icon-logo-resize.png"));
 		iconL.setBounds(100, 11, 300, 300);
 		centerPanel.add(this.iconL);
 	}
 
 	private void initializeTitleLabel() {
+		/*
 		this.titleL = new JLabel("Uroboros");
 		titleL.setForeground(Color.RED);
 		titleL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -64,14 +66,21 @@ public class MainWindow extends AbstractWindowFrame {
 		lblStudio.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		lblStudio.setBounds(201, 190, 97, 30);
 		centerPanel.add(lblStudio);
-		
 		centerPanel.add(this.titleL);
+		*/
+		
+		JLabel title = new JLabel("Uroboros Game Studio");
+		title.setForeground(Color.WHITE);
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setFont(new Font("Droid Sans Fallback", Font.BOLD | Font.ITALIC, 25));
+		title.setBounds(112, 149, 276, 30);
+		centerPanel.add(title);
 	}
 
 	private void initializaOpenProjectButton() {
 		this.openButton = new JButton("Abrir proyecto", new ImageIcon("images/Actions-document-open-folder-icon.png"));
 		openButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		openButton.setBounds(280, 338, 170, 50);
+		openButton.setBounds(273, 325, 190, 50);
 		openButton.addActionListener(new OpenProjectActionListener(model, frame, centerPanel));
 		centerPanel.add(this.openButton);
 	}
@@ -79,7 +88,7 @@ public class MainWindow extends AbstractWindowFrame {
 	private void initializeCreateProjectButton() {
 		this.createButton = new JButton("Nuevo proyecto", new ImageIcon("images/Actions-folder-new-icon.png"));
 		createButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		createButton.setBounds(45, 338, 190, 50);
+		createButton.setBounds(45, 325, 202, 50);
 		this.createButton.addActionListener(new CreateNewProjectAL(frame, model));
 		centerPanel.setLayout(null);
 		centerPanel.add(this.createButton);
@@ -89,7 +98,7 @@ public class MainWindow extends AbstractWindowFrame {
 		centerPanel = new JPanel();
 		centerPanel.setLayout(null);
 		centerPanel.setPreferredSize(new Dimension(500, 400));
-		centerPanel.setBackground(Color.WHITE);
+		centerPanel.setBackground(Color.BLACK);
 		this.frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 	}
 
