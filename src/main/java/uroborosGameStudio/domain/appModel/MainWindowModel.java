@@ -225,7 +225,8 @@ public class MainWindowModel
 
 	public void stopAudio() 
 	{
-		getCurrentScene().stopAudio();
+		this.project.stopAudios();
+		//getCurrentScene().stopAudio();
 	}
 
 	public String getPathProject() 

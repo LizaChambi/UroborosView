@@ -250,4 +250,9 @@ public class UGSProject extends GameObject implements Serializable {
 	public String getPathAudio() {
 		return "";
 	}
+
+	public void stopAudios() 
+	{
+		this.scenes.forEach(scene -> scene.stopAudio());
+	}
 }
