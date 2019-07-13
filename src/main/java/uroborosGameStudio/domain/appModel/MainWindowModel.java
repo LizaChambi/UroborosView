@@ -175,6 +175,10 @@ public class MainWindowModel
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
 	{
 		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+		engine.eval("var Label = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Label')");
+		engine.eval("var Color = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Color')");
+		engine.eval("var System = Java.type('java.lang.System')");
+		engine.eval("var AbilityWithCooldown = Java.type('org.team.uroboros.uroboros.engine.component.AbilityWithCooldown')");
 		engine.eval("var GameObject = Java.type('org.team.uroboros.uroboros.engine.GameObject')");
 		engine.eval("var SphereMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.SphereMaterial')");
 		engine.eval("var BoxMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.BoxMaterial')");
