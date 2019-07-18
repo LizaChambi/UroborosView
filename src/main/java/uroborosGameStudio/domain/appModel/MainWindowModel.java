@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import javax.script.ScriptException;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.team.uroboros.uroboros.engine.Game;
 
@@ -149,24 +148,41 @@ public class MainWindowModel
 
 	public void evalBehaviorsAndCollisions() 
 	{
-		EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
-		
-		try {
-			evalImportsUEngine(engine);
-			this.project.evalBehaviors(engine);
-			this.project.actorsLearnAbilities(engine);
-			this.project.evalCollisions(engine);
-		} 
-		catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(hasBehaviorsOrCollisions())
+		{
+			EcmaScriptEngine engine = new EcmaScriptEngine(this.project.getPathRoot());
+			try {
+				evalImportsUEngine(engine);
+				//this.project.evalBehaviors(engine);
+				this.project.evalAllBehaviors(engine);
+				// this.project.actorsLearnAbilities(engine);
+				this.project.actorsLearnAllAbilities(engine);
+				//this.project.evalCollisions(engine);
+				this.project.evalAllCollisions(engine);
+			} 
+			catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+	}
+
+	private boolean hasBehaviorsOrCollisions() 
+	{
+		return this.getCurrentScene().hasBehaviorsOrCollitions();
 	}
 
 	private void evalImportsUEngine(EcmaScriptEngine engine) throws ScriptException 
 	{
 		engine.eval("var Game = Java.type('org.team.uroboros.uroboros.engine.Game')");
+		engine.eval("var Label = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Label')");
+		engine.eval("var Color = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Color')");
+		engine.eval("var System = Java.type('java.lang.System')");
+		engine.eval("var AbilityWithCooldown = Java.type('org.team.uroboros.uroboros.engine.component.AbilityWithCooldown')");
 		engine.eval("var GameObject = Java.type('org.team.uroboros.uroboros.engine.GameObject')");
+		engine.eval("var SphereMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.SphereMaterial')");
+		engine.eval("var BoxMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.BoxMaterial')");
+		engine.eval("var PhysicsMaterial = Java.type('org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial')");
 		engine.eval("var Actor = Java.type('org.team.uroboros.uroboros.engine.component.Actor')");
 		engine.eval("var Scene = Java.type('org.team.uroboros.uroboros.engine.component.Scene')");
 		engine.eval("var Frame = Java.type('org.team.uroboros.uroboros.engine.ui.resources.Frame')");
@@ -197,25 +213,6 @@ public class MainWindowModel
 	{
 		this.itemSelected.setCollitionText(fileColliderSelected, text);
 	}
-	
-	public DefaultMutableTreeNode createTreeNode() 
-	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(this.getProject());
-		for (int i=0; i < this.cantScenes(); i++)
-		{
-			SceneWrapper scene = this.getSceneIn(i);
-			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
-			child1.setUserObject(scene);
-			for (int si=0; si<scene.cantActors();si++)
-			{
-				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
-				child11.setUserObject(scene.getActorIn(si));
-				child1.add(child11);
-			}
-			root.add(child1);
-		}
-		return root;
-	}
 
 	public void playAudio() 
 	{
@@ -228,7 +225,13 @@ public class MainWindowModel
 
 	public void stopAudio() 
 	{
-		getCurrentScene().stopAudio();
+		this.project.stopAudios();
+		//getCurrentScene().stopAudio();
+	}
+
+	public String getPathProject() 
+	{
+		return this.project.getPathRoot();
 	}
 
 }

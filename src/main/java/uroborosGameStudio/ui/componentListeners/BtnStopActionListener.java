@@ -34,8 +34,8 @@ public class BtnStopActionListener extends AbstractEditionListener {
 	}
 
 	private void updateUI(GameObject gameObject) {
-		btnStop.setEnabled(false);
 		btnPlay.setEnabled(true);
+		btnStop.setEnabled(false);
 		setCanvas(gameObject.selectedScene(model));
 	}
 	

@@ -14,9 +14,6 @@ import org.team.uroboros.uroboros.engine.component.Actor;
 import org.team.uroboros.uroboros.engine.component.Scene;
 import org.team.uroboros.uroboros.engine.geometry.Dimension;
 import org.team.uroboros.uroboros.engine.geometry.Point;
-import org.team.uroboros.uroboros.engine.physics.material.BoxMaterial;
-import org.team.uroboros.uroboros.engine.physics.material.PhysicsMaterial;
-import org.team.uroboros.uroboros.engine.physics.material.SphereMaterial;
 import org.team.uroboros.uroboros.engine.ui.TextureRenderer;
 import org.team.uroboros.uroboros.engine.ui.resources.Animation;
 import org.team.uroboros.uroboros.engine.ui.resources.Frame;
@@ -33,13 +30,13 @@ public class ActorWrapper extends GameObject  implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private String pathImage;
-	private java.awt.Point point;
+	private java.awt.Point position;
 	private java.awt.Dimension dimension;
 	private transient BufferedImage image;
 	private double frames;
 	private AdmBehaviors behaviors;
 	private AdmColliders collisions;
-	private String body;
+	private Body body;
 	private Physics physicType;
 	private Integer ratio;
 
@@ -47,13 +44,13 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		this.name = name;
 		setPathImageLocal(path);
-		this.point = new java.awt.Point(x, y);
+		this.position = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(this.getRealWidth(), this.getRealHeight());
 		this.frames = 1;
 		this.ext = ".act";
 		this.behaviors = new AdmBehaviors();
 		this.collisions = new AdmColliders();
-		this.body = "";
+		this.body = new Bodiless();
 		this.physicType = Physics.NONE;
 		this.ratio = 0;
 	}
@@ -63,12 +60,12 @@ public class ActorWrapper extends GameObject  implements Serializable
 		this.name = name;
 		this.ext = ".act";
 		setPathImageLocal(path);
-		this.point = new java.awt.Point(x, y);
+		this.position = new java.awt.Point(x, y);
 		this.dimension = new java.awt.Dimension(width, height);
 		this.frames = sprites;
 		this.behaviors = new AdmBehaviors();
 		this.collisions = new AdmColliders();
-		this.body = "";
+		this.body = new Bodiless();
 		this.physicType = Physics.NONE;
 		this.ratio = ratio;
 	}
@@ -88,7 +85,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	
 	public java.awt.Point getPosition()
 	{
-		return this.point;
+		return this.position;
 	}
 	
 	public java.awt.Dimension getDimension()
@@ -115,12 +112,12 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	@Override
 	public Integer getX() {
-		return this.point.x;
+		return this.position.x;
 	}
 
 	@Override
 	public Integer getY() {
-		return this.point.y;
+		return this.position.y;
 	}
 	
 	@Override
@@ -150,7 +147,6 @@ public class ActorWrapper extends GameObject  implements Serializable
 	{
 		Scene selectedScene = Game.getSceneWithActor(this.name);
 		Game.setScene(selectedScene);
-		System.out.println("Escena "+ selectedScene.getName() +" seleccionada: " + Game.getCurrentScene().getName());
 	}
 	
 	@Override
@@ -162,7 +158,7 @@ public class ActorWrapper extends GameObject  implements Serializable
 	@Override
 	public void setPosition(Integer x, Integer y) 
 	{
-		this.point = new java.awt.Point(x,y);
+		this.position = new java.awt.Point(x,y);
 		Game.getActorOnCurrentScene(name).translateTo(x,y);
 	}
 
@@ -211,15 +207,45 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	private void loadActorUEngine() 
 	{	// CAMBIAR EN EL CASO DE SER UNA ANIMACIÓN O UNA IMAGEN COMUN
+		
 		Actor actorLoaded = Game.createActorOnCurrentScene(this.name);
-		SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
-		Sprite sprite= new Sprite(spritesheet, 0);
-		actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
-		actorLoaded.setTexture(sprite);
+		if(isAnimation())
+		{
+			// Cargar animacion
+			List<Frame> frames = new ArrayList<Frame>();
+			List<Integer> indexs = new ArrayList<Integer>();
+			Dimension dimension = new Dimension(this.getWidth(), this.getHeight());
+			
+			Integer x = 0;
+			for (int i = 0; i < this.getSprites(); i++)
+			{
+				frames.add(new Frame(new Point(x,0), dimension));
+				indexs.add(i);
+				x+=this.getWidth();
+			}
+			
+			Frame[] objects = new Frame[frames.size()]; 
+			objects = frames.toArray(objects); 
+			Integer[] indexAux = new Integer[indexs.size()]; 
+			indexAux = indexs.toArray(indexAux); 
+			
+			SpriteSheet spritesheet = new SpriteSheet(this.pathImage, objects);
+			Texture sprite = new Animation(spritesheet, this.ratio, indexAux); //lista de los indices que usa la animacion. El 2do numero mientras mas grande más lento
+			actorLoaded.setDimension(dimension);
+			actorLoaded.setTexture(sprite);
+		}
+		else
+		{
+			SpriteSheet spritesheet = new SpriteSheet(this.pathImage, new Frame(Point.ORIGIN, new Dimension(this.getRealWidth(), this.getRealHeight())) );
+			Sprite sprite= new Sprite(spritesheet, 0);
+			actorLoaded.setDimension(new Dimension(this.getWidth(), this.getHeight()));
+			actorLoaded.setTexture(sprite);
+		}
+		
 		actorLoaded.learn(new TextureRenderer());
 		actorLoaded.translate(new Point(this.getX(), this.getY()));
 		
-		this.setPhysicsBodyUEngine(this.body);
+		this.body.setPhysicsBodyUEngine(this);
 		this.setPhysicsTypeUEngine(this.physicType);
 	}
 
@@ -260,7 +286,8 @@ public class ActorWrapper extends GameObject  implements Serializable
 
 	public void learnAbilities(EcmaScriptEngine engine) 
 	{
-		Actor actor = Game.getActorOnCurrentScene(name);
+		// Actor actor = Game.getActorOnCurrentScene(name);
+		Actor actor = Game.getActor(name);
 		this.behaviors.getBehaviors().forEach(behavior -> behavior.learnAbility(actor, engine));
 	}
 
@@ -297,29 +324,14 @@ public class ActorWrapper extends GameObject  implements Serializable
 	}
 
 	@Override
-	public void setPhysicsBody(String body) 
+	public void setPhysicsBody(Body body) 
 	{
 		this.body = body;
-		setPhysicsBodyUEngine(body);
-	}
-
-	private void setPhysicsBodyUEngine(String body) 
-	{
-		Actor actor = Game.getActorOnCurrentScene(this.name);
-		if(body.equals("Círculo"))
-		{
-			PhysicsMaterial cuerpo = new SphereMaterial(this.getDimension().getWidth() * 0.5, PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
-			actor.addPhysicsMaterial(cuerpo);
-		}
-		if (body.equals("Rectángulo"))
-		{
-			PhysicsMaterial cuerpo = new BoxMaterial(this.getWidth(), this.getHeight(), PhysicsMaterial.DEFAULT_FRICTION, PhysicsMaterial.DEFAULT_RESTITUTION, PhysicsMaterial.DEFAULT_DENSITY);
-			actor.addPhysicsMaterial(cuerpo);
-		}
+		this.body.setPhysicsBodyUEngine(this);
 	}
 
 	@Override
-	public String getBody() 
+	public Body getBody() 
 	{
 		return this.body;
 	}
@@ -440,5 +452,10 @@ public class ActorWrapper extends GameObject  implements Serializable
 			indexs.add(i);
 			x = (int) (x + newDim.getWidth());
 		}
+	}
+
+	public boolean hasCollidersOrBehaviors() 
+	{
+		return this.behaviors.hasBehaviors() || this.collisions.hasColliders();
 	}
 }

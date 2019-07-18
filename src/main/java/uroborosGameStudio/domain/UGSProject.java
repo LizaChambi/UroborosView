@@ -71,6 +71,7 @@ public class UGSProject extends GameObject implements Serializable {
 	public void addScene(SceneWrapper newScene) {
 		this.scenes.add(newScene);
 		Game.createScene(newScene.getName());
+		Game.setScene(newScene.getName());
 	}
 
 	@Override
@@ -97,6 +98,7 @@ public class UGSProject extends GameObject implements Serializable {
 		saveScenes();
 	}
 	
+	// este metodo debe ser privado
 	public void deleteOldFiles(String path) {
 		File file = new File(path); 
 		File[] files = file.listFiles();
@@ -202,19 +204,43 @@ public class UGSProject extends GameObject implements Serializable {
 		return this.scenes.stream().anyMatch(scene -> scene.existBehaviorName(name));
 	}
 
+	/*
 	public void evalBehaviors(EcmaScriptEngine engine) 
 	{
-		this.searchScene(Game.getCurrentScene().getName()).evalBehaviors(engine);;
+		this.searchScene(Game.getCurrentScene().getName()).evalBehaviors(engine);
+	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS ESCENAS
+	public void evalAllBehaviors(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalBehaviors(engine));
 	}
 
+	/*
 	public void actorsLearnAbilities(EcmaScriptEngine engine) 
 	{
 		this.searchScene(Game.getCurrentScene().getName()).actorsLearnAbilities(engine);
 	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS HABILIDADES
+	public void actorsLearnAllAbilities(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.actorsLearnAbilities(engine));
+	}
 
+	/*
 	public void evalCollisions(EcmaScriptEngine engine) 
 	{
 		this.searchScene(Game.getCurrentScene().getName()).evalCollisions(engine);
+	}
+	*/
+	
+	// METODO EVAL DE TODAS LAS COLISIONES
+	public void evalAllCollisions(EcmaScriptEngine engine) 
+	{
+		this.scenes.forEach(scene -> scene.evalCollisions(engine));
 	}
 
 	@Override
@@ -225,4 +251,8 @@ public class UGSProject extends GameObject implements Serializable {
 		return "";
 	}
 
+	public void stopAudios() 
+	{
+		this.scenes.forEach(scene -> scene.stopAudio());
+	}
 }

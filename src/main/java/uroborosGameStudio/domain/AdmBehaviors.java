@@ -68,4 +68,9 @@ public class AdmBehaviors implements Serializable {
 			}
 		});
 	}
+
+	public boolean hasBehaviors() 
+	{
+		return !this.behaviors.isEmpty();
+	}
 }

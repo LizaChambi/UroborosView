@@ -45,8 +45,10 @@ public class BtnOpenImageActionListener implements ActionListener
 
 	private void addExtensionFilters(JFileChooser jFile) 
 	{
+		FileFilter filterAll = new FileNameExtensionFilter("Todos lo archivos", "jpeg", "jpg", "png");
 		FileFilter filterPNG = new FileNameExtensionFilter("PNG (.png)", "png");
 		FileFilter filterJPEG = new FileNameExtensionFilter("JPEG (.jpeg/.jpg)", "jpeg", "jpg");
+		jFile.addChoosableFileFilter(filterAll);
 		jFile.addChoosableFileFilter(filterPNG);
 		jFile.addChoosableFileFilter(filterJPEG);
 	}

@@ -79,9 +79,9 @@ public abstract class GameObject implements Serializable
 
 	public void setBehaviorFileText(Integer file, String text) {};
 
-	public void setPhysicsBody(String body) {};
+	public void setPhysicsBody(Body body) {};
 
-	public String getBody(){return "";};
+	public Body getBody(){return new Bodiless();};
 
 	public Physics getPhysicsType(){return Physics.NONE;};
 

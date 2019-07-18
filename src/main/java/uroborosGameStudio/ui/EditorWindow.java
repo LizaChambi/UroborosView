@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +38,11 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.team.uroboros.uroboros.engine.ui.Canvas;
 
+import uroborosGameStudio.domain.Body;
+import uroborosGameStudio.domain.Circle;
 import uroborosGameStudio.domain.Physics;
+import uroborosGameStudio.domain.Rectangle;
+import uroborosGameStudio.domain.SceneWrapper;
 import uroborosGameStudio.ui.componentListeners.BtnDeleteAL;
 import uroborosGameStudio.ui.componentListeners.BtnEditDimensionImageActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnEditImageActionListener;
@@ -53,6 +59,7 @@ import uroborosGameStudio.ui.componentListeners.BtnRemoveBehaviorActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnRemoveColliderActionListener;
 import uroborosGameStudio.ui.componentListeners.BtnSaveProjectAL;
 import uroborosGameStudio.ui.componentListeners.BtnStopActionListener;
+import uroborosGameStudio.ui.componentListeners.ClearConsoleActionListener;
 import uroborosGameStudio.ui.componentListeners.CloseProjectAL;
 import uroborosGameStudio.ui.componentListeners.CodeFieldListener;
 import uroborosGameStudio.ui.componentListeners.CreateNewProjectAL;
@@ -133,10 +140,10 @@ public class EditorWindow extends AbstractWindowFrame {
 	private JPanel panelEditAudio;
 	private JTextField textFieldPathAudio = new JTextField();
 	private JLabel lblErrorDimension;
-	private JButton btnStop = new JButton("Detener");
+	private JButton btnStop = new JButton("Detener", new ImageIcon("images/Stop-Normal-Yellow-icon.png"));
 	private JButton btnPlay;
 	private JPanel consolePanel;
-	private JTextArea txtConsoleErrores;
+	private JTextArea txtConsole = new JTextArea();
 	private JScrollPane scrollPane;
 	private TextAreaOutputStream taos;
 
@@ -175,6 +182,7 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 	
 	private void initializeFrame() {
+		this.frame.setTitle("Uroboros Game Studio - " + model.getPathProject());
 		this.frame.setSize(this.resolution);
 		this.frame.setPreferredSize(this.resolution);
 		this.frame.setMinimumSize(new Dimension(800,600));
@@ -273,28 +281,31 @@ public class EditorWindow extends AbstractWindowFrame {
 	
 	private void toolbar() 
 	{
-		JButton btnNewScena = new JButton("Nueva Escena");
+		JButton btnNewScena = new JButton("Nueva Escena", new ImageIcon("images/add-icon.png"));
 		btnNewScena.addActionListener(new BtnNewSceneAL(treeScenes, idScene, canvas));
 		buttonPanel.add(btnNewScena);
 		
-		JButton btnNewActor = new JButton("Nuevo Actor");
+		JButton btnNewActor = new JButton("Nuevo Actor", new ImageIcon("images/user-add-icon.png"));
 		btnNewActor.addActionListener(new BtnNewActorAL(treeScenes, canvas, model));
 		buttonPanel.add(btnNewActor);
 		
-		JButton btnSave = new JButton("Guardar");
+		JButton btnSave = new JButton("Guardar", new ImageIcon("images/Save-as-icon.png"));
 		btnSave.addActionListener(new BtnSaveProjectAL(this.getModelObject()));
 		buttonPanel.add(btnSave);
 		
-		btnPlay = new JButton("Play");
+		btnPlay = new JButton("Ejecutar", new ImageIcon("images/Play-Green-icon.png"));
+		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new BtnPlayAL(canvas, model, btnStop, btnPlay));
 		buttonPanel.add(btnPlay);
+		btnStop.setEnabled(false);
 		
-		JButton btnRemove = new JButton("Eliminar");
-		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
-		buttonPanel.add(btnRemove);
-		
+//		btnStop = new JButton("Detener", new ImageIcon("images/stop-icon.png"));
 		btnStop.addActionListener(new BtnStopActionListener(treeScenes, canvas, model, btnPlay, btnStop));
 		buttonPanel.add(btnStop);
+		
+		JButton btnRemove = new JButton("Eliminar", new ImageIcon("images/Actions-stop-icon.png"));
+		btnRemove.addActionListener(new BtnDeleteAL(treeScenes, canvas, nameTextField, posXTextField, posYTextField, textFieldPathImage, textFieldWidth, textFieldHigh, model));
+		buttonPanel.add(btnRemove);
 	}
 
 	private void initializeCanvas() 
@@ -320,13 +331,32 @@ public class EditorWindow extends AbstractWindowFrame {
 	private void initializeTreePanel() {
 		scroollPanel = new JScrollPane(this.treeScenes);
 		scroollPanel.setPreferredSize(new Dimension(307, 400));
-		DefaultMutableTreeNode root = model.createTreeNode();
+		DefaultMutableTreeNode root = this.createTreeNode();
 		DefaultTreeModel tree = new DefaultTreeModel(root);
-		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio));
+		treeScenes.addTreeSelectionListener(new SceneTreePanelTSL(treeScenes,nameTextField,canvas, model, posXTextField, posYTextField, textFieldPathImage,textFieldWidth,textFieldHigh, table, cboxSelectBody, rdStatic, rdKinematic, rdDinamic, tableCollision, textArea, textFieldPathAudio, btnPlay));
 		treeScenes.setModel(tree);
 		this.treePlayPanel.add(scroollPanel, BorderLayout.LINE_START);
 	}
 	
+	private DefaultMutableTreeNode createTreeNode() 
+	{
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(model.getProject());
+		for (int i=0; i < model.cantScenes(); i++)
+		{
+			SceneWrapper scene = model.getSceneIn(i);
+			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode();
+			child1.setUserObject(scene);
+			for (int subI=0; subI<scene.cantActors();subI++)
+			{
+				DefaultMutableTreeNode child11 = new DefaultMutableTreeNode();
+				child11.setUserObject(scene.getActorIn(subI));
+				child1.add(child11);
+			}
+			root.add(child1);
+		}
+		return root;
+	}
+
 	private void editorPanel() 
 	{
 		this.inicializeEditorPanel();
@@ -337,12 +367,21 @@ public class EditorWindow extends AbstractWindowFrame {
 	}
 
 	private void consoleLogProperties() {
-		txtConsoleErrores = new JTextArea();
-		txtConsoleErrores.setText("");
-		taos = new TextAreaOutputStream(txtConsoleErrores);
 		
-		scrollPane = new JScrollPane(this.txtConsoleErrores);
-		scrollPane.setBounds(10, 10, 950, 250);
+		JButton btnClearConsole = new JButton("Limpiar consola");
+		btnClearConsole.addActionListener(new ClearConsoleActionListener(txtConsole));
+		btnClearConsole.setBounds(10, 5, 150, 25);
+		consolePanel.add(btnClearConsole);
+		
+		taos = new TextAreaOutputStream(txtConsole);
+		txtConsole.setBorder(new EmptyBorder(5, 5, 5, 5));
+		txtConsole.setEditable(false);
+		txtConsole.setForeground(Color.WHITE);
+		txtConsole.setBackground(Color.BLACK);
+		txtConsole.setFont(new Font("Cousine", Font.PLAIN, 12));
+		
+		scrollPane = new JScrollPane(this.txtConsole);
+		scrollPane.setBounds(10, 32, 950, 228);
 		scrollPane.setPreferredSize(new Dimension(945, 240));
 		consolePanel.add(scrollPane);
 	}
@@ -360,6 +399,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		consolePanel.setPreferredSize(new Dimension(973, 263));
 		consolePanel.setLayout(null);
 		tabbedPanel.addTab("Console Log", consolePanel);
+		tabbedPanel.setIconAt(2, new ImageIcon(EditorWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 	}
 
 	private void buttonsCollisionTable() 
@@ -386,6 +426,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		editorPanel = new JPanel();
 		editorPanel.setPreferredSize(new Dimension(973, 263));
 		tabbedPanel.addTab("Propiedades", editorPanel);
+		tabbedPanel.setIconAt(0, new ImageIcon("images/Pen-icon.png"));
 		this.gameEditorPanel.add(tabbedPanel, BorderLayout.SOUTH);
 	}
 
@@ -466,7 +507,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		bodyMaterialPanel.add(lblBodyMaterial);
 		lblBodyMaterial.setFont(new Font("Dialog", Font.BOLD, 12));
 	
-		cboxSelectBody.setModel(new DefaultComboBoxModel(new String[] {"Círculo", "Rectángulo"}));
+		cboxSelectBody.setModel(new DefaultComboBoxModel(new Body[] {new Circle(), new Rectangle()}));
 		cboxSelectBody.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cboxSelectBody.setSelectedItem(null);
 		cboxSelectBody.addActionListener(new PhysicsBodyAL(model, cboxSelectBody));
@@ -520,6 +561,7 @@ public class EditorWindow extends AbstractWindowFrame {
 		collisionPanel.setPreferredSize(new Dimension(973, 263));
 		collisionPanel.setLayout(null);
 		tabbedPanel.addTab("Colisiones", collisionPanel);
+		tabbedPanel.setIconAt(1, new ImageIcon(EditorWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/HardDrive.gif")));
 	}
 	
 	private void initializePropertiesEditPanel() 
