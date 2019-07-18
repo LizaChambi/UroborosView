@@ -3,18 +3,63 @@
   <groupId>org.uroboros-game-team</groupId>
   <artifactId>uroboros-game-studio</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-	<dependencies>
-	  	<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api -->
-		<dependency>
-		    <groupId>org.apache.maven</groupId>
-		    <artifactId>maven-plugin-api</artifactId>
-		    <version>3.6.0</version>
-		</dependency>
-		<dependency>
+  <repositories>
+  	<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+	</repository>
+ </repositories>
+ <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+</build>
+ 	<dependencies>
+ 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.TeamUroboros</groupId>
+			<artifactId>uroboros-engine</artifactId>
+			<version>develop-SNAPSHOT</version>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.team-uroboros</groupId> -->
+<!-- 			<artifactId>uroboros-engine</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<groupId>com.github.51lv3str1</groupId>
+			<artifactId>JTypeScript</artifactId>
+			<version>master-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>rsyntaxtextarea</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>autocomplete</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>languagesupport</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 		
 		<!-- mockito -->
